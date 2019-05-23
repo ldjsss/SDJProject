@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:gravity="center"
+        android:background="@color/color_bg">
+
+        <ImageView
+            android:id="@+id/toolbar_left_menu_iv"
+            android:layout_width="@dimen/toolbar_height"
+            android:layout_height="35dp"
+            android:padding="5dp"
+            android:src="@mipmap/main_user" />
+
+        <ImageView
+            android:id="@+id/toolbar_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginStart="@dimen/dp_80"
+            android:layout_marginEnd="@dimen/dp_80"
+            android:gravity="center"
+            android:src="@mipmap/main_navigation"
+            />
+
+        <ImageView
+            android:id="@+id/toolbar_right_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:padding="5dp"
+            android:src="@mipmap/main_service"
+            />
+    </RelativeLayout>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        style="@style/FirstpageFragment_TabLayout"
+        android:layout_width="match_parent"
+        app:tabPaddingStart="1dp"
+        app:tabPaddingEnd="1dp"
+        android:layout_height="wrap_content"
+        app:tabBackground="@color/transparent" />
+
+    <!--<com.lldj.tc.toolslibrary.view.ViewPagerSlide-->
+        <!--android:id="@+id/firstpage_viewpager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:overScrollMode="never" />-->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/firstpage_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"/>
+
+
+</LinearLayout>

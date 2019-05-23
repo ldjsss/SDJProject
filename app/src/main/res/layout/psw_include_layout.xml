@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/psw_root_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/psw_layout"
+        android:layout_width="240dp"
+        android:layout_height="30dp"
+      >
+        <EditText
+            android:id="@+id/psw_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:gravity="center_vertical"
+            android:hint="@string/set_psw"
+            android:maxLength="18"
+            android:layout_toStartOf="@+id/psw_show_or_hid_iv"
+            android:textColor="@color/color_969696"
+            android:textColorHint="@color/color_c8c8c8"
+            android:textCursorDrawable="@drawable/my_cursor"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/psw_show_or_hid_iv"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:src="@mipmap/eye_icon" />
+
+        <View
+            android:id="@+id/psw_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="5dp"
+            android:background="@color/color_969696" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/psw_wrong_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/psw_layout"
+        android:layout_alignEnd="@id/psw_layout"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="@string/psw_wrong_str"
+        android:textColor="#f05a23"
+        android:textSize="13sp"
+        android:visibility="invisible" />
+    <ImageView
+        android:id="@+id/psw_status"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_toEndOf="@id/psw_layout"
+        android:padding="8dp"
+        android:visibility="invisible"
+        android:src="@mipmap/log_error_msg"
+        />
+</RelativeLayout>

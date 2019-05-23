@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="FirstpageFragment_TabLayout" parent="">
+        <!--Customize your theme here. -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="tabSelectedTextColor">@color/colorPrimary</item>
+        <item name="tabTextAppearance">@style/FristpageFragment_TabText</item>
+        <item name="tabTextColor">@color/color_989898</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabIndicatorColor">@color/white</item>
+        <item name="rippleColor">@color/colorPrimary</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/white_round10_top</item>
+        <item name="android:theme">@style/AppTheme</item>
+        <item name="android:elevation" tools:ignore="NewApi">0.5dp</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabGravity">fill</item>
+    </style>
+    <style name="FristpageFragment_TabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">15sp</item>
+        <item name="textAllCaps">false</item>
+    </style>
+</resources>

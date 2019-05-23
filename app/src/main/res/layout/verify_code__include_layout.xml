@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/verify_code_root_layout"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/get_verify_code"
+        android:layout_width="100dp"
+        android:layout_height="@dimen/dp_30"
+        android:layout_alignParentEnd="true"
+        android:background="@color/color_e6e6e6"
+        android:gravity="center"
+        android:text="@string/get_verify_code"
+        android:textColor="@color/color_646464"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/verify_code_status"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@id/get_verify_code"
+        android:padding="8dp"
+        android:src="@mipmap/log_correct_msg"
+        android:visibility="invisible" />
+
+    <EditText
+        android:id="@+id/verify_code_et"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:layout_toStartOf="@id/get_verify_code"
+        android:background="@color/transparent"
+        android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:gravity="center_vertical"
+        android:hint="@string/input_verify_code"
+        android:maxLength="4"
+        android:textColor="@color/color_969696"
+        android:textColorHint="@color/color_c8c8c8"
+        android:textCursorDrawable="@drawable/my_cursor"
+        android:textSize="13sp" />
+
+    <View
+        android:id="@+id/verify_code_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/verify_code_et"
+        android:layout_alignEnd="@id/verify_code_status"
+        android:layout_marginTop="5dp"
+        android:background="@color/color_969696" />
+
+    <TextView
+        android:id="@+id/verify_code_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/verify_code_line"
+        android:layout_alignEnd="@id/verify_code_status"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="@string/verify_code_wrong"
+        android:textColor="#f05a23"
+        android:textSize="13sp"
+        android:visibility="invisible" />
+</RelativeLayout>

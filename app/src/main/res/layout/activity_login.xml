@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/photo_iv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/title_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp"
+        android:src="@mipmap/main_logo"
+        />
+    <!--手机号-->
+    <include
+        layout="@layout/tel_include_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/photo_iv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
+    <!--密码-->
+    <include
+        layout="@layout/psw_include_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tel_root_layout"
+        android:layout_alignStart="@id/tel_root_layout"
+        android:layout_marginTop="10dp" />
+    <!--验证码登录-->
+    <TextView
+        android:id="@+id/verify_code_login_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/psw_root_layout"
+        android:layout_alignStart="@+id/psw_root_layout"
+        android:padding="5dp"
+        android:text="@string/verify_code_login"
+        android:textColor="@color/color_646464"
+        android:textSize="13sp" />
+    <!--忘记密码-->
+    <TextView
+        android:id="@+id/forget_psw_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/psw_root_layout"
+        android:layout_alignEnd="@+id/tel_root_layout"
+        android:padding="5dp"
+        android:text="@string/forget_psw"
+        android:textColor="@color/color_646464"
+        android:textSize="13sp" />
+    <!--登录-->
+    <TextView
+        android:id="@+id/login_tv"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/forget_psw_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/rec_c8c8c8_round100"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
+    <!--注册-->
+    <RelativeLayout
+        android:id="@+id/register_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/register_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/register_tv"
+            android:layout_alignStart="@id/register_tv"
+            android:layout_alignEnd="@id/register_tv"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/just_look_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="@string/just_looking_around"
+        android:textColor="@color/color_969696"
+        android:textSize="13sp" />
+</RelativeLayout>

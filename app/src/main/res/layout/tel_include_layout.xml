@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tel_root_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+    android:id="@+id/tel_layout"
+    android:layout_width="240dp"
+    android:layout_height="30dp">
+
+    <TextView
+        android:id="@+id/quhao_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="+86"
+        android:textColor="@color/color_646464"
+        android:textSize="13sp" />
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="0.5dp"
+        android:layout_height="15dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/quhao_tv"
+        android:background="@color/color_e6e6e6" />
+
+    <EditText
+        android:id="@+id/tel_num_et"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/view_line"
+        android:background="@color/transparent"
+        android:hint="@string/input_tel_num"
+        android:inputType="number"
+        android:maxLength="11"
+        android:textColor="@color/color_969696"
+        android:textColorHint="@color/color_c8c8c8"
+        android:textCursorDrawable="@drawable/my_cursor"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:id="@+id/tel_status"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/dp_8"
+        android:src="@mipmap/log_correct_msg"
+        android:visibility="invisible" />
+
+    <View
+        android:id="@+id/tel_num_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:background="@color/color_c8c8c8" />
+</RelativeLayout>
+
+    <TextView
+        android:id="@+id/account_not_exist_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tel_layout"
+        android:layout_alignEnd="@id/tel_layout"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="@string/account_not_exist_str"
+        android:textColor="#f05a23"
+        android:textSize="13sp"
+        android:visibility="invisible" />
+</RelativeLayout>

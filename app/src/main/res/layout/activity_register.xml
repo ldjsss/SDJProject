@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_back_layout" />
+
+    <ImageView
+        android:id="@+id/photo_iv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/toolbar_root_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@mipmap/main_logo" />
+    <!--手机号-->
+    <include
+        layout="@layout/tel_include_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/photo_iv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp" />
+    <!--验证码-->
+    <include
+        layout="@layout/verify_code__include_layout"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tel_root_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+    <!--密码-->
+    <include
+        layout="@layout/psw_include_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/verify_code_root_layout"
+        android:layout_alignStart="@id/verify_code_root_layout"
+        android:layout_marginTop="10dp" />
+    <!--用户协议-->
+    <include
+        layout="@layout/agreement_include_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/psw_root_layout"
+        android:layout_alignStart="@id/psw_root_layout"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/register_tv"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/agreement_root_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/rec_c8c8c8_round100"
+        android:gravity="center"
+        android:text="@string/register_str"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
+
+    <RelativeLayout
+        android:id="@+id/goto_login_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/goto_login_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alreay_have_account_goto_login"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/goto_login_tv"
+            android:layout_alignStart="@id/goto_login_tv"
+            android:layout_alignEnd="@id/goto_login_tv"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary" />
+    </RelativeLayout>
+</RelativeLayout>

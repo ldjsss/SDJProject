@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="38dp"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/arrow_lefticon"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/match_back_2"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calendaricon"
+        android:src="@mipmap/main_calendar"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@id/arrow_lefticon"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/mathdatatext"
+        android:text="2019年5月21日 星期二"
+        android:textSize="13sp"
+        android:textColor="@color/google_blue"
+        android:layout_toRightOf="@id/calendaricon"
+        android:gravity="center" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:id="@+id/arrow_righticon"
+        android:layout_toRightOf="@id/mathdatatext"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/match_next"/>
+
+</RelativeLayout>

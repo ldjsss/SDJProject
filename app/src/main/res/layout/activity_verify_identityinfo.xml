@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar_back_layout" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_37"
+            android:text="@string/input_identity_info"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
+
+        <View
+            android:layout_width="150dp"
+            android:layout_height="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_57"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_57"
+            android:background="@color/colorPrimary" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginStart="@dimen/dp_57"
+            android:layout_marginEnd="@dimen/dp_57"
+            android:background="@color/colorPrimary" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_57"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_57">
+
+            <TextView
+                android:id="@+id/real_name_str_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="@dimen/dp_20"
+                android:text="@string/real_name"
+                android:textColor="@color/color_969696"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/real_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_toEndOf="@id/real_name_str_tv"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:hint="请输入真实姓名"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/real_name_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_below="@id/real_name_et"
+                android:layout_alignStart="@id/real_name_et"
+                android:background="@color/color_969696" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/type_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_layout"
+        android:layout_marginStart="@dimen/dp_57"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_57">
+
+        <TextView
+            android:id="@+id/certification_type_str_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="@dimen/dp_20"
+            android:text="@string/certificate_type"
+            android:textColor="@color/color_969696"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/certification_type_tv"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_toEndOf="@id/certification_type_str_tv"
+            android:background="@color/transparent"
+            android:gravity="center_vertical"
+            android:hint="请选择证件类型"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/type_arrow"
+            android:layout_width="20dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_5"
+            android:rotation="90"
+            android:src="@mipmap/arrow_grey_right" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_below="@id/certification_type_str_tv"
+            android:layout_alignStart="@id/certification_type_tv"
+            android:background="@color/color_969696" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/type_layout"
+        android:layout_marginStart="@dimen/dp_57"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_57">
+
+        <TextView
+            android:id="@+id/certification_num_str_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="@dimen/dp_20"
+            android:text="@string/certificate_num"
+            android:textColor="@color/color_969696"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/certification_num_et"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_toEndOf="@id/certification_num_str_tv"
+            android:background="@color/transparent"
+            android:gravity="center_vertical"
+            android:hint="请输入证件号码"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/certification_num_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_below="@id/certification_num_et"
+            android:layout_alignStart="@id/certification_num_et"
+            android:background="@color/color_969696" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/type_recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/type_layout"
+        android:layout_marginStart="130dp"
+        android:layout_marginEnd="@dimen/dp_57"
+        android:background="@color/white"
+        android:maxHeight="@dimen/dp_200"
+        android:overScrollMode="never"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/next_step_tv"
+        android:layout_width="335dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:background="@drawable/rec_00be0a_round100"
+        android:gravity="center"
+        android:text="@string/next_step"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</RelativeLayout>

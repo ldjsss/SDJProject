@@ -1,0 +1,8 @@
+/build
+*.git
+*.iml
+/.idea
+/.gradle
+/androidTest
+/test
+.properties

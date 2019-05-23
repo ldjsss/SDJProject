@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.lldj.tc">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".MedicalApplication"
+        android:allowBackup="true"
+        android:appComponentFactory=""
+        android:icon="@mipmap/ic_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/zhiyi_icon"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:appComponentFactory">
+        <activity
+            android:name=".firstpage.MatchDetailActivity"
+            android:label="@string/title_activity_match_detail"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.sdj.auction.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
+
+        <activity
+            android:name=".splash.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".guide.GuideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".MainActivity2"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.VerifyCodeLogin.VerifyCodeLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".webview.WebviewNormalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".register.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.TestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".JobSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.InputNameActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/transparent_activity"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+        <activity
+            android:name=".mine.msg.MsgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.qrcode.QRCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.info.InfoDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.EditNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.info.ModifyTelNumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".photo.OpenCameraOrGalleryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/transparent_activity" />
+        <activity
+            android:name=".cropimage.CropImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.verify.VerifyTipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.verify.VerifyInputIdentityInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.verify.VerifyEnsureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.verify.VerifyFaceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.verify.VerifySuccActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.verify.VerifySuccDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/transparent_activity" />
+        <activity
+            android:name=".mine.verify.job.JobVerifyNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.verify.job.JobVerifyJobActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.verify.job.JobVerifyCityActivity"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>
