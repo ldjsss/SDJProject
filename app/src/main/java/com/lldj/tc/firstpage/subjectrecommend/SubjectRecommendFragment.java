@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -117,6 +119,21 @@ public class SubjectRecommendFragment extends BaseFragment implements LRecyclerV
     }
 
     @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+        super.onFragmentVisibleChange(isVisible);
+        if (isVisible) {
+            Clog.e("sssssss", " -----------xcl isVisible = " + ViewType);
+            //   do things when fragment is visible
+            //    if (ListUtils.isEmpty(mDataList) && !isRefreshing()) {
+            //        setRefresh(true);
+            //        loadServiceData(false);
+        } else {
+            //        setRefresh(false);
+            Clog.e("sssssss", " -----------xcl ishide = " + ViewType);
+        }
+    }
+
+    @Override
     public void onScrollUp() {
     }
 
@@ -169,34 +186,6 @@ public class SubjectRecommendFragment extends BaseFragment implements LRecyclerV
     public void selectView(int position) {
         super.onDestroyView();
         Log.e("currentPosition", "--zzzzzz----- selectView currentPosition===" + position);
-//        ViewType = position;
-
-//        if(mAdapter == null){
-//            subjectLrecycleview.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-//            mAdapter = new GameCellAdapter(mContext, ViewType);
-//            lAdapter = new LRecyclerViewAdapter(getActivity(), mAdapter);
-//            subjectLrecycleview.setAdapter(lAdapter);
-//            subjectLrecycleview.setLScrollListener(this);
-
-        //第一次加载数据
-//            setFirstData();
-
-//            Log.e("ttttttttttt","--zzzz==="+position);
-//            BaseFragment fragment;
-//            if(position <= 1){
-//                fragment = new BannerFragment();
-//                Log.e("ttttttttttt","--11111111==="+position);
-//            }else{
-//                fragment = new CalendarFragment();
-//                Log.e("ttttttttttt","--2222222==="+position);
-//            }
-
-//            FragmentManager fragmentManager = getFragmentManager();
-//            FragmentTransaction transaction = fragmentManager.beginTransaction();
-//            transaction.replace(R.id.layout_board, fragment);
-//            transaction.commit();
-//
-//        }
 
     }
 }
