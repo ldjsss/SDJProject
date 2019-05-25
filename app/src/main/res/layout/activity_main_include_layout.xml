@@ -8,35 +8,55 @@
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:gravity="center"
-        android:background="@color/color_bg">
+        android:layout_height="60dp"
+        android:background="@color/color_bg"
+        android:layout_marginTop="15dp">
 
         <ImageView
             android:id="@+id/toolbar_left_menu_iv"
-            android:layout_width="@dimen/toolbar_height"
+            android:layout_width="35dp"
             android:layout_height="35dp"
-            android:padding="5dp"
+            android:paddingStart="5dp"
             android:src="@mipmap/main_user" />
 
         <ImageView
-            android:id="@+id/toolbar_title_tv"
-            android:layout_width="match_parent"
+            android:id="@+id/toolbar_gameselect"
+            android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginStart="@dimen/dp_80"
-            android:layout_marginEnd="@dimen/dp_80"
-            android:gravity="center"
-            android:src="@mipmap/main_navigation"
-            />
+            android:src="@mipmap/icon_gameselect"
+            android:layout_toRightOf="@id/toolbar_left_menu_iv"
+            android:layout_marginLeft="5dp"/>
 
         <ImageView
-            android:id="@+id/toolbar_right_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:id="@+id/toolbar_title_tv"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/main_navigation"
+            android:layout_centerHorizontal="true"/>
+
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:padding="5dp"
-            android:src="@mipmap/main_service"
-            />
+            android:paddingEnd="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/connectservice"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorService"
+                android:textSize="15sp"/>
+
+            <ImageView
+                android:id="@+id/toolbar_right_tv"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:src="@mipmap/main_service" />
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
 

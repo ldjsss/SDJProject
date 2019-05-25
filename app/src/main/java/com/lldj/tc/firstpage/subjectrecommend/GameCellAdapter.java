@@ -118,8 +118,8 @@ public class GameCellAdapter extends RecyclerView.Adapter {
         RelativeLayout bottomgamelayout;
         @BindView(R.id.bottomoverlayout)
         RelativeLayout bottomoverlayout;
-        @BindView(R.id.gameresult)
-        RelativeLayout gameresult;
+//        @BindView(R.id.gameresult)
+//        RelativeLayout gameresult;
 
         public viewHolder(View itemView) {
             super(itemView);
@@ -179,14 +179,12 @@ public class GameCellAdapter extends RecyclerView.Adapter {
                 mHolder.playnamecommon1.setVisibility(View.VISIBLE);
                 mHolder.imggamelock0.setVisibility(View.GONE);
                 mHolder.imggamelock1.setVisibility(View.GONE);
-                mHolder.bottomgamelayout.setVisibility(View.VISIBLE);
-                mHolder.bottomoverlayout.setVisibility(View.GONE);
 
                 mHolder.bottomgamelayout.setVisibility(View.VISIBLE);
                 mHolder.bottomoverlayout.setVisibility(View.GONE);
 
                 mHolder.gametime.setVisibility(View.VISIBLE);
-                mHolder.gameresult.setVisibility(View.GONE);
+//                mHolder.gameresult.setVisibility(View.GONE);
                 break;
             case 3:
                 mHolder.gamebetlayout0.setVisibility(View.GONE);
@@ -201,7 +199,7 @@ public class GameCellAdapter extends RecyclerView.Adapter {
                 mHolder.bottomoverlayout.setVisibility(View.VISIBLE);
 
                 mHolder.gametime.setVisibility(View.GONE);
-                mHolder.gameresult.setVisibility(View.VISIBLE);
+//                mHolder.gameresult.setVisibility(View.VISIBLE);
                 break;
         }
     }

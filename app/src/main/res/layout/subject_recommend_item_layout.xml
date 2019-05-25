@@ -118,7 +118,7 @@
             android:layout_marginStart="10dp"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="| 全场获胜者"
+            android:text="@string/allwinner"
             android:textSize="12sp"
             android:textColor="@color/white" />
     </LinearLayout>

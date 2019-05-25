@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">闪电竟</string>
+    <string name="connectservice">联系客服</string>
     <string name="matchDetialTitle">游戏竞猜</string>
     <string name="matchTodayTitle">今日</string>
     <string name="matchCurrentTitle">滚盘</string>
@@ -7,6 +8,8 @@
     <string name="matchOverTitle">已结束</string>
     <string name="matchStatusOver">已结束</string>
     <string name="matchStatusFront">未开始</string>
+    <string name="allwinner">| 全场获胜者</string>
+
 
 
 
@@ -83,5 +86,7 @@
     <string name="job_verify">职业认证</string>
     <string name="job_tip">1、完成操作大约需要3分钟。\n2、请提前准备好执业证件，确认您的证件信息真实有效，并上传清晰的证件照片。\n3、人工审核需要3&#8211;5个工作日。</string>
     <string name="title_activity_match_detail">MatchDetailActivity</string>
+    <string name="cc">个人资料</string>
+
 </resources>
 

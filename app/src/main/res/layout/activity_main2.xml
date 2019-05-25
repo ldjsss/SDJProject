@@ -21,13 +21,23 @@
         android:layout_marginRight="-65dp"
         android:layout_gravity="left"
         android:tag="LEFT">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50">
+            <ImageView
+                android:id="@+id/back_main_iv"
+                android:layout_width="@dimen/toolbar_height"
+                android:layout_height="@dimen/toolbar_height"
+                android:padding="5dp"
+                android:src="@mipmap/back_white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info"/>
 
-        <ImageView
-            android:id="@+id/back_main_iv"
-            android:layout_width="@dimen/toolbar_height"
-            android:layout_height="@dimen/toolbar_height"
-            android:padding="5dp"
-            android:src="@mipmap/back_white" />
+        </RelativeLayout>
+
+
 
     </LinearLayout>
 
