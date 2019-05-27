@@ -33,6 +33,7 @@
     <color name="color_dcdcdc">#dcdcdc</color>
     <color name="color_ea5822">#ea5822</color>
     <color name="color_bg">#34384a</color>
+    <color name="color_1a1c26">#1a1c26</color>
     <color name="abc_search_url_text_normal">#7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
     <color name="abc_search_url_text_selected">@android:color/black</color>

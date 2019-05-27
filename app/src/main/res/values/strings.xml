@@ -86,7 +86,7 @@
     <string name="job_verify">职业认证</string>
     <string name="job_tip">1、完成操作大约需要3分钟。\n2、请提前准备好执业证件，确认您的证件信息真实有效，并上传清晰的证件照片。\n3、人工审核需要3&#8211;5个工作日。</string>
     <string name="title_activity_match_detail">MatchDetailActivity</string>
-    <string name="cc">个人资料</string>
+    <string name="myinformation">个人资料</string>
 
 </resources>
 

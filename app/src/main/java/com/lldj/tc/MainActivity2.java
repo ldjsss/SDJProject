@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
@@ -32,7 +33,7 @@ public class MainActivity2 extends BaseActivity {
     @BindView(R.id.mainflayout)
     FrameLayout mainflayout;
     @BindView(R.id.left_layout)
-    LinearLayout leftLayout;
+    RelativeLayout leftLayout;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     @BindView(R.id.back_main_iv)
