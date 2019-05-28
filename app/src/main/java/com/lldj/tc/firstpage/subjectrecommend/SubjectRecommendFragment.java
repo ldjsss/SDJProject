@@ -185,7 +185,7 @@ public class SubjectRecommendFragment extends BaseFragment implements LRecyclerV
     @Override
     public void selectView(int position) {
         super.onDestroyView();
-        Log.e("currentPosition", "--zzzzzz----- selectView currentPosition===" + position);
+        Log.e("currentPosition", "selectView currentPosition===" + position);
 
     }
 }
