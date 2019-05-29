@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--透明-->
+    <color name="transparent">#00000000</color>
+    <!--白色-->
+    <color name="white">#FFFFFF</color>
+    <color name="white_alpha10">#19ffffff</color>
+    <color name="white_alpha20">#33ffffff</color>
+    <color name="white_alpha30">#4cffffff</color>
+    <color name="white_alpha40">#66ffffff</color>
+    <color name="white_alpha50">#7fffffff</color>
+    <color name="white_alpha60">#99ffffff</color>
+    <color name="white_alpha80">#ccffffff</color>
+    <color name="color_f0ffffff">#f0ffffff</color>
+    <!--黑色-->
+    <color name="black">#000000</color>
+    <color name="black_alpha20">#33000000</color>
+    <color name="black_alpha30">#4c000000</color>
+    <color name="black_alpha_40">#66000000</color>
+    <color name="black_alpha_50">#7F000000</color>
+    <color name="black_alpha_60">#99000000</color>
+    <color name="black_alpha_80">#cc000000</color>
+
+</resources>
