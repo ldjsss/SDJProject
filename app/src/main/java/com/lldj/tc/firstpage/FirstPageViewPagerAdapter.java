@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import com.lldj.tc.R;
 import com.lldj.tc.firstpage.subjectrecommend.SubjectRecommendFragment;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
+import com.lldj.tc.toolslibrary.view.FragmentStatePagerAdapterCompat;
 
 import java.util.ArrayList;
 import java.util.List;

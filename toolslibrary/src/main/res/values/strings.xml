@@ -48,6 +48,7 @@
     <string name="permission_get_accounts_exception" translatable="false">获取通讯录权限异常，请检查您是否有开启此权限</string>
     <string name="permission_read_phone_exception" translatable="false">获取读取手机权限异常，请检查您是否有开启此权限</string>
     <string name="permission_call_phone_exception" translatable="false">获取打电话权限异常，请检查您是否有开启此权限</string>
+    <string name="permission_read_phone_state" translatable="false">获取手机状态权限异常，请检查您是否有开启此权限</string>
     <string name="permission_camera_exception" translatable="false">获取相机权限异常，请检查您是否有开启此权限</string>
     <string name="permission_access_fine_location_exception" translatable="false">获取定位权限异常，请检查您是否有开启此权限</string>
     <string name="permission_access_coarse_location_exception" translatable="false">获取定位权限异常，请检查您是否有开启此权限</string>

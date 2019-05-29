@@ -13,26 +13,35 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lldj.tc.R;
+import com.lldj.tc.mine.info.InfoBean;
+import com.lldj.tc.retrofit_services.UserServices;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.immersionbar.OnKeyboardListener;
+import com.lldj.tc.toolslibrary.retrofit.BaseEntity;
+import com.lldj.tc.toolslibrary.retrofit.BaseObserver;
+import com.lldj.tc.toolslibrary.retrofit.RetrofitConfig;
+import com.lldj.tc.toolslibrary.retrofit.RetrofitUtils;
+import com.lldj.tc.toolslibrary.retrofit.RxSchedulerHepler;
 import com.lldj.tc.toolslibrary.util.KeyboardUtil;
 import com.lldj.tc.toolslibrary.util.TextWatcherUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
+import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
 
 /**
  * description: 输入真实姓名<p>
- * user: lenovo<p>
+ * user: wangclia<p>
  * Creat Time: 2018/12/5 18:56<p>
  * Modify Time: 2018/12/5 18:56<p>
  */
 
 
-public class EditNameActivity extends BaseActivity implements OnKeyboardListener {
+public class EditNameActivity extends BaseActivity implements OnKeyboardListener, TextWatcherUtils.TextWatcherListener {
     public static final String NAME = "name";
     public static final String TYPE = "type";
     @BindView(R.id.toolbar_back_iv)
@@ -49,6 +58,8 @@ public class EditNameActivity extends BaseActivity implements OnKeyboardListener
     View telNumLine;
     @BindView(R.id.save_tv)
     TextView saveTv;
+//    @BindView(R.id.loding_layout)
+//    RelativeLayout lodingLayout;
     //0修改姓名，1 修改昵称
     private int mType;
     String mNameStr;
@@ -90,16 +101,9 @@ public class EditNameActivity extends BaseActivity implements OnKeyboardListener
             nameEt.setSelection(nameEt.length());
         }
         setBtnStatus();
-        TextWatcherUtils mTextWatcher = new TextWatcherUtils(mContext, nameEt, 20, false);
+        TextWatcherUtils mTextWatcher = new TextWatcherUtils(mContext, nameEt, 20, true);
+        mTextWatcher.setTextChangedListener(this);
         nameEt.addTextChangedListener(mTextWatcher);
-        mTextWatcher.setAfterTextChangedListener(new TextWatcherUtils.AfterTextChangedListener() {
-            @Override
-            public void onTextChange(Editable s) {
-                mNameStr = nameEt.getText().toString().trim();
-                setBtnStatus();
-
-            }
-        });
 
     }
 
@@ -115,27 +119,26 @@ public class EditNameActivity extends BaseActivity implements OnKeyboardListener
 
     }
 
-    public void exitActivity() {
-        KeyboardUtil.hideInput(mContext, nameEt);
-        finish();
-        overridePendingTransition(0, 0);
-    }
 
     @OnClick({R.id.toolbar_back_iv, R.id.save_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back_iv:
-                finish();
+                exitActivity();
                 break;
             case R.id.save_tv:
                 mNameStr = nameEt.getText().toString().trim();
-//                Intent mIntent = new Intent();
-//                mIntent.putExtra("name", name);
-//                mIntent.putExtra("type", mType);
-//                setResult(100, mIntent);
-                SharePreUtils.setUserName(mContext, mNameStr);
-                finish();
-                KeyboardUtil.hideInput(mContext, nameEt);
+                getData();
+//                switch (mType) {
+//                    case 0:
+//                        SharePreUtils.setUserName(mContext, mNameStr);
+//                        break;
+//                    case 1:
+//                        SharePreUtils.setNickName(mContext, mNameStr);
+//                        break;
+//                }
+//                exitActivity();
+
                 break;
         }
     }
@@ -155,4 +158,69 @@ public class EditNameActivity extends BaseActivity implements OnKeyboardListener
     }
 
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        mNameStr = nameEt.getText().toString().trim();
+        setBtnStatus();
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
+    @Override
+    public void currentTextLength(long pTextLength) {
+
+    }
+
+    public void getData() {
+        saveTv.setEnabled(false);
+//        lodingLayout.setVisibility(View.VISIBLE);
+        UserServices listServices = RetrofitUtils.INSTANCE.getSpecialClient(RetrofitConfig.TEST_HOST_URL_9999, UserServices.class);
+        Observable<BaseEntity<InfoBean>> m;
+        if (mType == 0) {
+            m = listServices.saveAndUpdateName(mNameStr, "");
+        } else {
+            m = listServices.saveAndUpdateName("", mNameStr);
+        }
+        m.compose(RxSchedulerHepler.<BaseEntity<InfoBean>>io_main())
+                .subscribe(new BaseObserver<InfoBean>() {
+                    @Override
+                    protected void onSuccess(InfoBean infoBean) {
+                        saveTv.setEnabled(true);
+//                        lodingLayout.setVisibility(View.GONE);
+                        switch (mType) {
+                            case 0:
+                                SharePreUtils.setUserName(mContext, mNameStr);
+                                break;
+                            case 1:
+                                SharePreUtils.setNickName(mContext, mNameStr);
+                                break;
+                        }
+                        exitActivity();
+                    }
+
+                    @Override
+                    protected void onFail(int code, String msg) {
+                        saveTv.setEnabled(true);
+//                        lodingLayout.setVisibility(View.GONE);
+                        if (!TextUtils.isEmpty(msg)) {
+                            ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, msg, ToastUtils.LENGTH_SHORT);
+                        }
+                    }
+                });
+
+    }
+
+    public void exitActivity() {
+        KeyboardUtil.hideInput(mContext, nameEt);
+        finish();
+        overridePendingTransition(0, 0);
+    }
 }

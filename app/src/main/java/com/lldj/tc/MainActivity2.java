@@ -4,24 +4,25 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.lldj.tc.firstpage.FragmentSet;
 import com.lldj.tc.firstpage.FragmentViewPager;
-import com.lldj.tc.handler.HandlerInter;
 import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.toolslibrary.handler.HandlerInter;
+import com.lldj.tc.toolslibrary.http.HttpCallbackListener;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMsgListener {
@@ -63,9 +64,28 @@ public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMs
 
     @Override
     public void handleMsg(Message msg) {
+
         switch (msg.what) {
+            case HandlerType.MSGTAG:
+                HttpMsg.handleMsg(msg);
+                break;
             case HandlerType.LEFTMENU:
                 drawerLayout.openDrawer(Gravity.LEFT);
+
+//                String s = "{\"error\":0,\"status\":\"success\",\"results\":[{\"currentCity\":\"青岛\",\"index\":[{\"title\":\"穿衣\",\"zs\":\"较冷\",\"tipt\":\"穿衣指数\",\"des\":\"建议着厚外套加毛衣等服装。年老体弱者宜着大衣、呢外套加羊毛衫。\"},{\"title\":\"紫外线强度\",\"zs\":\"最弱\",\"tipt\":\"紫外线强度指数\",\"des\":\"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。\"}]}]}";
+//                Gson gson = new Gson();
+//                //把JSON数据转化为对象
+//                JsonBean jsonBean = gson.fromJson(s, JsonBean.class);
+//
+//                Log.w("-----ssssss", jsonBean.getResults().get(0).getCurrentCity());
+
+                HttpMsg.test(new HttpCallbackListener(){
+                    @Override
+                    public void onFinish(int code, String msg) {
+                        Log.w("-----code", code + "");
+                        Toast.makeText(mContext,"---------------test1",Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
             case HandlerType.LEFTBACK:
                 drawerLayout.closeDrawer(Gravity.LEFT);
@@ -80,3 +100,10 @@ public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMs
         mHandler.removeCallbacks(null);
     }
 }
+
+//post请求数据
+//    JSONObject body = new JSONObject();
+//    body.put("username", "panghao");
+//    body.put("password", "12345");
+
+

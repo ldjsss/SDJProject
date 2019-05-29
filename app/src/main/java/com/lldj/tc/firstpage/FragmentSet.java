@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.lldj.tc.R;
-import com.lldj.tc.handler.HandlerInter;
 import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 
 import butterknife.ButterKnife;

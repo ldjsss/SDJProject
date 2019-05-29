@@ -34,13 +34,15 @@ public class TextWatcherUtils implements TextWatcher {
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+        if (mTextChangedListener != null) {
+            mTextChangedListener.beforeTextChanged(s, start, count, after);
+        }
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (mChangeListener != null) {
-            mChangeListener.onTextChange(s, start, before, count);
+        if (mTextChangedListener != null) {
+            mTextChangedListener.onTextChanged(s, start, before, count);
         }
 
     }
@@ -55,9 +57,6 @@ public class TextWatcherUtils implements TextWatcher {
 
         // 注意这里只能每次都对整个EditText的内容求长度，不能对删除的单个字符求长度
         // 因为是中英文混合，单个字符而言，calculateLength函数都会返回1
-        if (mListener != null) {
-            mListener.current_text_length(calculateLength(s.toString()) + "");
-        }
         Clog.e("字符数", calculateLength(s.toString()) + "");
         while (calculateLength(s.toString()) > maxLength) { // 当输入字符个数超过限制的大小时，进行截断操作
             ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "最多输入" + maxLength + "个字", ToastUtils.LENGTH_SHORT);
@@ -71,8 +70,9 @@ public class TextWatcherUtils implements TextWatcher {
         // 恢复监听器
         mEditText.addTextChangedListener(this);
 
-        if (mAfterTextChangedListener != null) {
-            mAfterTextChangedListener.onTextChange(s);
+        if (mTextChangedListener != null) {
+            mTextChangedListener.afterTextChanged(s);
+            mTextChangedListener.currentTextLength(calculateLength(s.toString()));
         }
     }
 
@@ -96,34 +96,16 @@ public class TextWatcherUtils implements TextWatcher {
         return Math.round(len);
     }
 
-    public interface textlengthListener {
-        void current_text_length(String length);
+
+    private  TextWatcherListener mTextChangedListener;
+    public interface TextWatcherListener {
+        void beforeTextChanged(CharSequence s, int start, int count, int after);
+        void onTextChanged(CharSequence s, int start, int before, int count);
+        void afterTextChanged(Editable s);
+        void currentTextLength(long pTextLength);
 
     }
-
-    private textlengthListener mListener;
-
-    public void setOnTextLengthListener(textlengthListener pListener) {
-        this.mListener = pListener;
-    }
-
-    public interface textChangeListener {
-        void onTextChange(CharSequence s, int start, int before, int count);
-
-    }
-
-    private textChangeListener mChangeListener;
-
-    public void setOnTextChangeListener(textChangeListener pListener) {
-        this.mChangeListener = pListener;
-    }
-    public interface AfterTextChangedListener {
-        void onTextChange(Editable s);
-
-    }
-    private AfterTextChangedListener mAfterTextChangedListener;
-
-    public void setAfterTextChangedListener(AfterTextChangedListener pListener) {
-        this.mAfterTextChangedListener = pListener;
+    public void setTextChangedListener(TextWatcherListener pListener) {
+        this.mTextChangedListener = pListener;
     }
 }

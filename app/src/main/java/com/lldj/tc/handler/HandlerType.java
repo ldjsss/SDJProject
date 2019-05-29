@@ -8,16 +8,18 @@ public class HandlerType {
 
     private HandlerType annotationSeason = null;
 
-    public static final int LEFTMENU = 0;
-    public static final int LEFTBACK = 1;
-    public static final int SUMMER = 2;
-    public static final int FALL = 3;
+    public static final int MSGTAG = -111;
+
+    public static final int LEFTMENU = 1;
+    public static final int LEFTBACK = 2;
+    public static final int SUMMER = 3;
+    public static final int FALL = 4;
 
     public HandlerType(@Season int season) {
         System.out.println("Season :" + season);
     }
 
-    @IntDef({LEFTMENU, LEFTBACK, SUMMER, FALL})
+    @IntDef({MSGTAG,LEFTMENU, LEFTBACK, SUMMER, FALL})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Season {
     }
