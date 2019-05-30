@@ -18,11 +18,14 @@ import com.lldj.tc.firstpage.FragmentViewPager;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
-import com.lldj.tc.toolslibrary.http.HttpCallbackListener;
+import com.lldj.tc.toolslibrary.http.HttpTool;
+import com.lldj.tc.toolslibrary.util.RxTimerUtil;
+import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.Disposable;
 
 
 public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMsgListener {
@@ -32,6 +35,9 @@ public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMs
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     private HandlerInter mHandler;
+
+    Disposable sss;
+    Disposable ddd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,15 +66,33 @@ public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMs
         getSupportFragmentManager().beginTransaction().add(R.id.mainflayout, new FragmentViewPager()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.mainleft, new FragmentSet()).commit();
 
+         sss = RxTimerUtilPro.interval(1000, new RxTimerUtilPro.IRxNext() {
+            @Override
+            public void doNext(long number) {
+                Log.w("-----ssssss", "dddddd 11111111");
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });
+
+         ddd = RxTimerUtilPro.interval(1000, new RxTimerUtilPro.IRxNext() {
+            @Override
+            public void doNext(long number) {
+                Log.w("-----ssssss", "dddddd 22222");
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });
     }
 
     @Override
     public void handleMsg(Message msg) {
 
         switch (msg.what) {
-            case HandlerType.MSGTAG:
-                HttpMsg.handleMsg(msg);
-                break;
             case HandlerType.LEFTMENU:
                 drawerLayout.openDrawer(Gravity.LEFT);
 
@@ -79,13 +103,16 @@ public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMs
 //
 //                Log.w("-----ssssss", jsonBean.getResults().get(0).getCurrentCity());
 
-                HttpMsg.test(new HttpCallbackListener(){
+                HttpMsg.test(new HttpTool.msgListener(){
                     @Override
                     public void onFinish(int code, String msg) {
                         Log.w("-----code", code + "");
+                        Log.w("-----msg", msg + "");
                         Toast.makeText(mContext,"---------------test1",Toast.LENGTH_SHORT).show();
                     }
                 });
+                RxTimerUtilPro.cancel(sss);
+                RxTimerUtilPro.cancel(ddd);
                 break;
             case HandlerType.LEFTBACK:
                 drawerLayout.closeDrawer(Gravity.LEFT);

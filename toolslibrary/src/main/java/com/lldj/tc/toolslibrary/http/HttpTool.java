@@ -1,10 +1,8 @@
 package com.lldj.tc.toolslibrary.http;
 
-import android.os.Bundle;
-import android.os.Message;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
-
-import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -17,13 +15,13 @@ import java.net.URL;
 
 /* 创建一个新的类 HttpTool，将公共的操作抽象出来
  * 为了避免调用sendRequest方法时需实例化，设置为静态方法
- * 传入HttpCallbackListener对象为了方法回调
+ * 传入msgListener对象为了方法回调
  * 因为网络请求比较耗时，一般在子线程中进行，
  * 为了获得服务器返回的数据，需要使用java的回调机制 */
 
 public class HttpTool {
     private static int timeout = 8000;
-    public static void sendGet(final String tag, final String url) {
+    public static void sendGet(final String url, final msgListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -39,23 +37,19 @@ public class HttpTool {
                     StringBuilder response = new StringBuilder();
 
                     String line = "";
-                    int code = connection.getResponseCode();
+                    final int code = connection.getResponseCode();
                     if(HttpURLConnection.HTTP_OK == code){
                         while ((line = reader.readLine()) != null) {
                             response.append(line);
                         }
                     }else{}
-                    JSONObject body = new JSONObject();
-                    body.put("code", code);
-                    body.put("msg", line);
-                    body.put("tag", tag);
-
-                    Bundle b = new Bundle();
-                    b.putString("httpMsg", String.valueOf(String.valueOf(body)));
-                    Message m = new Message();
-                    m.what = -111;
-                    m.setData(b);
-                    HandlerInter.getInstance().sendMessage(m);
+                    final String ret = line;
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onFinish(code, ret);
+                        }
+                    });
                     in.close();  //关闭创建的流
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -127,7 +121,7 @@ public class HttpTool {
         }).start();
     }
 
-    public static void sendPost(final String tag, final String url, final JSONObject params) {
+    public static void sendPost(final String url, final JSONObject params, final msgListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -144,7 +138,6 @@ public class HttpTool {
                     httpURLConnection.setUseCaches(false);//POST请求不能用缓存，设置为false
                     httpURLConnection.setRequestProperty("Content-Type", "application/json");
                     httpURLConnection.connect();   //连接服务器
-
                     OutputStream os = httpURLConnection.getOutputStream();
                     ObjectOutputStream objOut = new ObjectOutputStream(os);  //构建输出流对象，以实现输出序列化的对象
                     String content = String.valueOf(String.valueOf(params));
@@ -153,7 +146,7 @@ public class HttpTool {
                     objOut.close();  //关闭流对象
                     os.close();
 
-                    int code = httpURLConnection.getResponseCode();
+                    final  int code = httpURLConnection.getResponseCode();
                     String result = "";
 
                     if (code == HttpURLConnection.HTTP_OK) {
@@ -164,8 +157,6 @@ public class HttpTool {
                         while ((recieveData = bf.readLine()) != null) {
                             result += recieveData + "\n";
                         }
-
-
                         in.close();
                         httpURLConnection.disconnect();
                     } else {
@@ -173,17 +164,13 @@ public class HttpTool {
 
                     }
 
-                    JSONObject body = new JSONObject();
-                    body.put("code", code);
-                    body.put("msg", result);
-                    body.put("tag", tag);
-
-                    Bundle b = new Bundle();
-                    b.putString("httpMsg", String.valueOf(String.valueOf(body)));
-                    Message m = new Message();
-                    m.what = -111;
-                    m.setData(b);
-                    HandlerInter.getInstance().sendMessage(m);
+                    final String ret = result;
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onFinish(code, ret);
+                        }
+                    });
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -194,5 +181,9 @@ public class HttpTool {
                 }
             }
         }).start();
+    }
+
+    public interface msgListener {
+        void onFinish(int code, String msg);
     }
 }
