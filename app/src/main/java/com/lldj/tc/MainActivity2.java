@@ -103,16 +103,16 @@ public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMs
 //
 //                Log.w("-----ssssss", jsonBean.getResults().get(0).getCurrentCity());
 
-                HttpMsg.test(new HttpTool.msgListener(){
-                    @Override
-                    public void onFinish(int code, String msg) {
-                        Log.w("-----code", code + "");
-                        Log.w("-----msg", msg + "");
-                        Toast.makeText(mContext,"---------------test1",Toast.LENGTH_SHORT).show();
-                    }
-                });
-                RxTimerUtilPro.cancel(sss);
-                RxTimerUtilPro.cancel(ddd);
+//                HttpMsg.test(new HttpTool.msgListener(){
+//                    @Override
+//                    public void onFinish(int code, String msg) {
+//                        Log.w("-----code", code + "");
+//                        Log.w("-----msg", msg + "");
+//                        Toast.makeText(mContext,"---------------test1",Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//                RxTimerUtilPro.cancel(sss);
+//                RxTimerUtilPro.cancel(ddd);
                 break;
             case HandlerType.LEFTBACK:
                 drawerLayout.closeDrawer(Gravity.LEFT);

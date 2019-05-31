@@ -8,23 +8,43 @@
 
     <RelativeLayout
         android:id="@+id/psw_layout"
-        android:layout_width="240dp"
-        android:layout_height="30dp"
+        android:layout_width="300dp"
+        android:layout_height="32dp"
       >
+
+        <TextView
+            android:id="@+id/key_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/userKey"
+            android:textColor="@color/color_ebe3d7"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="0.5dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/key_tv"
+            android:background="@color/color_8e6c37" />
+
         <EditText
             android:id="@+id/psw_et"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/transparent"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            android:gravity="center_vertical"
-            android:hint="@string/set_psw"
-            android:maxLength="18"
-            android:layout_toStartOf="@+id/psw_show_or_hid_iv"
-            android:textColor="@color/color_969696"
-            android:textColorHint="@color/color_c8c8c8"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/view_line"
+            android:background="@color/transparent"
+            android:hint="@string/userKeyRemind"
+            android:maxLength="16"
+            android:textColor="@color/color_ebe3d7"
+            android:textColorHint="@color/color_544a36"
             android:textCursorDrawable="@drawable/my_cursor"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/psw_show_or_hid_iv"
@@ -41,7 +61,7 @@
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="5dp"
-            android:background="@color/color_969696" />
+            android:background="@color/color_8e6c37" />
     </RelativeLayout>
 
     <TextView
@@ -63,6 +83,5 @@
         android:layout_toEndOf="@id/psw_layout"
         android:padding="8dp"
         android:visibility="invisible"
-        android:src="@mipmap/log_error_msg"
-        />
+        android:src="@mipmap/log_error_msg" />
 </RelativeLayout>

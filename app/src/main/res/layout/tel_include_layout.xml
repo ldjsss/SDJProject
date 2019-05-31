@@ -8,26 +8,26 @@
 
     <RelativeLayout
     android:id="@+id/tel_layout"
-    android:layout_width="240dp"
-    android:layout_height="30dp">
+    android:layout_width="300dp"
+    android:layout_height="32dp">
 
     <TextView
         android:id="@+id/quhao_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:text="+86"
-        android:textColor="@color/color_646464"
-        android:textSize="13sp" />
+        android:text="@string/userCount"
+        android:textColor="@color/color_ebe3d7"
+        android:textSize="16sp" />
 
     <View
         android:id="@+id/view_line"
         android:layout_width="0.5dp"
-        android:layout_height="15dp"
+        android:layout_height="18dp"
         android:layout_centerVertical="true"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/quhao_tv"
-        android:background="@color/color_e6e6e6" />
+        android:background="@color/color_8e6c37" />
 
     <EditText
         android:id="@+id/tel_num_et"
@@ -37,13 +37,12 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/view_line"
         android:background="@color/transparent"
-        android:hint="@string/input_tel_num"
-        android:inputType="number"
+        android:hint="@string/userCountRemind"
         android:maxLength="11"
-        android:textColor="@color/color_969696"
-        android:textColorHint="@color/color_c8c8c8"
+        android:textColor="@color/color_ebe3d7"
+        android:textColorHint="@color/color_544a36"
         android:textCursorDrawable="@drawable/my_cursor"
-        android:textSize="13sp" />
+        android:textSize="14sp" />
 
     <ImageView
         android:id="@+id/tel_status"
@@ -61,8 +60,8 @@
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="5dp"
-        android:background="@color/color_c8c8c8" />
-</RelativeLayout>
+        android:background="@color/color_8e6c37" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/account_not_exist_tip"

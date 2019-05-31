@@ -1,20 +1,22 @@
 package com.lldj.tc.login;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.lldj.tc.JobSelectActivity;
-import com.lldj.tc.MainActivity;
 import com.lldj.tc.MainActivity2;
+import com.lldj.tc.R;
 import com.lldj.tc.login.VerifyCodeLogin.VerifyCodeLoginActivity;
 import com.lldj.tc.register.RegisterActivity;
-import com.lldj.tc.R;
-import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 
 import butterknife.BindView;
@@ -75,6 +77,27 @@ public class LoginActivity extends BaseActivity implements IloginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        VideoView videov = (VideoView) findViewById(R.id.videoView);
+        MediaController mediaC = new MediaController(this);
+        String path = "android.resource://" + getPackageName() + "/"+ R.raw.main_movie;
+        videov.setVideoURI( Uri.parse(path));
+        videov.start();
+        videov.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                videov.setVideoURI( Uri.parse(path));
+                videov.start();
+            }
+        });
+
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        videov.setLayoutParams(layoutParams);
+
     }
 
     @Override
@@ -117,10 +140,8 @@ public class LoginActivity extends BaseActivity implements IloginView {
     public void setLoginStatus(boolean isEnable) {
         if (isEnable) {
             loginTv.setEnabled(true);
-            loginTv.setBackgroundResource(R.drawable.rec_00be0a_round100);
         } else {
             loginTv.setEnabled(false);
-            loginTv.setBackgroundResource(R.drawable.rec_c8c8c8_round100);
         }
     }
 
@@ -142,8 +163,8 @@ public class LoginActivity extends BaseActivity implements IloginView {
                 break;
             case R.id.just_look_tv:
                 startActivity(new Intent(this, MainActivity2.class));
-//                Intent mIntent = new Intent(this,TestActivity.class);
-//                startActivity(mIntent);
+                Intent mIntent = new Intent(this,TestActivity.class);
+                startActivity(mIntent);
                 finish();
                 break;
             case R.id.psw_show_or_hid_iv:
