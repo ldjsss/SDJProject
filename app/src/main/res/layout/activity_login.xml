@@ -58,15 +58,16 @@
         android:padding="5dp"
         android:text="@string/forget_psw"
         android:textColor="@color/color_544a36"
+        android:layout_marginTop="-15dp"
         android:textSize="14sp" />
     <!--登录-->
     <TextView
         android:id="@+id/login_tv"
-        android:layout_width="320dp"
+        android:layout_width="300dp"
         android:layout_height="38dp"
         android:layout_below="@id/forget_psw_tv"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/rec_00be0a_round100"
         android:gravity="center"
         android:text="@string/login"
@@ -84,7 +85,7 @@
 
         <TextView
             android:id="@+id/register_tv"
-            android:layout_width="320dp"
+            android:layout_width="300dp"
             android:layout_height="38dp"
             android:background="@drawable/rec_1a1c26_round100"
             android:text="@string/register_str"

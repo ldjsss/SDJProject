@@ -66,27 +66,27 @@ public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMs
         getSupportFragmentManager().beginTransaction().add(R.id.mainflayout, new FragmentViewPager()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.mainleft, new FragmentSet()).commit();
 
-         sss = RxTimerUtilPro.interval(1000, new RxTimerUtilPro.IRxNext() {
-            @Override
-            public void doNext(long number) {
-                Log.w("-----ssssss", "dddddd 11111111");
-            }
-
-            @Override
-            public void onComplete() {
-            }
-        });
-
-         ddd = RxTimerUtilPro.interval(1000, new RxTimerUtilPro.IRxNext() {
-            @Override
-            public void doNext(long number) {
-                Log.w("-----ssssss", "dddddd 22222");
-            }
-
-            @Override
-            public void onComplete() {
-            }
-        });
+//         sss = RxTimerUtilPro.interval(1000, new RxTimerUtilPro.IRxNext() {
+//            @Override
+//            public void doNext(long number) {
+//                Log.w("-----ssssss", "dddddd 11111111");
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//            }
+//        });
+//
+//         ddd = RxTimerUtilPro.interval(1000, new RxTimerUtilPro.IRxNext() {
+//            @Override
+//            public void doNext(long number) {
+//                Log.w("-----ssssss", "dddddd 22222");
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//            }
+//        });
     }
 
     @Override

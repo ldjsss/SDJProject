@@ -72,13 +72,15 @@ public class LoginActivity extends BaseActivity implements IloginView {
 
     private ILoginPresenterCompl iLoginPresenter;
 
+    private VideoView videov;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        VideoView videov = (VideoView) findViewById(R.id.videoView);
+        videov = (VideoView) findViewById(R.id.videoView);
         MediaController mediaC = new MediaController(this);
         String path = "android.resource://" + getPackageName() + "/"+ R.raw.main_movie;
         videov.setVideoURI( Uri.parse(path));
@@ -98,6 +100,28 @@ public class LoginActivity extends BaseActivity implements IloginView {
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         videov.setLayoutParams(layoutParams);
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(videov != null) videov.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(videov != null){
+            videov.resume();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(videov != null){
+            videov.suspend();
+        }
     }
 
     @Override
@@ -163,8 +187,8 @@ public class LoginActivity extends BaseActivity implements IloginView {
                 break;
             case R.id.just_look_tv:
                 startActivity(new Intent(this, MainActivity2.class));
-                Intent mIntent = new Intent(this,TestActivity.class);
-                startActivity(mIntent);
+//                Intent mIntent = new Intent(this,TestActivity.class);
+//                startActivity(mIntent);
                 finish();
                 break;
             case R.id.psw_show_or_hid_iv:
