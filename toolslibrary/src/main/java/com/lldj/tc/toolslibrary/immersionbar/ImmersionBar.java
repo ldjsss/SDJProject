@@ -52,7 +52,7 @@ public class ImmersionBar {
     private ViewGroup mContentView;
     private Dialog mDialog;
 
-    private BarParams mBarParams;
+    private static BarParams mBarParams;
     private BarConfig mConfig;
 
     private String mActivityName;

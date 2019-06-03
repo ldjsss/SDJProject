@@ -17,6 +17,7 @@ import com.lldj.tc.MainActivity2;
 import com.lldj.tc.R;
 import com.lldj.tc.login.VerifyCodeLogin.VerifyCodeLoginActivity;
 import com.lldj.tc.register.RegisterActivity;
+import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 
 import butterknife.BindView;
@@ -113,6 +114,7 @@ public class LoginActivity extends BaseActivity implements IloginView {
         super.onResume();
         if(videov != null){
             videov.resume();
+            videov.start();
         }
     }
 

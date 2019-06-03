@@ -4,12 +4,15 @@ import android.annotation.TargetApi;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Window;
+import android.view.WindowManager;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import android.view.Window;
-import android.view.WindowManager;
+
+import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 
 
 public abstract class BaseActivity extends FragmentActivity {
@@ -25,6 +28,9 @@ public abstract class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         handler = new Handler();
+
+        ImmersionBar.with(this).init();
+
     }
 
 

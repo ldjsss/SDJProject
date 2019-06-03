@@ -5,7 +5,30 @@
     android:background="@color/color_bg"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_back_layout" />
+    <include layout="@layout/toolbar_back_layout"/>
+
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_alignParentEnd="true"
+        android:paddingEnd="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/connectservice"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorService"
+            android:textSize="15sp"/>
+
+        <ImageView
+            android:id="@+id/toolbar_right_tv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/main_service" />
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/photo_iv"

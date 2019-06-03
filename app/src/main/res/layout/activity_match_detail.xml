@@ -155,6 +155,7 @@
 
     </LinearLayout>
 
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         style="@style/FirstpageFragment_TabLayout"
@@ -163,12 +164,11 @@
         app:tabPaddingEnd="1dp"
         android:layout_height="wrap_content"
         app:tabBackground="@color/transparent" />
-
-    <com.lldj.tc.toolslibrary.view.ViewPagerSlide
-        android:id="@+id/page_viewpager"
+    <com.lldj.tc.toolslibrary.recycleview.LRecyclerView
+        android:id="@+id/jingcairecycleview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never" />
+        android:layout_height="match_parent"/>
+
 
 
 </LinearLayout>
