@@ -10,6 +10,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * description: <p>
@@ -20,6 +21,24 @@ import retrofit2.http.POST;
 
 
 public interface UserServices {
+
+    //获取验证码
+    @FormUrlEncoded
+    @POST("register/sms")
+    Observable<BaseEntity<InfoBean>> getPhoneCode(@Path("mobile") String mobile);
+
+
+
+
+
+
+
+
+
+
+
+
+
     //姓名或者昵称
     @FormUrlEncoded
     @POST("appUser/saveAndUpdate")

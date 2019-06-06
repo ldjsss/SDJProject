@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lldj.tc.JobSelectActivity;
-import com.lldj.tc.register.RegisterActivity;
 import com.lldj.tc.webview.WebviewNormalActivity;
 import com.lldj.tc.R;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
@@ -137,7 +136,7 @@ public class VerifyCodeLoginActivity extends BaseActivity implements IVerifylogi
                 finish();
                 break;
             case R.id.register_layout:
-                RegisterActivity.launch(this,0);
+//                RegisterFrament.launch(this);
                 break;
             case R.id.service_agrement:
                 WebviewNormalActivity.launch(VerifyCodeLoginActivity.this,"服务协议");

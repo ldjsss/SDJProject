@@ -1,9 +1,13 @@
 package com.lldj.tc;
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -34,7 +38,6 @@ public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMs
     FrameLayout mainflayout;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    private HandlerInter mHandler;
 
     Disposable sss;
     Disposable ddd;
@@ -45,8 +48,6 @@ public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMs
 
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
-
-        mHandler = HandlerInter.getInstance();
         mHandler.setHandleMsgListener(this);
 
     }

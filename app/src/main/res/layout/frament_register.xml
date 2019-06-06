@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/reslayoutpar1"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_back_layout"/>
+
+    <RelativeLayout
+        android:id="@+id/connectservice"
+        android:layout_width="95dp"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/dp_25"
+        android:paddingEnd="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/connectservice"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorService"
+            android:textSize="15sp"/>
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/main_service" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/reslogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/toolbar_root_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@mipmap/main_logo" />
+    <!--手机号-->
+    <include
+        layout="@layout/res_tel_include_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reslogo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginTop="40dp" />
+
+    <!--密码-->
+    <include
+        layout="@layout/res_psw_include_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/restel_root_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginTop="25dp" />
+
+    <!--密码-->
+    <include
+        layout="@layout/res_repsw_include_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/respsw_root_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginTop="25dp" />
+
+    <!--姓名-->
+    <include
+        layout="@layout/res_name_include_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/res_repsw_root_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginTop="25dp" />
+
+    <!--获取验证码-->
+    <include
+        layout="@layout/verify_code__include_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/resname_root_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginTop="25dp" />
+
+    <!--验证码-->
+    <include
+        layout="@layout/res_phonecode_include_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/resgetcode_root_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginTop="25dp" />
+
+    <TextView
+        android:id="@+id/register_tv"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:background="@drawable/rec_00be0a_round100"
+        android:text="@string/register_str"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_below="@id/phonecode_root_layout"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:textSize="20sp" />
+
+</RelativeLayout>

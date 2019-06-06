@@ -9,9 +9,6 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * description: <p>
- * user: wangclia<p>
- * Creat Time: 2018/12/19 16:47<p>
- * Modify Time: 2018/12/19 16:47<p>
  */
 
 

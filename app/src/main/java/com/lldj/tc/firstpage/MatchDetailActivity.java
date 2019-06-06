@@ -146,9 +146,7 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
         lAdapter = new LRecyclerViewAdapter(this, mAdapter);
         jingcairecycleview.setAdapter(lAdapter);
         jingcairecycleview.setLScrollListener(this);
-        //禁止加载更多
-        jingcairecycleview.setNoMore(true);
-//        jingcairecycleview.set
+        jingcairecycleview.setNoMore(true);//禁止加载更多
         setFirstData();
 
 

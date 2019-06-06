@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.lldj.tc.R;
 import com.lldj.tc.login.LoginActivity;
+import com.lldj.tc.login.LoginRecycleView;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 
@@ -21,7 +22,10 @@ public class SplashActivity extends Activity {
             public void doNext(long number) {
 //                Intent mIntent = new Intent(SplashActivity.this,GuideActivity.class);
 //                startActivity(mIntent);
-                Intent mIntent = new Intent(SplashActivity.this, LoginActivity.class);
+//                Intent mIntent = new Intent(SplashActivity.this, LoginActivity.class);
+//                startActivity(mIntent);
+
+                Intent mIntent = new Intent(SplashActivity.this, LoginRecycleView.class);
                 startActivity(mIntent);
                 RxTimerUtil.cancel();
                 finish();

@@ -3,12 +3,13 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/psw_root_layout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
 
     <RelativeLayout
         android:id="@+id/psw_layout"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="32dp"
       >
 
@@ -62,6 +63,15 @@
             android:layout_alignParentBottom="true"
             android:layout_marginTop="5dp"
             android:background="@color/color_8e6c37" />
+
+        <ImageView
+            android:id="@+id/psw_status"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentEnd="true"
+            android:padding="8dp"
+            android:visibility="invisible"
+            android:src="@mipmap/log_error_msg" />
     </RelativeLayout>
 
     <TextView
@@ -76,12 +86,5 @@
         android:textColor="#f05a23"
         android:textSize="13sp"
         android:visibility="invisible" />
-    <ImageView
-        android:id="@+id/psw_status"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:layout_toEndOf="@id/psw_layout"
-        android:padding="8dp"
-        android:visibility="invisible"
-        android:src="@mipmap/log_error_msg" />
+
 </RelativeLayout>

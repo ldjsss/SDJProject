@@ -1,1 +1,2 @@
-include ':app', ':toolslibrary', ':SwipeToLoadLayout', ':convenientbanner', ':textbannerlibrary'
+include ':app', ':toolslibrary', ':SwipeToLoadLayout', ':convenientbanner', ':textbannerlibrary', ':autolayout'
+project(':autolayout').projectDir = new File('AndroidAutoLayout/autolayout')

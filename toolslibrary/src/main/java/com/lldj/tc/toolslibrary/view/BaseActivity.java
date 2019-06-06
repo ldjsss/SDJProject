@@ -12,12 +12,14 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 
 
-public abstract class BaseActivity extends FragmentActivity {
-    protected Handler handler;
+public abstract class BaseActivity extends FragmentActivity{
     protected boolean isPause;
+    protected HandlerInter mHandler;
+
 
     //资源
     protected Resources mResources;
@@ -27,9 +29,11 @@ public abstract class BaseActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        handler = new Handler();
 
         ImmersionBar.with(this).init();
+
+        mHandler = HandlerInter.getInstance();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
     }
 

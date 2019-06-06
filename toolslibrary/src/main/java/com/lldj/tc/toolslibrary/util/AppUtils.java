@@ -3,6 +3,7 @@ package com.lldj.tc.toolslibrary.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -19,6 +20,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -601,4 +603,23 @@ public class AppUtils {
 //        }
 //        return statusBarHeight;
 //    }
+
+    // 获取渠道号
+    public static String getChannel(Context context){
+        String channel = "";
+        try{
+            ApplicationInfo info = context.getPackageManager().
+                    getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            if(info != null && info.metaData != null){
+                String metaData = info.metaData.getString("CP_CHANNEL");
+                if(!metaData.isEmpty()){
+                    channel = metaData;
+                }
+            }
+        }catch (PackageManager.NameNotFoundException e){
+            e.printStackTrace();
+        }
+        Log.e("app channel", "当前渠道为："+ channel);
+        return channel;
+    }
 }

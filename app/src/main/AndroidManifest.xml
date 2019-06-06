@@ -7,7 +7,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:name=".MedicalApplication"
@@ -20,6 +21,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
+
+        <meta-data android:name="CP_CHANNEL" android:value="CP_SDJ_A100"/>
+
         <activity
             android:name=".firstpage.MatchDetailActivity"
             android:label="@string/title_activity_match_detail"
@@ -64,13 +68,17 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".login.LoginRecycleView"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".login.VerifyCodeLogin.VerifyCodeLoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".webview.WebviewNormalActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".register.RegisterActivity"
+            android:name=".register.RegisterFrament"
             android:screenOrientation="portrait" />
         <activity
             android:name=".login.TestActivity"

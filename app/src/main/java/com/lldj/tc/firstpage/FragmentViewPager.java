@@ -27,8 +27,6 @@ public class FragmentViewPager extends BaseFragment {
     ImageView toolbarGameselect;
     @BindView(R.id.toolbar_title_tv)
     ImageView toolbarTitleTv;
-    @BindView(R.id.toolbar_right_tv)
-    ImageView toolbarRightTv;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.firstpage_viewpager)
@@ -118,7 +116,7 @@ public class FragmentViewPager extends BaseFragment {
         textView.setText(title);
     }
 
-    @OnClick({R.id.toolbar_left_menu_iv, R.id.toolbar_gameselect, R.id.toolbar_right_tv})
+    @OnClick({R.id.toolbar_left_menu_iv, R.id.toolbar_gameselect, R.id.connectservice})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_left_menu_iv:
@@ -127,7 +125,7 @@ public class FragmentViewPager extends BaseFragment {
             case R.id.toolbar_gameselect:
                 Toast.makeText(mContext,"---------------test1",Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.toolbar_right_tv:
+            case R.id.connectservice:
                 Toast.makeText(mContext,"---------------test2",Toast.LENGTH_SHORT).show();
                 break;
         }

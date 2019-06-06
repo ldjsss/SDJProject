@@ -19,7 +19,7 @@ public class InfoBean {
     private String userName;
     private String nickName;
     private String photoUrl;
-    private String phone;
+    private String mobile;
     private String password;
     private String salt;
     private String icCardNo;
@@ -82,15 +82,15 @@ public class InfoBean {
         this.photoUrl = photoUrl;
     }
 
-    public String getPhone() {
-        if (TextUtils.isEmpty(phone)) {
-            phone = "";
+    public String getMobile() {
+        if (TextUtils.isEmpty(mobile)) {
+            mobile = "";
         }
-        return phone;
+        return mobile;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getPassword() {

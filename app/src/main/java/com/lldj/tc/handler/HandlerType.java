@@ -10,14 +10,14 @@ public class HandlerType {
 
     public static final int LEFTMENU = 1;
     public static final int LEFTBACK = 2;
-    public static final int SUMMER = 3;
-    public static final int FALL = 4;
+    public static final int REMOVERES = 3;
+    public static final int GOTOMAIN = 4;
 
     public HandlerType(@Season int season) {
         System.out.println("Season :" + season);
     }
 
-    @IntDef({LEFTMENU, LEFTBACK, SUMMER, FALL})
+    @IntDef({LEFTMENU, LEFTBACK, REMOVERES, GOTOMAIN})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Season {
     }

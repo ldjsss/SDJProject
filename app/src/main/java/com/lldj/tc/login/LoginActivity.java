@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,9 +16,11 @@ import android.widget.VideoView;
 import com.lldj.tc.JobSelectActivity;
 import com.lldj.tc.MainActivity2;
 import com.lldj.tc.R;
+import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.login.VerifyCodeLogin.VerifyCodeLoginActivity;
-import com.lldj.tc.register.RegisterActivity;
-import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
+import com.lldj.tc.register.ForgetFrament;
+import com.lldj.tc.register.RegisterFrament;
+import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 
 import butterknife.BindView;
@@ -27,10 +30,8 @@ import butterknife.OnClick;
 /**
  * 登录
  */
-public class LoginActivity extends BaseActivity implements IloginView {
+public class LoginActivity extends BaseActivity implements IloginView,  HandlerInter.HandleMsgListener{
 
-    @BindView(R.id.verify_code_login_tv)
-    TextView verifyCodeLoginTv;
     @BindView(R.id.forget_psw_tv)
     TextView forgetPswTv;
     @BindView(R.id.login_tv)
@@ -38,8 +39,8 @@ public class LoginActivity extends BaseActivity implements IloginView {
 
     @BindView(R.id.just_look_tv)
     TextView justLookTv;
-    @BindView(R.id.register_layout)
-    RelativeLayout registerLayout;
+//    @BindView(R.id.register_layout)
+//    RelativeLayout registerLayout;
     @BindView(R.id.photo_iv)
     ImageView photoIv;
     @BindView(R.id.quhao_tv)
@@ -74,6 +75,8 @@ public class LoginActivity extends BaseActivity implements IloginView {
     private ILoginPresenterCompl iLoginPresenter;
 
     private VideoView videov;
+    private RegisterFrament resFrament  = null;
+    private ForgetFrament lossFrament   = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,7 +85,6 @@ public class LoginActivity extends BaseActivity implements IloginView {
         ButterKnife.bind(this);
 
         videov = (VideoView) findViewById(R.id.videoView);
-        MediaController mediaC = new MediaController(this);
         String path = "android.resource://" + getPackageName() + "/"+ R.raw.main_movie;
         videov.setVideoURI( Uri.parse(path));
         videov.start();
@@ -101,6 +103,21 @@ public class LoginActivity extends BaseActivity implements IloginView {
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         videov.setLayoutParams(layoutParams);
 
+        mHandler.setHandleMsgListener(this);
+
+    }
+
+    @Override
+    public void handleMsg(Message msg) {
+        switch (msg.what) {
+            case HandlerType.REMOVERES:
+                if(resFrament != null) getSupportFragmentManager().beginTransaction().remove(resFrament).commit();
+                resFrament = null;
+
+                if(lossFrament != null)getSupportFragmentManager().beginTransaction().remove(lossFrament).commit();
+                lossFrament = null;
+                break;
+        }
     }
 
     @Override
@@ -113,7 +130,6 @@ public class LoginActivity extends BaseActivity implements IloginView {
     protected void onResume() {
         super.onResume();
         if(videov != null){
-            videov.resume();
             videov.start();
         }
     }
@@ -171,22 +187,21 @@ public class LoginActivity extends BaseActivity implements IloginView {
         }
     }
 
-    @OnClick({R.id.verify_code_login_tv, R.id.forget_psw_tv, R.id.login_tv, R.id.register_layout, R.id.just_look_tv, R.id.psw_show_or_hid_iv})
+    @OnClick({R.id.forget_psw_tv, R.id.login_tv, R.id.just_look_tv, R.id.psw_show_or_hid_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.verify_code_login_tv:
-                startActivity(new Intent(this, VerifyCodeLoginActivity.class));
-                break;
             case R.id.forget_psw_tv:
-                RegisterActivity.launch(LoginActivity.this, 1);
+                if (lossFrament == null) lossFrament = new ForgetFrament();
+                getSupportFragmentManager().beginTransaction().add(R.id.loginlayout, lossFrament).commit();
                 break;
             case R.id.login_tv:
                 startActivity(new Intent(this, JobSelectActivity.class));
                 finish();
                 break;
-            case R.id.register_layout:
-                RegisterActivity.launch(LoginActivity.this, 0);
-                break;
+//            case R.id.register_layout:
+//                if (resFrament == null) resFrament = new RegisterFrament();
+//                getSupportFragmentManager().beginTransaction().add(R.id.loginlayout, resFrament).commit();
+//                break;
             case R.id.just_look_tv:
                 startActivity(new Intent(this, MainActivity2.class));
 //                Intent mIntent = new Intent(this,TestActivity.class);
