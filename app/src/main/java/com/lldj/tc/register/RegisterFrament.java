@@ -18,6 +18,7 @@ import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 
@@ -26,6 +27,7 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
 
 /**
  * description: 注册<p>
@@ -68,6 +70,8 @@ public class RegisterFrament extends BaseFragment {
     private String password1 = "";
     private String phoneCode = "";
     private String userName = "";
+    private Disposable getCodeDisposable;
+    private int codeTime = 120;
 
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
@@ -100,24 +104,44 @@ public class RegisterFrament extends BaseFragment {
                     showToast(R.string.errorRemind5);
                     return;
                 }
-                HttpMsg.sendGetCode(phoneNum, new HttpTool.msgListener(){
+                codeTime = 120;
+                resgetVerifyCodebtn.setEnabled(false);
+
+                if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
+                getCodeDisposable = RxTimerUtilPro.interval(1000, new RxTimerUtilPro.IRxNext() {
                     @Override
-                    public void onFinish(int code, String msg) {
-                        Log.w("-----code", code + "");
+                    public void doNext(long number) {
+                        codeTime--;
+                        if (codeTime <=0 ){
+                            if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
+                            getCodeDisposable = null;
+                            resgetVerifyCodebtn.setEnabled(true);
+                            resgetVerifyCodebtn.setText(getText(R.string.get_verify_code));
+                            return;
+                        }
+                        resgetVerifyCodebtn.setText(codeTime + "s");
+                    }
+
+                    @Override
+                    public void onComplete() {}
+                });
+
+                HttpMsg.sendGetCode(phoneNum, new HttpMsg.Listener(){
+                    @Override
+                    public void onFinish(String msg) {
                         Log.w("-----msg", msg + "");
-                        Toast.makeText(mContext,"---------------sendGetCode back code = " + code + " /msg = " + msg,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext,"---------------sendGetCode back msg = " + msg,Toast.LENGTH_SHORT).show();
                     }
                 });
-                ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "获取验证码！", ToastUtils.LENGTH_SHORT);
+
                 break;
             case R.id.register_tv:
                 if (!checkAll()) return;
-                HttpMsg.sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(mContext), "", new HttpTool.msgListener(){
+                HttpMsg.sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(mContext), "", new HttpMsg.Listener(){
                     @Override
-                    public void onFinish(int code, String msg) {
-                        Log.w("-----code", code + "");
+                    public void onFinish(String msg) {
                         Log.w("-----msg", msg + "");
-                        Toast.makeText(mContext,"---------------register back code = " + code + " /msg = " + msg,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext,"---------------register back msg = " + msg,Toast.LENGTH_SHORT).show();
                     }
                 });
                 ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "注册！", ToastUtils.LENGTH_SHORT);

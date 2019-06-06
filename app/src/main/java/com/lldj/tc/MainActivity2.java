@@ -85,7 +85,6 @@ public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMs
 
     @Override
     public void handleMsg(Message msg) {
-
         switch (msg.what) {
             case HandlerType.LEFTMENU:
                 drawerLayout.openDrawer(Gravity.LEFT);
@@ -110,6 +109,9 @@ public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMs
                 break;
             case HandlerType.LEFTBACK:
                 drawerLayout.closeDrawer(Gravity.LEFT);
+            case HandlerType.SHOWTOAST:
+
+                Toast.makeText(this, msg.getData().getString("msg"), Toast.LENGTH_SHORT).show();
                 break;
         }
     }

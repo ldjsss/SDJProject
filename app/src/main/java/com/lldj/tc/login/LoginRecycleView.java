@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -73,6 +74,8 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
                 startActivity(new Intent(this, MainActivity2.class));
                 finish();
                 break;
+            case HandlerType.SHOWTOAST:
+                Toast.makeText(this, msg.getData().getString("msg"), Toast.LENGTH_SHORT).show();
         }
     }
 

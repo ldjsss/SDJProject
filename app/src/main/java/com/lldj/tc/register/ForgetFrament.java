@@ -84,12 +84,11 @@ public class ForgetFrament extends BaseFragment {
                 break;
             case R.id.register_tv:
                 if (!checkAll()) return;
-                HttpMsg.sendForgetKey(phoneNum, password, phoneCode, new HttpTool.msgListener(){
+                HttpMsg.sendForgetKey(phoneNum, password, phoneCode, new HttpMsg.Listener(){
                     @Override
-                    public void onFinish(int code, String msg) {
-                        Log.w("-----code", code + "");
+                    public void onFinish(String msg) {
                         Log.w("-----msg", msg + "");
-                        Toast.makeText(mContext,"---------------forget back code = " + code + " /msg = " + msg,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext,"---------------forget back msg = " + msg,Toast.LENGTH_SHORT).show();
                     }
                 });
                 ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "忘记密码！", ToastUtils.LENGTH_SHORT);

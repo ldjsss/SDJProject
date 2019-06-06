@@ -1,40 +1,49 @@
 package com.lldj.tc.httpMgr;
 
-import android.util.Log;
-import android.widget.Toast;
+import android.os.Bundle;
+import android.os.Message;
 
-import com.google.gson.Gson;
-import com.lldj.tc.mine.info.InfoBean;
-import com.lldj.tc.retrofit_services.UserServices;
+import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
-import com.lldj.tc.toolslibrary.retrofit.BaseEntity;
-import com.lldj.tc.toolslibrary.retrofit.BaseObserver;
-import com.lldj.tc.toolslibrary.retrofit.RetrofitUtils;
-import com.lldj.tc.toolslibrary.retrofit.RxSchedulerHepler;
 
 import org.json.JSONObject;
 
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HttpMsg {
-    public static Gson gson = new Gson();
-    public static String baseUrl = "http://192.168.1.109:9001/";
+    public static String baseUrl = "http://192.168.1.116:9001/";
 
-    public static void test(HttpTool.msgListener callbackListener) {
-        HttpTool.sendGet("http://www.baidu.com", new HttpTool.msgListener(){
+    public static HttpTool.msgListener getListener(Listener listener){
+        return new HttpTool.msgListener(){
             @Override
             public void onFinish(int code, String msg) {
-                callbackListener.onFinish(code, msg);
+
+                if(code == HttpURLConnection.HTTP_OK) {
+                    listener.onFinish(msg);
+                }else{
+                    Message message=new Message();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("msg", "Net Error Code " + code);
+                    message.setData(bundle);
+                    message.what=HandlerType.SHOWTOAST;
+                    HandlerInter.getInstance().sendMessage(message);
+                }
             }
-        });
+        };
     }
 
-    public static void sendGetCode(final String phone, HttpTool.msgListener callbackListener) {
+    public static void test(Listener callbackListener) {
+        HttpTool.sendGet("http://www.baidu.com", getListener(callbackListener));
+    }
+
+    public static void sendGetCode(final String phone, Listener callbackListener) {
         Map<String,String> URLParams = new HashMap();
         URLParams.put("mobile", phone);
 
-        HttpTool.http(baseUrl + "register/sms", URLParams, callbackListener);
+        HttpTool.httpPost(baseUrl + "register/sms", URLParams, getListener(callbackListener));
 
 //        HttpTool.sendGet(baseUrl + "register/sms?mobile=" + phone, callbackListener);
 
@@ -56,23 +65,15 @@ public class HttpMsg {
 //                });
     }
 
-    public static void sendLogin(final String count, final String password, HttpTool.msgListener callbackListener) {
-        JSONObject body = null;
-        try {
-            body = new JSONObject();
-            body.put("count", count);
-            body.put("password", password);
-        } catch (Exception e) {}
+    public static void sendLogin(final String username, final String password, Listener callbackListener) {
+        Map<String,String> URLParams = new HashMap();
+        URLParams.put("username", username);
+        URLParams.put("password", password);
 
-        HttpTool.sendPost("http://www.baidu.com", String.valueOf(body), new HttpTool.msgListener(){
-            @Override
-            public void onFinish(int code, String msg) {
-                callbackListener.onFinish(code, msg);
-            }
-        });
+        HttpTool.httpPost(baseUrl + "register/sms", URLParams, getListener(callbackListener));
     }
 
-    public static void sendRegister(final String username, final String password, String name, String mobile, String sms, String channel, String devices, HttpTool.msgListener callbackListener) {
+    public static void sendRegister(final String username, final String password, String name, String mobile, String sms, String channel, String devices, Listener callbackListener) {
         Map<String,String> URLParams = new HashMap();
         URLParams.put("username", username);
         URLParams.put("password", password);
@@ -82,23 +83,19 @@ public class HttpMsg {
         URLParams.put("channel", channel);
         URLParams.put("devices", devices);
 
-        HttpTool.http(baseUrl + "register/submit", URLParams, callbackListener);
+        HttpTool.httpPost(baseUrl + "register/submit", URLParams, getListener(callbackListener));
     }
 
-    public static void sendForgetKey(final String phone, final String password, String phoneKey, HttpTool.msgListener callbackListener) {
-        JSONObject body = null;
-        try {
-            body = new JSONObject();
-            body.put("phone", phone);
-            body.put("password", password);
-            body.put("phoneKey", phoneKey);
-        } catch (Exception e) {}
+    public static void sendForgetKey(final String mobile, final String password, String sms, Listener callbackListener) {
+        Map<String,String> URLParams = new HashMap();
+        URLParams.put("mobile", mobile);
+        URLParams.put("password", password);
+        URLParams.put("sms", sms);
 
-        HttpTool.sendPost("http://www.baidu.com", String.valueOf(body), new HttpTool.msgListener(){
-            @Override
-            public void onFinish(int code, String msg) {
-                callbackListener.onFinish(code, msg);
-            }
-        });
+        HttpTool.httpPost(baseUrl + "register/forget", URLParams, getListener(callbackListener));
+    }
+
+    public interface Listener {
+        void onFinish(String msg);
     }
 }

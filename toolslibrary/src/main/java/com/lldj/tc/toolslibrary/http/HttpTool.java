@@ -191,7 +191,7 @@ public class HttpTool {
         }).start();
     }
 
-    public static void http(final String url, final Map<String, String> params, final msgListener listener) {
+    public static void httpPost(final String url, final Map<String, String> params, final msgListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -226,11 +226,12 @@ public class HttpTool {
                 osw.close();
 
                 final  int code = con.getResponseCode();
+                StringBuffer buffer = new StringBuffer();
                 if(code == HttpURLConnection.HTTP_OK)
                 {
                     InputStreamReader in = new InputStreamReader(con.getInputStream());
                     BufferedReader bf = new BufferedReader(in);
-                    StringBuffer buffer = new StringBuffer();
+
                     String temp;
                     while ((temp = bf.readLine()) != null) {
                         buffer.append(temp);
@@ -239,17 +240,15 @@ public class HttpTool {
                     Log.w("HTTP", "buffer" + buffer.toString());
 
                     in.close();
-                    con.disconnect();
-
-                    final String ret = buffer.toString();
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onFinish(code, ret);
-                        }
-                    });
-
                 }
+                con.disconnect();
+                final String ret = buffer.toString();
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.onFinish(code, ret);
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
