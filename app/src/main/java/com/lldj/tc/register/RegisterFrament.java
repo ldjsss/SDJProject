@@ -87,6 +87,12 @@ public class RegisterFrament extends BaseFragment {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
+    }
+
     @OnClick({R.id.toolbar_back_iv, R.id.toolbar_title_tv, R.id.connectservice, R.id.resget_verify_codebtn, R.id.register_tv})
     public void onClick(View view) {
         switch (view.getId()) {

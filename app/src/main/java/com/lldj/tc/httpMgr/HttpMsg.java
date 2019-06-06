@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class HttpMsg {
     public static String baseUrl = "http://192.168.1.116:9001/";
+    public static String baseUrl2 = "http://192.168.1.116:9002/";
 
     public static HttpTool.msgListener getListener(Listener listener){
         return new HttpTool.msgListener(){
@@ -70,7 +71,7 @@ public class HttpMsg {
         URLParams.put("username", username);
         URLParams.put("password", password);
 
-        HttpTool.httpPost(baseUrl + "register/sms", URLParams, getListener(callbackListener));
+        HttpTool.httpPost(baseUrl2 + "login", URLParams, getListener(callbackListener));
     }
 
     public static void sendRegister(final String username, final String password, String name, String mobile, String sms, String channel, String devices, Listener callbackListener) {
