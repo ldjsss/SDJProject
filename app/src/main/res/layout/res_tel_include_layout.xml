@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/restel_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="32dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="@string/userCount"
+        android:textColor="@color/color_ebe3d7"
+        android:textSize="16sp" />
+
+    <View
+        android:id="@+id/resview_line11"
+        android:layout_width="0.5dp"
+        android:layout_height="18dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="70dp"
+        android:background="@color/color_1a1c26" />
+
+    <EditText
+        android:id="@+id/restel_num_et"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/resview_line11"
+        android:background="@color/transparent"
+        android:hint="@string/userKeyRemind"
+        android:maxLength="16"
+        android:textColor="@color/color_ebe3d7"
+        android:textColorHint="@color/color_cdc3b3"
+        android:textCursorDrawable="@drawable/my_cursor"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:background="@color/color_1a1c26" />
+    </RelativeLayout>
+
+</RelativeLayout>
