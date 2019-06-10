@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,22 +12,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.test.JsonBean;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
-import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
-import com.lldj.tc.toolslibrary.view.Titanic;
-import com.lldj.tc.toolslibrary.view.TitanicTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
-
-import java.util.regex.Pattern;
+import com.lldj.tc.util.AppURLCode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,6 +84,7 @@ public class RegisterFrament extends BaseFragment {
         ButterKnife.bind(this, rootView);
         ImmersionBar.with(this).titleBar(toolbarRootLayout).init();
         toolbarTitleTv.setText(getResources().getString(R.string.register_str));
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN );
 
     }
 
@@ -138,17 +135,9 @@ public class RegisterFrament extends BaseFragment {
                 AppUtils.showLoading(mContext);
                 HttpMsg.sendGetCode(phoneNum, new HttpMsg.Listener(){
                     @Override
-                    public void onFinish(String msg) {
-                        Log.w("-----msg", msg + "");
-                        Toast.makeText(mContext,"---------------sendGetCode back msg = " + msg,Toast.LENGTH_SHORT).show();
-
-                        Gson gson = new Gson();
-                        //把JSON数据转化为对象
-                        JsonBean jsonBean = gson.fromJson(msg, JsonBean.class);
-
-                        Log.w("-----getCode", jsonBean.getCode() + "");
-                        Log.w("-----getMessage", jsonBean.getMessage() + "");
-                        Log.w("-----getResult", jsonBean.getResult() + "");
+                    public void onFinish(JsonBean res) {
+                        Log.w("-----msg", res.getCode() + "");
+                        Toast.makeText(mContext,"---------------sendGetCode back msg = " + res.getCode(),Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -158,9 +147,10 @@ public class RegisterFrament extends BaseFragment {
                 AppUtils.showLoading(mContext);
                 HttpMsg.sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(mContext), "", new HttpMsg.Listener(){
                     @Override
-                    public void onFinish(String msg) {
-                        Log.w("-----msg", msg + "");
-                        Toast.makeText(mContext,"---------------register back msg = " + msg,Toast.LENGTH_SHORT).show();
+                    public void onFinish(JsonBean res) {
+                        if(res.getCode() == AppURLCode.succ){
+                            Toast.makeText(mContext, getResources().getString(R.string.registSucc),Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 });

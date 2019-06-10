@@ -77,9 +77,10 @@
         <activity
             android:name=".webview.WebviewNormalActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".register.RegisterFrament"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".register.RegisterFrament"-->
+            <!--android:windowSoftInputMode="adjustNothing"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".login.TestActivity"
             android:screenOrientation="portrait" />

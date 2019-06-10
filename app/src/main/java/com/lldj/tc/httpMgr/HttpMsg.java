@@ -3,7 +3,9 @@ package com.lldj.tc.httpMgr;
 import android.os.Bundle;
 import android.os.Message;
 
+import com.google.gson.Gson;
 import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.httpMgr.beans.test.JsonBean;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
@@ -17,6 +19,7 @@ import java.util.Map;
 public class HttpMsg {
     public static String baseUrl = "http://192.168.1.116:9001/";
     public static String baseUrl2 = "http://192.168.1.116:9002/";
+    private static Gson gson = new Gson();
 
     public static HttpTool.msgListener getListener(Listener listener){
         return new HttpTool.msgListener(){
@@ -24,7 +27,9 @@ public class HttpMsg {
             public void onFinish(int code, String msg) {
 
                 if(code == HttpURLConnection.HTTP_OK) {
-                    listener.onFinish(msg);
+                    //把JSON数据转化为对象
+                    JsonBean jsonBean = gson.fromJson(msg, JsonBean.class);
+                    listener.onFinish(jsonBean);
                 }else{
                     Message message=new Message();
                     Bundle bundle=new Bundle();
@@ -99,6 +104,6 @@ public class HttpMsg {
     }
 
     public interface Listener {
-        void onFinish(String msg);
+        void onFinish(JsonBean msg);
     }
 }

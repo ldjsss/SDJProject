@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.httpMgr.beans.test.JsonBean;
 import com.lldj.tc.register.ForgetFrament;
 import com.lldj.tc.register.RegisterFrament;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
@@ -125,9 +126,8 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
                     if(!checkAll()) return;
                     HttpMsg.sendLogin(userCount, password, new HttpMsg.Listener(){
                         @Override
-                        public void onFinish(String msg) {
-                            Log.w("-----msg", msg + "");
-                            Toast.makeText(mContext,"---------------login back msg = " + msg,Toast.LENGTH_SHORT).show();
+                        public void onFinish(JsonBean res) {
+                            Toast.makeText(mContext,"---------------login back msg = " + res.getCode(),Toast.LENGTH_SHORT).show();
                         }
                     });
                     ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "denglu！", ToastUtils.LENGTH_SHORT);

@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.httpMgr.beans.test.JsonBean;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
@@ -66,6 +68,8 @@ public class ForgetFrament extends BaseFragment {
         ButterKnife.bind(this, rootView);
         ImmersionBar.with(this).titleBar(toolbarRootLayout).init();
         toolbarTitleTv.setText(getResources().getString(R.string.forget_pswTitle));
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN );
+
     }
 
     @OnClick({R.id.toolbar_back_iv, R.id.toolbar_title_tv, R.id.connectservice, R.id.resget_verify_codebtn, R.id.register_tv})
@@ -86,9 +90,9 @@ public class ForgetFrament extends BaseFragment {
                 if (!checkAll()) return;
                 HttpMsg.sendForgetKey(phoneNum, password, phoneCode, new HttpMsg.Listener(){
                     @Override
-                    public void onFinish(String msg) {
-                        Log.w("-----msg", msg + "");
-                        Toast.makeText(mContext,"---------------forget back msg = " + msg,Toast.LENGTH_SHORT).show();
+                    public void onFinish(JsonBean res) {
+                        Log.w("-----msg", res.getCode() + "");
+                        Toast.makeText(mContext,"---------------forget back msg = " + res.getCode(),Toast.LENGTH_SHORT).show();
                     }
                 });
                 ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "忘记密码！", ToastUtils.LENGTH_SHORT);
