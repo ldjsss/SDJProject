@@ -11,15 +11,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.httpMgr.beans.test.JsonBean;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
+import com.lldj.tc.toolslibrary.view.Titanic;
+import com.lldj.tc.toolslibrary.view.TitanicTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 import java.util.regex.Pattern;
@@ -131,23 +135,33 @@ public class RegisterFrament extends BaseFragment {
                     @Override
                     public void onComplete() {}
                 });
-
+                AppUtils.showLoading(mContext);
                 HttpMsg.sendGetCode(phoneNum, new HttpMsg.Listener(){
                     @Override
                     public void onFinish(String msg) {
                         Log.w("-----msg", msg + "");
                         Toast.makeText(mContext,"---------------sendGetCode back msg = " + msg,Toast.LENGTH_SHORT).show();
+
+                        Gson gson = new Gson();
+                        //把JSON数据转化为对象
+                        JsonBean jsonBean = gson.fromJson(msg, JsonBean.class);
+
+                        Log.w("-----getCode", jsonBean.getCode() + "");
+                        Log.w("-----getMessage", jsonBean.getMessage() + "");
+                        Log.w("-----getResult", jsonBean.getResult() + "");
                     }
                 });
 
                 break;
             case R.id.register_tv:
                 if (!checkAll()) return;
+                AppUtils.showLoading(mContext);
                 HttpMsg.sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(mContext), "", new HttpMsg.Listener(){
                     @Override
                     public void onFinish(String msg) {
                         Log.w("-----msg", msg + "");
                         Toast.makeText(mContext,"---------------register back msg = " + msg,Toast.LENGTH_SHORT).show();
+
                     }
                 });
                 ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "注册！", ToastUtils.LENGTH_SHORT);

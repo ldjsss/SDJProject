@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -22,8 +23,16 @@ import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.PopupWindow;
 import android.widget.Toast;
+
+import com.lldj.tc.toolslibrary.R;
+import com.lldj.tc.toolslibrary.view.Titanic;
+import com.lldj.tc.toolslibrary.view.TitanicTextView;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -52,6 +61,9 @@ public class AppUtils {
     public static AppUtils getInstance() {
         return ourInstance;
     }
+    private static PopupWindow loading = null;
+    private static Titanic titanic = null;
+
 
     private AppUtils() {
     }
@@ -622,4 +634,34 @@ public class AppUtils {
         Log.e("app channel", "当前渠道为："+ channel);
         return channel;
     }
+
+    /**
+     * 弹出loading动画
+     */
+    public static void showLoading(Activity activity) {
+        if(AppUtils.loading != null) return;
+        View popView = activity.getLayoutInflater().inflate(R.layout.pop_loading_layout, null, false);
+        //运行动画
+        TitanicTextView tv = (TitanicTextView) popView.findViewById(R.id.my_text_view);
+        AppUtils.titanic = new Titanic();
+        titanic.start(tv);
+
+        AppUtils.loading = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        loading.setTouchable(true);
+        loading.setOutsideTouchable(false);
+        loading.setBackgroundDrawable(null);
+        loading.showAtLocation(activity.getWindow().getDecorView().findViewById(android.R.id.content),Gravity.START | Gravity.TOP, 0, 0);
+        loading.update();
+    }
+    public static void hideLoading() {
+        if(AppUtils.loading == null) return;
+
+        if(AppUtils.titanic != null) AppUtils.titanic.cancel();
+        AppUtils.loading.dismiss();
+
+        AppUtils.titanic = null;
+        AppUtils.loading = null;
+
+    }
+
 }

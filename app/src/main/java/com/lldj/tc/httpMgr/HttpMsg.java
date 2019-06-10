@@ -6,6 +6,7 @@ import android.os.Message;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 
 import org.json.JSONObject;
 
@@ -32,6 +33,7 @@ public class HttpMsg {
                     message.what=HandlerType.SHOWTOAST;
                     HandlerInter.getInstance().sendMessage(message);
                 }
+                AppUtils.hideLoading();
             }
         };
     }
