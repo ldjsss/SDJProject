@@ -24,11 +24,6 @@
             android:orientation="vertical"
             >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/menu_bottom_firstpage" />
-
 
         </LinearLayout>
 
@@ -43,10 +38,6 @@
             android:orientation="vertical"
            >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/menu_bottom_qiuzhi" />
 
         </LinearLayout>
         <LinearLayout
@@ -75,10 +66,6 @@
             android:orientation="vertical"
             >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/menu_bottom_leye" />
 
         </LinearLayout>
 
@@ -89,13 +76,9 @@
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/menu_bottom_mine" />
+
 
         </LinearLayout>
     </LinearLayout>

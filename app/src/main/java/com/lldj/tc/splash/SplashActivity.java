@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.lldj.tc.R;
-import com.lldj.tc.login.LoginActivity;
 import com.lldj.tc.login.LoginRecycleView;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.RxTimerUtil;

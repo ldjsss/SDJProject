@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.lldj.tc.MedicalApplication;
+import com.lldj.tc.SDJApplication;
 import com.lldj.tc.toolslibrary.util.Clog;
 
 public class SharedPreferencesUtil {
@@ -12,7 +12,7 @@ public class SharedPreferencesUtil {
     private static final String SHARED_NAME = "sdj";
 
     public static SharedPreferences getSharedPreferences(Context context) {
-        return (context == null ? MedicalApplication.getContext() : context).getSharedPreferences(SHARED_NAME,
+        return (context == null ? SDJApplication.getContext() : context).getSharedPreferences(SHARED_NAME,
                 Context.MODE_PRIVATE);
     }
 

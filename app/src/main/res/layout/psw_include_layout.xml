@@ -64,14 +64,6 @@
             android:layout_marginTop="5dp"
             android:background="@color/color_8e6c37" />
 
-        <ImageView
-            android:id="@+id/psw_status"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_alignParentEnd="true"
-            android:padding="8dp"
-            android:visibility="invisible"
-            android:src="@mipmap/log_error_msg" />
     </RelativeLayout>
 
     <TextView

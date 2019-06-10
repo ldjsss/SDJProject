@@ -45,16 +45,6 @@
         android:textCursorDrawable="@drawable/my_cursor"
         android:textSize="14sp" />
 
-    <ImageView
-        android:id="@+id/tel_status"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:padding="@dimen/dp_8"
-        android:src="@mipmap/log_correct_msg"
-        android:visibility="invisible" />
-
     <View
         android:id="@+id/tel_num_line"
         android:layout_width="match_parent"
