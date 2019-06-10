@@ -4,17 +4,12 @@ import android.os.Bundle;
 import android.os.Message;
 
 import com.google.gson.Gson;
-import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
-import com.lldj.tc.httpMgr.beans.test.JsonBean;
-import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
-import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.util.AppURLCode;
-
-import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.util.HashMap;
@@ -65,22 +60,6 @@ public class HttpMsg {
 
 //        HttpTool.sendGet(baseUrl + "register/sms?mobile=" + phone, callbackListener);
 
-//        UserServices mservices = RetrofitUtils.INSTANCE.getSpecialClient(baseUrl, UserServices.class);
-//        UserServices mservices = RetrofitUtils.INSTANCE.getClient(UserServices.class);
-//        mservices.getPhoneCode(phone)
-//                .compose(RxSchedulerHepler.<BaseEntity<InfoBean>>io_main())
-//                .subscribe(new BaseObserver<InfoBean>() {
-//                    @Override
-//                    protected void onSuccess(InfoBean infoTotalBean) {
-//                        Log.w("-----ssssss", "sssssss");
-//                    }
-//
-//                    @Override
-//                    protected void onFail(int code, String msg) {
-//                        Log.w("-----eeeee", "sssssss");
-//
-//                    }
-//                });
     }
 
     public static void sendLogin(final String username, final String password, Listener callbackListener) {

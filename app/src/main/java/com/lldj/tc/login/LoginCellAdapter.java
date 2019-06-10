@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.test.JsonBean;
+import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.register.ForgetFrament;
 import com.lldj.tc.register.RegisterFrament;
 import com.lldj.tc.sharepre.SharePreUtils;

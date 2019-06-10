@@ -1,6 +1,4 @@
-package com.lldj.tc.httpMgr.beans.test;
-
-import java.util.List;
+package com.lldj.tc.httpMgr.beans.FormatModel;
 
 public class JsonBean {
     private int code = -9999;

@@ -1,17 +1,8 @@
 package com.lldj.tc;
 
-import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
-import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -20,12 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.lldj.tc.firstpage.FragmentSet;
 import com.lldj.tc.firstpage.FragmentViewPager;
 import com.lldj.tc.handler.HandlerType;
-import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.test.JsonBean;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
-import com.lldj.tc.toolslibrary.http.HttpTool;
-import com.lldj.tc.toolslibrary.util.RxTimerUtil;
-import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 
 import butterknife.BindView;

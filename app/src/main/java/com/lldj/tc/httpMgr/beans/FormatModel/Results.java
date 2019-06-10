@@ -1,4 +1,4 @@
-package com.lldj.tc.httpMgr.beans.test;
+package com.lldj.tc.httpMgr.beans.FormatModel;
 
 public class Results {
 

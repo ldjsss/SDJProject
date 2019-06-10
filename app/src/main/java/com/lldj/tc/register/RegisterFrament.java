@@ -2,7 +2,6 @@ package com.lldj.tc.register;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -12,11 +11,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.test.JsonBean;
+import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;

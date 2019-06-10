@@ -54,15 +54,4 @@
         android:background="@color/color_8e6c37" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/account_not_exist_tip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tel_layout"
-        android:layout_alignEnd="@id/tel_layout"
-        android:layout_marginTop="@dimen/dp_5"
-        android:text="@string/account_not_exist_str"
-        android:textColor="#f05a23"
-        android:textSize="13sp"
-        android:visibility="invisible" />
 </RelativeLayout>
