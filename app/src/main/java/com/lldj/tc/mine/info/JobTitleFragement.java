@@ -77,7 +77,7 @@ public class JobTitleFragement extends BaseLazyFragment implements JobTitleAdapt
                 ((InfoDetailActivity) getActivity()).setJobTitle();
                 break;
             case R.id.ensure_tv:
-                SharePreUtils.setJobTitle(mContext, mDataList.get(mSelectPositon).getJobtitle());
+//                SharePreUtils.setJobTitle(mContext, mDataList.get(mSelectPositon).getJobtitle());
                 ((InfoDetailActivity) getActivity()).setJobTitle();
                 break;
         }

@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.os.Message;
 
 import com.google.gson.Gson;
+import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.beans.test.JsonBean;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.view.ToastUtils;
+import com.lldj.tc.util.AppURLCode;
 
 import org.json.JSONObject;
 
@@ -19,7 +23,15 @@ import java.util.Map;
 public class HttpMsg {
     public static String baseUrl = "http://192.168.1.116:9001/";
     public static String baseUrl2 = "http://192.168.1.116:9002/";
-    private static Gson gson = new Gson();
+
+    private static void toastMess(String msg){
+        Message message=new Message();
+        Bundle bundle=new Bundle();
+        bundle.putString("msg", msg);
+        message.setData(bundle);
+        message.what=HandlerType.SHOWTOAST;
+        HandlerInter.getInstance().sendMessage(message);
+    }
 
     public static HttpTool.msgListener getListener(Listener listener){
         return new HttpTool.msgListener(){
@@ -27,16 +39,14 @@ public class HttpMsg {
             public void onFinish(int code, String msg) {
 
                 if(code == HttpURLConnection.HTTP_OK) {
-                    //把JSON数据转化为对象
-                    JsonBean jsonBean = gson.fromJson(msg, JsonBean.class);
+                    Gson gson = new Gson();
+                    JsonBean jsonBean = gson.fromJson(msg, JsonBean.class);  //把JSON数据转化为对象
+                    if(jsonBean.getCode() != AppURLCode.succ){
+                        toastMess("ERROR CODE " + jsonBean.getCode() + jsonBean.getMessage());
+                    }
                     listener.onFinish(jsonBean);
                 }else{
-                    Message message=new Message();
-                    Bundle bundle=new Bundle();
-                    bundle.putString("msg", "Net Error Code " + code);
-                    message.setData(bundle);
-                    message.what=HandlerType.SHOWTOAST;
-                    HandlerInter.getInstance().sendMessage(message);
+                    toastMess("NET ERROR CODE" + code + msg);
                 }
                 AppUtils.hideLoading();
             }

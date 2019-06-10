@@ -19,11 +19,13 @@
     <string name="login">登录</string>
     <string name="register_str">注册</string>
     <string name="registSucc">注册成功</string>
+    <string name="registFail">注册失败</string>
     <string name="just_looking_around">游客登陆</string>
     <string name="phone">电话</string>
     <string name="phoneRemind">填写手机号</string>
     <string name="input_verify_code">输入验证码</string>
     <string name="verify_title">验证码</string>
+    <string name="codeHaveSend">验证码已发送</string>
     <string name="name">姓名</string>
     <string name="nameRemaind">为保证资金安全,请填写真实姓名</string>
     <string name="errorRemind">请输入6-16位英文或数字账号</string>
@@ -36,6 +38,9 @@
     <string name="changePassword">修改密码</string>
     <string name="newPassword">新密码</string>
     <string name="forget_pswTitle">忘记密码</string>
+    <string name="passwordHaveChange">密码已重置</string>
+    <string name="loginsucc">登陆成功</string>
+    <string name="loginfail">登陆失败</string>
 
 
 

@@ -14,15 +14,6 @@ public class SharePreUtils {
     }
 
 
-    //是否登录 true ,false
-    public static boolean getIsLogin(Context context) {
-        return SharedPreferencesUtil.getSharedPreferences(context).getBoolean(SharedKeys.IS_LOGIN, false);
-    }
-
-    public static void setLoginStatus(Context context, boolean isLogin) {
-        SharedPreferencesUtil.setValue(context, SharedKeys.IS_LOGIN, isLogin);
-    }
-
     //获取用户id
     public static String getUserId(Context context) {
         return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.UID, "");
@@ -41,43 +32,77 @@ public class SharePreUtils {
         return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.UNAME, "");
     }
 
-    public static void setNickName(Context context, String name) {
+    public static void setPassWord(Context context, String password) {
+        SharedPreferencesUtil.setValue(context, SharedKeys.PASSWORD, password);
+    }
+
+    public static String getPassword(Context context) {
+        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.PASSWORD, "");
+    }
+
+    public static void setName(Context context, String name) {
         SharedPreferencesUtil.setValue(context, SharedKeys.NICK_NAME, name);
     }
 
-    public static String getNickName(Context context) {
+    public static String getName(Context context) {
         return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.NICK_NAME, "");
     }
 
-    public static void setTelNum(Context context, String phone) {
+    public static void setPhone(Context context, String phone) {
         SharedPreferencesUtil.setValue(context, SharedKeys.PHONE, phone);
     }
 
-    public static String getTelNum(Context context) {
+    public static String getPhone(Context context) {
         return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.PHONE, "");
     }
 
-    public static void setDepartment(Context context, String phone) {
-        SharedPreferencesUtil.setValue(context, SharedKeys.DEPARTMENT, phone);
+    public static void setChannel(Context context, String channel) {
+        SharedPreferencesUtil.setValue(context, SharedKeys.CHANNEL, channel);
     }
 
-    public static String getDepartment(Context context) {
-        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.DEPARTMENT, "");
+    public static String getChannel(Context context) {
+        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.CHANNEL, "");
     }
 
-    public static void setJobTitle(Context context, String pjobTItle) {
-        SharedPreferencesUtil.setValue(context, SharedKeys.JOB_TITLE, pjobTItle);
+    public static void setToken(Context context, String phone) {
+        SharedPreferencesUtil.setValue(context, SharedKeys.TOKEN, phone);
     }
 
-    public static String getJobTitle(Context context) {
-        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.JOB_TITLE, "");
+    public static String getToken(Context context) {
+        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.TOKEN, "");
     }
 
-    public static void setVerifyTempName(Context context, String pTempName) {
-        SharedPreferencesUtil.setValue(context, SharedKeys.VERIFY_TEMP_NAME, pTempName);
+    public static void setDevices(Context context, String pjobTItle) {
+        SharedPreferencesUtil.setValue(context, SharedKeys.DEVICES, pjobTItle);
     }
 
-    public static String getVerifyTempName(Context context) {
-        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.VERIFY_TEMP_NAME, "");
+    public static String getDevices(Context context) {
+        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.DEVICES, "");
+    }
+
+    public static void setIP(Context context, String pTempName) {
+        SharedPreferencesUtil.setValue(context, SharedKeys.IP, pTempName);
+    }
+
+    public static String getIP(Context context) {
+        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.IP, "");
+    }
+
+
+
+
+
+    public static void setRegistInfo(Context context, final String username, final String password, String name, String mobile, String channel, String devices) {
+        setUserName(context, username);
+        setPassWord(context, password);
+        setName(context, name);
+        setPhone(context, mobile);
+        setChannel(context, channel);
+        setDevices(context, devices);
+    }
+
+    public static void setLoginInfo(Context context, final String token, final String expires_in, final String openid) {
+        setUserId(context, openid);
+        setToken(context, token);
     }
 }

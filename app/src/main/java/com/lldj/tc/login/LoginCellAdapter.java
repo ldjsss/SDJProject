@@ -24,9 +24,12 @@ import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.test.JsonBean;
 import com.lldj.tc.register.ForgetFrament;
 import com.lldj.tc.register.RegisterFrament;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
+import com.lldj.tc.util.AppURLCode;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -36,7 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * description: <p>
+ * description: login<p>
  */
 
 
@@ -124,13 +127,17 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
                     break;
                 case R.id.login_tv:
                     if(!checkAll()) return;
+                    HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
                     HttpMsg.sendLogin(userCount, password, new HttpMsg.Listener(){
                         @Override
                         public void onFinish(JsonBean res) {
-                            Toast.makeText(mContext,"---------------login back msg = " + res.getCode(),Toast.LENGTH_SHORT).show();
+                            if(res.getCode() == AppURLCode.succ){
+                                SharePreUtils.getInstance().setLoginInfo(mContext, res.getResult().getAccess_token(), res.getResult().getExpires_in(), res.getResult().getOpenid());
+                                Toast.makeText(mContext, mContext.getResources().getString(R.string.loginsucc),Toast.LENGTH_SHORT).show();
+                                HandlerInter.getInstance().sendEmptyMessage(HandlerType.GOTOMAIN);
+                            }
                         }
                     });
-                    ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "denglu！", ToastUtils.LENGTH_SHORT);
                     break;
                 case R.id.register_tv:
                     if (resFrament == null) { resFrament = new RegisterFrament(); }
@@ -151,7 +158,7 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
 
         private boolean checkAll() {
             userCount = telNumEt.getText().toString().trim();
-            password = pswEt.getText().toString().trim();
+            password  = pswEt.getText().toString().trim();
 
             if (TextUtils.isEmpty(userCount) || userCount.length() < 6 || userCount.length() > 16) {
                 ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, mContext.getResources().getString(R.string.errorRemind), ToastUtils.LENGTH_SHORT);
@@ -162,6 +169,11 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
                 return false;
             }
             return true;
+        }
+
+        private void fillCount(){
+            telNumEt.setText(SharePreUtils.getInstance().getUserName(mContext));
+            pswEt.setText(SharePreUtils.getInstance().getPassword(mContext));
         }
 
         public void handleMsg(Message msg) {
@@ -177,6 +189,10 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
 
                     frameaddlayout.setVisibility(View.GONE);
                     break;
+                    case HandlerType.REGISTSUCC:
+                        HandlerInter.getInstance().sendEmptyMessage(HandlerType.REMOVERES);
+                        fillCount();
+                        break;
             }
         }
 

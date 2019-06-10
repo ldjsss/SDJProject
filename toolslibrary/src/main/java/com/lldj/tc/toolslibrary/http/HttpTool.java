@@ -55,6 +55,12 @@ public class HttpTool {
                     in.close();  //关闭创建的流
                 } catch (Exception e) {
                     e.printStackTrace();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onFinish(-1000, "failed to connect to");
+                        }
+                    });
                 } finally {
                     if (connection != null) {
                         connection.disconnect();
@@ -122,6 +128,12 @@ public class HttpTool {
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onFinish(-1000, "failed to connect to");
+                        }
+                    });
                 }finally {
                     if (httpURLConnection != null) { httpURLConnection.disconnect(); }
                 }
@@ -182,6 +194,12 @@ public class HttpTool {
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onFinish(-1000, "failed to connect to");
+                        }
+                    });
                 } finally {
                     if (httpURLConnection != null) {
                         httpURLConnection.disconnect();
@@ -251,6 +269,12 @@ public class HttpTool {
                 });
             } catch (Exception e) {
                 e.printStackTrace();
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.onFinish(-1000, "failed to connect to");
+                    }
+                });
             } finally {
                 if (con != null) {
                     con.disconnect();

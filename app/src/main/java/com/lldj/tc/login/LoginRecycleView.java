@@ -21,7 +21,9 @@ import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
+import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 import java.util.ArrayList;
 
@@ -79,7 +81,11 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
                 finish();
                 break;
             case HandlerType.SHOWTOAST:
-                Toast.makeText(this, msg.getData().getString("msg"), Toast.LENGTH_SHORT).show();
+                ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, msg.getData().getString("msg"), ToastUtils.LENGTH_SHORT);
+                break;
+            case HandlerType.LOADING:
+                AppUtils.showLoading(mContext);
+                break;
         }
     }
 

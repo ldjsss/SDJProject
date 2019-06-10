@@ -202,12 +202,6 @@ public class InfoBean {
     }
 
     public void setUserInfo(Context pContext) {
-        SharePreUtils.setUserName(pContext, getUserName());
-        SharePreUtils.setNickName(pContext, getNickName());
-        SharePreUtils.setDepartment(pContext, getDepartmentName());
-//        SharePreUtils.setJob(pContext, getProfessionalName());
-//        SharePreUtils.setJobNum(pContext, getProfessionalNo());
-        SharePreUtils.setJobTitle(pContext, getProfessionalRank());
-        SharedPreferencesUtil.setValue(pContext,"token",token);
+
     }
 }

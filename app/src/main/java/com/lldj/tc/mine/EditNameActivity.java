@@ -200,7 +200,7 @@ public class EditNameActivity extends BaseActivity implements OnKeyboardListener
                                 SharePreUtils.setUserName(mContext, mNameStr);
                                 break;
                             case 1:
-                                SharePreUtils.setNickName(mContext, mNameStr);
+//                                SharePreUtils.setNickName(mContext, mNameStr);
                                 break;
                         }
                         exitActivity();

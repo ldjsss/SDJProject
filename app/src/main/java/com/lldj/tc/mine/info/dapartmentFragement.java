@@ -92,7 +92,7 @@ public class dapartmentFragement extends BaseLazyFragment implements DepartmentA
             case R.id.ensure_tv:
                 String level1dapartmentstr = mDataList.get(level_one_dapartment_position).getDapartment();
                 String level2dapartmentstr = mDataList.get(level_one_dapartment_position).getMtwoDepartmentList().get(level_two_dapartment_position).getDapartment();
-                SharePreUtils.setDepartment(mContext, level1dapartmentstr + "-" + level2dapartmentstr);
+//                SharePreUtils.setDepartment(mContext, level1dapartmentstr + "-" + level2dapartmentstr);
                 ((InfoDetailActivity) getActivity()).setDepartment();
                 break;
         }

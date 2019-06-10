@@ -138,7 +138,7 @@ public class ModifyTelNumActivity extends BaseActivity implements IVerifyloginVi
                 break;
             case R.id.save_tv:
                 mTelNumStr = telNumEt.getText().toString().trim();
-                SharePreUtils.setTelNum(mContext, mTelNumStr);
+//                SharePreUtils.setTelNum(mContext, mTelNumStr);
                 finish();
                 break;
         }

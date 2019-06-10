@@ -5,7 +5,7 @@ import java.util.List;
 public class JsonBean {
     private int code = -9999;
     private String message = "";
-    private String result = "";
+    private Results result;
 
     public int getCode() { return code; }
     public void setCode(int code) {
@@ -15,36 +15,13 @@ public class JsonBean {
     public void setMessage(String message) {
         this.message = message;
     }
-    public String getResult() {
+
+    public Results getResult() {
         return result;
     }
-    public void setResult(String result) {
+    public void setResults(Results result) {
         this.result = result;
     }
-
-
-//    private int error;
-//    private String status;
-//    private List<Results> results;
-//
-//    public int getError() {
-//        return error;
-//    }
-//    public void setError(int error) {
-//        this.error = error;
-//    }
-//    public String getStatus() {
-//        return status;
-//    }
-//    public void setStatus(String status) {
-//        this.status = status;
-//    }
-//    public List<Results> getResults() {
-//        return results;
-//    }
-//    public void setResults(List<Results> results) {
-//        this.results = results;
-//    }
 }
 
 

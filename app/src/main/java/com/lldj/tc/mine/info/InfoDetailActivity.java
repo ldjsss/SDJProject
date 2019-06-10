@@ -111,20 +111,20 @@ public class InfoDetailActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String uName = SharePreUtils.getUserName(mContext);
-        if (!TextUtils.isEmpty(uName)) {
-            nameTv.setText(uName);
-        }
-        String nickNameStr = SharePreUtils.getNickName(mContext);
-        if (!TextUtils.isEmpty(nickNameStr)) {
-            nickNameTv.setText(nickNameStr);
-        }
-        String mTelNumStr = SharePreUtils.getTelNum(mContext);
-        if (!TextUtils.isEmpty(mTelNumStr)) {
-            phoneTv.setText(mTelNumStr);
-        }
-        setDepartment();
-        setJobTitle();
+//        String uName = SharePreUtils.getUserName(mContext);
+//        if (!TextUtils.isEmpty(uName)) {
+//            nameTv.setText(uName);
+//        }
+//        String nickNameStr = SharePreUtils.getNickName(mContext);
+//        if (!TextUtils.isEmpty(nickNameStr)) {
+//            nickNameTv.setText(nickNameStr);
+//        }
+//        String mTelNumStr = SharePreUtils.getTelNum(mContext);
+//        if (!TextUtils.isEmpty(mTelNumStr)) {
+//            phoneTv.setText(mTelNumStr);
+//        }
+//        setDepartment();
+//        setJobTitle();
     }
 
     @OnClick({R.id.toolbar_back_iv, R.id.photo_layout, R.id.name_layout, R.id.nick_name_layout, R.id.phone_layout, R.id.career_layout, R.id.dapartment_layout, R.id.job_title_layout, R.id.caree_tip_close_iv})
@@ -179,18 +179,18 @@ public class InfoDetailActivity extends BaseActivity {
 
     public void setDepartment() {
         departmentFragement.setVisibility(View.GONE);
-        String departmentstr = SharePreUtils.getDepartment(mContext);
-        if (null != departmentstr) {
-            dapartmentTv.setText(departmentstr);
-        }
+//        String departmentstr = SharePreUtils.getDepartment(mContext);
+//        if (null != departmentstr) {
+//            dapartmentTv.setText(departmentstr);
+//        }
     }
 
     public void setJobTitle() {
-        jobTitleFragement.setVisibility(View.GONE);
-        String jobTItlestr = SharePreUtils.getJobTitle(mContext);
-        if (null != jobTItlestr) {
-            jobTitleTv.setText(jobTItlestr);
-        }
+//        jobTitleFragement.setVisibility(View.GONE);
+//        String jobTItlestr = SharePreUtils.getJobTitle(mContext);
+//        if (null != jobTItlestr) {
+//            jobTitleTv.setText(jobTItlestr);
+//        }
     }
 
     @Subscribe

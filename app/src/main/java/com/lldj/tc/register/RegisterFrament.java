@@ -12,10 +12,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.test.JsonBean;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
@@ -132,26 +134,28 @@ public class RegisterFrament extends BaseFragment {
                     @Override
                     public void onComplete() {}
                 });
-                AppUtils.showLoading(mContext);
+                HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
                 HttpMsg.sendGetCode(phoneNum, new HttpMsg.Listener(){
                     @Override
                     public void onFinish(JsonBean res) {
-                        Log.w("-----msg", res.getCode() + "");
-                        Toast.makeText(mContext,"---------------sendGetCode back msg = " + res.getCode(),Toast.LENGTH_SHORT).show();
+                        if(res.getCode() == AppURLCode.succ) {
+                            Toast.makeText(mContext, getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
                 break;
             case R.id.register_tv:
                 if (!checkAll()) return;
-                AppUtils.showLoading(mContext);
+                HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
                 HttpMsg.sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(mContext), "", new HttpMsg.Listener(){
                     @Override
                     public void onFinish(JsonBean res) {
                         if(res.getCode() == AppURLCode.succ){
+                            SharePreUtils.getInstance().setRegistInfo(mContext, userCount, password, userName, phoneNum, AppUtils.getChannel(mContext), "");
                             Toast.makeText(mContext, getResources().getString(R.string.registSucc),Toast.LENGTH_SHORT).show();
+                            HandlerInter.getInstance().sendEmptyMessage(HandlerType.REGISTSUCC);
                         }
-
                     }
                 });
                 ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "注册！", ToastUtils.LENGTH_SHORT);
