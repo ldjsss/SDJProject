@@ -118,6 +118,8 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
             //设置密码的显示or隐藏
             pswStatus(pswEt, pswShowOrHidIv);
 
+            tokenLogin();
+
         }
 
         @OnClick({R.id.forget_psw_tv, R.id.login_tv, R.id.register_tv, R.id.just_look_tv, R.id.psw_show_or_hid_iv})
@@ -140,9 +142,7 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
                         @Override
                         public void onFinish(JsonBean res) {
                             if (res.getCode() == AppURLCode.succ) {
-                                SharePreUtils.getInstance().setLoginInfo(mContext, res.getResult().getAccess_token(), res.getResult().getExpires_in(), res.getResult().getOpenid());
-                                Toast.makeText(mContext, mContext.getResources().getString(R.string.loginsucc), Toast.LENGTH_SHORT).show();
-                                HandlerInter.getInstance().sendEmptyMessage(HandlerType.GOTOMAIN);
+                                saveLoginData(res);
                             }
                         }
                     });
@@ -166,6 +166,27 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
                 case R.id.psw_show_or_hid_iv:
                     pswStatus(pswEt, pswShowOrHidIv);
             }
+        }
+
+        private void tokenLogin() {
+            String token = SharePreUtils.getToken(mContext);
+            if(TextUtils.isEmpty(token)) return;
+            HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
+            HttpMsg.sendTokenLogin(token, new HttpMsg.Listener() {
+                @Override
+                public void onFinish(JsonBean res) {
+                    if (res.getCode() == AppURLCode.succ) {
+                        saveLoginData(res);
+                    }
+                }
+            });
+        }
+
+        private void saveLoginData(JsonBean res) {
+            SharePreUtils.getInstance().setLoginInfo(mContext, res.getResult().getAccess_token(), res.getResult().getExpires_in(), res.getResult().getOpenid());
+            Toast.makeText(mContext, mContext.getResources().getString(R.string.loginsucc), Toast.LENGTH_SHORT).show();
+            HandlerInter.getInstance().sendEmptyMessage(HandlerType.GOTOMAIN);
+
         }
 
         private void pswStatus(EditText pPswEt, ImageView pPswStatusIv) {

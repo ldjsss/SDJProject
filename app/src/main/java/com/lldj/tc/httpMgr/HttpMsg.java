@@ -91,6 +91,13 @@ public class HttpMsg {
         HttpTool.httpPost(baseUrl2 + "login", URLParams, getListener(callbackListener));
     }
 
+    public static void sendTokenLogin(final String token, Listener callbackListener) {
+        Map<String,String> URLParams = new HashMap();
+        URLParams.put("access_token", token);
+
+        HttpTool.httpPost(baseUrl2 + "oauth2", URLParams, getListener(callbackListener));
+    }
+
     public static void sendRegister(final String username, final String password, String name, String mobile, String sms, String channel, String devices, Listener callbackListener) {
         Map<String,String> URLParams = new HashMap();
         URLParams.put("username", username);
