@@ -82,6 +82,8 @@ public class GameCellAdapter extends RecyclerView.Adapter {
         RelativeLayout gamebetlayout0;
         @BindView(R.id.gamestatus)
         TextView gamestatus;
+        @BindView(R.id.gamestatusicon)
+        ImageView gamestatusicon;
         @BindView(R.id.playname1)
         TextView playname1;
         @BindView(R.id.gamebet1)
@@ -117,9 +119,7 @@ public class GameCellAdapter extends RecyclerView.Adapter {
         @BindView(R.id.bottomgamelayout)
         RelativeLayout bottomgamelayout;
         @BindView(R.id.bottomoverlayout)
-        RelativeLayout bottomoverlayout;
-//        @BindView(R.id.gameresult)
-//        RelativeLayout gameresult;
+        LinearLayout bottomoverlayout;
 
         public viewHolder(View itemView) {
             super(itemView);
@@ -142,7 +142,7 @@ public class GameCellAdapter extends RecyclerView.Adapter {
         }
     }
 
-    //刷新底部显示状态 0 只显示战队，无倍注显示，无法押获胜 1 显示战队和倍注，未开始状态 2 显示战队和倍注，滚盘状态 / 显示战队，锁盘，滚盘状态 3 已结束
+    //刷新底部显示状态 0 只显示战队，无倍注显示，无法押获胜  显示战队和倍注，未开始状态 1 显示战队和倍注，滚盘状态 / 显示战队，锁盘，滚盘状态 3 已结束
     public void bottomCommon(int _type) {
         if (mHolder == null) return;
         switch (_type) {
@@ -167,6 +167,9 @@ public class GameCellAdapter extends RecyclerView.Adapter {
                 mHolder.imggamelock1.setVisibility(View.GONE);
                 mHolder.bottomgamelayout.setVisibility(View.VISIBLE);
                 mHolder.bottomoverlayout.setVisibility(View.GONE);
+
+                mHolder.gamestatus.setText(mContext.getResources().getString(R.string.matchCurrentTitle));
+                mHolder.gamestatusicon.setBackgroundResource(R.mipmap.match_status_1);
                 break;
             case 2:
                 mHolder.gamebetlayout0.setVisibility(View.VISIBLE);
@@ -184,6 +187,7 @@ public class GameCellAdapter extends RecyclerView.Adapter {
                 mHolder.bottomoverlayout.setVisibility(View.GONE);
 
                 mHolder.gametime.setVisibility(View.VISIBLE);
+
 //                mHolder.gameresult.setVisibility(View.GONE);
                 break;
             case 3:
@@ -193,7 +197,7 @@ public class GameCellAdapter extends RecyclerView.Adapter {
                 mHolder.playname1.setVisibility(View.GONE);
                 mHolder.playnamecommon0.setVisibility(View.GONE);
                 mHolder.playnamecommon1.setVisibility(View.GONE);
-                mHolder.gamestatus.setVisibility(View.GONE);
+//                mHolder.gamestatus.setVisibility(View.GONE);
 
                 mHolder.bottomgamelayout.setVisibility(View.GONE);
                 mHolder.bottomoverlayout.setVisibility(View.VISIBLE);

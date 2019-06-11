@@ -34,7 +34,7 @@
         android:layout_marginStart="@dimen/dimen_40"
         android:layout_marginEnd="@dimen/dimen_40"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-8dp" />
+        android:layout_marginTop="20dp" />
 
     <RelativeLayout
         android:id="@+id/forget_psw_layout"
@@ -44,7 +44,7 @@
         android:layout_below="@id/psw_root_layout"
         android:layout_marginStart="@dimen/dimen_40"
         android:layout_marginEnd="@dimen/dimen_40"
-        android:layout_marginTop="-15dp">
+        android:layout_marginTop="2dp">
 
         <!--忘记密码-->
         <TextView

@@ -10,10 +10,11 @@
         android:id="@+id/tab_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/tab_text_color"
+        android:textColor="@color/color_cdc3b3"
         android:singleLine="true"
         android:ellipsize="marquee"
-        android:textSize="15sp" />
+        android:textSize="18sp"
+        android:text="demo"/>
 
     <TextView
         android:id="@+id/tab_no_reading_count_tv"
@@ -22,8 +23,8 @@
         android:text="666"
         android:singleLine="true"
         android:ellipsize="marquee"
-        android:textColor="@color/tab_text_color"
-        android:textSize="12sp" />
+        android:textColor="@color/color_cdc3b3"
+        android:textSize="13sp" />
 
 
 </LinearLayout>

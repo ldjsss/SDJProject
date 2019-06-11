@@ -7,6 +7,9 @@
     <color name="color_8e6c37">#8e6c37</color>
     <color name="color_1a1c26">#1a1c26</color>
     <color name="color_cdc3b3">#cdc3b3</color>
+    <color name="color_34384a">#34384a</color>
+    <color name="color_bg">#34384a</color>
+    <color name="color_262935">#262935</color>
 
 
     <color name="colorPrimary">#00be0a</color>
@@ -35,7 +38,6 @@
     <color name="color_c8c8c8">#c8c8c8</color>
     <color name="color_dcdcdc">#dcdcdc</color>
     <color name="color_ea5822">#ea5822</color>
-    <color name="color_bg">#34384a</color>
     <color name="abc_search_url_text_normal">#7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
     <color name="abc_search_url_text_selected">@android:color/black</color>

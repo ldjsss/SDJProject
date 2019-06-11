@@ -26,9 +26,6 @@ import java.util.List;
 /**
  *
  * @描述 文字自动轮播（跑马灯）
- * @author luoweichao
- * @email superluo666@gmail.com
- * @date 2018/3/28/028 21:21
  *
  */
 public class TextBannerView extends RelativeLayout {

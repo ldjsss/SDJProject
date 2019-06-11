@@ -9,9 +9,9 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:id="@+id/layout_board"
-        android:background="#cc8ac6">
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:id="@+id/layout_board">
     </FrameLayout>
 
     <com.lldj.tc.toolslibrary.recycleview.LRecyclerView
@@ -20,7 +20,6 @@
         android:layout_height="match_parent"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:background="@color/tooltip_background_dark"
         android:overScrollMode="never" />
 
 </LinearLayout>

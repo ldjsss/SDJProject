@@ -11,8 +11,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:orientation="horizontal">
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="@drawable/mathtitle_bg">
 
         <ImageView
             android:id="@+id/gameicon"
@@ -32,7 +35,7 @@
             android:text="ESL 职业联赛—美洲"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/gameicon"
-            android:textColor="@color/white" />
+            android:textColor="@color/color_cdc3b3" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,18 +47,20 @@
             android:layout_marginLeft="5dp"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/gamename"
-            android:textColor="@color/style_color_accent" />
+            android:textColor="@color/color_8e6c37" />
 
         <TextView
             android:layout_width="50dp"
-            android:layout_height="30dp"
+            android:layout_height="match_parent"
             android:id="@+id/gameplaycount"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginEnd="10dp"
             android:text="+3"
             android:textSize="14sp"
-            android:textColor="@color/white"
+            android:textColor="@color/color_cdc3b3"
             android:gravity="center"
             android:background="@drawable/rec_stroke_round4_969696" />
 
@@ -95,14 +100,14 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@mipmap/game_arena"
-            android:layout_marginStart="45dp"/>
+            android:layout_marginStart="40dp"/>
         <ImageView
             android:id="@+id/imgplayicon1"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@mipmap/game_csgo"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="45dp"/>
+            android:layout_marginEnd="40dp"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -116,12 +121,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
              android:layout_weight="1"
-            android:layout_marginStart="10dp"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="@string/allwinner"
             android:textSize="12sp"
-            android:textColor="@color/white" />
+            android:textColor="@color/color_cdc3b3" />
     </LinearLayout>
 
     <View

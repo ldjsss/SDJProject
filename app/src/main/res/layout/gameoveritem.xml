@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="38dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
     android:orientation="horizontal"
     android:id="@+id/bottomoverlayout">
 
+
     <RelativeLayout
-        android:layout_width="110dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="125dp"
+        android:layout_marginStart="10dp"
         android:layout_height="match_parent"
-        android:id="@+id/playcelllayout0">
+        android:id="@+id/playcelllayout0"
+        android:orientation="horizontal"
+        android:layout_weight = "1">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -18,22 +21,25 @@
             android:textSize="13sp"
             android:textColor="@color/white"
             android:gravity="center"
-            android:background="@drawable/rec_stroke_round4_969696" />
+            android:background="@drawable/mathtitle_bg" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/playvictoryicon0"
+            android:src="@mipmap/main_victory"
+            android:layout_alignParentEnd="true"/>
     </RelativeLayout>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/playvictoryicon0"
-        android:src="@mipmap/main_victory"
-        android:layout_marginLeft="-10dp"
-        android:layout_toEndOf="@id/playcelllayout0" />
+    <LinearLayout
+        android:layout_width="@dimen/dimen_20"
+        android:layout_height="match_parent"></LinearLayout>
 
     <RelativeLayout
-        android:layout_width="110dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="125dp"
+        android:layout_marginEnd="10dp"
         android:layout_alignParentRight="true"
         android:layout_height="match_parent"
-        android:id="@+id/playcelllayout1">
+        android:id="@+id/playcelllayout1"
+        android:layout_weight = "1">
 
         <TextView
             android:layout_width="match_parent"
@@ -43,15 +49,13 @@
             android:textSize="13sp"
             android:textColor="@color/white"
             android:gravity="center"
-            android:background="@drawable/rec_stroke_round4_969696" />
+            android:background="@drawable/mathtitle_bg" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="-10dp"
+            android:id="@+id/playvictoryicon1"
+            android:src="@mipmap/main_failure" />
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="-10dp"
-        android:id="@+id/playvictoryicon1"
-        android:src="@mipmap/main_failure"
-        android:layout_toStartOf="@id/playcelllayout1" />
-
-</RelativeLayout>
+</LinearLayout>
