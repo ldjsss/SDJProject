@@ -121,6 +121,7 @@ public class GameCellAdapter extends RecyclerView.Adapter {
         @BindView(R.id.bottomoverlayout)
         LinearLayout bottomoverlayout;
 
+
         public viewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
