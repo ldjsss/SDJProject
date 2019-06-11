@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.lldj.tc.R;
-import com.lldj.tc.firstpage.subjectrecommend.SubjectRecommendFragment;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.FragmentStatePagerAdapterCompat;
 
@@ -18,13 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FirstPageViewPagerAdapter extends FragmentStatePagerAdapterCompat {
+public class MainPagerAdapter extends FragmentStatePagerAdapterCompat {
     private Resources mResources;
     private String[] mTitle;
     public List<Fragment> fragmentList = new ArrayList<>();  //创建List，用来管理所有要添加到ViewPager的Fragment
 
 
-    public FirstPageViewPagerAdapter(Context content, FragmentManager fm) {
+    public MainPagerAdapter(Context content, FragmentManager fm) {
         super(fm);
         mResources = content.getResources();
         mTitle = new String[]{mResources.getString(R.string.matchTodayTitle), mResources.getString(R.string.matchCurrentTitle), mResources.getString(R.string.matchFrontTitle), mResources.getString(R.string.matchOverTitle)};
@@ -36,7 +35,7 @@ public class FirstPageViewPagerAdapter extends FragmentStatePagerAdapterCompat {
     private void setUpFragments() {
         fragmentList.clear();
         for (int i = 0; i < mTitle.length; i++) {
-            SubjectRecommendFragment fragment = new SubjectRecommendFragment();
+            MainFragment fragment = new MainFragment();
             Bundle bundle = new Bundle();
             bundle.putInt("ARG", i);
             fragment.setArguments(bundle);

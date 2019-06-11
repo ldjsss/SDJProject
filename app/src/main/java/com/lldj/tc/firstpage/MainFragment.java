@@ -1,4 +1,4 @@
-package com.lldj.tc.firstpage.subjectrecommend;
+package com.lldj.tc.firstpage;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,14 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
-import com.lldj.tc.firstpage.BannerFragment;
-import com.lldj.tc.firstpage.CalendarFragment;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
@@ -27,11 +24,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * description: <p>
+ * main ui
  */
-public class SubjectRecommendFragment extends BaseFragment implements LRecyclerView.LScrollListener {
+public class MainFragment extends BaseFragment implements LRecyclerView.LScrollListener {
 
-    private GameCellAdapter mAdapter = null;
+    private MainCellAdapter mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
     private ArrayList<String> mlist = new ArrayList<>();
     private int mTotal = 30;
@@ -64,7 +61,7 @@ public class SubjectRecommendFragment extends BaseFragment implements LRecyclerV
         //第一次加载数据
         if(lAdapter == null){
             subjectLrecycleview.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-            mAdapter = new GameCellAdapter(mContext, ViewType);
+            mAdapter = new MainCellAdapter(mContext, ViewType);
             lAdapter = new LRecyclerViewAdapter(getActivity(), mAdapter);
             subjectLrecycleview.setAdapter(lAdapter);
             subjectLrecycleview.setLScrollListener(this);

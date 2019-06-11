@@ -1,4 +1,4 @@
-package com.lldj.tc.firstpage.subjectrecommend;
+package com.lldj.tc.firstpage;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,14 +27,14 @@ import butterknife.OnClick;
  */
 
 
-public class GameCellAdapter extends RecyclerView.Adapter {
+public class MainCellAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     private ArrayList<String> mlist = new ArrayList<>();
     private viewHolder mHolder = null;
     private int ViewType;
 
-    public GameCellAdapter(Context mContext, int _viewType) {
+    public MainCellAdapter(Context mContext, int _viewType) {
         this.mContext = mContext;
         this.ViewType = _viewType;
     }
@@ -117,7 +118,7 @@ public class GameCellAdapter extends RecyclerView.Adapter {
         @BindView(R.id.playvictoryicon1)
         ImageView playvictoryicon1;
         @BindView(R.id.bottomgamelayout)
-        RelativeLayout bottomgamelayout;
+        LinearLayout bottomgamelayout;
         @BindView(R.id.bottomoverlayout)
         LinearLayout bottomoverlayout;
 
@@ -127,18 +128,25 @@ public class GameCellAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick({R.id.gamebetlayout0, R.id.gamebetlayout1, R.id.gamebg})
+        @OnClick({R.id.gamebetlayout0, R.id.gamebetlayout1, R.id.gamebg, R.id.playcellbetlayout0, R.id.playcellbetlayout1, R.id.playcelllayout0, R.id.playcelllayout1})
         public void onViewClicked(View view) {
             switch (view.getId()) {
-                case R.id.gamebetlayout0:
-                    System.out.print("sssssssss");
-                    break;
-                case R.id.gamebetlayout1:
-                    System.out.print("sssssssss");
-                    break;
                 case R.id.gamebg:
                     MatchDetailActivity.launch(mContext, 0);
                     break;
+                case R.id.playcellbetlayout0:
+                    Toast.makeText(mContext, "hhhhhh", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.playcellbetlayout1:
+                    Toast.makeText(mContext, "ddddddd", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.playcelllayout0:
+                    Toast.makeText(mContext, "ffffff", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.playcelllayout1:
+                    Toast.makeText(mContext, "jjjjjjjj", Toast.LENGTH_SHORT).show();
+                    break;
+
             }
         }
     }

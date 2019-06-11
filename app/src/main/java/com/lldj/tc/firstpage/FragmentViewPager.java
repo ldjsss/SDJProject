@@ -31,7 +31,7 @@ public class FragmentViewPager extends BaseFragment {
     TabLayout tabLayout;
     @BindView(R.id.firstpage_viewpager)
     ViewPager firstpageViewpager;
-    private FirstPageViewPagerAdapter mPagerAdapter;
+    private MainPagerAdapter mPagerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class FragmentViewPager extends BaseFragment {
 
     //初始化viewpager
     public void initViewPager() {
-        mPagerAdapter = new FirstPageViewPagerAdapter(mContext, mContext.getSupportFragmentManager());
+        mPagerAdapter = new MainPagerAdapter(mContext, mContext.getSupportFragmentManager());
         firstpageViewpager.setAdapter(mPagerAdapter);
         tabLayout.setupWithViewPager(firstpageViewpager);
         definedTablayout();

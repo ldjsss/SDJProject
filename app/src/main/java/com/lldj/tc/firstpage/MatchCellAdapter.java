@@ -116,7 +116,7 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
         @BindView(R.id.playvictoryicon1)
         ImageView playvictoryicon1;
         @BindView(R.id.bottomgamelayout)
-        RelativeLayout bottomgamelayout;
+        LinearLayout bottomgamelayout;
         @BindView(R.id.bottomoverlayout)
         LinearLayout bottomoverlayout;
 //        @BindView(R.id.gameresult)
