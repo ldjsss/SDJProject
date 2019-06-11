@@ -12,14 +12,16 @@ import com.lldj.tc.firstpage.FragmentSet;
 import com.lldj.tc.firstpage.FragmentViewPager;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
+import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 
 
-public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMsgListener {
+public class MainUIActivity extends BaseActivity implements HandlerInter.HandleMsgListener {
 
     @BindView(R.id.mainflayout)
     FrameLayout mainflayout;
@@ -96,9 +98,12 @@ public class MainActivity2 extends BaseActivity implements HandlerInter.HandleMs
                 break;
             case HandlerType.LEFTBACK:
                 drawerLayout.closeDrawer(Gravity.LEFT);
+                break;
             case HandlerType.SHOWTOAST:
-
-                Toast.makeText(this, msg.getData().getString("msg"), Toast.LENGTH_SHORT).show();
+                ToastUtils.show_middle_pic(this, R.mipmap.cancle_icon, msg.getData().getString("msg"), ToastUtils.LENGTH_SHORT);
+                break;
+            case HandlerType.LOADING:
+                AppUtils.showLoading(mContext);
                 break;
         }
     }

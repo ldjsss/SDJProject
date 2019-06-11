@@ -7,13 +7,12 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lldj.tc.MainActivity2;
+import com.lldj.tc.MainUIActivity;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
@@ -77,7 +76,7 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
         if (mAdapter != null) mAdapter.handleMsg(msg);
         switch (msg.what) {
             case HandlerType.GOTOMAIN:
-                startActivity(new Intent(this, MainActivity2.class));
+                startActivity(new Intent(this, MainUIActivity.class));
                 finish();
                 break;
             case HandlerType.SHOWTOAST:

@@ -12,10 +12,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
+import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
@@ -66,8 +69,6 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
             subjectLrecycleview.setAdapter(lAdapter);
             subjectLrecycleview.setLScrollListener(this);
 
-            setFirstData();
-
             if (ViewType >1) {
                 middleFragment = new CalendarFragment();
             }
@@ -82,14 +83,6 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
         }
     }
 
-    private void setFirstData() {
-        for (int i = 0; i < 10; i++) {
-            mlist.add("测试");
-        }
-        mAdapter.changeData(mlist);
-        RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
@@ -99,68 +92,11 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
 
     @Override
     public void onRefresh() {
-        Clog.e("sssssss", " -----------xcl onRefresh = ");
-        mlist.clear();
-        setFirstData();
-        RxTimerUtil.timer(500, new RxTimerUtil.IRxNext() {
-            @Override
-            public void doNext(long number) {
-                //刷新完成
-                subjectLrecycleview.refreshComplete();
-            }
-
-            @Override
-            public void onComplete() {
-            }
-        });
-    }
-
-    @Override
-    protected void onFragmentVisibleChange(boolean isVisible) {
-        super.onFragmentVisibleChange(isVisible);
-        if (isVisible) {
-            Clog.e("sssssss", " -----------xcl isVisible = " + ViewType);
-            //   do things when fragment is visible
-            //    if (ListUtils.isEmpty(mDataList) && !isRefreshing()) {
-            //        setRefresh(true);
-            //        loadServiceData(false);
-        } else {
-            //        setRefresh(false);
-            Clog.e("sssssss", " -----------xcl ishide = " + ViewType);
-        }
-    }
-
-    @Override
-    public void onScrollUp() {
-    }
-
-    @Override
-    public void onScrollDown() {
-    }
-
-    @Override
-    public void onBottom() {
-        Log.e("打印", "滚动到底部");
-        LoadingFooter.State state = RecyclerViewStateUtils.getFooterViewState(subjectLrecycleview);
-        if (state == LoadingFooter.State.Loading) {
-            return;
-        }
-        if (mlist.size() < mTotal) {
-            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Loading, null);
-            loadData();
-        } else {
-            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.TheEnd, null);
-        }
-    }
-
-    @Override
-    public void onScrolled(int distanceX, int distanceY) {
-    }
-
-    public void loadData() {
+        HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
         RxTimerUtil.timer(2000, new RxTimerUtil.IRxNext() {
             @Override
             public void doNext(long number) {
+                AppUtils.hideLoading();
                 for (int i = 0; i < 10; i++) {
                     mlist.add("测试");
                 }
@@ -176,13 +112,44 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
             public void onComplete() {
             }
         });
-
     }
+
+    @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+        super.onFragmentVisibleChange(isVisible);
+        if (isVisible) {
+            Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
+                onRefresh();
+        } else {
+            Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
+        }
+    }
+
+    @Override
+    public void onScrollUp() { }
+
+    @Override
+    public void onScrollDown() { }
+
+    @Override
+    public void onBottom() {
+        Log.e("打印", "滚动到底部");
+        LoadingFooter.State state = RecyclerViewStateUtils.getFooterViewState(subjectLrecycleview);
+        if (state == LoadingFooter.State.Loading) { return; }
+        if (mlist.size() < mTotal) {
+            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Loading, null);
+            onRefresh();
+        } else {
+            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.TheEnd, null);
+        }
+    }
+
+    @Override
+    public void onScrolled(int distanceX, int distanceY) { }
 
     @Override
     public void selectView(int position) {
         super.onDestroyView();
         Log.e("currentPosition", "selectView currentPosition===" + position);
-
     }
 }
