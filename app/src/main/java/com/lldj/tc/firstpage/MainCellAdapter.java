@@ -53,7 +53,6 @@ public class MainCellAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         this.mHolder = (viewHolder) holder;
-
         bottomCommon(ViewType);
     }
 
@@ -148,6 +147,10 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     break;
 
             }
+        }
+
+        private void test(){
+            Toast.makeText(mContext, "test", Toast.LENGTH_SHORT).show();
         }
     }
 

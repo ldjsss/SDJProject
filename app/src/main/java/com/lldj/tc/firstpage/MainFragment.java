@@ -193,9 +193,4 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RxTimerUtil.cancel();
-    }
 }
