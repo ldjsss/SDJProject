@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.Gravity;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.lldj.tc.firstpage.BetDialog;
 import com.lldj.tc.firstpage.FragmentSet;
 import com.lldj.tc.firstpage.FragmentViewPager;
 import com.lldj.tc.handler.HandlerType;
@@ -105,6 +105,9 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
             case HandlerType.LOADING:
                 AppUtils.showLoading(mContext);
                 break;
+            case HandlerType.SHOWBETDIA:
+                new BetDialog(this,R.style.DialogTheme).show();
+                break;
         }
     }
 
@@ -114,6 +117,7 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
         //销毁移除所有消息，避免内存泄露
         mHandler.removeCallbacks(null);
     }
+
 }
 
 //post请求数据

@@ -12,6 +12,7 @@ import android.widget.VideoView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lldj.tc.BetActivity;
 import com.lldj.tc.MainUIActivity;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
@@ -77,6 +78,7 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
         switch (msg.what) {
             case HandlerType.GOTOMAIN:
                 startActivity(new Intent(this, MainUIActivity.class));
+//                startActivity(new Intent(this, BetActivity.class));
                 finish();
                 break;
             case HandlerType.SHOWTOAST:

@@ -7,8 +7,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".SDJApplication"
@@ -21,13 +21,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
-
-        <meta-data android:name="CP_CHANNEL" android:value="CP_SDJ_A100"/>
+        <meta-data
+            android:name="CP_CHANNEL"
+            android:value="CP_SDJ_A100" />
 
         <activity
             android:name=".firstpage.MatchDetailActivity"
             android:label="@string/title_activity_match_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -53,7 +54,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".guide.GuideActivity"
+            android:name=".BetActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainUIActivity"
@@ -62,68 +63,6 @@
         <activity
             android:name=".login.LoginRecycleView"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".login.VerifyCodeLogin.VerifyCodeLoginActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".webview.WebviewNormalActivity"
-            android:screenOrientation="portrait" />
-        <!--<activity-->
-            <!--android:name=".register.RegisterFrament"-->
-            <!--android:windowSoftInputMode="adjustNothing"-->
-            <!--android:screenOrientation="portrait" />-->
-        <activity
-            android:name=".mine.InputNameActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/transparent_activity"
-            android:windowSoftInputMode="stateAlwaysVisible" />
-        <activity
-            android:name=".mine.msg.MsgActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mine.qrcode.QRCodeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mine.info.InfoDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mine.EditNameActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".photo.OpenCameraOrGalleryActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/transparent_activity" />
-        <activity
-            android:name=".cropimage.CropImageActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mine.verify.VerifyTipActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mine.verify.VerifyInputIdentityInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mine.verify.VerifyEnsureActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mine.verify.VerifyFaceActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mine.verify.VerifySuccActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mine.verify.VerifySuccDialogActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/transparent_activity" />
-        <activity
-            android:name=".mine.verify.job.JobVerifyNameActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mine.verify.job.JobVerifyJobActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mine.verify.job.JobVerifyCityActivity"
             android:screenOrientation="portrait" />
     </application>
 

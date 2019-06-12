@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="45dp"
+       android:background="@drawable/rec_bettitle">
+
+      <TextView
+          android:layout_width="40dp"
+          android:layout_height="25dp"
+          android:id="@+id/gamebetcount"
+          android:layout_centerVertical="true"
+          android:layout_marginStart="10dp"
+          android:text="1"
+          android:textSize="18sp"
+          android:textColor="@color/color_cdc3b3"
+          android:gravity="center"
+          android:background="@drawable/rec_stroke_round4_969696" />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/deleteAll"
+          android:textSize="18sp"
+          android:layout_centerVertical="true"
+          android:layout_toRightOf="@id/gamebetcount"
+          android:layout_marginLeft="@dimen/dp_10"
+          android:textColor="@color/black"/>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="×"
+          android:textSize="30sp"
+          android:layout_centerVertical="true"
+          android:layout_alignParentEnd="true"
+          android:layout_marginEnd="@dimen/dp_20"
+          android:id="@+id/close"
+          android:textColor="@color/black"/>
+      <View
+          android:layout_width="@dimen/dp_1"
+          android:layout_height="match_parent"
+          android:layout_toLeftOf="@+id/close"
+          android:layout_marginEnd="@dimen/dp_20"
+          android:id="@+id/closeline"
+          android:background="@color/black"/>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_toLeftOf="@+id/closeline"
+          android:textSize="18sp"
+          android:layout_centerVertical="true"
+          android:text="@string/moneyHave"
+          android:layout_marginEnd="@dimen/dp_10"
+          android:textColor="@color/black"/>
+
+   </RelativeLayout>
+
+   <ExpandableListView
+       android:id="@+id/expandableListView"
+       android:layout_width="match_parent"
+       android:layout_height="180dp"
+       android:layout_weight = "1"/>
+   <View
+       android:layout_width="match_parent"
+       android:layout_height="80dp"
+       android:layout_weight = "1"/>
+
+</LinearLayout>

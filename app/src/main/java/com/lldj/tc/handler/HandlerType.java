@@ -15,12 +15,13 @@ public class HandlerType {
     public static final int SHOWTOAST = 5;
     public static final int REGISTSUCC = 6;
     public static final int LOADING = 7;
+    public static final int SHOWBETDIA = 8;
 
     public HandlerType(@Season int season) {
         System.out.println("Season :" + season);
     }
 
-    @IntDef({LEFTMENU, LEFTBACK, REMOVERES, GOTOMAIN, SHOWTOAST, REGISTSUCC, LOADING})
+    @IntDef({LEFTMENU, LEFTBACK, REMOVERES, GOTOMAIN, SHOWTOAST, REGISTSUCC, LOADING, SHOWBETDIA})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Season {
     }

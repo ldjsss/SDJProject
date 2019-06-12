@@ -41,6 +41,8 @@
     <string name="passwordHaveChange">密码已重置</string>
     <string name="loginsucc">登陆成功</string>
     <string name="loginfail">登陆失败</string>
+    <string name="deleteAll">删除全部</string>
+    <string name="moneyHave">余额 </string>
 
 
 
