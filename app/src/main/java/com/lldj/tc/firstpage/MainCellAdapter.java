@@ -135,7 +135,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     MatchDetailActivity.launch(mContext, 0);
                     break;
                 case R.id.playcellbetlayout0:
-                    Toast.makeText(mContext, "hhhhhh", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "hhhhhh" + mlist.get(getAdapterPosition()-1), Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.playcellbetlayout1:
                     Toast.makeText(mContext, "ddddddd", Toast.LENGTH_SHORT).show();

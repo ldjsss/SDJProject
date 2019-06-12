@@ -33,8 +33,9 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
 
     private MainCellAdapter mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
-    private ArrayList<String> mlist = new ArrayList<>();
-    private int mTotal = 30;
+    private ArrayList<String> mlist = new ArrayList<>(); //展示数据列表
+    private ArrayList<String> alist = new ArrayList<>(); //全部数据列表
+    private int pageSize = 10;
     private int ViewType;
     BaseFragment middleFragment;
 
@@ -61,7 +62,6 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
 
         layoutBoard.setId( 1000 + ViewType); //为解决复用后id重复，动态添加控件时加跑偏
 
-        //第一次加载数据
         if(lAdapter == null){
             subjectLrecycleview.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
             mAdapter = new MainCellAdapter(mContext, ViewType);
@@ -91,21 +91,30 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh() {//请求全部数据
+        Clog.e("onRefresh", "onRefresh = " + ViewType);
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-        RxTimerUtil.timer(2000, new RxTimerUtil.IRxNext() {
+        RxTimerUtil.timer(100, new RxTimerUtil.IRxNext() {
             @Override
             public void doNext(long number) {
                 AppUtils.hideLoading();
-                for (int i = 0; i < 10; i++) {
-                    mlist.add("测试");
+                mlist.clear();
+                alist.clear();
+
+                for (int i = 0; i < 16; i++) {
+                    alist.add("测试" + i);
                 }
+
+                int t = pageSize;
+                if (alist.size() < t) t = alist.size();
+                for (int i = 0; i < t; i++) {
+                    mlist.add(alist.get(i));
+                }
+
                 mAdapter.changeData(mlist);
-                RecyclerViewStateUtils.setFooterViewState(subjectLrecycleview, LoadingFooter.State.Normal);
-                Log.e("数组长度", mlist.size() + "==");
-                if (mlist.size() >= mTotal) {
-                    RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.TheEnd, null);
-                }
+                RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
+                //刷新完成
+                subjectLrecycleview.refreshComplete();
             }
 
             @Override
@@ -126,30 +135,67 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
     }
 
     @Override
-    public void onScrollUp() { }
+    public void onScrollUp() {
+    }
 
     @Override
-    public void onScrollDown() { }
+    public void onScrollDown() {
+    }
 
     @Override
     public void onBottom() {
         Log.e("打印", "滚动到底部");
         LoadingFooter.State state = RecyclerViewStateUtils.getFooterViewState(subjectLrecycleview);
-        if (state == LoadingFooter.State.Loading) { return; }
-        if (mlist.size() < mTotal) {
-            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Loading, null);
-            onRefresh();
+        if (state == LoadingFooter.State.Loading) {
+            return;
+        }
+        if (mlist.size() < alist.size()) {
+            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.Loading, null);
+            loadData();
         } else {
-            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.TheEnd, null);
+            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
         }
     }
 
     @Override
     public void onScrolled(int distanceX, int distanceY) { }
 
+    public void loadData() {
+
+        RxTimerUtil.timer(2000, new RxTimerUtil.IRxNext() {
+            @Override
+            public void doNext(long number) {
+                int mLen = mlist.size();
+                int t = pageSize;
+                if (mLen + t > alist.size()) t = alist.size() - mLen;
+                for (int i = 0; i < t; i++) {
+                    mlist.add(alist.get(mLen + i));
+                }
+                mAdapter.changeData(mlist);
+                RecyclerViewStateUtils.setFooterViewState(subjectLrecycleview, LoadingFooter.State.Normal);
+                Log.e("数组长度", mlist.size() + "==");
+                if (mlist.size() >= alist.size()) {
+                    RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
+                }
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });
+
+    }
+
     @Override
     public void selectView(int position) {
         super.onDestroyView();
         Log.e("currentPosition", "selectView currentPosition===" + position);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RxTimerUtil.cancel();
     }
 }
