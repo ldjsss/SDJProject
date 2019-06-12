@@ -12,7 +12,6 @@ import android.widget.VideoView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lldj.tc.BetActivity;
 import com.lldj.tc.MainUIActivity;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;

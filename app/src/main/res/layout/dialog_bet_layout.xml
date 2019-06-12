@@ -15,7 +15,7 @@
           android:layout_height="25dp"
           android:id="@+id/gamebetcount"
           android:layout_centerVertical="true"
-          android:layout_marginStart="10dp"
+          android:layout_marginStart="20dp"
           android:text="1"
           android:textSize="18sp"
           android:textColor="@color/color_cdc3b3"
@@ -29,8 +29,8 @@
           android:textSize="18sp"
           android:layout_centerVertical="true"
           android:layout_toRightOf="@id/gamebetcount"
-          android:layout_marginLeft="@dimen/dp_10"
-          android:textColor="@color/black"/>
+          android:layout_marginLeft="@dimen/dp_20"
+          android:textColor="@color/color_1a1c26"/>
 
       <TextView
           android:layout_width="wrap_content"
@@ -41,14 +41,14 @@
           android:layout_alignParentEnd="true"
           android:layout_marginEnd="@dimen/dp_20"
           android:id="@+id/close"
-          android:textColor="@color/black"/>
+          android:textColor="@color/color_1a1c26"/>
       <View
           android:layout_width="@dimen/dp_1"
           android:layout_height="match_parent"
           android:layout_toLeftOf="@+id/close"
           android:layout_marginEnd="@dimen/dp_20"
           android:id="@+id/closeline"
-          android:background="@color/black"/>
+          android:background="@color/color_1a1c26"/>
 
       <TextView
           android:layout_width="wrap_content"
@@ -58,18 +58,18 @@
           android:layout_centerVertical="true"
           android:text="@string/moneyHave"
           android:layout_marginEnd="@dimen/dp_10"
-          android:textColor="@color/black"/>
+          android:textColor="@color/color_1a1c26"/>
 
    </RelativeLayout>
 
    <ExpandableListView
        android:id="@+id/expandableListView"
        android:layout_width="match_parent"
-       android:layout_height="180dp"
+       android:layout_height="wrap_content"
        android:layout_weight = "1"/>
    <View
        android:layout_width="match_parent"
-       android:layout_height="80dp"
+       android:layout_height="65dp"
        android:layout_weight = "1"/>
 
 </LinearLayout>
