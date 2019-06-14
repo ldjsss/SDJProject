@@ -43,7 +43,10 @@
     <string name="loginfail">登陆失败</string>
     <string name="deleteAll">删除全部</string>
     <string name="moneyHave">余额 </string>
-
+    <string name="inputMoney">输入金额 </string>
+    <string name="willget">预计返回 </string>
+    <string name="betmax">最大 </string>
+    <string name="sure">确认 </string>
 
 
 

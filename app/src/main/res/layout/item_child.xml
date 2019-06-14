@@ -1,21 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_child"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@mipmap/ic_launcher"/>
-
-    <TextView
-        android:id="@+id/tv_child"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="item text"
-        android:textColor="#000000"/>
+        android:layout_height="2dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/color_bg" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginTop="5dp"
+        android:id="@+id/itemlayout1"
+        android:orientation = "horizontal">
+
+        <TextView
+            android:id="@+id/tv_child1"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="1"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/color_8e6c37"
+            android:background="@drawable/rec_betcountbtn"
+            android:tag="tv1"
+            android:layout_weight="1"/>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_child2"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="2"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/color_8e6c37"
+            android:background="@drawable/rec_betcountbtn"
+            android:tag="tv2"
+            android:layout_weight="1"/>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_child3"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="3"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/color_8e6c37"
+            android:background="@drawable/rec_betcountbtn"
+            android:layout_weight="1"
+            android:tag="tv3" />
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_child4"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="4"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/color_8e6c37"
+            android:background="@drawable/rec_betcountbtn"
+            android:layout_centerHorizontal="true"
+            android:tag="tv4"
+            android:layout_weight="1"/>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_child5"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="5"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/color_8e6c37"
+            android:background="@drawable/rec_betcountbtn"
+            android:tag="tv5"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_child11"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="@string/betmax"
+            android:textColor="@color/color_8e6c37"
+            android:gravity="center"
+            android:tag="tv10"
+            android:background="@drawable/rec_betcountbtn"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_child12"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="delete"
+            android:textColor="@color/color_8e6c37"
+            android:gravity="center"
+            android:background="@drawable/rec_betcountbtn"
+            android:tag="tv11"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/itemlayout1"
+        android:id="@+id/itemlayout2">
+
+        <TextView
+            android:id="@+id/tv_child6"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="6"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/color_8e6c37"
+            android:background="@drawable/rec_betcountbtn"
+            android:tag="tv6"
+            android:layout_weight="1"/>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_child7"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="7"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/color_8e6c37"
+            android:background="@drawable/rec_betcountbtn"
+            android:tag="tv7"
+            android:layout_weight="1"/>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_child8"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="8"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/color_8e6c37"
+            android:background="@drawable/rec_betcountbtn"
+            android:layout_weight="1"
+            android:tag="tv8" />
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_child9"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="9"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/color_8e6c37"
+            android:background="@drawable/rec_betcountbtn"
+            android:layout_centerHorizontal="true"
+            android:tag="tv9"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_child0"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="0"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/color_8e6c37"
+            android:background="@drawable/rec_betcountbtn"
+            android:tag="tv0"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_child13"
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:text="@string/sure"
+            android:textColor="@color/color_8e6c37"
+            android:gravity="center"
+            android:background="@drawable/rec_betcountbtn"
+            android:tag="tv12"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/itemlayout2"
+        android:background="@color/color_bg"
+        android:layout_marginTop="5dp"/>
+
+</RelativeLayout>

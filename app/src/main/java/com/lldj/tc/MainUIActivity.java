@@ -1,8 +1,11 @@
 package com.lldj.tc;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.Gravity;
+import android.view.Window;
 import android.widget.FrameLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;

@@ -42,7 +42,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:src="@mipmap/main_logo" />
-    <!--手机号-->
+    <!--账号-->
     <include
         layout="@layout/res_tel_include_layout"
         android:layout_width="match_parent"
