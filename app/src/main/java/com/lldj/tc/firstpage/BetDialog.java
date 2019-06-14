@@ -2,6 +2,7 @@ package com.lldj.tc.firstpage;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -168,23 +169,25 @@ public class BetDialog extends Dialog {
             if (groupPosition < 0 || tag == null) return;
 
             String _tag = tag.substring(2, tag.length());
+            String text = editTexts.get(groupPosition) != null ? (String)editTexts.get(groupPosition) : "";
             Clog.e("btnClick", "groupPosition" + groupPosition + "tag" + _tag);
             switch (_tag){
                 case "10":
 
                     break;
                 case "11":
-
+                    if(TextUtils.isEmpty(text)) return;
+                    text = text.substring(0,text.length() - 1);
+                    editTexts.put(groupPosition, text);
                     break;
                 case "12":
 
                     break;
                 default:
-                    String text = editTexts.get(groupPosition) != null ? (String)editTexts.get(groupPosition) : "";
                     editTexts.put(groupPosition, text + _tag);
-                    notifyDataSetChanged();
                     break;
             }
+            notifyDataSetChanged();
         }
     }
 
