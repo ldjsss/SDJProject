@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.MainUIActivity;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
@@ -23,6 +27,7 @@ import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
+import com.lldj.tc.util.AppURLCode;
 
 import java.util.ArrayList;
 
@@ -76,7 +81,17 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
         if (mAdapter != null) mAdapter.handleMsg(msg);
         switch (msg.what) {
             case HandlerType.GOTOMAIN:
-                startActivity(new Intent(this, MainUIActivity.class));
+                HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
+                HttpMsg.sendGetUserInfo(SharePreUtils.getInstance().getToken(mContext), SharePreUtils.getInstance().getUserId(mContext), new HttpMsg.Listener(){
+                    @Override
+                    public void onFinish(JsonBean res) {
+                        if(res.getCode() == AppURLCode.succ){
+                            SharePreUtils.getInstance().setUserInfo(mContext, res.getResult().getOpenid(), res.getResult().getMobile(), res.getResult().getMoney(), res.getResult().getUsername());
+                            Toast.makeText(mContext, getResources().getString(R.string.getUseInfoSucc),Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(mContext, MainUIActivity.class));
+                        }
+                    }
+                });
 //                startActivity(new Intent(this, BetActivity.class));
                 finish();
                 break;

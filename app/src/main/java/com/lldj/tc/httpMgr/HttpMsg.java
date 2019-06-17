@@ -99,6 +99,14 @@ public class HttpMsg {
         HttpTool.httpPost(baseUrl + "register/forget", URLParams, getListener(callbackListener));
     }
 
+    public static void sendGetUserInfo(final String access_token, final String openid, Listener callbackListener) {
+        Map<String,String> URLParams = new HashMap();
+        URLParams.put("access_token", access_token);
+        URLParams.put("openid", openid);
+
+        HttpTool.httpPost(baseUrl2 + "user/info", URLParams, getListener(callbackListener));
+    }
+
     public interface Listener {
         void onFinish(JsonBean msg);
     }

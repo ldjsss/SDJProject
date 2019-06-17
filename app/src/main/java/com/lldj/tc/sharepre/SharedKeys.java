@@ -15,6 +15,8 @@ public class SharedKeys {
     public static final String HEAD_URL = "head_url";
     //手机
     public static final String PHONE = "phone";
+    //
+    public static final String MONEY = "money";
     //科室
     public static final String TOKEN = "token";
     //

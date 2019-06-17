@@ -12,21 +12,13 @@ import android.view.WindowManager;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
-
 import com.lldj.tc.R;
 import com.lldj.tc.toolslibrary.util.Clog;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 import static android.view.ViewGroup.FOCUS_BEFORE_DESCENDANTS;
 
@@ -119,18 +111,13 @@ public class BetDialog extends Dialog {
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
-            if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.item_group, null);
-            } else {
-
-            }
-
+            if (convertView == null) { convertView = getLayoutInflater().inflate(R.layout.item_group, null); }
             EditText tv_group = (EditText) convertView.findViewById(R.id.betinput_et);
 
             String text = editTexts.get(groupPosition) != null ? (String)editTexts.get(groupPosition) : "";
             tv_group.setText(text);
 
-            Clog.e("ggggggg" + groupPosition, " hhhhhhh" + isExpanded);
+            Clog.e("ggggggg " + groupPosition, " hhhhhhh " + isExpanded);
 
             return convertView;
         }
@@ -139,9 +126,7 @@ public class BetDialog extends Dialog {
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-            if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.item_child, null);
-            }
+            if (convertView == null) { convertView = getLayoutInflater().inflate(R.layout.item_child, null); }
 
             for (int i = 0; i <13; i++){
                 TextView tv_child = (TextView)convertView.findViewWithTag("tv" + i);
@@ -161,7 +146,7 @@ public class BetDialog extends Dialog {
         @Override
         public boolean isChildSelectable(int groupPosition, int childPosition) {
 
-            Clog.e("sssssssssss", "ffffffffffff" + groupPosition + "ddd" + childPosition);
+            Clog.e("sssssssssss", "ffffffffffff " + groupPosition + "ddd " + childPosition);
             return true;
         }
 
@@ -181,9 +166,10 @@ public class BetDialog extends Dialog {
                     editTexts.put(groupPosition, text);
                     break;
                 case "12":
-
+                    expandableListView.getLayoutParams().height = expandableListView.getLayoutParams().height + 30;
                     break;
                 default:
+                    if(TextUtils.isEmpty(text) && _tag.equalsIgnoreCase("0")) return;
                     editTexts.put(groupPosition, text + _tag);
                     break;
             }

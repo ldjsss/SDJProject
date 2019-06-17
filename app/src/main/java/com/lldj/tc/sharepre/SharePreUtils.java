@@ -48,6 +48,14 @@ public class SharePreUtils {
         return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.NICK_NAME, "");
     }
 
+    public static void setMoney(Context context, String money) {
+        SharedPreferencesUtil.setValue(context, SharedKeys.MONEY, money);
+    }
+
+    public static String getMoney(Context context) {
+        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.MONEY, "");
+    }
+
     public static void setPhone(Context context, String phone) {
         SharedPreferencesUtil.setValue(context, SharedKeys.PHONE, phone);
     }
@@ -104,5 +112,12 @@ public class SharePreUtils {
     public static void setLoginInfo(Context context, final String token, final String expires_in, final String openid) {
         setUserId(context, openid);
         setToken(context, token);
+    }
+
+    public static void setUserInfo(Context context, final String openid, final String mobile, final String money, final String username) {
+        setUserId(context, openid);
+        setPhone(context, mobile);
+        setName(context, username);
+        setMoney(context, money);
     }
 }
