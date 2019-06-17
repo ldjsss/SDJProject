@@ -1,6 +1,10 @@
 package com.lldj.tc.firstpage;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +18,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.firstpage.MatchDetailActivity;
 import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -32,7 +41,7 @@ import butterknife.OnClick;
 public class MainCellAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
-    private ArrayList<String> mlist = new ArrayList<>();
+    private ArrayList<Results> mlist = new ArrayList<>();
     private viewHolder mHolder = null;
     private int ViewType;
 
@@ -41,7 +50,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         this.ViewType = _viewType;
     }
 
-    public void changeData(ArrayList<String> plist) {
+    public void changeData(ArrayList<Results> plist) {
         mlist = plist;
         notifyDataSetChanged();
     }
@@ -136,7 +145,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     MatchDetailActivity.launch(mContext, 0);
                     break;
                 case R.id.playcellbetlayout0:
-                    Toast.makeText(mContext, "hhhhhh" + mlist.get(getAdapterPosition()-1), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "hhhhhh" + mlist.get(getAdapterPosition()-1).getGame_id(), Toast.LENGTH_SHORT).show();
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
                     break;
                 case R.id.playcellbetlayout1:
@@ -152,8 +161,49 @@ public class MainCellAdapter extends RecyclerView.Adapter {
             }
         }
 
+
+        public void getImageBitmap(String url, ImageView imageView) {
+
+            new Thread(new Runnable(){
+                @Override
+                public void run() {
+                    try {
+                        URL imgUrl = new URL(url);
+                        HttpURLConnection conn = (HttpURLConnection) imgUrl
+                                .openConnection();
+                        conn.setDoInput(true);
+                        conn.connect();
+                        InputStream is = conn.getInputStream();
+                        Bitmap bitmap = BitmapFactory.decodeStream(is);
+                        is.close();
+
+                        imageView.post(new Runnable(){
+                            @Override
+                            public void run() {
+                                imageView.setImageBitmap(bitmap) ;
+                            }}) ;
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }).start()  ;
+
+
+        }
+
         //刷新底部显示状态 0 只显示战队，无倍注显示，无法押获胜  显示战队和倍注，未开始状态 1 显示战队和倍注，滚盘状态 / 显示战队，锁盘，滚盘状态 3 已结束
         public void bottomCommon(int _type) {
+
+            Results _data = mlist.get(getAdapterPosition()-1);
+            gamename.setText(_data.getTournament_name());
+            gamenamecount.setText("/ " + _data.getRound());
+            gameplaycount.setText("+" + _data.getPlay_count());
+
+            getImageBitmap(_data.getTeam()[0].getTeam_logo(), imgplayicon0);
+
             switch (_type) {
                 case 0:
                     gamebetlayout0.setVisibility(View.GONE);

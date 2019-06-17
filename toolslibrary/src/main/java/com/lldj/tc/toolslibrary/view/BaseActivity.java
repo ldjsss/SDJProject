@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 
 
 public abstract class BaseActivity extends FragmentActivity{
@@ -68,6 +69,7 @@ public abstract class BaseActivity extends FragmentActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        AppUtils.hideLoading();
     }
 
     /**

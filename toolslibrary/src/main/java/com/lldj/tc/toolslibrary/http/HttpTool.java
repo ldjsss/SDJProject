@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.lldj.tc.toolslibrary.util.Clog;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,6 +26,7 @@ import java.util.Set;
 public class HttpTool {
     private static int timeout = 8000;
     public static void sendGet(final String url, final msgListener listener) {
+        Clog.e("url", url);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -34,25 +37,34 @@ public class HttpTool {
                     connection.setRequestMethod("GET");
                     connection.setConnectTimeout(timeout);
                     connection.setReadTimeout(timeout);
-                    InputStream in = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                    StringBuilder response = new StringBuilder();
+//                    InputStream in = connection.getInputStream();
+//                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+//                    StringBuilder response = new StringBuilder();
 
-                    String line = "";
                     final int code = connection.getResponseCode();
-                    if(HttpURLConnection.HTTP_OK == code){
-                        while ((line = reader.readLine()) != null) {
-                            response.append(line);
+                    StringBuffer buffer = new StringBuffer();
+                    if(code == HttpURLConnection.HTTP_OK)
+                    {
+                        InputStreamReader in = new InputStreamReader(connection.getInputStream());
+                        BufferedReader bf = new BufferedReader(in);
+
+                        String temp;
+                        while ((temp = bf.readLine()) != null) {
+                            buffer.append(temp);
+                            buffer.append("\n");
                         }
-                    }else{}
-                    final String ret = line;
+                        Log.w("HTTP", "buffer" + buffer.toString());
+
+                        in.close();
+                    }
+
+                    final String ret = buffer.toString();
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
                             listener.onFinish(code, ret);
                         }
                     });
-                    in.close();  //关闭创建的流
                 } catch (Exception e) {
                     e.printStackTrace();
                     new Handler(Looper.getMainLooper()).post(new Runnable() {

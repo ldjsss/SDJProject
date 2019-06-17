@@ -24,6 +24,7 @@ import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
+import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.register.ForgetFrament;
 import com.lldj.tc.register.RegisterFrament;
 import com.lldj.tc.sharepre.SharePreUtils;
@@ -183,7 +184,8 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
         }
 
         private void saveLoginData(JsonBean res) {
-            SharePreUtils.getInstance().setLoginInfo(mContext, res.getResult().getAccess_token(), res.getResult().getExpires_in(), res.getResult().getOpenid());
+            Results ret = (Results)res.getResult();
+            SharePreUtils.getInstance().setLoginInfo(mContext, ret.getAccess_token(), ret.getExpires_in(), ret.getOpenid());
             Toast.makeText(mContext, mContext.getResources().getString(R.string.loginsucc), Toast.LENGTH_SHORT).show();
             HandlerInter.getInstance().sendEmptyMessage(HandlerType.GOTOMAIN);
 

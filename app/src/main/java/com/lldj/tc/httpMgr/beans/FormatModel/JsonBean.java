@@ -1,9 +1,9 @@
 package com.lldj.tc.httpMgr.beans.FormatModel;
 
-public class JsonBean {
+public class JsonBean <T>{
     private int code = -9999;
     private String message = "";
-    private Results result;
+    private T result;
 
     public int getCode() { return code; }
     public void setCode(int code) {
@@ -14,12 +14,13 @@ public class JsonBean {
         this.message = message;
     }
 
-    public Results getResult() {
+    public T getResult() {
         return result;
     }
-    public void setResults(Results result) {
+    public void setResults(T result) {
         this.result = result;
     }
+
 }
 
 

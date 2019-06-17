@@ -6,23 +6,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.httpMgr.beans.FormatModel.JsonBeans;
+import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
-import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
+import com.lldj.tc.util.AppURLCode;
+
 import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -33,8 +40,8 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
 
     private MainCellAdapter mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
-    private ArrayList<String> mlist = new ArrayList<>(); //展示数据列表
-    private ArrayList<String> alist = new ArrayList<>(); //全部数据列表
+    private Results[] alist; //展示数据列表
+    private ArrayList<Results> mlist = new ArrayList<>(); //全部数据列表
     private int pageSize = 10;
     private int ViewType;
     BaseFragment middleFragment;
@@ -94,31 +101,28 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
     public void onRefresh() {//请求全部数据
         Clog.e("onRefresh", "onRefresh = " + ViewType);
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-        RxTimerUtil.timer(100, new RxTimerUtil.IRxNext() {
+
+        HttpMsg.sendGetMatchList(1, new HttpMsg.Listener2(){
             @Override
-            public void doNext(long number) {
-                AppUtils.hideLoading();
-                mlist.clear();
-                alist.clear();
+            public void onFinish(JsonBeans res) {
+                if(res.getCode() == AppURLCode.succ){
+                    mlist.clear();
 
-                for (int i = 0; i < 16; i++) {
-                    alist.add("测试" + i);
+                    Results[] _list = res.getResult();
+                    alist = new Results[_list.length];
+
+                    System.arraycopy(_list, 0, alist, 0, _list.length);
+
+                    int t = alist.length > pageSize ? pageSize : alist.length;
+                    for (int i = 0; i < t; i++) {
+                        mlist.add(alist[i]);
+                    }
+
+                    mAdapter.changeData(mlist);
+                    RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
+                    subjectLrecycleview.refreshComplete(); //刷新完成
+                    Toast.makeText(mContext, getResources().getString(R.string.getGameListSucc),Toast.LENGTH_SHORT).show();
                 }
-
-                int t = pageSize;
-                if (alist.size() < t) t = alist.size();
-                for (int i = 0; i < t; i++) {
-                    mlist.add(alist.get(i));
-                }
-
-                mAdapter.changeData(mlist);
-                RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
-                //刷新完成
-                subjectLrecycleview.refreshComplete();
-            }
-
-            @Override
-            public void onComplete() {
             }
         });
     }
@@ -149,7 +153,7 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
         if (state == LoadingFooter.State.Loading) {
             return;
         }
-        if (mlist.size() < alist.size()) {
+        if (mlist.size() < alist.length) {
             RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.Loading, null);
             loadData();
         } else {
@@ -167,14 +171,14 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
             public void doNext(long number) {
                 int mLen = mlist.size();
                 int t = pageSize;
-                if (mLen + t > alist.size()) t = alist.size() - mLen;
+                if (mLen + t > alist.length) t = alist.length - mLen;
                 for (int i = 0; i < t; i++) {
-                    mlist.add(alist.get(mLen + i));
+                    mlist.add(alist[mLen + i]);
                 }
                 mAdapter.changeData(mlist);
                 RecyclerViewStateUtils.setFooterViewState(subjectLrecycleview, LoadingFooter.State.Normal);
                 Log.e("数组长度", mlist.size() + "==");
-                if (mlist.size() >= alist.size()) {
+                if (mlist.size() >= alist.length) {
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
                 }
             }

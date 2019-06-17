@@ -4,28 +4,59 @@ import android.os.Bundle;
 import android.os.Message;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
+import com.lldj.tc.httpMgr.beans.FormatModel.JsonBeans;
+import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.util.AppURLCode;
 
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HttpMsg {
     public static String baseUrl = "http://192.168.1.116:9001/";
     public static String baseUrl2 = "http://192.168.1.116:9002/";
+    public static String baseUrl3 = "http://192.168.1.116:9004/";
 
     private static void toastMess(String msg){
+        if(msg == null) msg = "";
         Message message=new Message();
         Bundle bundle=new Bundle();
         bundle.putString("msg", msg);
         message.setData(bundle);
         message.what=HandlerType.SHOWTOAST;
         HandlerInter.getInstance().sendMessage(message);
+    }
+
+    public static HttpTool.msgListener getListener2(Listener2 listener){
+        return new HttpTool.msgListener(){
+            @Override
+            public void onFinish(int code, String msg) {
+
+                if(code == HttpURLConnection.HTTP_OK) {
+                    Gson gson = new Gson();
+                    JsonBeans jsonBean = gson.fromJson(msg, JsonBeans.class);
+
+//                    JsonBean<List<Results>> jsonBean = new Gson().fromJson(msg, new TypeToken<JsonBean<Results>>() {}.getType());//new Gson().fromJson(msg, jsonType);
+//                    JsonBean<Results> jsonBean = new Gson().fromJson(msg, new TypeToken<Results>() {}.getType());
+                    if(jsonBean.getCode() != AppURLCode.succ){
+                        toastMess("ERROR CODE " + jsonBean.getCode() + jsonBean.getMessage());
+                    }
+                    listener.onFinish(jsonBean);
+
+                }else{
+                    toastMess("NET ERROR CODE" + code + msg);
+                }
+                AppUtils.getInstance().hideLoading();
+            }
+        };
     }
 
     public static HttpTool.msgListener getListener(Listener listener){
@@ -35,7 +66,9 @@ public class HttpMsg {
 
                 if(code == HttpURLConnection.HTTP_OK) {
                     Gson gson = new Gson();
-                    JsonBean jsonBean = gson.fromJson(msg, JsonBean.class);  //把JSON数据转化为对象
+//                    JsonBean jsonBean = gson.fromJson(msg, JsonBean.class);  //把JSON数据转化为对象
+
+                    JsonBean<Results> jsonBean = new Gson().fromJson(msg, new TypeToken<JsonBean<Results>>() {}.getType());
                     if(jsonBean.getCode() != AppURLCode.succ){
                         toastMess("ERROR CODE " + jsonBean.getCode() + jsonBean.getMessage());
                     }
@@ -43,7 +76,7 @@ public class HttpMsg {
                 }else{
                     toastMess("NET ERROR CODE" + code + msg);
                 }
-                AppUtils.hideLoading();
+                AppUtils.getInstance().hideLoading();
             }
         };
     }
@@ -107,7 +140,21 @@ public class HttpMsg {
         HttpTool.httpPost(baseUrl2 + "user/info", URLParams, getListener(callbackListener));
     }
 
+    /////////////////////////
+
+    public static void sendGetGameList(Listener2 callbackListener) {
+        HttpTool.sendGet(baseUrl3 + "game", getListener2(callbackListener));
+    }
+
+    public static void sendGetMatchList(int type, Listener2 callbackListener) {
+        HttpTool.sendGet(baseUrl3 + "match/type/" + type, getListener2(callbackListener));
+    }
+
     public interface Listener {
         void onFinish(JsonBean msg);
+    }
+
+    public interface Listener2 {
+        void onFinish(JsonBeans msg);
     }
 }

@@ -18,6 +18,7 @@ import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
+import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
@@ -30,6 +31,8 @@ import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.util.AppURLCode;
 
 import java.util.ArrayList;
+
+import javax.xml.transform.Result;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,7 +89,8 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
                     @Override
                     public void onFinish(JsonBean res) {
                         if(res.getCode() == AppURLCode.succ){
-                            SharePreUtils.getInstance().setUserInfo(mContext, res.getResult().getOpenid(), res.getResult().getMobile(), res.getResult().getMoney(), res.getResult().getUsername());
+                            Results ret = (Results)res.getResult();
+                            SharePreUtils.getInstance().setUserInfo(mContext, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername());
                             Toast.makeText(mContext, getResources().getString(R.string.getUseInfoSucc),Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(mContext, MainUIActivity.class));
                         }
