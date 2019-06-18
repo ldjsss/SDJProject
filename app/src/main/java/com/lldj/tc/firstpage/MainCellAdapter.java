@@ -2,6 +2,7 @@ package com.lldj.tc.firstpage;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
-import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
+import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
 import com.lldj.tc.httpMgr.beans.FormatModel.match.Team;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
@@ -41,11 +42,13 @@ public class MainCellAdapter extends RecyclerView.Adapter {
     private viewHolder mHolder = null;
     private int ViewType;
     private String[] statusText;
+    private int[] winBmp;
 
     public MainCellAdapter(Context mContext, int _viewType) {
         this.mContext = mContext;
         this.ViewType = _viewType;
         statusText = new String[]{"", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.matchCurrentTitle), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
+        winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
     }
 
     public void changeData(ArrayList<Results> plist) {
@@ -85,8 +88,6 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         RelativeLayout imgLayout;
         @BindView(R.id.playname0)
         TextView playname0;
-        @BindView(R.id.gamebet0)
-        TextView gamebet0;
         @BindView(R.id.gamebetlayout0)
         RelativeLayout gamebetlayout0;
         @BindView(R.id.gamestatus)
@@ -95,8 +96,6 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         ImageView gamestatusicon;
         @BindView(R.id.playname1)
         TextView playname1;
-        @BindView(R.id.gamebet1)
-        TextView gamebet1;
         @BindView(R.id.gamebetlayout1)
         RelativeLayout gamebetlayout1;
         @BindView(R.id.gamebg)
@@ -132,6 +131,11 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         @BindView(R.id.gameresult)
         TextView gameresult;
 
+        @BindView(R.id.gamebet0)
+        TextView gamebet0;
+        @BindView(R.id.gamebet1)
+        TextView gamebet1;
+
 
         public viewHolder(View itemView) {
             super(itemView);
@@ -145,7 +149,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     MatchDetailActivity.launch(mContext, 0);
                     break;
                 case R.id.playcellbetlayout0:
-                    Toast.makeText(mContext, "hhhhhh" + mlist.get(getAdapterPosition()-1).getGame_id(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "hhhhhh" + mlist.get(getAdapterPosition() - 1).getGame_id(), Toast.LENGTH_SHORT).show();
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
                     break;
                 case R.id.playcellbetlayout1:
@@ -164,9 +168,10 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         //刷新底部显示状态 0 只显示战队，无倍注显示，无法押获胜  显示战队和倍注，未开始状态 1 显示战队和倍注，滚盘状态 / 显示战队，锁盘，滚盘状态 3 已结束
         public void bottomCommon(int _type) {
 
-            Results _data = mlist.get(getAdapterPosition()-1);
-            Team team0 = _data.getTeam()[0];
-            Team team1 = _data.getTeam()[1];
+            Results _data = mlist.get(getAdapterPosition() - 1);
+            Team team0 = _data.getTeam() != null ? _data.getTeam()[0] : null;
+            Team team1 = _data.getTeam() != null ? _data.getTeam()[1] : null;
+            Odds[] odds = _data.getOdds() != null ? _data.getOdds() : null;
             int status = _data.getStatus();
 
             gamename.setText(_data.getTournament_name());
@@ -180,25 +185,24 @@ public class MainCellAdapter extends RecyclerView.Adapter {
             playname1.setText(team1.getTeam_short_name());
             gametime.setText(_data.getStart_time());
 
-            if(status == 2){
+            if (status == 2) {
                 gamestatusicon.setImageResource(R.mipmap.match_status_1);
-            }
-            else {
+            } else {
                 gamestatusicon.setImageResource(R.mipmap.match_status_0);
             }
             gamestatus.setText(statusText[status]);
 
-            HttpTool.getBitmapUrl(team0.getTeam_logo(), new bmpListener(){
+            HttpTool.getBitmapUrl(team0.getTeam_logo(), new bmpListener() {
                 @Override
                 public void onFinish(Bitmap bitmap) {
-                    imgplayicon0.setImageBitmap(bitmap) ;
+                    imgplayicon0.setImageBitmap(bitmap);
                 }
             });
 
-            HttpTool.getBitmapUrl(team1.getTeam_logo(), new bmpListener(){
+            HttpTool.getBitmapUrl(team1.getTeam_logo(), new bmpListener() {
                 @Override
                 public void onFinish(Bitmap bitmap) {
-                    imgplayicon1.setImageBitmap(bitmap) ;
+                    imgplayicon1.setImageBitmap(bitmap);
                 }
             });
 
@@ -214,6 +218,42 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     bottomoverlayout.setVisibility(View.GONE);
                     gameresult.setVisibility(View.GONE);
                     gametime.setVisibility(View.VISIBLE);
+
+                    //show final bet
+                    Odds odd = getOddData(odds, "final", team0.getTeam_id());
+                    if (odd != null) {
+                        int _status = odd.getStatus();
+                        if(_status == 2){ //lock bet
+                            gamebet0.setVisibility(View.GONE);
+                            imggamearrow0.setVisibility(View.GONE);
+                        }
+                        else if (!TextUtils.isEmpty(odd.getOdds())) {
+                            gamebet0.setVisibility(View.VISIBLE);
+                            imggamearrow0.setVisibility(View.VISIBLE);
+                            imggamelock0.setVisibility(View.GONE);
+                            gamebet0.setText(odd.getOdds());
+                        }
+                        gamebetlayout0.setVisibility(View.VISIBLE);
+                        playnamecommon0.setVisibility(View.VISIBLE);
+                        playname0.setText("");
+                    }
+                    odd = getOddData(odds, "final", team1.getTeam_id());
+                    if (odd != null) {
+                        int _status = odd.getStatus();
+                        if(_status == 2){ //lock bet
+                            gamebet1.setVisibility(View.GONE);
+                            imggamearrow1.setVisibility(View.GONE);
+                        }
+                        else if (!TextUtils.isEmpty(odd.getOdds())) {
+                            gamebet1.setVisibility(View.VISIBLE);
+                            imggamearrow1.setVisibility(View.VISIBLE);
+                            imggamelock1.setVisibility(View.GONE);
+                            gamebet1.setText(odd.getOdds());
+                        }
+                        gamebetlayout1.setVisibility(View.VISIBLE);
+                        playnamecommon1.setVisibility(View.VISIBLE);
+                        playname1.setText("");
+                    }
                     break;
                 case 1:
                     gamebetlayout0.setVisibility(View.VISIBLE);
@@ -259,15 +299,29 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     playname1.setVisibility(View.GONE);
                     playnamecommon0.setVisibility(View.GONE);
                     playnamecommon1.setVisibility(View.GONE);
-//                gamestatus.setVisibility(View.GONE);
 
                     bottomgamelayout.setVisibility(View.GONE);
                     bottomoverlayout.setVisibility(View.VISIBLE);
 
                     gametime.setVisibility(View.GONE);
-//                gameresult.setVisibility(View.VISIBLE);
+                    gameresult.setVisibility(View.VISIBLE);
+
+                    playvictoryicon0.setImageResource(winBmp[Integer.parseInt(getOddData(odds, "final", team0.getTeam_id()).getWin())]);
+                    playvictoryicon1.setImageResource(winBmp[Integer.parseInt(getOddData(odds, "final", team1.getTeam_id()).getWin())]);
+
                     break;
             }
+        }
+
+        private Odds getOddData(Odds[] odds, String key, int team_id) {
+            if (odds == null) return null;
+            for (int i = 0; i < odds.length; i++) {
+                String _match_stage = odds[i].getMatch_stage();
+                if (_match_stage.equalsIgnoreCase("final") && team_id == odds[i].getTeam_id()) {
+                    return odds[i];
+                }
+            }
+            return null;
         }
     }
 

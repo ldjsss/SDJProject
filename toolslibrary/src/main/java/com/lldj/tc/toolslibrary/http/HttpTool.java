@@ -350,8 +350,8 @@ public class HttpTool {
                         con = (HttpURLConnection) u.openConnection();
                     }
                     con.setRequestMethod("GET");
-                    con.setConnectTimeout(8000);
-                    con.setReadTimeout(30000);
+                    con.setConnectTimeout(timeout);
+                    con.setReadTimeout(timeout);
                     con.connect();
                     InputStream is = con.getInputStream();
                     final Bitmap bitmap = BitmapFactory.decodeStream(is);
