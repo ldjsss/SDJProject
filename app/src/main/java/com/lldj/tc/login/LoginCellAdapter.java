@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
@@ -32,7 +35,9 @@ import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.util.AppURLCode;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -162,7 +167,7 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
 
                     break;
                 case R.id.just_look_tv:
-                    HandlerInter.getInstance().sendEmptyMessage(HandlerType.GOTOMAIN);
+                    HandlerInter.getInstance().sendEmptyMessage(HandlerType.JUSTLOOK);
                     break;
                 case R.id.psw_show_or_hid_iv:
                     pswStatus(pswEt, pswShowOrHidIv);

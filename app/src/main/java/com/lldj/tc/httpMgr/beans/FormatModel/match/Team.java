@@ -74,7 +74,3 @@ public class Team {
     private String start_time;
     private Score score;
 }
-
-class Score{
-
-}

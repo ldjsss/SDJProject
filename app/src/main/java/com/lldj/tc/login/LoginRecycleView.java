@@ -99,6 +99,10 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
 //                startActivity(new Intent(this, BetActivity.class));
                 finish();
                 break;
+            case HandlerType.JUSTLOOK:
+                startActivity(new Intent(mContext, MainUIActivity.class));
+                finish();
+                break;
             case HandlerType.SHOWTOAST:
                 ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, msg.getData().getString("msg"), ToastUtils.LENGTH_SHORT);
                 break;

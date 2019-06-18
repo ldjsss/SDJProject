@@ -2,9 +2,6 @@ package com.lldj.tc.firstpage;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
+import com.lldj.tc.httpMgr.beans.FormatModel.match.Team;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
+import com.lldj.tc.toolslibrary.http.HttpTool;
+import com.lldj.tc.toolslibrary.http.HttpTool.bmpListener;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -44,10 +40,12 @@ public class MainCellAdapter extends RecyclerView.Adapter {
     private ArrayList<Results> mlist = new ArrayList<>();
     private viewHolder mHolder = null;
     private int ViewType;
+    private String[] statusText;
 
     public MainCellAdapter(Context mContext, int _viewType) {
         this.mContext = mContext;
         this.ViewType = _viewType;
+        statusText = new String[]{"", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.matchCurrentTitle), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
     }
 
     public void changeData(ArrayList<Results> plist) {
@@ -131,6 +129,8 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         LinearLayout bottomgamelayout;
         @BindView(R.id.bottomoverlayout)
         LinearLayout bottomoverlayout;
+        @BindView(R.id.gameresult)
+        TextView gameresult;
 
 
         public viewHolder(View itemView) {
@@ -161,48 +161,46 @@ public class MainCellAdapter extends RecyclerView.Adapter {
             }
         }
 
-
-        public void getImageBitmap(String url, ImageView imageView) {
-
-            new Thread(new Runnable(){
-                @Override
-                public void run() {
-                    try {
-                        URL imgUrl = new URL(url);
-                        HttpURLConnection conn = (HttpURLConnection) imgUrl
-                                .openConnection();
-                        conn.setDoInput(true);
-                        conn.connect();
-                        InputStream is = conn.getInputStream();
-                        Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        is.close();
-
-                        imageView.post(new Runnable(){
-                            @Override
-                            public void run() {
-                                imageView.setImageBitmap(bitmap) ;
-                            }}) ;
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }).start()  ;
-
-
-        }
-
         //刷新底部显示状态 0 只显示战队，无倍注显示，无法押获胜  显示战队和倍注，未开始状态 1 显示战队和倍注，滚盘状态 / 显示战队，锁盘，滚盘状态 3 已结束
         public void bottomCommon(int _type) {
 
             Results _data = mlist.get(getAdapterPosition()-1);
+            Team team0 = _data.getTeam()[0];
+            Team team1 = _data.getTeam()[1];
+            int status = _data.getStatus();
+
             gamename.setText(_data.getTournament_name());
             gamenamecount.setText("/ " + _data.getRound());
             gameplaycount.setText("+" + _data.getPlay_count());
+            playnamecommon0.setText(team0.getTeam_short_name());
+            playnamecommon1.setText(team1.getTeam_short_name());
+            playovername0.setText(team0.getTeam_short_name());
+            playovername1.setText(team1.getTeam_short_name());
+            playname0.setText(team0.getTeam_short_name());
+            playname1.setText(team1.getTeam_short_name());
+            gametime.setText(_data.getStart_time());
 
-            getImageBitmap(_data.getTeam()[0].getTeam_logo(), imgplayicon0);
+            if(status == 2){
+                gamestatusicon.setImageResource(R.mipmap.match_status_1);
+            }
+            else {
+                gamestatusicon.setImageResource(R.mipmap.match_status_0);
+            }
+            gamestatus.setText(statusText[status]);
+
+            HttpTool.getBitmapUrl(team0.getTeam_logo(), new bmpListener(){
+                @Override
+                public void onFinish(Bitmap bitmap) {
+                    imgplayicon0.setImageBitmap(bitmap) ;
+                }
+            });
+
+            HttpTool.getBitmapUrl(team1.getTeam_logo(), new bmpListener(){
+                @Override
+                public void onFinish(Bitmap bitmap) {
+                    imgplayicon1.setImageBitmap(bitmap) ;
+                }
+            });
 
             switch (_type) {
                 case 0:
@@ -214,6 +212,8 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     playnamecommon1.setVisibility(View.GONE);
                     bottomgamelayout.setVisibility(View.VISIBLE);
                     bottomoverlayout.setVisibility(View.GONE);
+                    gameresult.setVisibility(View.GONE);
+                    gametime.setVisibility(View.VISIBLE);
                     break;
                 case 1:
                     gamebetlayout0.setVisibility(View.VISIBLE);
@@ -226,8 +226,12 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     imggamelock1.setVisibility(View.GONE);
                     bottomgamelayout.setVisibility(View.VISIBLE);
                     bottomoverlayout.setVisibility(View.GONE);
+                    gametime.setVisibility(View.GONE);
+                    gameresult.setVisibility(View.VISIBLE);
 
-                    gamestatus.setText(mContext.getResources().getString(R.string.matchCurrentTitle));
+
+                    gameresult.setText(team0.getScore().getTotal() + " - " + team1.getScore().getTotal());
+
                     gamestatusicon.setBackgroundResource(R.mipmap.match_status_1);
                     break;
                 case 2:
@@ -246,8 +250,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     bottomoverlayout.setVisibility(View.GONE);
 
                     gametime.setVisibility(View.VISIBLE);
-
-//                gameresult.setVisibility(View.GONE);
+                    gameresult.setVisibility(View.GONE);
                     break;
                 case 3:
                     gamebetlayout0.setVisibility(View.GONE);

@@ -16,8 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.handler.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.FormatModel.JsonBeans;
+import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
+import com.lldj.tc.httpMgr.beans.FormatModel.match.sortClass;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
@@ -29,6 +30,9 @@ import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.util.AppURLCode;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,16 +106,23 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
         Clog.e("onRefresh", "onRefresh = " + ViewType);
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
 
-        HttpMsg.sendGetMatchList(1, new HttpMsg.Listener2(){
+        HttpMsg.sendGetMatchList(ViewType + 1, new HttpMsg.Listener(){
             @Override
-            public void onFinish(JsonBeans res) {
+            public void onFinish(JsonBean res) {
                 if(res.getCode() == AppURLCode.succ){
                     mlist.clear();
+                    List<Results> _list = (List<Results>)res.getResult();
 
-                    Results[] _list = res.getResult();
-                    alist = new Results[_list.length];
+                    Collections.sort(_list, new sortClass());
 
-                    System.arraycopy(_list, 0, alist, 0, _list.length);
+                    alist = new Results[_list.size()];
+
+                    for (int i = 0; i < _list.size(); i++) {
+                        alist[i] = _list.get(i);
+                    }
+
+//                    Clog.e("--------", "hhhhhh = " + alist[0].getTournament_short_name());
+//                    System.arraycopy(_list, 0, alist, 0, _list.size());
 
                     int t = alist.length > pageSize ? pageSize : alist.length;
                     for (int i = 0; i < t; i++) {
@@ -132,7 +143,7 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
         super.onFragmentVisibleChange(isVisible);
         if (isVisible) {
             Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
-                onRefresh();
+            onRefresh();
         } else {
             Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
         }

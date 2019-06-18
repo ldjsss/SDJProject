@@ -21,6 +21,14 @@ public class JsonBean <T>{
         this.result = result;
     }
 
+    @Override
+    public String toString() {
+        return "JsonBean{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                ", result=" + result +
+                '}';
+    }
 }
 
 

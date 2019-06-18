@@ -3,8 +3,10 @@ package com.lldj.tc.httpMgr.beans.FormatModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.match.Team;
 import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
 
+import java.util.Arrays;
 
-public class Results <T>{
+
+public class Results{
 
     private String access_token;
     private String expires_in;
@@ -245,4 +247,37 @@ public class Results <T>{
         this.odds = odds;
     }
 
+
+    @Override
+    public String toString() {
+        return "Results{" +
+                "access_token='" + access_token + '\'' +
+                ", expires_in='" + expires_in + '\'' +
+                ", openid='" + openid + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", money='" + money + '\'' +
+                ", username='" + username + '\'' +
+                ", early=" + early +
+                ", id=" + id +
+                ", live=" + live +
+                ", today=" + today +
+                ", logo='" + logo + '\'' +
+                ", name='" + name + '\'' +
+                ", short_name='" + short_name + '\'' +
+                ", game_id=" + game_id +
+                ", tournament_id=" + tournament_id +
+                ", status=" + status +
+                ", game_name='" + game_name + '\'' +
+                ", match_name='" + match_name + '\'' +
+                ", match_short_name='" + match_short_name + '\'' +
+                ", start_time='" + start_time + '\'' +
+                ", end_time='" + end_time + '\'' +
+                ", round='" + round + '\'' +
+                ", tournament_name='" + tournament_name + '\'' +
+                ", tournament_short_name='" + tournament_short_name + '\'' +
+                ", play_count=" + play_count +
+                ", team=" + Arrays.toString(team) +
+                ", odds=" + Arrays.toString(odds) +
+                '}';
+    }
 }

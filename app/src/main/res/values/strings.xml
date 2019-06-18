@@ -8,6 +8,7 @@
     <string name="matchOverTitle">已结束</string>
     <string name="matchStatusOver">已结束</string>
     <string name="matchStatusFront">未开始</string>
+    <string name="matchStatusError">已取消或异常</string>
     <string name="allwinner">| 全场获胜者</string>
     <string name="userCount">账号</string>
     <string name="userCountRemind">请输入账号/手机号</string>
