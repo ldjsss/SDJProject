@@ -16,13 +16,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.mainUtil.EventType;
+import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
 import com.lldj.tc.httpMgr.beans.FormatModel.match.Team;
+import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.http.HttpTool.bmpListener;
+import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
+import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
+import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 
 import java.util.ArrayList;
 
@@ -53,6 +59,8 @@ public class MainCellAdapter extends RecyclerView.Adapter {
 
     public void changeData(ArrayList<Results> plist) {
         mlist = plist;
+
+        AppUtils.dispatchEvent(new ObData(EventType.UPDATEMATCHLIST, mlist));
         notifyDataSetChanged();
     }
 
@@ -146,14 +154,23 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         public void onViewClicked(View view) {
             switch (view.getId()) {
                 case R.id.gamebg:
-                    MatchDetailActivity.launch(mContext, 0);
+                    MatchDetailActivity.launch(mContext, getAdapterPosition() - 1);
+                    RxTimerUtil.timer(100, new RxTimerUtil.IRxNext() {
+                        @Override
+                        public void doNext(long number) {
+                            AppUtils.dispatchEvent(new ObData(EventType.UPDATEMATCHLIST, mlist));
+                        }
+                        @Override
+                        public void onComplete() { }
+                    });
+
                     break;
                 case R.id.playcellbetlayout0:
-                    Toast.makeText(mContext, "hhhhhh" + mlist.get(getAdapterPosition() - 1).getGame_id(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "hhhhhh" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
                     break;
                 case R.id.playcellbetlayout1:
-                    Toast.makeText(mContext, "ddddddd", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "ddddddd" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.playcelllayout0:
                     Toast.makeText(mContext, "ffffff", Toast.LENGTH_SHORT).show();
@@ -232,6 +249,8 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                             imggamearrow0.setVisibility(View.VISIBLE);
                             imggamelock0.setVisibility(View.GONE);
                             gamebet0.setText(odd.getOdds());
+
+//                            Utils.setFlickerAnimation(imggamearrow0, 13);
                         }
                         gamebetlayout0.setVisibility(View.VISIBLE);
                         playnamecommon0.setVisibility(View.VISIBLE);
@@ -249,6 +268,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                             imggamearrow1.setVisibility(View.VISIBLE);
                             imggamelock1.setVisibility(View.GONE);
                             gamebet1.setText(odd.getOdds());
+//                            Utils.setFlickerAnimation(imggamearrow1, 5);
                         }
                         gamebetlayout1.setVisibility(View.VISIBLE);
                         playnamecommon1.setVisibility(View.VISIBLE);

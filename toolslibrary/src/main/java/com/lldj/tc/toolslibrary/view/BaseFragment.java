@@ -14,8 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.event.Observer;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 
+import java.util.ArrayList;
 
 
 public abstract class BaseFragment extends Fragment {
@@ -42,6 +46,8 @@ public abstract class BaseFragment extends Fragment {
      */
     protected View rootView;
 
+    private ArrayList<Observer<ObData>> eventList = new ArrayList<>();
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -61,7 +67,20 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    protected void registEvent(Observer<ObData> observer){
+        AppUtils.registEvent(observer);
+        eventList.add(observer);
+    }
 
+    protected void unregisterEvent(Observer<ObData> observer){
+        AppUtils.unregisterEvent(observer);
+        for (int i = 0; i < eventList.size(); i++) {
+            if (observer == eventList.get(i)){
+                eventList.remove(i);
+                break;
+            }
+        }
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -141,6 +160,11 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         Clog.d(getClass().getSimpleName(), "onDestroy");
+
+        for (int i = 0; i < eventList.size(); i++) {
+            AppUtils.unregisterEvent(eventList.get(i));
+        }
+        eventList.clear();
     }
 
     @Override

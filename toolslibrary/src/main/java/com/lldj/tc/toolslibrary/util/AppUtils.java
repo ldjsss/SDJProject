@@ -10,7 +10,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
-import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -31,6 +30,9 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.lldj.tc.toolslibrary.R;
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.event.Observable;
+import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.view.Titanic;
 import com.lldj.tc.toolslibrary.view.TitanicTextView;
 
@@ -47,6 +49,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -64,10 +67,34 @@ public class AppUtils {
     private static PopupWindow loading = null;
     private static Titanic titanic = null;
 
+    private  static ArrayList<Observer<ObData>> eventList = new ArrayList<>();
+    private  static Observable<ObData> observable;
 
-    private AppUtils() {
+    private AppUtils() { }
+
+    public static void registEvent(Observer<ObData> observer){
+        if (observable == null) observable = new Observable<ObData>();
+
+        observable.register(observer);
+        eventList.add(observer);
     }
 
+    public static void unregisterEvent(Observer<ObData> observer){
+        if (observable == null) observable = new Observable<ObData>();
+        observable.unregister(observer);
+        for (int i = 0; i < eventList.size(); i++) {
+            if (observer == eventList.get(i)){
+                eventList.remove(i);
+                break;
+            }
+        }
+    }
+
+    public static void dispatchEvent(ObData data){
+        if (data == null) return;
+        if (observable == null) observable = new Observable<ObData>();
+        observable.notifyObserver(data);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String getFromAssets(Context ct, String fileName) {

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
@@ -25,17 +25,17 @@ import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
-import com.lldj.tc.toolslibrary.util.RxTimerUtil;
+import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
-import com.lldj.tc.util.AppURLCode;
+import com.lldj.tc.mainUtil.GlobalVariable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.Disposable;
 
 /**
  * main ui
@@ -48,7 +48,9 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
     private ArrayList<Results> mlist = new ArrayList<>(); //全部数据列表
     private int pageSize = 10;
     private int ViewType;
-    BaseFragment middleFragment;
+    private BaseFragment middleFragment;
+    private Disposable disposable;
+    private int disTime = 2000;
 
     @BindView(R.id.subject_lrecycleview)
     LRecyclerView subjectLrecycleview;
@@ -105,37 +107,7 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
     public void onRefresh() {//请求全部数据
         Clog.e("onRefresh", "onRefresh = " + ViewType);
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-
-        HttpMsg.sendGetMatchList(ViewType + 1, new HttpMsg.Listener(){
-            @Override
-            public void onFinish(JsonBean res) {
-                if(res.getCode() == AppURLCode.succ){
-                    mlist.clear();
-                    List<Results> _list = (List<Results>)res.getResult();
-
-                    Collections.sort(_list, new sortClass());
-
-                    alist = new Results[_list.size()];
-
-                    for (int i = 0; i < _list.size(); i++) {
-                        alist[i] = _list.get(i);
-                    }
-
-//                    Clog.e("--------", "hhhhhh = " + alist[0].getTournament_short_name());
-//                    System.arraycopy(_list, 0, alist, 0, _list.size());
-
-                    int t = alist.length > pageSize ? pageSize : alist.length;
-                    for (int i = 0; i < t; i++) {
-                        mlist.add(alist[i]);
-                    }
-
-                    mAdapter.changeData(mlist);
-                    RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
-                    subjectLrecycleview.refreshComplete(); //刷新完成
-                    Toast.makeText(mContext, getResources().getString(R.string.getGameListSucc),Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        getMatchData();
     }
 
     @Override
@@ -144,18 +116,18 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
         if (isVisible) {
             Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
             onRefresh();
+            if(ViewType == 1) startUpdate();
         } else {
             Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
+            stopUpdate();
         }
     }
 
     @Override
-    public void onScrollUp() {
-    }
+    public void onScrollUp() { }
 
     @Override
-    public void onScrollDown() {
-    }
+    public void onScrollDown() { }
 
     @Override
     public void onBottom() {
@@ -176,36 +148,73 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
     public void onScrolled(int distanceX, int distanceY) { }
 
     public void loadData() {
-
-        RxTimerUtil.timer(2000, new RxTimerUtil.IRxNext() {
-            @Override
-            public void doNext(long number) {
-                int mLen = mlist.size();
-                int t = pageSize;
-                if (mLen + t > alist.length) t = alist.length - mLen;
-                for (int i = 0; i < t; i++) {
-                    mlist.add(alist[mLen + i]);
-                }
-                mAdapter.changeData(mlist);
-                RecyclerViewStateUtils.setFooterViewState(subjectLrecycleview, LoadingFooter.State.Normal);
-                Log.e("数组长度", mlist.size() + "==");
-                if (mlist.size() >= alist.length) {
-                    RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
-                }
-            }
-
-            @Override
-            public void onComplete() {
-            }
-        });
-
+        int mLen = mlist.size();
+        int t = pageSize;
+        if (mLen + t > alist.length) t = alist.length - mLen;
+        for (int i = 0; i < t; i++) {
+            mlist.add(alist[mLen + i]);
+        }
+        mAdapter.changeData(mlist);
+        RecyclerViewStateUtils.setFooterViewState(subjectLrecycleview, LoadingFooter.State.Normal);
+//        Log.e("数组长度", mlist.size() + "==");
+        if (mlist.size() >= alist.length) {
+            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
+        }
     }
 
     @Override
     public void selectView(int position) {
         super.onDestroyView();
-        Log.e("currentPosition", "selectView currentPosition===" + position);
+//        Log.e("currentPosition", "selectView currentPosition===" + position);
+    }
 
+    private void getMatchData(){
+        HttpMsg.sendGetMatchList(ViewType + 1, new HttpMsg.Listener(){
+            @Override
+            public void onFinish(JsonBean res) {
+                if(res.getCode() == GlobalVariable.succ){
+                    mlist.clear();
+                    List<Results> _list = (List<Results>)res.getResult();
+
+                    Collections.sort(_list, new sortClass());
+
+                    alist = new Results[_list.size()];
+
+                    for (int i = 0; i < _list.size(); i++) {
+                        alist[i] = _list.get(i);
+                    }
+
+                    int t = alist.length > pageSize ? pageSize : alist.length;
+                    for (int i = 0; i < t; i++) {
+                        mlist.add(alist[i]);
+                    }
+
+                    mAdapter.changeData(mlist);
+                    RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
+                    subjectLrecycleview.refreshComplete(); //刷新完成
+                    Toast.makeText(mContext, getResources().getString(R.string.getGameListSucc),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void startUpdate(){
+        if (disposable != null) return;
+
+        disposable = RxTimerUtilPro.interval(disTime, new RxTimerUtilPro.IRxNext() {
+            @Override
+            public void doNext(long number) {
+                getMatchData();
+            }
+
+            @Override
+            public void onComplete() { }
+        });
+    }
+
+    private void stopUpdate(){
+        RxTimerUtilPro.cancel(disposable);
+        disposable = null;
     }
 
 }

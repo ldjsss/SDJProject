@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lldj.tc.R;
-import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
@@ -22,7 +22,7 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
-import com.lldj.tc.util.AppURLCode;
+import com.lldj.tc.mainUtil.GlobalVariable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -136,7 +136,7 @@ public class RegisterFrament extends BaseFragment {
                 HttpMsg.sendGetCode(phoneNum, new HttpMsg.Listener(){
                     @Override
                     public void onFinish(JsonBean res) {
-                        if(res.getCode() == AppURLCode.succ) {
+                        if(res.getCode() == GlobalVariable.succ) {
                             Toast.makeText(mContext, getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -149,7 +149,7 @@ public class RegisterFrament extends BaseFragment {
                 HttpMsg.sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(mContext), "", new HttpMsg.Listener(){
                     @Override
                     public void onFinish(JsonBean res) {
-                        if(res.getCode() == AppURLCode.succ){
+                        if(res.getCode() == GlobalVariable.succ){
                             SharePreUtils.getInstance().setRegistInfo(mContext, userCount, password, userName, phoneNum, AppUtils.getChannel(mContext), "");
                             Toast.makeText(mContext, getResources().getString(R.string.registSucc),Toast.LENGTH_SHORT).show();
                             HandlerInter.getInstance().sendEmptyMessage(HandlerType.REGISTSUCC);

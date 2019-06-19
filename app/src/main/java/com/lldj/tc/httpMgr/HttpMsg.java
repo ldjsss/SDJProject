@@ -5,13 +5,13 @@ import android.os.Message;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
-import com.lldj.tc.util.AppURLCode;
+import com.lldj.tc.mainUtil.GlobalVariable;
 
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
@@ -60,7 +60,7 @@ public class HttpMsg {
                     }
 
 
-                    if(_code != AppURLCode.succ){
+                    if(_code != GlobalVariable.succ){
                         toastMess("ERROR CODE " + _code + _msg);
                     }
 
@@ -82,7 +82,7 @@ public class HttpMsg {
 ////                    JsonBean jsonBean = gson.fromJson(msg, JsonBean.class);  //把JSON数据转化为对象
 //
 //                    JsonBean<Results> jsonBean = new Gson().fromJson(msg, new TypeToken<JsonBean<Results>>() {}.getType());
-//                    if(jsonBean.getCode() != AppURLCode.succ){
+//                    if(jsonBean.getCode() != GlobalVariable.succ){
 //                        toastMess("ERROR CODE " + jsonBean.getCode() + jsonBean.getMessage());
 //                    }
 //                    listener.onFinish(jsonBean);

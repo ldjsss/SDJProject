@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +20,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.lldj.tc.R;
-import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
@@ -33,11 +30,9 @@ import com.lldj.tc.register.RegisterFrament;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
-import com.lldj.tc.util.AppURLCode;
+import com.lldj.tc.mainUtil.GlobalVariable;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -147,7 +142,7 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
                     HttpMsg.sendLogin(userCount, password, new HttpMsg.Listener() {
                         @Override
                         public void onFinish(JsonBean res) {
-                            if (res.getCode() == AppURLCode.succ) {
+                            if (res.getCode() == GlobalVariable.succ) {
                                 saveLoginData(res);
                             }
                         }
@@ -181,7 +176,7 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
             HttpMsg.sendTokenLogin(token, new HttpMsg.Listener() {
                 @Override
                 public void onFinish(JsonBean res) {
-                    if (res.getCode() == AppURLCode.succ) {
+                    if (res.getCode() == GlobalVariable.succ) {
                         saveLoginData(res);
                     }
                 }

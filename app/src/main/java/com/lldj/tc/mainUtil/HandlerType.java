@@ -1,4 +1,4 @@
-package com.lldj.tc.handler;
+package com.lldj.tc.mainUtil;
 
 import androidx.annotation.IntDef;
 import java.lang.annotation.Retention;
@@ -17,12 +17,13 @@ public class HandlerType {
     public static final int LOADING = 7;
     public static final int SHOWBETDIA = 8;
     public static final int JUSTLOOK = 9;
+    public static final int MATCHLIST = 10;
 
     public HandlerType(@Season int season) {
         System.out.println("Season :" + season);
     }
 
-    @IntDef({LEFTMENU, LEFTBACK, REMOVERES, GOTOMAIN, SHOWTOAST, REGISTSUCC, LOADING, SHOWBETDIA, JUSTLOOK})
+    @IntDef({LEFTMENU, LEFTBACK, REMOVERES, GOTOMAIN, SHOWTOAST, REGISTSUCC, LOADING, SHOWBETDIA, JUSTLOOK, MATCHLIST})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Season {
     }

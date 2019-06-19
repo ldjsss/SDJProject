@@ -1,14 +1,12 @@
-package com.lldj.tc.util;
+package com.lldj.tc.mainUtil;
 
 /**
- * description: <p>
- * user: lenovo<p>
- * Creat Time: 2018/12/7 19:08<p>
- * Modify Time: 2018/12/7 19:08<p>
  */
 
 
 public class GlobalVariable {
+
+    public static final int succ = 200;
     //手机拍照 request
     public final static int CAMERA_REQUEST_CODE= 0x01;
     //相册选择

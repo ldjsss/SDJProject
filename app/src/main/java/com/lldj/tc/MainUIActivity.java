@@ -1,11 +1,8 @@
 package com.lldj.tc;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.Gravity;
-import android.view.Window;
 import android.widget.FrameLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -13,7 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.lldj.tc.firstpage.BetDialog;
 import com.lldj.tc.firstpage.FragmentSet;
 import com.lldj.tc.firstpage.FragmentViewPager;
-import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;

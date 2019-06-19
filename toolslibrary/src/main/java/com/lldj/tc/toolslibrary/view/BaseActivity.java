@@ -3,7 +3,6 @@ package com.lldj.tc.toolslibrary.view;
 import android.annotation.TargetApi;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -12,9 +11,13 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
+
+import java.util.ArrayList;
 
 
 public abstract class BaseActivity extends FragmentActivity{
@@ -24,7 +27,8 @@ public abstract class BaseActivity extends FragmentActivity{
 
     //资源
     protected Resources mResources;
-    public BaseActivity mContext;
+    public    BaseActivity mContext;
+    private   ArrayList<Observer<ObData>> eventList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,20 @@ public abstract class BaseActivity extends FragmentActivity{
 
     }
 
+    protected void registEvent(Observer<ObData> observer){
+        AppUtils.registEvent(observer);
+        eventList.add(observer);
+    }
+
+    protected void unregisterEvent(Observer<ObData> observer){
+        AppUtils.unregisterEvent(observer);
+        for (int i = 0; i < eventList.size(); i++) {
+            if (observer == eventList.get(i)){
+                eventList.remove(i);
+                break;
+            }
+        }
+    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -70,6 +88,11 @@ public abstract class BaseActivity extends FragmentActivity{
     protected void onDestroy() {
         super.onDestroy();
         AppUtils.hideLoading();
+
+        for (int i = 0; i < eventList.size(); i++) {
+            AppUtils.unregisterEvent(eventList.get(i));
+        }
+        eventList.clear();
     }
 
     /**

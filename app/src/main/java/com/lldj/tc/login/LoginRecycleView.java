@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.MainUIActivity;
 import com.lldj.tc.R;
-import com.lldj.tc.handler.HandlerType;
+import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
@@ -28,11 +28,9 @@ import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
-import com.lldj.tc.util.AppURLCode;
+import com.lldj.tc.mainUtil.GlobalVariable;
 
 import java.util.ArrayList;
-
-import javax.xml.transform.Result;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,7 +74,6 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN );
 
-
     }
 
     @Override
@@ -88,16 +85,15 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
                 HttpMsg.sendGetUserInfo(SharePreUtils.getInstance().getToken(mContext), SharePreUtils.getInstance().getUserId(mContext), new HttpMsg.Listener(){
                     @Override
                     public void onFinish(JsonBean res) {
-                        if(res.getCode() == AppURLCode.succ){
+                        if(res.getCode() == GlobalVariable.succ){
                             Results ret = (Results)res.getResult();
                             SharePreUtils.getInstance().setUserInfo(mContext, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername());
                             Toast.makeText(mContext, getResources().getString(R.string.getUseInfoSucc),Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(mContext, MainUIActivity.class));
+                            finish();
                         }
                     }
                 });
-//                startActivity(new Intent(this, BetActivity.class));
-                finish();
                 break;
             case HandlerType.JUSTLOOK:
                 startActivity(new Intent(mContext, MainUIActivity.class));
@@ -132,22 +128,17 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
     }
 
     @Override
-    public void onRefresh() {
-    }
+    public void onRefresh() { }
 
     @Override
-    public void onScrollUp() {
-    }
+    public void onScrollUp() { }
 
     @Override
-    public void onScrollDown() {
-    }
+    public void onScrollDown() { }
 
     @Override
-    public void onBottom() {
-    }
+    public void onBottom() { }
 
     @Override
-    public void onScrolled(int distanceX, int distanceY) {
-    }
+    public void onScrolled(int distanceX, int distanceY) { }
 }
