@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 public class HttpMsg {
-    public static String baseUrl = "http://192.168.1.116:9001/";
-    public static String baseUrl2 = "http://192.168.1.116:9002/";
-    public static String baseUrl3 = "http://192.168.1.116:9004/";
+    public static String baseUrl = "http://192.168.1.118:9001/";
+    public static String baseUrl2 = "http://192.168.1.118:9002/";
+    public static String baseUrl3 = "http://192.168.1.118:9004/";
 
     private static void toastMess(String msg){
         if(msg == null) msg = "";
@@ -161,6 +161,10 @@ public class HttpMsg {
 
     public static void sendGetMatchList(int type, Listener callbackListener) {
         HttpTool.sendGet(baseUrl3 + "match/type/" + type, getListener(callbackListener));
+    }
+
+    public static void sendGetMatchDetial(int matchID, Listener callbackListener) {
+        HttpTool.sendGet(baseUrl3 + "match/detail/" + matchID, getListener(callbackListener));
     }
 
     public interface Listener {

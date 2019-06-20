@@ -4,6 +4,7 @@ import com.lldj.tc.httpMgr.beans.FormatModel.match.Team;
 import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 public class Results{
@@ -132,8 +133,8 @@ public class Results{
     private String tournament_name;
     private String tournament_short_name;
     private int play_count;
-    private Team [] team;
-    private Odds [] odds;
+    private List<Team> team;
+    private List<Odds> odds;
 
     public int getGame_id() {
         return game_id;
@@ -231,19 +232,19 @@ public class Results{
         this.play_count = play_count;
     }
 
-    public Team[] getTeam() {
+    public List<Team> getTeam() {
         return team;
     }
 
-    public void setTeam(Team[] team) {
+    public void setTeam(List<Team> team) {
         this.team = team;
     }
 
-    public Odds[] getOdds() {
+    public List<Odds> getOdds() {
         return odds;
     }
 
-    public void setOdds(Odds[] odds) {
+    public void setOdds(List<Odds> odds) {
         this.odds = odds;
     }
 
@@ -276,8 +277,8 @@ public class Results{
                 ", tournament_name='" + tournament_name + '\'' +
                 ", tournament_short_name='" + tournament_short_name + '\'' +
                 ", play_count=" + play_count +
-                ", team=" + Arrays.toString(team) +
-                ", odds=" + Arrays.toString(odds) +
+                ", team=" + team +
+                ", odds=" + odds +
                 '}';
     }
 }

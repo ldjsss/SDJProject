@@ -19,7 +19,7 @@
             android:id="@+id/playovername0"
             android:text="Royal"
             android:textSize="13sp"
-            android:textColor="@color/white"
+            android:textColor="@color/color_cdc3b3"
             android:gravity="center"
             android:background="@drawable/mathtitle_bg" />
         <ImageView
@@ -47,7 +47,7 @@
             android:id="@+id/playovername1"
             android:text="CDEC"
             android:textSize="13sp"
-            android:textColor="@color/white"
+            android:textColor="@color/color_cdc3b3"
             android:gravity="center"
             android:background="@drawable/mathtitle_bg" />
         <ImageView

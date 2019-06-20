@@ -5,33 +5,36 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
+import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
 import com.lldj.tc.httpMgr.beans.FormatModel.match.Team;
-import com.lldj.tc.mainUtil.EventType;
-import com.lldj.tc.toolslibrary.event.ObData;
-import com.lldj.tc.toolslibrary.event.Observable;
-import com.lldj.tc.toolslibrary.event.Observer;
+import com.lldj.tc.mainUtil.GlobalVariable;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
-import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +43,7 @@ import butterknife.OnClick;
 /**
  * description: <p>
  */
-public class MatchDetailActivity extends BaseActivity implements LRecyclerView.LScrollListener {
+public class MatchDetailActivity extends BaseActivity implements LRecyclerView.LScrollListener{
     @BindView(R.id.toolbar_back_iv)
     ImageView toolbarBackIv;
     @BindView(R.id.toolbar_title_tv)
@@ -77,26 +80,28 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
     LRecyclerView jingcairecycleview;
     @BindView(R.id.gameplaycount)
     TextView gameplaycount;
+    @BindView(R.id.gamestatus1)
+    TextView gamestatus1;
+    @BindView(R.id.gamestatusicon)
+    ImageView gamestatusicon;
 
     private Results _matchData;
-    private int position;
+    private int ViewType;
+    private int matchId;
     private MatchCellAdapter mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
-    private ArrayList<String> mlist = new ArrayList<>();
-    private int mTotal = 30;
+
+    private int mTotal = 0;
     LinearLayoutManager layoutManager;
 
     private String[] statusText;
     private int[] winBmp;
 
-//    private int pageSize = 10;
-//    private Results[] alist; //展示数据列表
-//    private ArrayList<Results> mlist = new ArrayList<>(); //全部数据列表
 
-
-    public static void launch(Context pContext, int pos) {
+    public static void launch(Context pContext, int ViewType, int matchId) {
         Intent mIntent = new Intent(pContext, MatchDetailActivity.class);
-        mIntent.putExtra("pos", pos);
+        mIntent.putExtra("ViewType", ViewType);
+        mIntent.putExtra("matchId", matchId);
         pContext.startActivity(mIntent);
     }
 
@@ -107,21 +112,24 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        this.position = bundle.getInt("pos");
+        this.ViewType = bundle.getInt("ViewType");
+        this.matchId = bundle.getInt("matchId");
 
         statusText = new String[]{"", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.matchCurrentTitle), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
         winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
 
-        registEvent(new Observer<ObData>() {
-            @Override
-            public void onUpdate(Observable<ObData> observable, ObData data) {
-                if (data.getKey().equalsIgnoreCase(EventType.UPDATEMATCHLIST)) {
-                    ArrayList<Results> list = (ArrayList<Results>) data.getValue();
-                    _matchData = list.get(position);
-                    onRefresh();
-                }
-            }
-        });
+        onRefresh();
+//        registEvent(new Observer<ObData>() {
+//            @Override
+//            public void onUpdate(Observable<ObData> observable, ObData data) {
+//                if (data.getKey().equalsIgnoreCase(EventType.UPDATEMATCHLIST)) {
+//                    ArrayList<Results> list = (ArrayList<Results>) data.getValue();
+//                    _matchData = list.get(position);
+//
+//                    onRefresh();
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -130,155 +138,123 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
         ImmersionBar.with(this).titleBar(toolbarRootLayout).init();
 
         toolbarTitleTv.setText(mResources.getString(R.string.matchDetialTitle));
+    }
+
+    @Override
+    public void onRefresh() {
+        HttpMsg.sendGetMatchDetial(matchId, new HttpMsg.Listener(){
+            @Override
+            public void onFinish(JsonBean res) {
+                if(res.getCode() == GlobalVariable.succ){
+                    _matchData = (Results)res.getResult();
+
+                    Results _data = _matchData;
+                    if (_data == null) return;
+
+                    Team team0 = _data.getTeam() != null ? _data.getTeam().get(0) : null;
+                    Team team1 = _data.getTeam() != null ? _data.getTeam().get(1) : null;
+                    List<Odds> odds = _data.getOdds() != null ? _data.getOdds() : null;
+                    int status = _data.getStatus();
+
+                    gamename.setText(_data.getTournament_name());
+                    gamenamecount.setText("/ " + _data.getRound());
+                    gameplaycount.setText("+" + _data.getPlay_count());
+                    playnamecommon0.setText(team0.getTeam_short_name());
+                    playnamecommon1.setText(team1.getTeam_short_name());
+                    matchtime.setText(_data.getStart_time());
+
+                    if (status == 2) {
+                        gamestatusicon.setImageResource(R.mipmap.match_status_1);
+                    } else {
+                        gamestatusicon.setImageResource(R.mipmap.match_status_0);
+                    }
+                    gamestatus.setText(statusText[status]);
+
+                    HttpTool.getBitmapUrl(team0.getTeam_logo(), new HttpTool.bmpListener() {
+                        @Override
+                        public void onFinish(Bitmap bitmap) {
+                            if (bitmap != null) imgplayicon0.setImageBitmap(bitmap);
+                        }
+                    });
+
+                    HttpTool.getBitmapUrl(team1.getTeam_logo(), new HttpTool.bmpListener() {
+                        @Override
+                        public void onFinish(Bitmap bitmap) {
+                            if (bitmap != null) imgplayicon1.setImageBitmap(bitmap);
+                        }
+                    });
+
+                    Log.w("-----detail data = ", _data.toString());
+
+                    Map<String, List<Odds>> oddMap = new HashMap<>();
+                    if(odds != null) {
+                        ArrayList<String> keys = new ArrayList<>();
+                        mTotal = 0;
+
+                        for (int i = 0; i < odds.size(); i++) {
+                            Odds _odd   = odds.get(i);
+                            String _key = _odd.getMatch_stage();
+                            List<Odds> itemList = oddMap.get(_key);
+                            if(itemList == null){
+                                itemList = new ArrayList<>();
+                                keys.add(_key);
+                            }
+                            itemList.add(_odd);
+
+                            oddMap.put(_key, itemList);
+                        }
+
+                        mTotal = keys.size();
+                        initList(oddMap, keys);
+                    }
+
+                    if (mAdapter != null){
+                        mAdapter.changeData(oddMap);
+                        RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
+                        jingcairecycleview.refreshComplete();
+                    }
+                }
+            }
+        });
+    }
+
+    private void initList(Map<String, List<Odds>> oddMap, ArrayList<String> keys){
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int tabPosition = tab.getPosition();
-                switch (tabPosition) {
-                    case 0:
-                        jingcairecycleview.scrollToPosition(0);
-
-                        break;
-                    case 1:
-                        jingcairecycleview.scrollToPosition(5);
-                        layoutManager.scrollToPositionWithOffset(5, 0);
-                        break;
-                    case 2:
-                        jingcairecycleview.scrollToPosition(10);
-                        layoutManager.scrollToPositionWithOffset(10, 0);
-                        break;
-                    case 3:
-                        jingcairecycleview.scrollToPosition(15);
-                        layoutManager.scrollToPositionWithOffset(15, 0);
-                        break;
-
-                }
-
-
-            }
-
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
+                jingcairecycleview.scrollToPosition(tabPosition);
+                if(tabPosition!=0)layoutManager.scrollToPositionWithOffset(tabPosition, 0);
             }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) { }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
         });
 
-
-        tabLayout.addTab(tabLayout.newTab().setText("全场"));
-        tabLayout.addTab(tabLayout.newTab().setText("第一局"));
-        tabLayout.addTab(tabLayout.newTab().setText("第二局"));
-        tabLayout.addTab(tabLayout.newTab().setText("第三局"));
-        layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-
-        jingcairecycleview.setLayoutManager(layoutManager);
-        mAdapter = new MatchCellAdapter(mContext);
-        lAdapter = new LRecyclerViewAdapter(this, mAdapter);
-        jingcairecycleview.setAdapter(lAdapter);
-        jingcairecycleview.setLScrollListener(this);
-        jingcairecycleview.setNoMore(true);//禁止加载更多
-        setFirstData();
-
-
-    }
-
-
-    private void setFirstData() {
-        for (int i = 0; i < 20; i++) {
-            mlist.add("测试");
+        tabLayout.removeAllTabs();
+        for (int i = 0; i < keys.size(); i++) {
+            tabLayout.addTab(tabLayout.newTab().setText(keys.get(i)));
         }
-        mAdapter.changeData(mlist);
-        RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, 10, LoadingFooter.State.Normal, null);
-    }
 
-
-    public void exitActivity() {
-        finish();
-    }
-
-    @OnClick(R.id.toolbar_back_iv)
-    public void onViewClicked() {
-        exitActivity();
-    }
-
-    @Override
-    public void onRefresh() {
-
-        Results _data = _matchData;
-        if(_data == null) return;
-
-        Team team0 = _data.getTeam() != null ? _data.getTeam()[0] : null;
-        Team team1 = _data.getTeam() != null ? _data.getTeam()[1] : null;
-        Odds[] odds = _data.getOdds() != null ? _data.getOdds() : null;
-        int status = _data.getStatus();
-
-        gamename.setText(_data.getTournament_name());
-        gamenamecount.setText("/ " + _data.getRound());
-        gameplaycount.setText("+" + _data.getPlay_count());
-        playnamecommon0.setText(team0.getTeam_short_name());
-        playnamecommon1.setText(team1.getTeam_short_name());
-        matchtime.setText(_data.getStart_time());
-
-//        if (status == 2) {
-//            gamestatusicon.setImageResource(R.mipmap.match_status_1);
-//        } else {
-//            gamestatusicon.setImageResource(R.mipmap.match_status_0);
-//        }
-        gamestatus.setText(statusText[status]);
-
-        HttpTool.getBitmapUrl(team0.getTeam_logo(), new HttpTool.bmpListener() {
-            @Override
-            public void onFinish(Bitmap bitmap) {
-                imgplayicon0.setImageBitmap(bitmap);
-            }
-        });
-
-        HttpTool.getBitmapUrl(team1.getTeam_logo(), new HttpTool.bmpListener() {
-            @Override
-            public void onFinish(Bitmap bitmap) {
-                imgplayicon1.setImageBitmap(bitmap);
-            }
-        });
-
-
-
-
-
-        mlist.clear();
-        setFirstData();
-        RxTimerUtil.timer(500, new RxTimerUtil.IRxNext() {
-            @Override
-            public void doNext(long number) {
-                //刷新完成
-                jingcairecycleview.refreshComplete();
-
-                mAdapter.changeData(mlist);
-                RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, 10, LoadingFooter.State.Normal, null);
-                jingcairecycleview.refreshComplete(); //刷新完成
-            }
-
-            @Override
-            public void onComplete() {
-            }
-        });
-
+        if(layoutManager == null) {
+            layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+            jingcairecycleview.setLayoutManager(layoutManager);
+            mAdapter = new MatchCellAdapter(mContext);
+            lAdapter = new LRecyclerViewAdapter(this, mAdapter);
+            jingcairecycleview.setAdapter(lAdapter);
+            jingcairecycleview.setLScrollListener(this);
+            jingcairecycleview.setNoMore(true);//禁止加载更多
+        }
     }
 
     @Override
-    public void onScrollUp() {
-
-    }
+    public void onScrollUp() { }
 
     @Override
-    public void onScrollDown() {
-
-    }
+    public void onScrollDown() { }
 
     @Override
     public void onBottom() {
@@ -299,43 +275,30 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
     @Override
     public void onScrolled(int distanceX, int distanceY) {
         int firstVisible = layoutManager.findFirstVisibleItemPosition();
-
-        if (firstVisible < 5) {
-            tabLayout.getTabAt(0).select();
-        } else if (firstVisible >= 5 && firstVisible < 10) {
-            tabLayout.getTabAt(1).select();
-
-        } else if (firstVisible >= 10 && firstVisible < 15) {
-            tabLayout.getTabAt(2).select();
-
-        } else if (firstVisible >= 15) {
-            tabLayout.getTabAt(3).select();
-
-        }
+//        tabLayout.getTabAt(firstVisible).select();
+//        if (firstVisible < 5) {
+//            tabLayout.getTabAt(firstVisible).select();
+//        } else if (firstVisible >= 5 && firstVisible < 10) {
+//            tabLayout.getTabAt(1).select();
+//
+//        } else if (firstVisible >= 10 && firstVisible < 15) {
+//            tabLayout.getTabAt(2).select();
+//
+//        } else if (firstVisible >= 15) {
+//            tabLayout.getTabAt(3).select();
+//
+//        }
 
 
     }
 
+    public void exitActivity() {
+        finish();
+    }
 
-//    public void loadData() {
-//        RxTimerUtil.timer(2000, new RxTimerUtil.IRxNext() {
-//            @Override
-//            public void doNext(long number) {
-//                for (int i = 0; i < 10; i++) {
-//                    mlist.add("测试");
-//                }
-//                mAdapter.changeData(mlist);
-//                RecyclerViewStateUtils.setFooterViewState(jingcairecycleview, LoadingFooter.State.Normal);
-//                Log.e("数组长度", mlist.size() + "==");
-//                if (mlist.size() >= mTotal) {
-//                    RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, 10, LoadingFooter.State.TheEnd, null);
-//                }
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//            }
-//        });
-//
-//    }
+    @OnClick(R.id.toolbar_back_iv)
+    public void onViewClicked() {
+        exitActivity();
+    }
+
 }

@@ -1,6 +1,6 @@
 package com.lldj.tc.httpMgr.beans.FormatModel.match;
 
-public class Odds {
+public class Odds{
     private int group_id;
     private int id;
     private int team_id;
@@ -147,5 +147,25 @@ public class Odds {
         this.match_stage = match_stage;
     }
 
-
+    @Override
+    public String toString() {
+        return "Odds{" +
+                "group_id=" + group_id +
+                ", id=" + id +
+                ", team_id=" + team_id +
+                ", status=" + status +
+                ", bet_min=" + bet_min +
+                ", bet_max=" + bet_max +
+                ", last_update=" + last_update +
+                ", match_id=" + match_id +
+                ", value='" + value + '\'' +
+                ", win='" + win + '\'' +
+                ", name='" + name + '\'' +
+                ", group_name='" + group_name + '\'' +
+                ", group_short_name='" + group_short_name + '\'' +
+                ", odds='" + odds + '\'' +
+                ", tag='" + tag + '\'' +
+                ", match_stage='" + match_stage + '\'' +
+                '}';
+    }
 }

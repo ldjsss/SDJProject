@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="5dp"
+    android:padding="10dp"
     android:orientation="vertical"
     android:id="@+id/gamebg"
-    android:layout_marginBottom="@dimen/dp_10"
     android:background="@drawable/rec_stroke_round4_969696">
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,12 +15,12 @@
         <View
             android:layout_width="100dp"
             android:layout_height="0.5dp"
-            android:background="@color/white"/>
+            android:background="@color/color_bg"/>
         <TextView
             android:id="@+id/myposition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/color_cdc3b3"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:text="第几局"/>
@@ -29,142 +28,35 @@
         <View
             android:layout_width="100dp"
             android:layout_height="0.5dp"
-            android:background="@color/white"/>
-
-
+            android:background="@color/color_bg"/>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:orientation="horizontal">
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/gameicon"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:paddingStart="10dp"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/game_csgo" />
+         <View
+             android:layout_width="0.5dp"
+             android:layout_height="match_parent"
+             android:background="@color/color_bg"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:id="@+id/gamename"
-            android:singleLine="true"
-            android:textSize="14sp"
-            android:text="ESL 职业联赛—美洲"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/gameicon"
-            android:textColor="@color/white" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:id="@+id/gamenamecount"
-            android:singleLine="true"
-            android:textSize="14sp"
-            android:text="/ BO3"
-            android:layout_marginLeft="5dp"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/gamename"
-            android:textColor="@color/style_color_accent" />
+         <TextView
+             android:id="@+id/matchplayname"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@color/color_cdc3b3"
+             android:layout_marginStart="5dp"
+             android:text="全局"/>
+     </LinearLayout>
 
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:id="@+id/gameplaycount"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:text="+3"
-            android:textSize="14sp"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:background="@drawable/rec_stroke_round4_969696" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/img_layout"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="80dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/gametime"
-            android:singleLine="true"
-            android:textSize="18sp"
-            android:text="13:00"
-            android:layout_centerInParent="true"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/gameresult"
-            android:singleLine="true"
-            android:textSize="30sp"
-            android:text="1 - 1"
-            android:layout_centerInParent="true"
-            android:textColor="@color/white" />
-
-        <ImageView
-            android:id="@+id/imgplayicon0"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/game_arena"
-            android:layout_marginStart="45dp"/>
-        <ImageView
-            android:id="@+id/imgplayicon1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/game_csgo"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="45dp"/>
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="@string/allwinner"
-            android:textSize="12sp"
-            android:textColor="@color/white" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"/>
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        <include layout="@layout/gamebetitem"/>
-        <include layout="@layout/gameoveritem"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+        <include layout="@layout/gamedetialitem"/>
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"/>
 
 
 </LinearLayout>

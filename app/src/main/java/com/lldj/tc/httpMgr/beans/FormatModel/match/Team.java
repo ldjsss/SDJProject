@@ -73,4 +73,18 @@ public class Team {
     private String team_short_name;
     private String start_time;
     private Score score;
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "team_id=" + team_id +
+                ", pos=" + pos +
+                ", match_id=" + match_id +
+                ", team_logo='" + team_logo + '\'' +
+                ", team_name='" + team_name + '\'' +
+                ", team_short_name='" + team_short_name + '\'' +
+                ", start_time='" + start_time + '\'' +
+                ", score=" + score +
+                '}';
+    }
 }

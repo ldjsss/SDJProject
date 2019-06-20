@@ -97,15 +97,15 @@
 
         <ImageView
             android:id="@+id/imgplayicon0"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:src="@mipmap/game_arena"
             android:layout_marginStart="40dp"/>
         <ImageView
             android:id="@+id/imgplayicon1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/game_csgo"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:src="@mipmap/game_arena"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="40dp"/>
     </RelativeLayout>

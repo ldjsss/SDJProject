@@ -305,7 +305,6 @@ public class HttpTool {
                             buffer.append("\n");
                         }
                         Log.w("HTTP", "buffer" + buffer.toString());
-
                         in.close();
                     }
                     con.disconnect();
@@ -324,11 +323,7 @@ public class HttpTool {
                             listener.onFinish(-1000, "failed to connect to");
                         }
                     });
-                }finally {
-                    if (con != null) {
-                        con.disconnect();
-                    }
-                }
+                }finally { if (con != null) { con.disconnect(); } }
             }
         }).start();
     }
@@ -338,9 +333,9 @@ public class HttpTool {
         new Thread(new Runnable(){
             @Override
             public void run() {
+                HttpURLConnection con = null;
                 try {
                     URL u = new URL(url);
-                    HttpURLConnection con = null;
                     if ("https".equals(u.getProtocol())) {// ssl证书管理在这里
                         HttpsURLConnection connHttps = (HttpsURLConnection) u.openConnection();
                         connHttps.setSSLSocketFactory(socketFactory);
@@ -363,10 +358,18 @@ public class HttpTool {
                             listener.onFinish(bitmap);
                         }
                     });
-                } catch (MalformedURLException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onFinish(null);
+                        }
+                    });
+                }finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
                 }
             }
 

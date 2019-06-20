@@ -18,7 +18,6 @@ import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
-import com.lldj.tc.httpMgr.beans.FormatModel.match.sortClass;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
@@ -31,6 +30,7 @@ import com.lldj.tc.mainUtil.GlobalVariable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -176,7 +176,9 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
                     mlist.clear();
                     List<Results> _list = (List<Results>)res.getResult();
 
-                    Collections.sort(_list, new sortClass());
+                    Collections.sort(_list, (Comparator<Object>) (o1, o2) -> {
+                        return ((Results) o1).getStart_time().compareTo(((Results) o2).getStart_time());
+                    });
 
                     alist = new Results[_list.size()];
 

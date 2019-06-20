@@ -31,6 +31,7 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +45,7 @@ import butterknife.OnClick;
 public class MainCellAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
-    private ArrayList<Results> mlist = new ArrayList<>();
+    private List<Results> mlist = new ArrayList<>();
     private viewHolder mHolder = null;
     private int ViewType;
     private String[] statusText;
@@ -57,7 +58,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
     }
 
-    public void changeData(ArrayList<Results> plist) {
+    public void changeData(List<Results> plist) {
         mlist = plist;
 
         AppUtils.dispatchEvent(new ObData(EventType.UPDATEMATCHLIST, mlist));
@@ -154,15 +155,16 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         public void onViewClicked(View view) {
             switch (view.getId()) {
                 case R.id.gamebg:
-                    MatchDetailActivity.launch(mContext, getAdapterPosition() - 1);
-                    RxTimerUtil.timer(100, new RxTimerUtil.IRxNext() {
-                        @Override
-                        public void doNext(long number) {
-                            AppUtils.dispatchEvent(new ObData(EventType.UPDATEMATCHLIST, mlist));
-                        }
-                        @Override
-                        public void onComplete() { }
-                    });
+                    Results _data = mlist.get(getAdapterPosition() - 1);
+                    MatchDetailActivity.launch(mContext, ViewType, _data.getId());
+//                    RxTimerUtil.timer(100, new RxTimerUtil.IRxNext() {
+//                        @Override
+//                        public void doNext(long number) {
+//                            AppUtils.dispatchEvent(new ObData(EventType.UPDATEMATCHLIST, mlist));
+//                        }
+//                        @Override
+//                        public void onComplete() { }
+//                    });
 
                     break;
                 case R.id.playcellbetlayout0:
@@ -186,9 +188,9 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         public void bottomCommon(int _type) {
 
             Results _data = mlist.get(getAdapterPosition() - 1);
-            Team team0 = _data.getTeam() != null ? _data.getTeam()[0] : null;
-            Team team1 = _data.getTeam() != null ? _data.getTeam()[1] : null;
-            Odds[] odds = _data.getOdds() != null ? _data.getOdds() : null;
+            Team team0    = _data.getTeam() != null ? _data.getTeam().get(0) : null;
+            Team team1    = _data.getTeam() != null ? _data.getTeam().get(1) : null;
+            List<Odds> odds = _data.getOdds() != null ? _data.getOdds() : null;
             int status = _data.getStatus();
 
             gamename.setText(_data.getTournament_name());
@@ -333,12 +335,12 @@ public class MainCellAdapter extends RecyclerView.Adapter {
             }
         }
 
-        private Odds getOddData(Odds[] odds, String key, int team_id) {
+        private Odds getOddData(List<Odds> odds, String key, int team_id) {
             if (odds == null) return null;
-            for (int i = 0; i < odds.length; i++) {
-                String _match_stage = odds[i].getMatch_stage();
-                if (_match_stage.equalsIgnoreCase("final") && team_id == odds[i].getTeam_id()) {
-                    return odds[i];
+            for (int i = 0; i < odds.size(); i++) {
+                String _match_stage = odds.get(i).getMatch_stage();
+                if (_match_stage.equalsIgnoreCase("final") && team_id == odds.get(i).getTeam_id()) {
+                    return odds.get(i);
                 }
             }
             return null;

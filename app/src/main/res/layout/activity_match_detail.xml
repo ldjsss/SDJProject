@@ -42,7 +42,7 @@
                 android:text="ESL 职业联赛—美洲"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/gameicon"
-                android:textColor="@color/white" />
+                android:textColor="@color/color_cdc3b3" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/gamename"
-                android:textColor="@color/style_color_accent" />
+                android:textColor="@color/color_8e6c37" />
 
             <TextView
                 android:layout_width="50dp"
@@ -87,7 +87,7 @@
                 android:textSize="14sp"
                 android:text="未开始"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="38dp"
                 android:textColor="@color/white" />
 
             <TextView
@@ -97,58 +97,63 @@
                 android:singleLine="true"
                 android:textSize="15sp"
                 android:text="2019年5月11日"
+                android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/white" />
+                android:textColor="@color/color_cdc3b3" />
 
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imglayout0"
-                android:layout_marginStart="@dimen/dp_40"
-                android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:id="@+id/imglayout0">
                 <ImageView
                     android:id="@+id/imgplayicon0"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
                     android:src="@mipmap/game_arena"/>
 
                 <TextView
+                    android:id="@+id/playnamecommon0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/playnamecommon0"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="12dp"
                     android:singleLine="true"
-                    android:layout_gravity="center_horizontal"
-                    android:textSize="14sp"
                     android:text="中国足球"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/color_cdc3b3"
+                    android:textSize="14sp" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/dp_40"
+            <RelativeLayout
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
                 android:id="@+id/imglayout1"
-                android:orientation="vertical">
+                android:layout_alignParentEnd="true">
                 <ImageView
                     android:id="@+id/imgplayicon1"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@mipmap/game_csgo"/>
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:src="@mipmap/game_arena"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/playnamecommon1"
                     android:singleLine="true"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="12dp"
                     android:textSize="14sp"
                     android:text="中国足球"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/color_cdc3b3" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -158,8 +163,8 @@
                 android:textSize="30sp"
                 android:text="0"
                 android:layout_toRightOf="@id/imglayout0"
-                android:layout_alignBaseline="@id/gamestatus1"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="-20dp"
+                android:layout_marginTop="28dp"
                 android:textColor="@color/white" />
 
             <TextView
@@ -170,16 +175,16 @@
                 android:textSize="30sp"
                 android:text="0"
                 android:layout_toLeftOf="@id/imglayout1"
-                android:layout_marginRight="20dp"
-                android:layout_alignBaseline="@id/gamestatus1"
+                android:layout_marginRight="-20dp"
+                android:layout_marginTop="28dp"
                 android:textColor="@color/white" />
 
             <RelativeLayout
-                android:layout_width="50dp"
-                android:layout_height="50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
-                >
+                android:layout_marginBottom="10dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -192,7 +197,7 @@
                 <TextView
                     android:id="@+id/gamestatus"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:textColor="@color/color_8e6c37"
                     android:text="@string/matchStatusFront"
@@ -205,20 +210,27 @@
 
     </LinearLayout>
 
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        style="@style/FirstpageFragment_TabLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        app:tabPaddingStart="1dp"
-        app:tabPaddingEnd="1dp"
-        android:layout_height="wrap_content"
-        app:tabBackground="@color/transparent" />
-    <com.lldj.tc.toolslibrary.recycleview.LRecyclerView
-        android:id="@+id/jingcairecycleview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@drawable/rec_stroke_round4_969696"
+        android:layout_margin="@dimen/dp_10"
+        android:orientation="vertical">
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            style="@style/FirstpageFragment_TabLayout"
+            android:layout_width="match_parent"
+            app:tabPaddingStart="1dp"
+            app:tabPaddingEnd="1dp"
+            android:layout_height="wrap_content"
+            app:tabBackground="@color/transparent" />
+        <com.lldj.tc.toolslibrary.recycleview.LRecyclerView
+            android:id="@+id/jingcairecycleview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>
