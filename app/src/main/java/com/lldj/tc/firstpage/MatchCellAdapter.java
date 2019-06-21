@@ -131,15 +131,19 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
                         view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
                         detailitembg.addView(view);
 
-                        if(_odds.size() >= (i+1)*2){
+                        Odds odd1 = _odds.get(i*2);
+                        ((TextView) view.findViewById(R.id.playovername0)).setText(odd1.getName());
 
+                        if(_odds.size() >= (i+1)*2){
+                            Odds odd2 = _odds.get(i*2 + 1);
+                            ((TextView) view.findViewById(R.id.playovername1)).setText(odd2.getName());
                         }
                         else {
                             view.findViewById(R.id.betvisible1).setVisibility(View.GONE);
                         }
 
                     }
-                    
+
                 }
 
             }
