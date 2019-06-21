@@ -1,79 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:orientation="horizontal"
+    android:layout_height="60dp"
+    android:orientation="vertical"
     android:id="@+id/bottomoverlayout">
 
-
-    <RelativeLayout
-        android:layout_width="110dp"
-        android:layout_marginStart="10dp"
-        android:layout_height="match_parent"
-        android:id="@+id/playcelllayout0"
-        android:orientation="horizontal"
-        android:layout_weight = "1">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="13sp"
-            android:textColor="@color/color_cdc3b3"
-            android:gravity="center"
-            android:background="@drawable/mathbetbg" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/playvictoryicon0"
-            android:src="@mipmap/main_victory"
-            android:layout_alignParentEnd="true"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/playovername0"
-            android:text="ABCD"
-            android:textSize="13sp"
-            android:textColor="@color/color_cdc3b3"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="@dimen/dp_10" />
-    </RelativeLayout>
     <LinearLayout
-        android:layout_width="@dimen/dimen_40"
-        android:layout_height="match_parent"></LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_20"></LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="110dp"
-        android:layout_marginEnd="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_height="match_parent"
-        android:id="@+id/playcelllayout1"
-        android:layout_weight = "1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="13sp"
-            android:textColor="@color/color_cdc3b3"
-            android:gravity="center"
-            android:background="@drawable/mathbetbg" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="-10dp"
-            android:id="@+id/playvictoryicon1"
-            android:src="@mipmap/main_failure" />
+        <RelativeLayout
+            android:layout_width="110dp"
+            android:layout_marginStart="10dp"
+            android:layout_height="40dp"
+            android:id="@+id/playcelllayout0"
+            android:orientation="horizontal"
+            android:layout_weight = "1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="13sp"
+                android:textColor="@color/color_cdc3b3"
+                android:gravity="center"
+                android:background="@drawable/mathbetbg" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/playvictoryicon0"
+                android:src="@mipmap/main_victory"
+                android:layout_alignParentEnd="true"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/playovername1"
-            android:text="ABCD"
-            android:textSize="13sp"
-            android:textColor="@color/color_cdc3b3"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/dp_10" />
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/playovername0"
+                android:text="ABCD"
+                android:textSize="13sp"
+                android:textColor="@color/color_cdc3b3"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/dp_10" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="@dimen/dimen_40"
+            android:layout_height="match_parent"></LinearLayout>
+        <RelativeLayout
+            android:layout_width="110dp"
+            android:layout_marginEnd="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="@dimen/dp_40"
+            android:id="@+id/playcelllayout1"
+            android:layout_weight = "1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/betvisible1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="13sp"
+                    android:textColor="@color/color_cdc3b3"
+                    android:gravity="center"
+                    android:background="@drawable/mathbetbg" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="-10dp"
+                    android:id="@+id/playvictoryicon1"
+                    android:src="@mipmap/main_failure" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/playovername1"
+                    android:text="ABCD"
+                    android:textSize="13sp"
+                    android:textColor="@color/color_cdc3b3"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dp_10" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

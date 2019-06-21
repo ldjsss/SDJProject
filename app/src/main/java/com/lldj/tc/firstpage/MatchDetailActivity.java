@@ -184,7 +184,7 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
                         }
                     });
 
-                    Log.w("-----detail data = ", _data.toString());
+//                    Log.w("-----detail data = ", _data.toString());
 
                     Map<String, List<Odds>> oddMap = new HashMap<>();
                     if(odds != null) {
@@ -220,12 +220,21 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
 
     private void initList(Map<String, List<Odds>> oddMap, ArrayList<String> keys){
 
+        if(layoutManager == null) {
+            layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+            jingcairecycleview.setLayoutManager(layoutManager);
+            mAdapter = new MatchCellAdapter(mContext);
+            lAdapter = new LRecyclerViewAdapter(this, mAdapter);
+            jingcairecycleview.setAdapter(lAdapter);
+            jingcairecycleview.setLScrollListener(this);
+            jingcairecycleview.setNoMore(true);//禁止加载更多
+        }
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int tabPosition = tab.getPosition();
-                jingcairecycleview.scrollToPosition(tabPosition);
-                if(tabPosition!=0)layoutManager.scrollToPositionWithOffset(tabPosition, 0);
+                layoutManager.scrollToPositionWithOffset(tabPosition + 1, 0);
             }
 
             @Override
@@ -237,16 +246,6 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
         tabLayout.removeAllTabs();
         for (int i = 0; i < keys.size(); i++) {
             tabLayout.addTab(tabLayout.newTab().setText(keys.get(i)));
-        }
-
-        if(layoutManager == null) {
-            layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-            jingcairecycleview.setLayoutManager(layoutManager);
-            mAdapter = new MatchCellAdapter(mContext);
-            lAdapter = new LRecyclerViewAdapter(this, mAdapter);
-            jingcairecycleview.setAdapter(lAdapter);
-            jingcairecycleview.setLScrollListener(this);
-            jingcairecycleview.setNoMore(true);//禁止加载更多
         }
     }
 
@@ -275,21 +274,8 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
     @Override
     public void onScrolled(int distanceX, int distanceY) {
         int firstVisible = layoutManager.findFirstVisibleItemPosition();
-//        tabLayout.getTabAt(firstVisible).select();
-//        if (firstVisible < 5) {
-//            tabLayout.getTabAt(firstVisible).select();
-//        } else if (firstVisible >= 5 && firstVisible < 10) {
-//            tabLayout.getTabAt(1).select();
-//
-//        } else if (firstVisible >= 10 && firstVisible < 15) {
-//            tabLayout.getTabAt(2).select();
-//
-//        } else if (firstVisible >= 15) {
-//            tabLayout.getTabAt(3).select();
-//
-//        }
-
-
+        Log.e("firstVisible", firstVisible + "");
+       if(tabLayout != null) tabLayout.setScrollPosition(firstVisible - 1, 0 ,false);
     }
 
     public void exitActivity() {

@@ -214,14 +214,14 @@ public class MainCellAdapter extends RecyclerView.Adapter {
             HttpTool.getBitmapUrl(team0.getTeam_logo(), new bmpListener() {
                 @Override
                 public void onFinish(Bitmap bitmap) {
-                    imgplayicon0.setImageBitmap(bitmap);
+                    if (bitmap != null) imgplayicon1.setImageBitmap(bitmap);
                 }
             });
 
             HttpTool.getBitmapUrl(team1.getTeam_logo(), new bmpListener() {
                 @Override
                 public void onFinish(Bitmap bitmap) {
-                    imgplayicon1.setImageBitmap(bitmap);
+                    if (bitmap != null) imgplayicon1.setImageBitmap(bitmap);
                 }
             });
 
