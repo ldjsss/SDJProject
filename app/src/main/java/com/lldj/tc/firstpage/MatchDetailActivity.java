@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -209,7 +207,7 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
                     }
 
                     if (mAdapter != null){
-                        mAdapter.changeData(oddMap);
+                        mAdapter.changeData(oddMap, ViewType);
                         RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
                         jingcairecycleview.refreshComplete();
                     }
@@ -263,10 +261,9 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
 //            return;
 //        }
 //        if (mlist.size() < mTotal) {
-//            RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, 10, LoadingFooter.State.Loading, null);
-//            loadData();
+//            RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Loading, null);
 //        } else {
-//            RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, 10, LoadingFooter.State.TheEnd, null);
+//            RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.TheEnd, null);
 //        }
 
     }

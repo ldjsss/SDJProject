@@ -33,6 +33,7 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     private viewHolder mHolder  = null;
+    private int ViewType;
 
     Map<String, List<Odds>> mlist = new HashMap<>();
 
@@ -40,9 +41,10 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
         this.mContext = mContext;
     }
 
-    public void changeData(Map<String, List<Odds>> plist) {
+    public void changeData(Map<String, List<Odds>> plist, int ViewType) {
 
         mlist = plist;
+        ViewType = ViewType;
 
         notifyDataSetChanged();
     }
