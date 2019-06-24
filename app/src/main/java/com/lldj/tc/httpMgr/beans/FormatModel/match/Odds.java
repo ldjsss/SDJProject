@@ -121,9 +121,7 @@ public class Odds{
         this.group_short_name = group_short_name;
     }
 
-    public String getOdds() {
-        return odds;
-    }
+    public String getOdds() { return odds; }
 
     public void setOdds(String odds) {
         this.odds = odds;

@@ -220,7 +220,7 @@ public class BetDialog<dismiss> extends Dialog {
 
             if (odd == null) return convertView;
 
-            Clog.e("---- " + groupPosition, data.toString());
+//            Clog.e("---- " + groupPosition, data.toString());
 
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.item_group, null);
@@ -240,6 +240,11 @@ public class BetDialog<dismiss> extends Dialog {
 
             TextView betpercent = (TextView) convertView.findViewById(R.id.betpercent);
             betpercent.setText("@" + odd.getOdds());
+
+            String willGet = "";
+            if(!TextUtils.isEmpty(text)) willGet = (Float.parseFloat(text) * Float.parseFloat(odd.getOdds())) + "";
+            TextView betwildgettv = (TextView) convertView.findViewById(R.id.betwildgettv);
+            betwildgettv.setText(willGet);
 
             Clog.e("ggggggg " + groupPosition, " hhhhhhh " + isExpanded);
 
