@@ -151,11 +151,11 @@ public class MainCellAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick({R.id.gamebetlayout0, R.id.gamebetlayout1, R.id.gamebg, R.id.playcellbetlayout0, R.id.playcellbetlayout1, R.id.playcelllayout0, R.id.playcelllayout1})
+        @OnClick({R.id.playname0, R.id.gamebg, R.id.playname1, R.id.playcelllayout0, R.id.playcelllayout1})
         public void onViewClicked(View view) {
+            Results _data = mlist.get(getAdapterPosition() - 1);
             switch (view.getId()) {
                 case R.id.gamebg:
-                    Results _data = mlist.get(getAdapterPosition() - 1);
                     MatchDetailActivity.launch(mContext, ViewType, _data.getId());
 //                    RxTimerUtil.timer(100, new RxTimerUtil.IRxNext() {
 //                        @Override
@@ -167,12 +167,13 @@ public class MainCellAdapter extends RecyclerView.Adapter {
 //                    });
 
                     break;
-                case R.id.playcellbetlayout0:
-                    Toast.makeText(mContext, "hhhhhh" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                case R.id.playname0:
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
+                    betClick(_data, "0");
                     break;
-                case R.id.playcellbetlayout1:
-                    Toast.makeText(mContext, "ddddddd" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                case R.id.playname1:
+                    HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
+                    betClick(_data, "1");
                     break;
                 case R.id.playcelllayout0:
                     Toast.makeText(mContext, "ffffff", Toast.LENGTH_SHORT).show();
@@ -182,6 +183,19 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     break;
 
             }
+        }
+
+        private void betClick(Results data, String tag){
+            RxTimerUtil.timer(100, new RxTimerUtil.IRxNext() {
+                @Override
+                public void doNext(long number) {
+                    ObData obj = new ObData(EventType.BETLISTADD, data);
+                    obj.setTag(tag);
+                    AppUtils.dispatchEvent(obj);
+                }
+                @Override
+                public void onComplete() { }
+            });
         }
 
         //刷新底部显示状态 0 只显示战队，无倍注显示，无法押获胜  显示战队和倍注，未开始状态 1 显示战队和倍注，滚盘状态 / 显示战队，锁盘，滚盘状态 3 已结束
@@ -214,7 +228,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
             HttpTool.getBitmapUrl(team0.getTeam_logo(), new bmpListener() {
                 @Override
                 public void onFinish(Bitmap bitmap) {
-                    if (bitmap != null) imgplayicon1.setImageBitmap(bitmap);
+                    if (bitmap != null) imgplayicon0.setImageBitmap(bitmap);
                 }
             });
 

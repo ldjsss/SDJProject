@@ -8,10 +8,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.HttpMsg;
@@ -26,6 +24,7 @@ import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
+import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 
@@ -37,6 +36,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
 
 /**
  * description: <p>
@@ -88,12 +88,12 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
     private int matchId;
     private MatchCellAdapter mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
-
     private int mTotal = 0;
     LinearLayoutManager layoutManager;
 
     private String[] statusText;
-    private int[] winBmp;
+    private int disTime = 4000;
+    private Disposable disposable;
 
 
     public static void launch(Context pContext, int ViewType, int matchId) {
@@ -113,8 +113,7 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
         this.ViewType = bundle.getInt("ViewType");
         this.matchId = bundle.getInt("matchId");
 
-        statusText = new String[]{"", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.matchCurrentTitle), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
-        winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
+        if (statusText == null)statusText = new String[]{"", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.matchCurrentTitle), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
 
         onRefresh();
 //        registEvent(new Observer<ObData>() {
@@ -161,10 +160,12 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
                     playnamecommon1.setText(team1.getTeam_short_name());
                     matchtime.setText(_data.getStart_time());
 
-                    if (status == 2) {
+                    if (status == 2) { //gameing
                         gamestatusicon.setImageResource(R.mipmap.match_status_1);
-                    } else {
+                        startUpdate();
+                    } else { //other
                         gamestatusicon.setImageResource(R.mipmap.match_status_0);
+                        stopUpdate();
                     }
                     gamestatus.setText(statusText[status]);
 
@@ -284,4 +285,28 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
         exitActivity();
     }
 
+    private void startUpdate(){
+        if (disposable != null) return;
+
+        disposable = RxTimerUtilPro.interval(disTime, new RxTimerUtilPro.IRxNext() {
+            @Override
+            public void doNext(long number) {
+                onRefresh();
+            }
+
+            @Override
+            public void onComplete() { }
+        });
+    }
+
+    private void stopUpdate(){
+        RxTimerUtilPro.cancel(disposable);
+        disposable = null;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopUpdate();
+    }
 }

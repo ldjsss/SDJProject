@@ -50,7 +50,7 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
     private int ViewType;
     private BaseFragment middleFragment;
     private Disposable disposable;
-    private int disTime = 2000;
+    private int disTime = 4000;
 
     @BindView(R.id.subject_lrecycleview)
     LRecyclerView subjectLrecycleview;

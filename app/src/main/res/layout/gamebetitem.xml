@@ -107,7 +107,6 @@
         android:layout_alignParentRight="true"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:id="@+id/playcellbetlayout1"
         android:layout_weight = "1">
 
         <TextView

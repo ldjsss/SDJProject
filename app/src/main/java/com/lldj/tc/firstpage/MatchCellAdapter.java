@@ -1,11 +1,13 @@
 package com.lldj.tc.firstpage;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
+import com.lldj.tc.mainUtil.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +37,8 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private viewHolder mHolder  = null;
     private int ViewType;
+    private int[] winBmp;
+
 
     Map<String, List<Odds>> mlist = new HashMap<>();
 
@@ -45,6 +50,7 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
 
         mlist = plist;
         ViewType = ViewType;
+       if(winBmp == null) winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
 
         notifyDataSetChanged();
     }
@@ -90,8 +96,6 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
                 String key      = entry.getKey();
                 List<Odds> odds = entry.getValue();
 
-//                myposition.setText(key);
-
 //                Log.w("-----detail odds = ", odds.toString());
 
                 Map<String, List<Odds>> oddMap = new HashMap<>();
@@ -106,7 +110,6 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
 
                     oddMap.put(_key, itemList);
                 }
-
 
                 Iterator<Map.Entry<String, List<Odds>>> entries = oddMap.entrySet().iterator();
                 while (entries.hasNext()) {
@@ -134,11 +137,86 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
                         detailitembg.addView(view);
 
                         Odds odd1 = _odds.get(i*2);
-                        ((TextView) view.findViewById(R.id.playovername0)).setText(odd1.getName());
+                        int _statue = odd1.getStatus();
+
+                        ((TextView) view.findViewById(R.id.playovername0)).setText(TextUtils.isEmpty(odd1.getName())? "unknown" : odd1.getName());
+                        String _oddstring = odd1.getOdds();
+
+                        TextView tv_odds = (TextView) view.findViewById(R.id.playbetnum0);
+                        ImageView im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon0);
+                        ImageView im_lock = (ImageView) view.findViewById(R.id.playlockicon0);
+                        if(_statue == 1) { //normal
+                            im_lock.setVisibility(View.GONE);
+                            if (_oddstring.equals("")) {
+                                tv_odds.setVisibility(View.GONE);
+                                im_arrows.setVisibility(View.GONE);
+                            } else {
+                                tv_odds.setText(_oddstring);
+                                tv_odds.setVisibility(View.VISIBLE);
+                            }
+                        }
+                        else if(_statue == 2){ //lock
+                            tv_odds.setVisibility(View.GONE);
+                            im_arrows.setVisibility(View.GONE);
+                            im_lock.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            im_lock.setVisibility(View.GONE);
+                            tv_odds.setVisibility(View.GONE);
+                            im_arrows.setVisibility(View.GONE);
+                        }
+
+                        //set player 1 win icon
+                        String _win = odd1.getWin();
+                        ImageView iv_win = (ImageView) view.findViewById(R.id.playvictoryicon0);
+                        if(_win == null || _win.equals("") || Integer.parseInt(_win)<0){
+                            iv_win.setVisibility(View.GONE);
+                        }
+                        else {
+                            iv_win.setImageResource(winBmp[Integer.parseInt(_win)]);
+                            iv_win.setVisibility(View.VISIBLE);
+                        }
 
                         if(_odds.size() >= (i+1)*2){
                             Odds odd2 = _odds.get(i*2 + 1);
-                            ((TextView) view.findViewById(R.id.playovername1)).setText(odd2.getName());
+                            _oddstring = odd2.getOdds();
+                            _statue = odd2.getStatus();
+
+                            ((TextView) view.findViewById(R.id.playovername1)).setText(TextUtils.isEmpty(odd1.getName())? "unknown" : odd1.getName());
+
+                            tv_odds = (TextView) view.findViewById(R.id.playbetnum1);
+                            im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon1);
+                            im_lock = (ImageView) view.findViewById(R.id.playlockicon1);
+
+                            if(_statue == 1) { //normal
+                                im_lock.setVisibility(View.GONE);
+                                if (_oddstring.equals("")) {
+                                    tv_odds.setVisibility(View.GONE);
+                                    im_arrows.setVisibility(View.GONE);
+                                } else {
+                                    tv_odds.setText(_oddstring);
+                                    tv_odds.setVisibility(View.VISIBLE);
+                                }
+                            }
+                            else if(_statue == 2) { //lock
+                                im_lock.setVisibility(View.VISIBLE);
+                            }
+                            else{
+                                im_lock.setVisibility(View.GONE);
+                                tv_odds.setVisibility(View.GONE);
+                                im_arrows.setVisibility(View.GONE);
+                            }
+
+                            //set player 2 win icon
+                            _win = odd2.getWin();
+                            iv_win = (ImageView) view.findViewById(R.id.playvictoryicon1);
+                            if(_win == null || _win.equals("") || Integer.parseInt(_win)<0){
+                                iv_win.setVisibility(View.GONE);
+                            }
+                            else {
+                                iv_win.setImageResource(winBmp[Integer.parseInt(_win)]);
+                                iv_win.setVisibility(View.VISIBLE);
+                            }
                         }
                         else {
                             view.findViewById(R.id.betvisible1).setVisibility(View.GONE);

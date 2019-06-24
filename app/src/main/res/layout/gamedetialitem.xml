@@ -34,6 +34,15 @@
                 android:src="@mipmap/main_victory"
                 android:layout_alignParentEnd="true"/>
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/playlockicon0"
+                android:src="@mipmap/dktz_suo"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dimen_20"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,6 +53,30 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="@dimen/dp_10" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_alignParentEnd="true"
+                android:paddingEnd="10dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/playdetailarrowicon0"
+                    android:src="@mipmap/main_courage"
+                    android:layout_gravity="center_vertical"
+                    android:layout_alignParentEnd="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/playbetnum0"
+                    android:text="0.0"
+                    android:textSize="15sp"
+                    android:textColor="@color/color_cdc3b3"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
         </RelativeLayout>
         <LinearLayout
             android:layout_width="@dimen/dimen_40"
@@ -85,6 +118,39 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/dp_10" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/playlockicon1"
+                    android:src="@mipmap/dktz_suo"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dimen_20"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/playbetnum1"
+                        android:text="0.0"
+                        android:textSize="15sp"
+                        android:textColor="@color/color_cdc3b3"
+                        android:layout_gravity="center_vertical"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/playdetailarrowicon1"
+                        android:src="@mipmap/main_courage"
+                        android:layout_gravity="center_vertical"
+                        android:layout_alignParentEnd="true"/>
+
+                </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

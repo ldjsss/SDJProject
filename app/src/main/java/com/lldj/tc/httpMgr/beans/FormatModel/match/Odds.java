@@ -43,9 +43,7 @@ public class Odds{
         this.team_id = team_id;
     }
 
-    public int getStatus() {
-        return status;
-    }
+    public int getStatus() { return status; }
 
     public void setStatus(int status) {
         this.status = status;

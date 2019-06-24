@@ -31,6 +31,8 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
     Disposable sss;
     Disposable ddd;
 
+    private BetDialog betDialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +108,17 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
                 AppUtils.showLoading(mContext);
                 break;
             case HandlerType.SHOWBETDIA:
-                new BetDialog(this,R.style.DialogTheme).show();
+                if(betDialog == null) betDialog = new BetDialog(this,R.style.DialogTheme);
+                betDialog.show();
+                break;
+            case HandlerType.HIDEBETDIA:
+                if(betDialog == null) return;
+                betDialog.hide();
+                break;
+            case HandlerType.DELETEBETDIA:
+                if(betDialog == null) return;
+                betDialog.dismiss();
+                betDialog = null;
                 break;
         }
     }
