@@ -50,6 +50,7 @@
     <string name="sure">确认 </string>
     <string name="getUseInfoSucc">获取用户信息成功</string>
     <string name="getGameListSucc">获取比赛列表成功</string>
+    <string name="hadlock">已锁盘</string>
 
 
 

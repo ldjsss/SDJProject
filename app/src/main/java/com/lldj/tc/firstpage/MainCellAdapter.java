@@ -168,10 +168,18 @@ public class MainCellAdapter extends RecyclerView.Adapter {
 
                     break;
                 case R.id.playname0:
+                    if(_data.getOdds().get(0).getStatus() == 2){
+                        Toast.makeText(mContext, mContext.getResources().getString(R.string.hadlock), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
                     betClick(_data, _data.getOdds().get(0).getId() + "");
                     break;
                 case R.id.playname1:
+                    if(_data.getOdds().get(1).getStatus() == 2){
+                        Toast.makeText(mContext, mContext.getResources().getString(R.string.hadlock), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
                     betClick(_data, _data.getOdds().get(1).getId() + "");
                     break;
