@@ -246,7 +246,7 @@ public class BetDialog<dismiss> extends Dialog {
             TextView betwildgettv = (TextView) convertView.findViewById(R.id.betwildgettv);
             betwildgettv.setText(willGet);
 
-            Clog.e("ggggggg " + groupPosition, " hhhhhhh " + isExpanded);
+//            Clog.e("ggggggg " + groupPosition, " hhhhhhh " + isExpanded);
 
             ((ImageView) convertView.findViewById(R.id.iv_groupdelete)).setOnClickListener(new View.OnClickListener() {
                 @Override

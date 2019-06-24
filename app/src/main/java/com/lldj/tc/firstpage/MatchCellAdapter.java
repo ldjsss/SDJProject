@@ -9,14 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
+import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
+import com.lldj.tc.mainUtil.EventType;
+import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.mainUtil.Utils;
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.handler.HandlerInter;
+import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +46,7 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
     private viewHolder mHolder  = null;
     private int ViewType;
     private int[] winBmp;
+    private Results tData;
 
 
     Map<String, List<Odds>> mlist = new HashMap<>();
@@ -46,10 +55,11 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
         this.mContext = mContext;
     }
 
-    public void changeData(Map<String, List<Odds>> plist, int ViewType) {
+    public void changeData(Map<String, List<Odds>> plist, int ViewType, Results _data) {
 
         mlist = plist;
         ViewType = ViewType;
+        tData = _data;
        if(winBmp == null) winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
 
         notifyDataSetChanged();
@@ -154,6 +164,14 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
                                 tv_odds.setText(_oddstring);
                                 tv_odds.setVisibility(View.VISIBLE);
                             }
+
+                            ((RelativeLayout) view.findViewById(R.id.playcelllayout0)).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
+                                    betClick(tData, odd1.getId() + "");
+                                }
+                            });
                         }
                         else if(_statue == 2){ //lock
                             tv_odds.setVisibility(View.GONE);
@@ -197,6 +215,14 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
                                     tv_odds.setText(_oddstring);
                                     tv_odds.setVisibility(View.VISIBLE);
                                 }
+
+                                ((RelativeLayout) view.findViewById(R.id.playcelllayout1)).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
+                                        betClick(tData, odd2.getId() + "");
+                                    }
+                                });
                             }
                             else if(_statue == 2) { //lock
                                 im_lock.setVisibility(View.VISIBLE);
@@ -228,6 +254,19 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
 
             }
 
+        }
+
+        private void betClick(Results data, String tag){
+            RxTimerUtil.timer(100, new RxTimerUtil.IRxNext() {
+                @Override
+                public void doNext(long number) {
+                    ObData obj = new ObData(EventType.BETLISTADD, data);
+                    obj.setTag(tag);
+                    AppUtils.dispatchEvent(obj);
+                }
+                @Override
+                public void onComplete() { }
+            });
         }
 
         private Map.Entry<String, List<Odds>> getEntry(String key){

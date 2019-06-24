@@ -208,7 +208,7 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
                     }
 
                     if (mAdapter != null){
-                        mAdapter.changeData(oddMap, ViewType);
+                        mAdapter.changeData(oddMap, ViewType, _data);
                         RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
                         jingcairecycleview.refreshComplete();
                     }
