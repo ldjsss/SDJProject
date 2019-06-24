@@ -32,5 +32,12 @@ public class ObData {
         this.tag = tag;
     }
 
-
+    @Override
+    public String toString() {
+        return "ObData{" +
+                "key='" + key + '\'' +
+                ", value=" + value +
+                ", tag='" + tag + '\'' +
+                '}';
+    }
 }

@@ -169,11 +169,11 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     break;
                 case R.id.playname0:
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
-                    betClick(_data, "0");
+                    betClick(_data, _data.getOdds().get(0).getId() + "");
                     break;
                 case R.id.playname1:
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
-                    betClick(_data, "1");
+                    betClick(_data, _data.getOdds().get(1).getId() + "");
                     break;
                 case R.id.playcelllayout0:
                     Toast.makeText(mContext, "ffffff", Toast.LENGTH_SHORT).show();

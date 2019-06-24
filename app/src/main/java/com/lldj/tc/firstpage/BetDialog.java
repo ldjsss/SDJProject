@@ -14,12 +14,15 @@ import android.view.WindowManager;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 
 import com.lldj.tc.R;
+import com.lldj.tc.httpMgr.beans.FormatModel.Results;
+import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
 import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.toolslibrary.event.ObData;
@@ -167,18 +170,52 @@ public class BetDialog<dismiss> extends Dialog {
         //【重要】填充一级列表
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+            ObData data = groups.get(groupPosition);
+            Results _data = (Results)data.getValue();
+            String ID = data.getTag();
+
+            Odds odd = getTeamOddsByID(_data, ID);
+
+            if(odd == null) return convertView;
+
+            Clog.e("---- " + groupPosition, data.toString());
 
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.item_group, null);
             }
             EditText tv_group = (EditText) convertView.findViewById(R.id.betinput_et);
-
             String text = editTexts.get(groupPosition) != null ? (String) editTexts.get(groupPosition) : "";
             tv_group.setText(text);
 
+            TextView tv_groupName = (TextView) convertView.findViewById(R.id.tv_groupgame);
+            tv_groupName.setText(TextUtils.isEmpty(odd.getName())? "unkonw":odd.getName());
+
+            TextView tv_groupplays = (TextView) convertView.findViewById(R.id.tv_groupplays);
+            tv_groupplays.setText(odd.getGroup_name());
+
+            TextView tv_groupteams = (TextView) convertView.findViewById(R.id.tv_groupteams);
+            tv_groupteams.setText(_data.getMatch_name());
+
             Clog.e("ggggggg " + groupPosition, " hhhhhhh " + isExpanded);
 
+            ((ImageView) convertView.findViewById(R.id.iv_groupdelete)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    groups.remove(groupPosition);
+                    _myExpandableListView.notifyDataSetChanged();
+                    gamebettotalcount.setText(groups.size() + "");
+                }
+            });
+
             return convertView;
+        }
+
+        private Odds getTeamOddsByID(Results _data, String ID){
+            for (int i = 0; i < _data.getOdds().size(); i++) {
+                if(_data.getOdds().get(i).getId() == Integer.parseInt(ID)) return _data.getOdds().get(i);
+            }
+
+            return null;
         }
 
         //【重要】填充二级列表
@@ -191,6 +228,7 @@ public class BetDialog<dismiss> extends Dialog {
 
             for (int i = 0; i < 13; i++) {
                 TextView tv_child = (TextView) convertView.findViewWithTag("tv" + i);
+
                 tv_child.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
