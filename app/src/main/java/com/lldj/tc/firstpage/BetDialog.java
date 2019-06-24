@@ -2,6 +2,7 @@ package com.lldj.tc.firstpage;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,13 +15,11 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.toolslibrary.event.ObData;
@@ -35,19 +34,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.view.ViewGroup.FOCUS_BEFORE_DESCENDANTS;
-import static com.lldj.tc.toolslibrary.util.AppUtils.registEvent;
 
 public class BetDialog<dismiss> extends Dialog {
 
+    @BindView(R.id.gamebettotalcount)
+    TextView gamebettotalcount;
     //View
     private ExpandableListView expandableListView;
-
-    //Model：定义的数据
-//    private String[] groups = {"A", "B", "C", "D", "E"};
 
     //注意，字符数组不要写成{{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
     private String[][] childs = {{"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}};
@@ -95,7 +93,7 @@ public class BetDialog<dismiss> extends Dialog {
                     groups.add(data);
 
                     _myExpandableListView.notifyDataSetChanged();
-                    ((TextView)findViewById(R.id.gamebetcount)).setText(groups.size());
+                    gamebettotalcount.setText(groups.size() + "");
                 }
             }
         };
