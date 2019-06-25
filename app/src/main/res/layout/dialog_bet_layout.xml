@@ -1,84 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_262935">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="45dp"
-       android:background="@drawable/rec_bettitle">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/bettitlelayout"
+        android:background="@drawable/rec_bettitle">
 
-      <TextView
-          android:layout_width="40dp"
-          android:layout_height="25dp"
-          android:id="@+id/gamebettotalcount"
-          android:layout_centerVertical="true"
-          android:layout_marginStart="20dp"
-          android:text="1"
-          android:textSize="18sp"
-          android:textColor="@color/color_cdc3b3"
-          android:gravity="center"
-          android:background="@drawable/rec_stroke_round4_969696" />
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:id="@+id/gamebettotalcount"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:text="1"
+            android:textSize="18sp"
+            android:textColor="@color/color_cdc3b3"
+            android:gravity="center"
+            android:background="@drawable/rec_stroke_round4_969696" />
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/deleteAll"
-           android:textSize="18sp"
-           android:layout_centerVertical="true"
-           android:layout_toRightOf="@id/gamebettotalcount"
-           android:layout_marginLeft="@dimen/dp_20"
-           android:id="@+id/deleteall"
-           android:textColor="@color/color_1a1c26"/>
-       <LinearLayout
-           android:layout_width="wrap_content"
-           android:layout_height="match_parent"
-           android:orientation="horizontal"
-           android:layout_centerVertical="true"
-           android:layout_alignParentEnd="true"
-           android:id="@+id/closelayout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/deleteAll"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/gamebettotalcount"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:id="@+id/deleteall"
+            android:textColor="@color/color_1a1c26"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/closelayout">
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textSize="18sp"
-               android:layout_centerVertical="true"
-               android:text="@string/moneyHave"
-               android:textColor="@color/color_1a1c26"
-               android:id="@+id/moneyhave"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:text="@string/moneyHave"
+                android:textColor="@color/color_1a1c26"
+                android:id="@+id/moneyhave"/>
 
-           <View
-               android:layout_width="@dimen/dp_1"
-               android:layout_height="match_parent"
-               android:layout_marginStart="@dimen/dp_10"
-               android:id="@+id/closeline"
-               android:background="@color/color_1a1c26"/>
+            <View
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_10"
+                android:id="@+id/closeline"
+                android:background="@color/color_1a1c26"/>
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="×"
-               android:textSize="30sp"
-               android:layout_marginEnd="@dimen/dp_20"
-               android:layout_marginStart="@dimen/dimen_20"
-               android:id="@+id/close"
-               android:textColor="@color/color_1a1c26"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="×"
+                android:textSize="30sp"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:id="@+id/close"
+                android:textColor="@color/color_1a1c26"/>
 
-       </LinearLayout>
+        </LinearLayout>
 
-   </RelativeLayout>
+    </RelativeLayout>
 
-   <ExpandableListView
-       android:id="@+id/expandableListView"
-       android:layout_width="match_parent"
-       android:layout_height="220dp"
-       android:layout_weight = "1" />
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_below="@+id/bettitlelayout"/>
 
-   <View
-       android:layout_width="match_parent"
-       android:layout_height="60dp"
-       android:layout_weight = "1"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/viewlayout"
+        android:layout_below="@+id/expandableListView"/>
 
-</LinearLayout>
+</RelativeLayout>
