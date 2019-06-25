@@ -1,24 +1,17 @@
 package com.lldj.tc.firstpage;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.StyleRes;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.tabs.TabLayout;
@@ -35,9 +28,8 @@ import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
-import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
-import com.lldj.tc.toolslibrary.view.BaseActivity;
+import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 
 import java.util.ArrayList;
@@ -53,7 +45,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * description: <p>
  */
-public class MatchDetailDialog extends Dialog implements LRecyclerView.LScrollListener{
+public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LScrollListener{
     @BindView(R.id.toolbar_back_iv)
     ImageView toolbarBackIv;
     @BindView(R.id.toolbar_title_tv)
@@ -101,36 +93,32 @@ public class MatchDetailDialog extends Dialog implements LRecyclerView.LScrollLi
     private MatchCellAdapter mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
     private int mTotal = 0;
-    LinearLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
+    private DrawerLayout drawerLayout;
 
     private String[] statusText;
     private int disTime = 4000;
     private Disposable disposable;
 
-    public MatchDetailDialog(@NonNull Context context, @StyleRes int themeResId) {
-        super(context, themeResId);
+    @Override
+    public int getContentView() {
+        return R.layout.frament_match_detail;
+    }
 
-        //2、设置布局
-        View view = View.inflate(context, R.layout.activity_match_detail, null);
-        setContentView(view);
+    @Override
+    public void initView(View view) {
 
         ButterKnife.bind(this, view);
 
-        Window window = this.getWindow();
-        //设置弹出位置
-        window.setGravity(Gravity.RIGHT);
-        window.setWindowAnimations(R.style.Anim_fade);  //设置弹出动画
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);//设置对话框大小
+        if (statusText == null)statusText = new String[]{"", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.matchCurrentTitle), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
 
-        WindowManager.LayoutParams layoutParams = window.getAttributes();
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE; //核心代码是这个属性。
-        window.setAttributes(layoutParams);
+        ImmersionBar.with((Activity)mContext).titleBar(toolbarRootLayout).init();
 
-        if (statusText == null)statusText = new String[]{"", context.getString(R.string.matchStatusFront), context.getString(R.string.matchCurrentTitle), context.getString(R.string.matchStatusOver), context.getString(R.string.matchStatusError)};
+        toolbarTitleTv.setText(mContext.getString(R.string.matchDetialTitle));
 
-        ImmersionBar.with((Activity)context).titleBar(toolbarRootLayout).init();
-
-        toolbarTitleTv.setText(context.getString(R.string.matchDetialTitle));
+        mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+        fullScreenImmersive(mContext.getWindow().getDecorView());
+        mContext.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
 
     }
 
@@ -146,21 +134,14 @@ public class MatchDetailDialog extends Dialog implements LRecyclerView.LScrollLi
         }
     }
 
-    public void showView(int ViewType, int matchId){
+    public void showView(int ViewType, int matchId, DrawerLayout drawerLayout){
         this.ViewType = ViewType;
         this.matchId  = matchId;
-
         onRefresh();
 
-        show();
-    }
+        this.drawerLayout = drawerLayout;
+        drawerLayout.openDrawer(Gravity.RIGHT);
 
-    @Override
-    public void show() {
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
-        super.show();
-        fullScreenImmersive(getWindow().getDecorView());
-        this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
     }
 
     @Override
@@ -235,7 +216,7 @@ public class MatchDetailDialog extends Dialog implements LRecyclerView.LScrollLi
 
                     if (mAdapter != null){
                         mAdapter.changeData(oddMap, ViewType, _data);
-                        RecyclerViewStateUtils.setFooterViewState(getOwnerActivity(), jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
+                        RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
                         jingcairecycleview.refreshComplete();
                     }
                 }
@@ -283,16 +264,6 @@ public class MatchDetailDialog extends Dialog implements LRecyclerView.LScrollLi
     @Override
     public void onBottom() {
         Log.e("打印", "滚动到底部");
-//        LoadingFooter.State state = RecyclerViewStateUtils.getFooterViewState(jingcairecycleview);
-//        if (state == LoadingFooter.State.Loading) {
-//            return;
-//        }
-//        if (mlist.size() < mTotal) {
-//            RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Loading, null);
-//        } else {
-//            RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.TheEnd, null);
-//        }
-
     }
 
     @Override
@@ -304,7 +275,7 @@ public class MatchDetailDialog extends Dialog implements LRecyclerView.LScrollLi
 
     @OnClick(R.id.toolbar_back_iv)
     public void onViewClicked() {
-       this.dismiss();
+        drawerLayout.closeDrawer(Gravity.RIGHT);
     }
 
     private void startUpdate(){
@@ -327,8 +298,10 @@ public class MatchDetailDialog extends Dialog implements LRecyclerView.LScrollLi
     }
 
     @Override
-    public void dismiss() {
-        super.dismiss();
+    public void onDestroyView() {
+        super.onDestroyView();
         stopUpdate();
     }
+
+
 }

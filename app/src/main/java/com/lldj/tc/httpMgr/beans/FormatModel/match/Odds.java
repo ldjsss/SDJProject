@@ -89,9 +89,7 @@ public class Odds{
         this.value = value;
     }
 
-    public String getWin() {
-        return win;
-    }
+    public String getWin() { return win; }
 
     public void setWin(String win) {
         this.win = win;

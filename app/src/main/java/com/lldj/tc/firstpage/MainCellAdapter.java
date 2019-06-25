@@ -346,8 +346,26 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     gametime.setVisibility(View.GONE);
                     gameresult.setVisibility(View.VISIBLE);
 
-                    playvictoryicon0.setImageResource(winBmp[Integer.parseInt(getOddData(odds, "final", team0.getTeam_id()).getWin())]);
-                    playvictoryicon1.setImageResource(winBmp[Integer.parseInt(getOddData(odds, "final", team1.getTeam_id()).getWin())]);
+                    Odds _odd = getOddData(odds, "final", team0.getTeam_id());
+                    String win = "";
+                    if(_odd != null)win = _odd.getWin();
+                    if(!TextUtils.isEmpty(win) && Integer.parseInt(win)>=0) {
+                        playvictoryicon0.setImageResource(winBmp[Integer.parseInt(win)]);
+                        playvictoryicon0.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        playvictoryicon0.setVisibility(View.GONE);
+                    }
+
+                    _odd = getOddData(odds, "final", team1.getTeam_id());
+                    if(_odd != null)win = _odd.getWin();
+                    if(!TextUtils.isEmpty(win) && Integer.parseInt(win)>=0) {
+                        playvictoryicon1.setImageResource(winBmp[Integer.parseInt(win)]);
+                        playvictoryicon1.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        playvictoryicon1.setVisibility(View.GONE);
+                    }
 
                     break;
             }

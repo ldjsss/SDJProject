@@ -26,7 +26,7 @@
             android:value="CP_SDJ_A100" />
 
         <activity
-            android:name=".firstpage.MatchDetailDialog"
+            android:name=".firstpage.MatchDetailFrament"
             android:label="@string/title_activity_match_detail"
             android:theme="@style/AppTheme.NoActionBar" />
 

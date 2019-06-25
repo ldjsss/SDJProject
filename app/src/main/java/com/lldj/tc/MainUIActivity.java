@@ -2,15 +2,13 @@ package com.lldj.tc;
 
 import android.os.Bundle;
 import android.os.Message;
-import android.view.Gravity;
 import android.widget.FrameLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.lldj.tc.firstpage.BetDialog;
-import com.lldj.tc.firstpage.FragmentSet;
 import com.lldj.tc.firstpage.FragmentViewPager;
-import com.lldj.tc.firstpage.MatchDetailDialog;
+import com.lldj.tc.firstpage.MatchDetailFrament;
 import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.toolslibrary.event.ObData;
@@ -18,7 +16,6 @@ import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
-import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 
@@ -37,6 +34,7 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
     DrawerLayout drawerLayout;
 
     private BetDialog betDialog;
+    private MatchDetailFrament detailDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,33 +50,18 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
     protected void initData() {
         ButterKnife.bind(this);
 
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);        //禁止手势滑动
+//        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);        //禁止手势滑动
         getSupportFragmentManager().beginTransaction().add(R.id.mainflayout, new FragmentViewPager()).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainleft, new FragmentSet()).commit();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.mainleft, new FragmentSet()).commit();
+        detailDialog = new MatchDetailFrament();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainright, detailDialog).commit();
 
         registEvent(new Observer<ObData>() {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 if (data.getKey().equalsIgnoreCase(EventType.BETDETAILUI)) {
                     Map<String, Integer> _map = (Map)data.getValue();
-                    new MatchDetailDialog(mContext, R.style.DialogTheme).showView(_map.get("ViewType"), _map.get("id"));
-
-                    if(betDialog != null){
-                        List<ObData> groups = betDialog.getGroups();
-                        HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
-                        RxTimerUtilPro.timer(100, new RxTimerUtilPro.IRxNext() {
-                            @Override
-                            public void doNext(long number) {
-                                Message message=new Message();
-                                message.what=HandlerType.SHOWBETDIA;
-                                message.obj = groups;
-                                HandlerInter.getInstance().sendMessage(message);
-                            }
-
-                            @Override
-                            public void onComplete() { }
-                        });
-                    }
+                    detailDialog.showView(_map.get("ViewType"), _map.get("id"), drawerLayout);
                 }
             }
         });
@@ -88,10 +71,8 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
     public void handleMsg(Message msg) {
         switch (msg.what) {
             case HandlerType.LEFTMENU:
-                drawerLayout.openDrawer(Gravity.LEFT);
                 break;
             case HandlerType.LEFTBACK:
-                drawerLayout.closeDrawer(Gravity.LEFT);
                 break;
             case HandlerType.SHOWTOAST:
                 ToastUtils.show_middle_pic(this, R.mipmap.cancle_icon, msg.getData().getString("msg"), ToastUtils.LENGTH_SHORT);
@@ -100,10 +81,9 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
                 AppUtils.showLoading(mContext);
                 break;
             case HandlerType.SHOWBETDIA:
-                if(betDialog!=null && betDialog.isShowing()) return;
                 List<ObData> groups = null;
                 if(msg.obj!=null)groups = (List<ObData>)msg.obj;
-                betDialog = new BetDialog(this, R.style.DialogTheme);
+                if(betDialog==null)betDialog = new BetDialog(this, R.style.DialogTheme);
                 betDialog.showView(groups);
                 break;
             case HandlerType.HIDEBETDIA:
