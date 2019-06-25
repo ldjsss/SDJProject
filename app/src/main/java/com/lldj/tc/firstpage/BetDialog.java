@@ -2,26 +2,20 @@ package com.lldj.tc.firstpage;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
-
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
@@ -34,12 +28,10 @@ import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -144,6 +136,16 @@ public class BetDialog<dismiss> extends Dialog {
         _myExpandableListView.notifyDataSetChanged();
         gamebettotalcount.setText(groups.size() + "");
 
+    }
+
+    public List<ObData> getGroups(){
+        return groups;
+    }
+
+    public void showView(List<ObData> groups) {
+        if(groups != null) this.groups = groups;
+        show();;
+        update();
     }
 
     @OnClick({R.id.deleteall, R.id.closelayout})

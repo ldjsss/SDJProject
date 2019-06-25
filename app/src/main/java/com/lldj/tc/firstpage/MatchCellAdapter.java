@@ -225,6 +225,8 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
                                 });
                             }
                             else if(_statue == 2) { //lock
+                                tv_odds.setVisibility(View.GONE);
+                                im_arrows.setVisibility(View.GONE);
                                 im_lock.setVisibility(View.VISIBLE);
                             }
                             else{
@@ -257,7 +259,7 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
         }
 
         private void betClick(Results data, String tag){
-            RxTimerUtil.timer(100, new RxTimerUtil.IRxNext() {
+            RxTimerUtil.timer(50, new RxTimerUtil.IRxNext() {
                 @Override
                 public void doNext(long number) {
                     ObData obj = new ObData(EventType.BETLISTADD, data);

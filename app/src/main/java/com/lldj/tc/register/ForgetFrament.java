@@ -1,14 +1,23 @@
 package com.lldj.tc.register;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.lldj.tc.R;
 import com.lldj.tc.mainUtil.HandlerType;
@@ -32,7 +41,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * description: 忘记密码<p>
  */
-public class ForgetFrament extends BaseFragment {
+public class ForgetFrament extends Dialog {
 
     @BindView(R.id.toolbar_title_tv)
     StrokeTextView toolbarTitleTv;
@@ -57,35 +66,40 @@ public class ForgetFrament extends BaseFragment {
     private Disposable getCodeDisposable;
     private int codeTime = 120;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public ForgetFrament(@NonNull Context context, int themeResId) {
+        super(context, themeResId);
+
+        View view = View.inflate(context, R.layout.dialog_forgetpassword, null);
+        setContentView(view);
+
+        ButterKnife.bind(this, view);
+
+        Window window = this.getWindow();
+        window.setGravity(Gravity.RIGHT);
+        window.setWindowAnimations(R.style.Anim_fade);  //设置弹出动画
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);//设置对话框大小
+
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE; //核心代码是这个属性。
+        window.setAttributes(layoutParams);
+
+        ImmersionBar.with((Activity)context).titleBar(toolbarRootLayout).init();
+        toolbarTitleTv.setText(context.getResources().getString(R.string.forget_pswTitle));
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
-    @Override
-    public int getContentView() {
-        return R.layout.frament_forgetpassword;
-    }
-
-    @Override
-    public void initView(View rootView) {
-        ButterKnife.bind(this, rootView);
-        ImmersionBar.with(this).titleBar(toolbarRootLayout).init();
-        toolbarTitleTv.setText(getResources().getString(R.string.forget_pswTitle));
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-    }
 
     @OnClick({R.id.toolbar_back_iv, R.id.toolbar_title_tv, R.id.connectservice, R.id.resget_verify_codebtn, R.id.register_tv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back_iv:
-                HandlerInter.getInstance().sendEmptyMessage(HandlerType.REMOVERES);
+                dismiss();
                 break;
             case R.id.toolbar_title_tv:
                 break;
             case R.id.connectservice:
-                ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "暂未实现！", ToastUtils.LENGTH_SHORT);
+                ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, "暂未实现！", ToastUtils.LENGTH_SHORT);
                 break;
             case R.id.resget_verify_codebtn:
                 phoneNum = rescodetelNumEt.getText().toString().trim();
@@ -105,7 +119,7 @@ public class ForgetFrament extends BaseFragment {
                             if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
                             getCodeDisposable = null;
                             resgetVerifyCodebtn.setEnabled(true);
-                            resgetVerifyCodebtn.setText(getText(R.string.get_verify_code));
+                            resgetVerifyCodebtn.setText(getContext().getText(R.string.get_verify_code));
                             return;
                         }
                         resgetVerifyCodebtn.setText(codeTime + "s");
@@ -120,7 +134,7 @@ public class ForgetFrament extends BaseFragment {
                     @Override
                     public void onFinish(JsonBean res) {
                         if(res.getCode() == GlobalVariable.succ) {
-                            Toast.makeText(mContext, getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getContext().getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -132,9 +146,10 @@ public class ForgetFrament extends BaseFragment {
                     @Override
                     public void onFinish(JsonBean res) {
                         if(res.getCode() == GlobalVariable.succ) {
-                            Toast.makeText(mContext, getResources().getString(R.string.passwordHaveChange), Toast.LENGTH_SHORT).show();
-                            SharePreUtils.setPassWord(mContext, password);
+                            Toast.makeText(getContext(), getContext().getResources().getString(R.string.passwordHaveChange), Toast.LENGTH_SHORT).show();
+                            SharePreUtils.setPassWord(getContext(), password);
                             HandlerInter.getInstance().sendEmptyMessage(HandlerType.REGISTSUCC);
+                            dismiss();
                         }
                     }
                 });
@@ -143,7 +158,7 @@ public class ForgetFrament extends BaseFragment {
     }
 
     private void showToast(int id) {
-        ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, getResources().getString(id), ToastUtils.LENGTH_SHORT);
+        ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getContext().getResources().getString(id), ToastUtils.LENGTH_SHORT);
     }
 
     private boolean checkAll() {
@@ -169,9 +184,29 @@ public class ForgetFrament extends BaseFragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void dismiss() {
+        super.dismiss();
         if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
+    }
+
+    private void fullScreenImmersive(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            view.setSystemUiVisibility(uiOptions);
+        }
+    }
+
+    @Override
+    public void show() {
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+        super.show();
+        fullScreenImmersive(getWindow().getDecorView());
+        this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
     }
 }
 

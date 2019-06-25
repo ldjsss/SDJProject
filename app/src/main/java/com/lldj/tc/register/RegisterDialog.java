@@ -1,8 +1,14 @@
 package com.lldj.tc.register;
 
-import android.os.Bundle;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.os.Build;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.lldj.tc.R;
 import com.lldj.tc.mainUtil.HandlerType;
@@ -20,7 +28,6 @@ import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
-import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.mainUtil.GlobalVariable;
 
@@ -32,7 +39,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * description: 注册<p>
  */
-public class RegisterFrament extends BaseFragment {
+public class RegisterDialog extends Dialog {
 
 
     @BindView(R.id.toolbar_back_iv)
@@ -73,24 +80,50 @@ public class RegisterFrament extends BaseFragment {
     private Disposable getCodeDisposable;
     private int codeTime = 120;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public RegisterDialog(@NonNull Context context, int themeResId) {
+        super(context, themeResId);
 
-    @Override
-    public int getContentView() { return R.layout.frament_register; }
+        View view = View.inflate(context, R.layout.dialog_register, null);
+        setContentView(view);
 
-    @Override
-    public void initView(View rootView) {
-        ButterKnife.bind(this, rootView);
-        ImmersionBar.with(this).titleBar(toolbarRootLayout).init();
-        toolbarTitleTv.setText(getResources().getString(R.string.register_str));
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN );
+        ButterKnife.bind(this, view);
 
+        Window window = this.getWindow();
+        window.setGravity(Gravity.RIGHT);
+        window.setWindowAnimations(R.style.Anim_fade);  //设置弹出动画
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);//设置对话框大小
+
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE; //核心代码是这个属性。
+        window.setAttributes(layoutParams);
+
+        ImmersionBar.with((Activity)context).titleBar(toolbarRootLayout).init();
+        toolbarTitleTv.setText(context.getResources().getString(R.string.register_str));
+    }
+
+    private void fullScreenImmersive(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            view.setSystemUiVisibility(uiOptions);
+        }
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void show() {
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+        super.show();
+        fullScreenImmersive(getWindow().getDecorView());
+        this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
         if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
     }
 
@@ -98,12 +131,12 @@ public class RegisterFrament extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back_iv:
-                HandlerInter.getInstance().sendEmptyMessage(HandlerType.REMOVERES);
+                dismiss();
                 break;
             case R.id.toolbar_title_tv:
                 break;
             case R.id.connectservice:
-                ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "暂未实现！", ToastUtils.LENGTH_SHORT);
+                ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, "暂未实现！", ToastUtils.LENGTH_SHORT);
                 break;
             case R.id.resget_verify_codebtn:
                 phoneNum = rescodetelNumEt.getText().toString().trim();
@@ -123,7 +156,7 @@ public class RegisterFrament extends BaseFragment {
                             if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
                             getCodeDisposable = null;
                             resgetVerifyCodebtn.setEnabled(true);
-                            resgetVerifyCodebtn.setText(getText(R.string.get_verify_code));
+                            resgetVerifyCodebtn.setText(getContext().getText(R.string.get_verify_code));
                             return;
                         }
                         resgetVerifyCodebtn.setText(codeTime + "s");
@@ -137,7 +170,7 @@ public class RegisterFrament extends BaseFragment {
                     @Override
                     public void onFinish(JsonBean res) {
                         if(res.getCode() == GlobalVariable.succ) {
-                            Toast.makeText(mContext, getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getContext().getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -146,23 +179,24 @@ public class RegisterFrament extends BaseFragment {
             case R.id.register_tv:
                 if (!checkAll()) return;
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                HttpMsg.sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(mContext), "", new HttpMsg.Listener(){
+                HttpMsg.sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(getContext()), "", new HttpMsg.Listener(){
                     @Override
                     public void onFinish(JsonBean res) {
                         if(res.getCode() == GlobalVariable.succ){
-                            SharePreUtils.getInstance().setRegistInfo(mContext, userCount, password, userName, phoneNum, AppUtils.getChannel(mContext), "");
-                            Toast.makeText(mContext, getResources().getString(R.string.registSucc),Toast.LENGTH_SHORT).show();
+                            SharePreUtils.getInstance().setRegistInfo(getContext(), userCount, password, userName, phoneNum, AppUtils.getChannel(getContext()), "");
+                            Toast.makeText(getContext(), getContext().getResources().getString(R.string.registSucc),Toast.LENGTH_SHORT).show();
                             HandlerInter.getInstance().sendEmptyMessage(HandlerType.REGISTSUCC);
+                            dismiss();
                         }
                     }
                 });
-                ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "注册！", ToastUtils.LENGTH_SHORT);
+                ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, "注册！", ToastUtils.LENGTH_SHORT);
                 break;
         }
     }
 
     private void showToast(int id) {
-        ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, getResources().getString(id), ToastUtils.LENGTH_SHORT);
+        ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getContext().getResources().getString(id), ToastUtils.LENGTH_SHORT);
     }
 
     private boolean checkAll() {

@@ -113,7 +113,7 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
         ButterKnife.bind(this);
         layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         loginrecycleview.setLayoutManager(layoutManager);
-        mAdapter = new LoginCellAdapter(mContext, getSupportFragmentManager());
+        mAdapter = new LoginCellAdapter(mContext);
         lAdapter = new LRecyclerViewAdapter(this, mAdapter);
         loginrecycleview.setAdapter(lAdapter);
         loginrecycleview.setLScrollListener(this);

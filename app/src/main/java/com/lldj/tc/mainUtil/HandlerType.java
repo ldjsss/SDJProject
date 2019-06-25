@@ -10,7 +10,6 @@ public class HandlerType {
 
     public static final int LEFTMENU = 1;
     public static final int LEFTBACK = 2;
-    public static final int REMOVERES = 3;
     public static final int GOTOMAIN = 4;
     public static final int SHOWTOAST = 5;
     public static final int REGISTSUCC = 6;
@@ -25,7 +24,7 @@ public class HandlerType {
         System.out.println("Season :" + season);
     }
 
-    @IntDef({LEFTMENU, LEFTBACK, REMOVERES, GOTOMAIN, SHOWTOAST, REGISTSUCC, LOADING, SHOWBETDIA, JUSTLOOK, MATCHLIST, HIDEBETDIA, DELETEBETDIA})
+    @IntDef({LEFTMENU, LEFTBACK, GOTOMAIN, SHOWTOAST, REGISTSUCC, LOADING, SHOWBETDIA, JUSTLOOK, MATCHLIST, HIDEBETDIA, DELETEBETDIA})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Season {
     }

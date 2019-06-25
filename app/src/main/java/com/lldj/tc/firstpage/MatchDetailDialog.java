@@ -1,13 +1,24 @@
 package com.lldj.tc.firstpage;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.tabs.TabLayout;
@@ -24,6 +35,7 @@ import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
@@ -41,7 +53,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * description: <p>
  */
-public class MatchDetailActivity extends BaseActivity implements LRecyclerView.LScrollListener{
+public class MatchDetailDialog extends Dialog implements LRecyclerView.LScrollListener{
     @BindView(R.id.toolbar_back_iv)
     ImageView toolbarBackIv;
     @BindView(R.id.toolbar_title_tv)
@@ -95,46 +107,60 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
     private int disTime = 4000;
     private Disposable disposable;
 
+    public MatchDetailDialog(@NonNull Context context, @StyleRes int themeResId) {
+        super(context, themeResId);
 
-    public static void launch(Context pContext, int ViewType, int matchId) {
-        Intent mIntent = new Intent(pContext, MatchDetailActivity.class);
-        mIntent.putExtra("ViewType", ViewType);
-        mIntent.putExtra("matchId", matchId);
-        pContext.startActivity(mIntent);
+        //2、设置布局
+        View view = View.inflate(context, R.layout.activity_match_detail, null);
+        setContentView(view);
+
+        ButterKnife.bind(this, view);
+
+        Window window = this.getWindow();
+        //设置弹出位置
+        window.setGravity(Gravity.RIGHT);
+        window.setWindowAnimations(R.style.Anim_fade);  //设置弹出动画
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);//设置对话框大小
+
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE; //核心代码是这个属性。
+        window.setAttributes(layoutParams);
+
+        if (statusText == null)statusText = new String[]{"", context.getString(R.string.matchStatusFront), context.getString(R.string.matchCurrentTitle), context.getString(R.string.matchStatusOver), context.getString(R.string.matchStatusError)};
+
+        ImmersionBar.with((Activity)context).titleBar(toolbarRootLayout).init();
+
+        toolbarTitleTv.setText(context.getString(R.string.matchDetialTitle));
+
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_match_detail);
+    private void fullScreenImmersive(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            view.setSystemUiVisibility(uiOptions);
+        }
+    }
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        this.ViewType = bundle.getInt("ViewType");
-        this.matchId = bundle.getInt("matchId");
-
-        if (statusText == null)statusText = new String[]{"", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.matchCurrentTitle), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
+    public void showView(int ViewType, int matchId){
+        this.ViewType = ViewType;
+        this.matchId  = matchId;
 
         onRefresh();
-//        registEvent(new Observer<ObData>() {
-//            @Override
-//            public void onUpdate(Observable<ObData> observable, ObData data) {
-//                if (data.getKey().equalsIgnoreCase(EventType.UPDATEMATCHLIST)) {
-//                    ArrayList<Results> list = (ArrayList<Results>) data.getValue();
-//                    _matchData = list.get(position);
-//
-//                    onRefresh();
-//                }
-//            }
-//        });
+
+        show();
     }
 
     @Override
-    protected void initData() {
-        ButterKnife.bind(this);
-        ImmersionBar.with(this).titleBar(toolbarRootLayout).init();
-
-        toolbarTitleTv.setText(mResources.getString(R.string.matchDetialTitle));
+    public void show() {
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+        super.show();
+        fullScreenImmersive(getWindow().getDecorView());
+        this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
     }
 
     @Override
@@ -209,7 +235,7 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
 
                     if (mAdapter != null){
                         mAdapter.changeData(oddMap, ViewType, _data);
-                        RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
+                        RecyclerViewStateUtils.setFooterViewState(getOwnerActivity(), jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
                         jingcairecycleview.refreshComplete();
                     }
                 }
@@ -220,10 +246,10 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
     private void initList(Map<String, List<Odds>> oddMap, ArrayList<String> keys){
 
         if(layoutManager == null) {
-            layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+            layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
             jingcairecycleview.setLayoutManager(layoutManager);
-            mAdapter = new MatchCellAdapter(mContext);
-            lAdapter = new LRecyclerViewAdapter(this, mAdapter);
+            mAdapter = new MatchCellAdapter(getContext());
+            lAdapter = new LRecyclerViewAdapter(getContext(), mAdapter);
             jingcairecycleview.setAdapter(lAdapter);
             jingcairecycleview.setLScrollListener(this);
             jingcairecycleview.setNoMore(true);//禁止加载更多
@@ -276,13 +302,9 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
        if(tabLayout != null) tabLayout.setScrollPosition(firstVisible - 1, 0 ,false);
     }
 
-    public void exitActivity() {
-        finish();
-    }
-
     @OnClick(R.id.toolbar_back_iv)
     public void onViewClicked() {
-        exitActivity();
+       this.dismiss();
     }
 
     private void startUpdate(){
@@ -305,8 +327,8 @@ public class MatchDetailActivity extends BaseActivity implements LRecyclerView.L
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void dismiss() {
+        super.dismiss();
         stopUpdate();
     }
 }

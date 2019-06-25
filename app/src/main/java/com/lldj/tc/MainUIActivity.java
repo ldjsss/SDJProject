@@ -10,15 +10,23 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.lldj.tc.firstpage.BetDialog;
 import com.lldj.tc.firstpage.FragmentSet;
 import com.lldj.tc.firstpage.FragmentViewPager;
+import com.lldj.tc.firstpage.MatchDetailDialog;
+import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.event.Observable;
+import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 
+import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.disposables.Disposable;
 
 
 public class MainUIActivity extends BaseActivity implements HandlerInter.HandleMsgListener {
@@ -27,9 +35,6 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
     FrameLayout mainflayout;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-
-    Disposable sss;
-    Disposable ddd;
 
     private BetDialog betDialog;
 
@@ -51,27 +56,32 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
         getSupportFragmentManager().beginTransaction().add(R.id.mainflayout, new FragmentViewPager()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.mainleft, new FragmentSet()).commit();
 
-//         sss = RxTimerUtilPro.interval(1000, new RxTimerUtilPro.IRxNext() {
-//            @Override
-//            public void doNext(long number) {
-//                Log.w("-----ssssss", "dddddd 11111111");
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//            }
-//        });
-//
-//         ddd = RxTimerUtilPro.interval(1000, new RxTimerUtilPro.IRxNext() {
-//            @Override
-//            public void doNext(long number) {
-//                Log.w("-----ssssss", "dddddd 22222");
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//            }
-//        });
+        registEvent(new Observer<ObData>() {
+            @Override
+            public void onUpdate(Observable<ObData> observable, ObData data) {
+                if (data.getKey().equalsIgnoreCase(EventType.BETDETAILUI)) {
+                    Map<String, Integer> _map = (Map)data.getValue();
+                    new MatchDetailDialog(mContext, R.style.DialogTheme).showView(_map.get("ViewType"), _map.get("id"));
+
+                    if(betDialog != null){
+                        List<ObData> groups = betDialog.getGroups();
+                        HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
+                        RxTimerUtilPro.timer(100, new RxTimerUtilPro.IRxNext() {
+                            @Override
+                            public void doNext(long number) {
+                                Message message=new Message();
+                                message.what=HandlerType.SHOWBETDIA;
+                                message.obj = groups;
+                                HandlerInter.getInstance().sendMessage(message);
+                            }
+
+                            @Override
+                            public void onComplete() { }
+                        });
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -79,24 +89,6 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
         switch (msg.what) {
             case HandlerType.LEFTMENU:
                 drawerLayout.openDrawer(Gravity.LEFT);
-
-//                String s = "{\"error\":0,\"status\":\"success\",\"results\":[{\"currentCity\":\"青岛\",\"index\":[{\"title\":\"穿衣\",\"zs\":\"较冷\",\"tipt\":\"穿衣指数\",\"des\":\"建议着厚外套加毛衣等服装。年老体弱者宜着大衣、呢外套加羊毛衫。\"},{\"title\":\"紫外线强度\",\"zs\":\"最弱\",\"tipt\":\"紫外线强度指数\",\"des\":\"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。\"}]}]}";
-//                Gson gson = new Gson();
-//                //把JSON数据转化为对象
-//                JsonBean jsonBean = gson.fromJson(s, JsonBean.class);
-//
-//                Log.w("-----ssssss", jsonBean.getResults().get(0).getCurrentCity());
-
-//                HttpMsg.test(new HttpTool.msgListener(){
-//                    @Override
-//                    public void onFinish(int code, String msg) {
-//                        Log.w("-----code", code + "");
-//                        Log.w("-----msg", msg + "");
-//                        Toast.makeText(mContext,"---------------test1",Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//                RxTimerUtilPro.cancel(sss);
-//                RxTimerUtilPro.cancel(ddd);
                 break;
             case HandlerType.LEFTBACK:
                 drawerLayout.closeDrawer(Gravity.LEFT);
@@ -108,8 +100,11 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
                 AppUtils.showLoading(mContext);
                 break;
             case HandlerType.SHOWBETDIA:
-                if(betDialog == null) betDialog = new BetDialog(this,R.style.DialogTheme);
-                betDialog.show();
+                if(betDialog!=null && betDialog.isShowing()) return;
+                List<ObData> groups = null;
+                if(msg.obj!=null)groups = (List<ObData>)msg.obj;
+                betDialog = new BetDialog(this, R.style.DialogTheme);
+                betDialog.showView(groups);
                 break;
             case HandlerType.HIDEBETDIA:
                 if(betDialog == null) return;

@@ -26,7 +26,7 @@ import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.register.ForgetFrament;
-import com.lldj.tc.register.RegisterFrament;
+import com.lldj.tc.register.RegisterDialog;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
@@ -48,11 +48,9 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private ArrayList<String> mlist = new ArrayList<>();
     private viewHolder mHolder = null;
-    FragmentManager fragmentManager = null;
 
-    public LoginCellAdapter(Context mContext, FragmentManager fragmentManager) {
+    public LoginCellAdapter(Context mContext) {
         this.mContext = mContext;
-        this.fragmentManager = fragmentManager;
     }
 
     public void changeData(ArrayList<String> plist) {
@@ -86,7 +84,6 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
 
     class viewHolder extends RecyclerView.ViewHolder {
 
-        private RegisterFrament resFrament = null;
         private ForgetFrament lossFrament = null;
 
         @BindView(R.id.frameaddlayout)
@@ -127,14 +124,7 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.forget_psw_tv:
-                    if (lossFrament == null) {
-                        lossFrament = new ForgetFrament();
-                    }
-                    FragmentTransaction ft = fragmentManager.beginTransaction();
-                    ft.add(R.id.frameaddlayout, lossFrament);
-                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    ft.commit();
-                    frameaddlayout.setVisibility(View.VISIBLE);
+                    new ForgetFrament(mContext, R.style.DialogTheme).show();
                     break;
                 case R.id.login_tv:
                     if (!checkAll()) return;
@@ -149,16 +139,8 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
                     });
                     break;
                 case R.id.register_tv:
-                    if (resFrament == null) {
-                        resFrament = new RegisterFrament();
-                    }
 
-                    FragmentTransaction ft1 = fragmentManager.beginTransaction();
-                    ft1.add(R.id.frameaddlayout, resFrament);
-                    ft1.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    ft1.commit();
-
-                    frameaddlayout.setVisibility(View.VISIBLE);
+                    new RegisterDialog(mContext, R.style.DialogTheme).show();
 
                     break;
                 case R.id.just_look_tv:
@@ -226,21 +208,10 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
 
         public void handleMsg(Message msg) {
             switch (msg.what) {
-                case HandlerType.REMOVERES:
-                    if (resFrament != null)
-                        fragmentManager.beginTransaction().remove(resFrament).commit();
-                    resFrament = null;
-
-                    if (lossFrament != null)
-                        fragmentManager.beginTransaction().remove(lossFrament).commit();
-                    lossFrament = null;
-
-                    frameaddlayout.setVisibility(View.GONE);
-                    break;
                 case HandlerType.REGISTSUCC:
-                    HandlerInter.getInstance().sendEmptyMessage(HandlerType.REMOVERES);
                     fillCount();
                     break;
+
             }
         }
 

@@ -31,7 +31,9 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -156,16 +158,10 @@ public class MainCellAdapter extends RecyclerView.Adapter {
             Results _data = mlist.get(getAdapterPosition() - 1);
             switch (view.getId()) {
                 case R.id.gamebg:
-                    MatchDetailActivity.launch(mContext, ViewType, _data.getId());
-//                    RxTimerUtil.timer(100, new RxTimerUtil.IRxNext() {
-//                        @Override
-//                        public void doNext(long number) {
-//                            AppUtils.dispatchEvent(new ObData(EventType.UPDATEMATCHLIST, mlist));
-//                        }
-//                        @Override
-//                        public void onComplete() { }
-//                    });
-
+                    Map<String, Integer> _map = new HashMap();
+                    _map.put("ViewType", ViewType);
+                    _map.put("id", _data.getId());
+                    AppUtils.dispatchEvent(new ObData(EventType.BETDETAILUI, _map));
                     break;
                 case R.id.playname0:
                     if(_data.getOdds().get(0).getStatus() == 2){
@@ -194,7 +190,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         }
 
         private void betClick(Results data, String tag){
-            RxTimerUtil.timer(100, new RxTimerUtil.IRxNext() {
+            RxTimerUtil.timer(50, new RxTimerUtil.IRxNext() {
                 @Override
                 public void doNext(long number) {
                     ObData obj = new ObData(EventType.BETLISTADD, data);
