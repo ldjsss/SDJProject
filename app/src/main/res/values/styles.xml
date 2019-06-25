@@ -132,5 +132,10 @@
         <item name="android:windowExitAnimation">@anim/out_to_right</item>
     </style>
 
+    <style name="Anim_left" parent="android:Theme.NoTitleBar">
+        <item name="android:windowEnterAnimation">@anim/in_from_left</item>
+        <item name="android:windowExitAnimation">@anim/out_to_left</item>
+    </style>
+
 
 </resources>

@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.lldj.tc.firstpage.BetDialog;
+import com.lldj.tc.firstpage.DialogSet;
 import com.lldj.tc.firstpage.FragmentViewPager;
 import com.lldj.tc.firstpage.MatchDetailFrament;
 import com.lldj.tc.mainUtil.EventType;
@@ -52,7 +53,6 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
 
 //        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);        //禁止手势滑动
         getSupportFragmentManager().beginTransaction().add(R.id.mainflayout, new FragmentViewPager()).commit();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.mainleft, new FragmentSet()).commit();
         detailDialog = new MatchDetailFrament();
         getSupportFragmentManager().beginTransaction().replace(R.id.mainright, detailDialog).commit();
 
@@ -71,6 +71,7 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
     public void handleMsg(Message msg) {
         switch (msg.what) {
             case HandlerType.LEFTMENU:
+                new DialogSet(this, R.style.DialogTheme).show();
                 break;
             case HandlerType.LEFTBACK:
                 break;
