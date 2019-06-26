@@ -22,7 +22,7 @@ import androidx.annotation.NonNull;
 import com.lldj.tc.R;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
+import com.lldj.tc.httpMgr.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
@@ -166,22 +166,24 @@ public class RegisterDialog extends Dialog {
                     public void onComplete() {}
                 });
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                HttpMsg.sendGetCode(phoneNum, new HttpMsg.Listener(){
-                    @Override
-                    public void onFinish(JsonBean res) {
-                        if(res.getCode() == GlobalVariable.succ) {
-                            Toast.makeText(getContext(), getContext().getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+//                HttpMsg.sendGetCode(phoneNum, new HttpMsg.Listener(){
+//                    @Override
+//                    public void onFinish(Object _res) {
+//                        JsonBean res = (JsonBean)_res;
+//                        if(res.getCode() == GlobalVariable.succ) {
+//                            Toast.makeText(getContext(), getContext().getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
 
                 break;
             case R.id.register_tv:
                 if (!checkAll()) return;
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                HttpMsg.sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(getContext()), "", new HttpMsg.Listener(){
+                HttpMsg.getInstance().sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(getContext()), "", JsonBean.class, new HttpMsg.Listener(){
                     @Override
-                    public void onFinish(JsonBean res) {
+                    public void onFinish(Object _res) {
+                        JsonBean res = (JsonBean) _res;
                         if(res.getCode() == GlobalVariable.succ){
                             SharePreUtils.getInstance().setRegistInfo(getContext(), userCount, password, userName, phoneNum, AppUtils.getChannel(getContext()), "");
                             Toast.makeText(getContext(), getContext().getResources().getString(R.string.registSucc),Toast.LENGTH_SHORT).show();

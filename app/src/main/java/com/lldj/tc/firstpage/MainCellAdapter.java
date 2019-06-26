@@ -16,17 +16,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
+import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
-import com.lldj.tc.httpMgr.beans.FormatModel.Results;
-import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
-import com.lldj.tc.httpMgr.beans.FormatModel.match.Team;
+import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
+import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Team;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.http.HttpTool.bmpListener;
-import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
-import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 
@@ -47,7 +45,7 @@ import butterknife.OnClick;
 public class MainCellAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
-    private List<Results> mlist = new ArrayList<>();
+    private List<ResultsModel> mlist = new ArrayList<>();
     private viewHolder mHolder = null;
     private int ViewType;
     private String[] statusText;
@@ -60,7 +58,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
     }
 
-    public void changeData(List<Results> plist) {
+    public void changeData(List<ResultsModel> plist) {
         mlist = plist;
 
         AppUtils.dispatchEvent(new ObData(EventType.UPDATEMATCHLIST, mlist));
@@ -155,7 +153,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
 
         @OnClick({R.id.playname0, R.id.gamebg, R.id.playname1, R.id.playcelllayout0, R.id.playcelllayout1})
         public void onViewClicked(View view) {
-            Results _data = mlist.get(getAdapterPosition() - 1);
+            ResultsModel _data = mlist.get(getAdapterPosition() - 1);
             switch (view.getId()) {
                 case R.id.gamebg:
                     Map<String, Integer> _map = new HashMap();
@@ -189,7 +187,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
             }
         }
 
-        private void betClick(Results data, String tag){
+        private void betClick(ResultsModel data, String tag){
             RxTimerUtil.timer(50, new RxTimerUtil.IRxNext() {
                 @Override
                 public void doNext(long number) {
@@ -205,7 +203,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         //刷新底部显示状态 0 只显示战队，无倍注显示，无法押获胜  显示战队和倍注，未开始状态 1 显示战队和倍注，滚盘状态 / 显示战队，锁盘，滚盘状态 3 已结束
         public void bottomCommon(int _type) {
 
-            Results _data = mlist.get(getAdapterPosition() - 1);
+            ResultsModel _data = mlist.get(getAdapterPosition() - 1);
             Team team0    = _data.getTeam() != null ? _data.getTeam().get(0) : null;
             Team team1    = _data.getTeam() != null ? _data.getTeam().get(1) : null;
             List<Odds> odds = _data.getOdds() != null ? _data.getOdds() : null;

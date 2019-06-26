@@ -5,25 +5,22 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.lldj.tc.toolslibrary.util.Clog;
 
 import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Map;
-import java.util.Set;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManager;
@@ -178,12 +175,13 @@ public class HttpTool {
         }).start();
     }
 
-    public static void sendPost(final String url, final String params, final msgListener listener) {
+    public static void sendPost(final String url, final String token, final String params, final msgListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 HttpURLConnection httpURLConnection = null;
-
+                System.out.println("url:" + url);
+                System.out.println("params:" + params);
                 try {
                     URL _url = new URL(url);
                     httpURLConnection = (HttpURLConnection) _url.openConnection();
@@ -194,16 +192,15 @@ public class HttpTool {
                     httpURLConnection.setUseCaches(false);//POST请求不能用缓存，设置为false
                     httpURLConnection.setRequestProperty("Content-Type","application/json;charset=UTF-8"); //设置请求属性
                     httpURLConnection.setRequestProperty("connection", "keep-alive");
-                    httpURLConnection.connect();   //连接服务器
-                    OutputStream os = httpURLConnection.getOutputStream();
-                    ObjectOutputStream objOut = new ObjectOutputStream(os);  //构建输出流对象，以实现输出序列化的对象
+                    httpURLConnection.setRequestProperty("Authorization", token);
+                    httpURLConnection.setRequestMethod("POST");
+                    DataOutputStream os = new DataOutputStream( httpURLConnection.getOutputStream());
+                    String content = String.valueOf(params);
+                    os.writeBytes(content);
+                    os.flush();  //刷新对象输出流，将字节全部写入输出流中
+                    os.close();  //关闭流对象
 
-                    objOut.writeBytes(params);
-                    objOut.flush();  //刷新对象输出流，将字节全部写入输出流中
-                    objOut.close();  //关闭流对象
-                    os.close();
-
-                    final  int code = httpURLConnection.getResponseCode();
+                    final int code = httpURLConnection.getResponseCode();
                     String result = "";
 
                     if (code == HttpURLConnection.HTTP_OK) {
@@ -292,7 +289,7 @@ public class HttpTool {
                     osw.flush();
                     osw.close();
 
-                    final  int code = con.getResponseCode();
+                    final int code = con.getResponseCode();
                     StringBuffer buffer = new StringBuffer();
                     if(code == HttpURLConnection.HTTP_OK)
                     {

@@ -1,4 +1,4 @@
-package com.lldj.tc.httpMgr.beans.FormatModel.match;
+package com.lldj.tc.httpMgr.beans.FormatModel.matchModel;
 
 public class Team {
     public int getTeam_id() {

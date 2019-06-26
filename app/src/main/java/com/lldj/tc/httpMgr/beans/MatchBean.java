@@ -1,9 +1,13 @@
-package com.lldj.tc.httpMgr.beans.FormatModel;
+package com.lldj.tc.httpMgr.beans;
 
-public class JsonBean <T>{
+import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
+
+import java.util.List;
+
+public class MatchBean{
     private int code = -9999;
     private String message = "";
-    private T result;
+    private List<ResultsModel> result;
 
     public int getCode() { return code; }
     public void setCode(int code) {
@@ -14,10 +18,10 @@ public class JsonBean <T>{
         this.message = message;
     }
 
-    public T getResult() {
+    public List<ResultsModel> getResult() {
         return result;
     }
-    public void setResults(T result) {
+    public void setResults(List<ResultsModel> result) {
         this.result = result;
     }
 

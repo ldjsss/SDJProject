@@ -16,16 +16,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
+import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
-import com.lldj.tc.httpMgr.beans.FormatModel.Results;
-import com.lldj.tc.register.ForgetFrament;
+import com.lldj.tc.httpMgr.beans.JsonBean;
+import com.lldj.tc.register.ForgetDialog;
 import com.lldj.tc.register.RegisterDialog;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
@@ -84,7 +82,7 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
 
     class viewHolder extends RecyclerView.ViewHolder {
 
-        private ForgetFrament lossFrament = null;
+        private ForgetDialog lossFrament = null;
 
         @BindView(R.id.frameaddlayout)
         FrameLayout frameaddlayout;
@@ -124,14 +122,16 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.forget_psw_tv:
-                    new ForgetFrament(mContext, R.style.DialogTheme).show();
+                    new ForgetDialog(mContext, R.style.DialogTheme).show();
                     break;
                 case R.id.login_tv:
                     if (!checkAll()) return;
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                    HttpMsg.sendLogin(userCount, password, new HttpMsg.Listener() {
+                    HttpMsg.getInstance().sendLogin(userCount, password, JsonBean.class, new HttpMsg.Listener() {
+
                         @Override
-                        public void onFinish(JsonBean res) {
+                        public void onFinish(Object _res) {
+                            JsonBean res = (JsonBean)_res;
                             if (res.getCode() == GlobalVariable.succ) {
                                 saveLoginData(res);
                             }
@@ -155,9 +155,10 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
             String token = SharePreUtils.getToken(mContext);
             if(TextUtils.isEmpty(token)) return;
             HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-            HttpMsg.sendTokenLogin(token, new HttpMsg.Listener() {
+            HttpMsg.getInstance().sendTokenLogin(token, JsonBean.class, new HttpMsg.Listener() {
                 @Override
-                public void onFinish(JsonBean res) {
+                public void onFinish(Object _res) {
+                    JsonBean res = (JsonBean) _res;
                     if (res.getCode() == GlobalVariable.succ) {
                         saveLoginData(res);
                     }
@@ -166,7 +167,7 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
         }
 
         private void saveLoginData(JsonBean res) {
-            Results ret = (Results)res.getResult();
+            ResultsModel ret = (ResultsModel)res.getResult();
             SharePreUtils.getInstance().setLoginInfo(mContext, ret.getAccess_token(), ret.getExpires_in(), ret.getOpenid());
             Toast.makeText(mContext, mContext.getResources().getString(R.string.loginsucc), Toast.LENGTH_SHORT).show();
             HandlerInter.getInstance().sendEmptyMessage(HandlerType.GOTOMAIN);

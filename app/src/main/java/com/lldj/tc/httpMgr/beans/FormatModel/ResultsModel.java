@@ -1,13 +1,12 @@
 package com.lldj.tc.httpMgr.beans.FormatModel;
 
-import com.lldj.tc.httpMgr.beans.FormatModel.match.Team;
-import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
+import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Team;
+import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
 
-import java.util.Arrays;
 import java.util.List;
 
 
-public class Results{
+public class ResultsModel {
 
     private String access_token;
     private String expires_in;
@@ -15,6 +14,80 @@ public class Results{
     private String mobile;
     private String money;
     private String username;
+
+    ////////////赛事相关
+    private int early;
+    private int id;
+    private int live;
+    private int today;
+    private String logo;
+    private String name;
+    private String short_name;
+
+    /////////////
+
+    private int game_id;
+    private int tournament_id;
+    private int status;
+    private String game_name;
+    private String match_name;
+    private String match_short_name;
+    private String start_time;
+    private String end_time;
+    private String round;
+    private String tournament_name;
+    private String tournament_short_name;
+    private int play_count;
+    private List<Team> team;
+    private List<Odds> odds;
+
+    private int code;
+    private int bet_site;
+
+    private String bet_money;
+    private String bet_win_money;
+    private String odds_id;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public int getBet_site() {
+        return bet_site;
+    }
+
+    public void setBet_site(int bet_site) {
+        this.bet_site = bet_site;
+    }
+
+    public String getBet_money() {
+        return bet_money;
+    }
+
+    public void setBet_money(String bet_money) {
+        this.bet_money = bet_money;
+    }
+
+    public String getBet_win_money() {
+        return bet_win_money;
+    }
+
+    public void setBet_win_money(String bet_win_money) {
+        this.bet_win_money = bet_win_money;
+    }
+
+
+    public String getOdds_id() {
+        return odds_id;
+    }
+
+    public void setOdds_id(String odds_id) {
+        this.odds_id = odds_id;
+    }
 
     public String getAccess_token() {
         return access_token;
@@ -57,19 +130,6 @@ public class Results{
     public void setUsername(String username) {
         this.username = username;
     }
-
-
-
-
-    ////////////赛事相关
-    private int early;
-    private int id;
-    private int live;
-    private int today;
-    private String logo;
-    private String name;
-    private String short_name;
-
 
     public int getEarly() {
         return early;
@@ -117,24 +177,6 @@ public class Results{
     public void setToday(int today) {
         this.today = today;
     }
-
-
-    /////////////
-
-    private int game_id;
-    private int tournament_id;
-    private int status;
-    private String game_name;
-    private String match_name;
-    private String match_short_name;
-    private String start_time;
-    private String end_time;
-    private String round;
-    private String tournament_name;
-    private String tournament_short_name;
-    private int play_count;
-    private List<Team> team;
-    private List<Odds> odds;
 
     public int getGame_id() {
         return game_id;
@@ -240,6 +282,14 @@ public class Results{
         this.team = team;
     }
 
+//    public List<Odds> getOdds() {
+//        return odds;
+//    }
+//
+//    public void setOdds(List<Odds> odds) {
+//        this.odds = odds;
+//    }
+
     public List<Odds> getOdds() {
         return odds;
     }
@@ -251,7 +301,7 @@ public class Results{
 
     @Override
     public String toString() {
-        return "Results{" +
+        return "ResultsModel{" +
                 "access_token='" + access_token + '\'' +
                 ", expires_in='" + expires_in + '\'' +
                 ", openid='" + openid + '\'' +
@@ -279,6 +329,12 @@ public class Results{
                 ", play_count=" + play_count +
                 ", team=" + team +
                 ", odds=" + odds +
+                ", code=" + code +
+                ", bet_site=" + bet_site +
+                ", bet_money='" + bet_money + '\'' +
+                ", bet_win_money='" + bet_win_money + '\'' +
+                ", odds='" + odds + '\'' +
+                ", odds_id='" + odds_id + '\'' +
                 '}';
     }
 }

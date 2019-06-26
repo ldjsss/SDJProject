@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -22,13 +21,12 @@ import androidx.annotation.NonNull;
 import com.lldj.tc.R;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
+import com.lldj.tc.httpMgr.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
-import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.mainUtil.GlobalVariable;
@@ -41,7 +39,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * description: 忘记密码<p>
  */
-public class ForgetFrament extends Dialog {
+public class ForgetDialog extends Dialog {
 
     @BindView(R.id.toolbar_title_tv)
     StrokeTextView toolbarTitleTv;
@@ -66,7 +64,7 @@ public class ForgetFrament extends Dialog {
     private Disposable getCodeDisposable;
     private int codeTime = 120;
 
-    public ForgetFrament(@NonNull Context context, int themeResId) {
+    public ForgetDialog(@NonNull Context context, int themeResId) {
         super(context, themeResId);
 
         View view = View.inflate(context, R.layout.dialog_forgetpassword, null);
@@ -130,9 +128,10 @@ public class ForgetFrament extends Dialog {
                     }
                 });
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                HttpMsg.sendGetCode(phoneNum, new HttpMsg.Listener() {
+                HttpMsg.getInstance().sendGetCode(phoneNum, JsonBean.class, new HttpMsg.Listener() {
                     @Override
-                    public void onFinish(JsonBean res) {
+                    public void onFinish(Object _res) {
+                        JsonBean res = (JsonBean) _res;
                         if(res.getCode() == GlobalVariable.succ) {
                             Toast.makeText(getContext(), getContext().getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
                         }
@@ -142,9 +141,10 @@ public class ForgetFrament extends Dialog {
             case R.id.register_tv:
                 if (!checkAll()) return;
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                HttpMsg.sendForgetKey(phoneNum, password, phoneCode, new HttpMsg.Listener() {
+                HttpMsg.getInstance().sendForgetKey(phoneNum, password, phoneCode, JsonBean.class, new HttpMsg.Listener() {
                     @Override
-                    public void onFinish(JsonBean res) {
+                    public void onFinish(Object _res) {
+                        JsonBean res = (JsonBean) _res;
                         if(res.getCode() == GlobalVariable.succ) {
                             Toast.makeText(getContext(), getContext().getResources().getString(R.string.passwordHaveChange), Toast.LENGTH_SHORT).show();
                             SharePreUtils.setPassWord(getContext(), password);

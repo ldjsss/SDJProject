@@ -2,8 +2,6 @@ package com.lldj.tc.firstpage;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.beans.FormatModel.Results;
-import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
+import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
+import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
-import com.lldj.tc.mainUtil.Utils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
@@ -46,7 +43,7 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
     private viewHolder mHolder  = null;
     private int ViewType;
     private int[] winBmp;
-    private Results tData;
+    private ResultsModel tData;
 
 
     Map<String, List<Odds>> mlist = new HashMap<>();
@@ -55,7 +52,7 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
         this.mContext = mContext;
     }
 
-    public void changeData(Map<String, List<Odds>> plist, int ViewType, Results _data) {
+    public void changeData(Map<String, List<Odds>> plist, int ViewType, ResultsModel _data) {
 
         mlist = plist;
         ViewType = ViewType;
@@ -258,7 +255,7 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
 
         }
 
-        private void betClick(Results data, String tag){
+        private void betClick(ResultsModel data, String tag){
             RxTimerUtil.timer(50, new RxTimerUtil.IRxNext() {
                 @Override
                 public void doNext(long number) {

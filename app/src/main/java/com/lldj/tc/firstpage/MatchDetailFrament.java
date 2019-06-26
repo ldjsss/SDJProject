@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
-import com.lldj.tc.httpMgr.beans.FormatModel.Results;
-import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
-import com.lldj.tc.httpMgr.beans.FormatModel.match.Team;
+import com.lldj.tc.httpMgr.beans.JsonBean;
+import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
+import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
+import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Team;
 import com.lldj.tc.mainUtil.GlobalVariable;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
@@ -87,7 +87,7 @@ public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LS
     @BindView(R.id.gamestatusicon)
     ImageView gamestatusicon;
 
-    private Results _matchData;
+    private ResultsModel _matchData;
     private int ViewType;
     private int matchId;
     private MatchCellAdapter mAdapter = null;
@@ -146,18 +146,19 @@ public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LS
 
     @Override
     public void onRefresh() {
-        HttpMsg.sendGetMatchDetial(matchId, new HttpMsg.Listener(){
+        HttpMsg.getInstance().sendGetMatchDetial(matchId, JsonBean.class, new HttpMsg.Listener(){
             @Override
-            public void onFinish(JsonBean res) {
+            public void onFinish(Object _res) {
+                JsonBean res = (JsonBean) _res;
                 if(res.getCode() == GlobalVariable.succ){
-                    _matchData = (Results)res.getResult();
+                    _matchData = (ResultsModel)res.getResult();
 
-                    Results _data = _matchData;
+                    ResultsModel _data = _matchData;
                     if (_data == null) return;
 
                     Team team0 = _data.getTeam() != null ? _data.getTeam().get(0) : null;
                     Team team1 = _data.getTeam() != null ? _data.getTeam().get(1) : null;
-                    List<Odds> odds = _data.getOdds() != null ? _data.getOdds() : null;
+                    List<Odds> odds = _data.getOdds() != null ? (List<Odds>)_data.getOdds() : null;
                     int status = _data.getStatus();
 
                     gamename.setText(_data.getTournament_name());

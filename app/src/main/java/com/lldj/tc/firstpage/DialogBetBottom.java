@@ -15,9 +15,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.beans.FormatModel.BetModel;
+import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.httpMgr.beans.BetBean;
 import com.lldj.tc.mainUtil.EventType;
+import com.lldj.tc.mainUtil.GlobalVariable;
 import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
@@ -51,7 +54,7 @@ public class DialogBetBottom extends Dialog {
     @BindView(R.id.betbottomlayout2)
     RelativeLayout betbottomlayout2;
     private Observer<ObData> observer;
-    private Map<String, BetModel> betList = new HashMap();
+    private Map<String, BetBean> betList = new HashMap();
     private int totalBet = 0;
     private float totalGet = 0;
     private String selectCount = "0";
@@ -77,15 +80,15 @@ public class DialogBetBottom extends Dialog {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 if (data.getKey().equalsIgnoreCase(EventType.BETCHANGE)) {
-                    betList = (Map<String, BetModel>) data.getValue();
+                    betList = (Map<String, BetBean>) data.getValue();
 
                     totalBet = 0;
                     totalGet = 0;
                     selectCount = data.getTag();
 
-                    Iterator<Map.Entry<String, BetModel>> entries = betList.entrySet().iterator();
+                    Iterator<Map.Entry<String, BetBean>> entries = betList.entrySet().iterator();
                     while (entries.hasNext()) {
-                        Map.Entry<String, BetModel> entry = entries.next();
+                        Map.Entry<String, BetBean> entry = entries.next();
                         Clog.e("--key " + entry.getKey(), " ---value " + (entry.getValue() == null ? "null" : entry.getValue().toString()));
                         if (entry.getValue() != null) {
                             totalBet += entry.getValue().getAmount();
@@ -141,6 +144,32 @@ public class DialogBetBottom extends Dialog {
         switch (view.getId()) {
             case R.id.betsurebtn:
                 Log.d("betsurebtn", "-->");
+//                JSONArray arrayList=new JSONArray();
+//                Iterator<Map.Entry<String, BetBean>> entries = betList.entrySet().iterator();
+//                while (entries.hasNext()) {
+//                    Map.Entry<String, BetBean> entry = entries.next();
+//                    if (entry.getValue() != null) {
+//                        arrayList.put(entry.getValue());
+//                    }
+//                }
+//                JSONObject jsonObj = new JSONObject();
+//                try {
+//                    jsonObj.put("datas", arrayList);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+
+                HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
+                HttpMsg.getInstance().sendBetList(SharePreUtils.getToken(getContext()),
+                        "{\"datas\": [{\"amount\": 0,\"oddsid\": 85759}]}", BetBean.class, new HttpMsg.Listener(){
+                    @Override
+                    public void onFinish(Object _res) {
+                        BetBean res = (BetBean) _res;
+                        if(res.getCode() == GlobalVariable.succ){
+
+                        }
+                    }
+                });
                 break;
             case R.id.betbottomlayout2:
                 Log.d("betbottomlayout2", "-->");

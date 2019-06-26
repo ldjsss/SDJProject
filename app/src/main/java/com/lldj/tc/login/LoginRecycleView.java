@@ -17,8 +17,8 @@ import com.lldj.tc.MainUIActivity;
 import com.lldj.tc.R;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
-import com.lldj.tc.httpMgr.beans.FormatModel.Results;
+import com.lldj.tc.httpMgr.beans.JsonBean;
+import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
@@ -82,11 +82,12 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
         switch (msg.what) {
             case HandlerType.GOTOMAIN:
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                HttpMsg.sendGetUserInfo(SharePreUtils.getInstance().getToken(mContext), SharePreUtils.getInstance().getUserId(mContext), new HttpMsg.Listener(){
+                HttpMsg.getInstance().sendGetUserInfo(SharePreUtils.getInstance().getToken(mContext), SharePreUtils.getInstance().getUserId(mContext), JsonBean.class, new HttpMsg.Listener(){
                     @Override
-                    public void onFinish(JsonBean res) {
+                    public void onFinish(Object _res) {
+                        JsonBean res = (JsonBean) _res;
                         if(res.getCode() == GlobalVariable.succ){
-                            Results ret = (Results)res.getResult();
+                            ResultsModel ret = (ResultsModel)res.getResult();
                             SharePreUtils.getInstance().setUserInfo(mContext, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername());
                             Toast.makeText(mContext, getResources().getString(R.string.getUseInfoSucc),Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(mContext, MainUIActivity.class));

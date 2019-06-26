@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,14 +15,13 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.beans.FormatModel.BetModel;
-import com.lldj.tc.httpMgr.beans.FormatModel.Results;
-import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
+import com.lldj.tc.httpMgr.beans.BetBean;
+import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
+import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.sharepre.SharePreUtils;
@@ -37,7 +35,6 @@ import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import butterknife.BindView;
@@ -53,7 +50,7 @@ public class DialogBet extends Dialog {
     @BindView(R.id.moneyhave)
     TextView moneyhave;
     private ExpandableListView expandableListView;
-    private Map<String, BetModel> betList = new HashMap();
+    private Map<String, BetBean> betList = new HashMap();
 
     //注意，字符数组不要写成{{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
     private String[][] childs = {{"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}};
@@ -209,11 +206,11 @@ public class DialogBet extends Dialog {
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             ObData data = groups.get(groupPosition);
-            Results _data = (Results) data.getValue();
+            ResultsModel _data = (ResultsModel) data.getValue();
             String ID = data.getTag();
 
             Odds odd = getTeamOddsByID(_data, ID);
-            BetModel betinfo = betList.get(ID);
+            BetBean betinfo = betList.get(ID);
 
             if (odd == null) return convertView;
 
@@ -257,10 +254,10 @@ public class DialogBet extends Dialog {
             return convertView;
         }
 
-        private Odds getTeamOddsByID(Results _data, String ID) {
-            for (int i = 0; i < _data.getOdds().size(); i++) {
-                if (_data.getOdds().get(i).getId() == Integer.parseInt(ID))
-                    return _data.getOdds().get(i);
+        private Odds getTeamOddsByID(ResultsModel _data, String ID) {
+            for (int i = 0; i < ((List<Odds>)_data.getOdds()).size(); i++) {
+                if (((List<Odds>)_data.getOdds()).get(i).getId() == Integer.parseInt(ID))
+                    return ((List<Odds>)_data.getOdds()).get(i);
             }
 
             return null;
@@ -299,9 +296,9 @@ public class DialogBet extends Dialog {
             if (groupPosition < 0 || tag == null) return;
 
             ObData data = groups.get(groupPosition);
-            Results _data = (Results) data.getValue();
+            ResultsModel _data = (ResultsModel) data.getValue();
             String ID = data.getTag();
-            BetModel betinfo = betList.get(ID);
+            BetBean betinfo = betList.get(ID);
             Odds odd = getTeamOddsByID(_data, ID);
 
             String _tag = tag.substring(2, tag.length());
@@ -329,7 +326,7 @@ public class DialogBet extends Dialog {
                 int willGet = 0;
                 if(!TextUtils.isEmpty(text) && Float.parseFloat(text) > 0) {
                     willGet = (int)(Float.parseFloat(text) * Float.parseFloat(odd.getOdds()));
-                    betList.put(ID, new BetModel((int)Float.parseFloat(text), Integer.parseInt(ID), willGet));
+                    betList.put(ID, new BetBean((int)Float.parseFloat(text), Integer.parseInt(ID), willGet));
                 }else
                 {
                     betList.put(ID, null);

@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
+import com.lldj.tc.httpMgr.beans.MatchBean;
+import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.FormatModel.JsonBean;
-import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
@@ -44,8 +44,8 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
 
     private MainCellAdapter mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
-    private Results[] alist; //展示数据列表
-    private ArrayList<Results> mlist = new ArrayList<>(); //全部数据列表
+    private ResultsModel[] alist; //展示数据列表
+    private ArrayList<ResultsModel> mlist = new ArrayList<>(); //全部数据列表
     private int pageSize = 10;
     private int ViewType;
     private BaseFragment middleFragment;
@@ -169,18 +169,19 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
     }
 
     private void getMatchData(){
-        HttpMsg.sendGetMatchList(ViewType + 1, new HttpMsg.Listener(){
+        HttpMsg.getInstance().sendGetMatchList(ViewType + 1, MatchBean.class, new HttpMsg.Listener(){
             @Override
-            public void onFinish(JsonBean res) {
+            public void onFinish(Object _res) {
+                MatchBean res = (MatchBean) _res;
                 if(res.getCode() == GlobalVariable.succ){
                     mlist.clear();
-                    List<Results> _list = (List<Results>)res.getResult();
+                    List<ResultsModel> _list = (List<ResultsModel>)res.getResult();
 
                     Collections.sort(_list, (Comparator<Object>) (o1, o2) -> {
-                        return ((Results) o1).getStart_time().compareTo(((Results) o2).getStart_time());
+                        return ((ResultsModel) o1).getStart_time().compareTo(((ResultsModel) o2).getStart_time());
                     });
 
-                    alist = new Results[_list.size()];
+                    alist = new ResultsModel[_list.size()];
 
                     for (int i = 0; i < _list.size(); i++) {
                         alist[i] = _list.get(i);
