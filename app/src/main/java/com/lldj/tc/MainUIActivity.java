@@ -5,8 +5,8 @@ import android.os.Message;
 import android.widget.FrameLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import com.lldj.tc.firstpage.BetDialog;
+import com.lldj.tc.firstpage.DialogBet;
+import com.lldj.tc.firstpage.DialogBetBottom;
 import com.lldj.tc.firstpage.DialogSet;
 import com.lldj.tc.firstpage.FragmentViewPager;
 import com.lldj.tc.firstpage.MatchDetailFrament;
@@ -19,10 +19,8 @@ import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
-
 import java.util.List;
 import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -34,7 +32,8 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
-    private BetDialog betDialog;
+    private DialogBet dialogBet;
+    private DialogBetBottom dialogBetBottom;
     private MatchDetailFrament detailDialog;
 
     @Override
@@ -82,19 +81,20 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
                 AppUtils.showLoading(mContext);
                 break;
             case HandlerType.SHOWBETDIA:
-                List<ObData> groups = null;
-                if(msg.obj!=null)groups = (List<ObData>)msg.obj;
-                if(betDialog==null)betDialog = new BetDialog(this, R.style.DialogTheme);
-                betDialog.showView(groups);
+                if(dialogBet ==null) dialogBet = new DialogBet(this, R.style.DialogTheme);
+                dialogBet.show();
+                if(dialogBetBottom == null) dialogBetBottom = new DialogBetBottom(this, R.style.DialogTheme);
+                dialogBetBottom.show();
                 break;
             case HandlerType.HIDEBETDIA:
-                if(betDialog == null) return;
-                betDialog.hide();
+                if(dialogBet != null) dialogBet.hide();
+                AppUtils.dispatchEvent(new ObData(EventType.HIDEBETLIST, null));
                 break;
             case HandlerType.DELETEBETDIA:
-                if(betDialog == null) return;
-                betDialog.dismiss();
-                betDialog = null;
+                if(dialogBet != null) dialogBet.dismiss();
+                dialogBet = null;
+                if(dialogBetBottom != null) dialogBetBottom.dismiss();
+                dialogBetBottom = null;
                 break;
         }
     }

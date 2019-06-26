@@ -200,7 +200,7 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
                             _oddstring = odd2.getOdds();
                             _statue = odd2.getStatus();
 
-                            ((TextView) view.findViewById(R.id.playovername1)).setText(TextUtils.isEmpty(odd1.getName())? "unknown" : odd1.getName());
+                            ((TextView) view.findViewById(R.id.playovername1)).setText(TextUtils.isEmpty(odd2.getName())? "unknown" : odd2.getName());
 
                             tv_odds = (TextView) view.findViewById(R.id.playbetnum1);
                             im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon1);

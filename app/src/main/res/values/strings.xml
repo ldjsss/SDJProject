@@ -52,6 +52,13 @@
     <string name="getGameListSucc">获取比赛列表成功</string>
     <string name="hadlock">已锁盘</string>
     <string name="maxSelect">最多可选择12场比赛</string>
+    <string name="currentBetTitle">本次投注</string>
+    <string name="maxGetTitle">最高返还</string>
+    <string name="makesurebet">确认投注</string>
+    <string name="packup">收起</string>
+    <string name="haveselect">已选</string>
+    <string name="clickedlook">投注单</string>
+    <string name="betlistlook">查看</string>
 
 
     <string name="input_tel_num">请输入手机号</string>

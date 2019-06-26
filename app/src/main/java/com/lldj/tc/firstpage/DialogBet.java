@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 import com.lldj.tc.R;
+import com.lldj.tc.httpMgr.beans.FormatModel.BetModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.Results;
 import com.lldj.tc.httpMgr.beans.FormatModel.match.Odds;
 import com.lldj.tc.mainUtil.EventType;
@@ -36,6 +37,7 @@ import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import butterknife.BindView;
@@ -44,18 +46,17 @@ import butterknife.OnClick;
 
 import static android.view.ViewGroup.FOCUS_BEFORE_DESCENDANTS;
 
-public class BetDialog extends Dialog {
+public class DialogBet extends Dialog {
 
     @BindView(R.id.gamebettotalcount)
     TextView gamebettotalcount;
     @BindView(R.id.moneyhave)
     TextView moneyhave;
-    //View
     private ExpandableListView expandableListView;
+    private Map<String, BetModel> betList = new HashMap();
 
     //注意，字符数组不要写成{{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
     private String[][] childs = {{"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}};
-    private Map editTexts = new HashMap();
     private Observer<ObData> observer;
     private List<ObData> groups = new ArrayList<>();
     private MyExpandableListView _myExpandableListView;
@@ -64,7 +65,7 @@ public class BetDialog extends Dialog {
     int maxHeight = 0;
     int _oneHeight = 0;
 
-    public BetDialog(@NonNull Context context, @StyleRes int themeResId) {
+    public DialogBet(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
 
         screenHeight = AppUtils.getDisplayMetrics(getContext()).heightPixels;
@@ -126,6 +127,9 @@ public class BetDialog extends Dialog {
     }
 
     private void update(){
+        ObData _data = new ObData(EventType.BETCHANGE, betList);
+        _data.setTag(groups.size()+"");
+        AppUtils.dispatchEvent(_data);
         _myExpandableListView.notifyDataSetChanged();
         gamebettotalcount.setText(groups.size() + "");
 
@@ -142,12 +146,6 @@ public class BetDialog extends Dialog {
 
     public List<ObData> getGroups(){
         return groups;
-    }
-
-    public void showView(List<ObData> groups) {
-        if(groups != null) this.groups = groups;
-        show();;
-        update();
     }
 
     @OnClick({R.id.deleteall, R.id.closelayout})
@@ -171,27 +169,22 @@ public class BetDialog extends Dialog {
 
     //为ExpandableListView自定义适配器
     class MyExpandableListView extends BaseExpandableListAdapter {
-
-        //返回一级列表的个数
         @Override
         public int getGroupCount() {
             return groups.size();
         }
 
-        //返回每个二级列表的个数
         @Override
         public int getChildrenCount(int groupPosition) { //参数groupPosition表示第几个一级列表
             Log.d("smyhvae", "-->" + groupPosition);
             return childs[groupPosition].length;
         }
 
-        //返回一级列表的单个item（返回的是对象）
         @Override
         public Object getGroup(int groupPosition) {
             return groups.get(groupPosition);
         }
 
-        //返回二级列表中的单个item（返回的是对象）
         @Override
         public Object getChild(int groupPosition, int childPosition) {
             return childs[groupPosition][childPosition];  //不要误写成groups[groupPosition][childPosition]
@@ -207,7 +200,6 @@ public class BetDialog extends Dialog {
             return childPosition;
         }
 
-        //每个item的id是否是固定？一般为true
         @Override
         public boolean hasStableIds() {
             return true;
@@ -221,6 +213,7 @@ public class BetDialog extends Dialog {
             String ID = data.getTag();
 
             Odds odd = getTeamOddsByID(_data, ID);
+            BetModel betinfo = betList.get(ID);
 
             if (odd == null) return convertView;
 
@@ -230,8 +223,7 @@ public class BetDialog extends Dialog {
                 convertView = getLayoutInflater().inflate(R.layout.item_group, null);
             }
             TextView tv_group = (TextView) convertView.findViewById(R.id.betinput_et);
-            String text = editTexts.get(groupPosition) != null ? (String) editTexts.get(groupPosition) : "";
-            tv_group.setText(text);
+            tv_group.setText(betinfo==null?"":betinfo.getAmount()+"");
 
             TextView tv_groupName = (TextView) convertView.findViewById(R.id.tv_groupgame);
             tv_groupName.setText(TextUtils.isEmpty(odd.getName()) ? "unkonw" : odd.getName());
@@ -245,22 +237,22 @@ public class BetDialog extends Dialog {
             TextView betpercent = (TextView) convertView.findViewById(R.id.betpercent);
             betpercent.setText("@" + odd.getOdds());
 
-            String willGet = "";
-            if(!TextUtils.isEmpty(text)) willGet = (Float.parseFloat(text) * Float.parseFloat(odd.getOdds())) + "";
             TextView betwildgettv = (TextView) convertView.findViewById(R.id.betwildgettv);
-            betwildgettv.setText(willGet);
+            betwildgettv.setText(betinfo==null?"0":betinfo.getWillget()+"");
 
 //            Clog.e("ggggggg " + groupPosition, " hhhhhhh " + isExpanded);
 
             ((ImageView) convertView.findViewById(R.id.iv_groupdelete)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ObData data = groups.get(groupPosition);
+                    String ID = data.getTag();
                     groups.remove(groupPosition);
+                    betList.remove(ID);
                     update();
                     if(groups.size()<=0) HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
                 }
             });
-
 
             return convertView;
         }
@@ -306,9 +298,16 @@ public class BetDialog extends Dialog {
         private void btnClick(int groupPosition, String tag) {
             if (groupPosition < 0 || tag == null) return;
 
+            ObData data = groups.get(groupPosition);
+            Results _data = (Results) data.getValue();
+            String ID = data.getTag();
+            BetModel betinfo = betList.get(ID);
+            Odds odd = getTeamOddsByID(_data, ID);
+
             String _tag = tag.substring(2, tag.length());
-            String text = editTexts.get(groupPosition) != null ? (String) editTexts.get(groupPosition) : "";
+            String text = betinfo != null ? betinfo.getAmount()+"" : "";
             Clog.e("btnClick", "groupPosition" + groupPosition + "tag" + _tag);
+
             switch (_tag) {
                 case "10":
 
@@ -316,17 +315,27 @@ public class BetDialog extends Dialog {
                 case "11":
                     if (TextUtils.isEmpty(text)) return;
                     text = text.substring(0, text.length() - 1);
-                    editTexts.put(groupPosition, text);
                     break;
                 case "12":
 
                     break;
                 default:
                     if (TextUtils.isEmpty(text) && _tag.equalsIgnoreCase("0")) return;
-                    editTexts.put(groupPosition, text + _tag);
+                    text = text + _tag;
                     break;
             }
-            notifyDataSetChanged();
+
+            if(!_tag.equals("12")){
+                int willGet = 0;
+                if(!TextUtils.isEmpty(text) && Float.parseFloat(text) > 0) {
+                    willGet = (int)(Float.parseFloat(text) * Float.parseFloat(odd.getOdds()));
+                    betList.put(ID, new BetModel((int)Float.parseFloat(text), Integer.parseInt(ID), willGet));
+                }else
+                {
+                    betList.put(ID, null);
+                }
+            }
+            update();
         }
     }
 
