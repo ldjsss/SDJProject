@@ -181,7 +181,7 @@ public class DialogBetBottom extends Dialog {
                     public void onFinish(Object _res) {
                         BetBean res = (BetBean) _res;
                         if(res.getCode() == GlobalVariable.succ){
-
+                            new DialogBetResult(getContext(), R.style.DialogTheme).show();
                         }
                     }
                 });

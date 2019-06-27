@@ -3,18 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/black_alpha_60">
-
+    android:background="#252A3B"
+    android:layout_marginStart="@dimen/dp_10"
+    android:layout_marginEnd="@dimen/dp_10">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:id="@+id/bettitlelayout">
+        android:layout_height="40dp"
+        android:id="@+id/bettitlelayout"
+        android:gravity="center_vertical">
         <!--android:background="@drawable/rec_bettitle"-->
 
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/gamebeticon"
             android:src="@mipmap/sobot_icon_switch_robot"
             android:layout_centerVertical="true"
@@ -29,55 +31,90 @@
             android:layout_toRightOf="@id/gamebeticon"
             android:layout_marginLeft="@dimen/dp_10"
             android:id="@+id/deleteall"
-            android:textColor="@color/color_1a1c26"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/closelayout">
+            android:textColor="#74ACC3"/>
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:id="@+id/closelayout">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_centerVertical="true"
-                android:text="@string/moneyHave"
-                android:textColor="@color/color_1a1c26"
-                android:id="@+id/moneyhave"/>
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="18sp"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:text="@string/moneyHave"-->
+                <!--android:textColor="@color/color_1a1c26"-->
+                <!--android:id="@+id/moneyhave"/>-->
 
-            <View
-                android:layout_width="@dimen/dp_1"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dp_10"
-                android:id="@+id/closeline"
-                android:background="@color/color_1a1c26"/>
+            <!--<View-->
+                <!--android:layout_width="@dimen/dp_1"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginStart="@dimen/dp_10"-->
+                <!--android:id="@+id/closeline"-->
+                <!--android:background="@color/color_1a1c26"/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="×"
-                android:textSize="30sp"
-                android:layout_marginEnd="@dimen/dp_20"
-                android:layout_marginStart="@dimen/dimen_20"
-                android:id="@+id/close"
-                android:textColor="@color/color_1a1c26"/>
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="×"-->
+                <!--android:textSize="30sp"-->
+                <!--android:layout_marginEnd="@dimen/dp_20"-->
+                <!--android:layout_marginStart="@dimen/dimen_20"-->
+                <!--android:id="@+id/close"-->
+                <!--android:textColor="@color/color_1a1c26"/>-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
     </RelativeLayout>
 
-
+    <View
+        android:id="@+id/betlineview1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#383b4a" />
 
     <com.lldj.tc.toolslibrary.recycleview.LRecyclerView
-        android:id="@+id/subject_lrecycleview"
+        android:id="@+id/betlrecycleview"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:overScrollMode="never" />
 
+    <View
+        android:id="@+id/betlineview2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#383b4a" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lookbetlist"
+            android:textSize="20sp"
+            android:id="@+id/bt_betlist"
+            android:textColor="#BDC5DE"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/continuebet"
+            android:textSize="20sp"
+            android:id="@+id/bt_continue"
+            android:textColor="#74ACC3"
+            android:layout_weight="1"
+            android:gravity="center"/>
+    </LinearLayout>
 
 
 </LinearLayout>

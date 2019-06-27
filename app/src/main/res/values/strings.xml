@@ -68,6 +68,8 @@
     <string name="betsurewarm">您的订单需要系统确认，请在"投注记录"留意订单状态</string>
     <string name="betnum">订单号:</string>
     <string name="betresult">订单提交结果</string>
+    <string name="lookbetlist">查看投注记录</string>
+    <string name="continuebet">继续投注</string>
 
 
     <string name="input_tel_num">请输入手机号</string>
