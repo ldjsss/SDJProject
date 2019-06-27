@@ -59,7 +59,8 @@
     <string name="haveselect">已选</string>
     <string name="clickedlook">投注单</string>
     <string name="betlistlook">查看</string>
-
+    <string name="betminnum">最低押注</string>
+    <string name="betmaxnum">最高押注</string>
 
     <string name="input_tel_num">请输入手机号</string>
     <string name="set_psw">设置密码(6-18位字母数字组合)</string>

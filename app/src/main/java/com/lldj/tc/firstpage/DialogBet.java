@@ -326,7 +326,7 @@ public class DialogBet extends Dialog {
                 int willGet = 0;
                 if(!TextUtils.isEmpty(text) && Float.parseFloat(text) > 0) {
                     willGet = (int)(Float.parseFloat(text) * Float.parseFloat(odd.getOdds()));
-                    betList.put(ID, new BetBean((int)Float.parseFloat(text), Integer.parseInt(ID), willGet));
+                    betList.put(ID, new BetBean((int)Float.parseFloat(text), Integer.parseInt(ID), willGet, odd.getBet_max(), odd.getBet_min(), odd.getName()));
                 }else
                 {
                     betList.put(ID, null);

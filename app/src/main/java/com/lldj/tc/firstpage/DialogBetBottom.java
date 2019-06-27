@@ -27,6 +27,7 @@ import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
+import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -152,8 +153,19 @@ public class DialogBetBottom extends Dialog {
                 Iterator<Map.Entry<String, BetBean>> entries = betList.entrySet().iterator();
                 while (entries.hasNext()) {
                     Map.Entry<String, BetBean> entry = entries.next();
-                    if (entry.getValue() != null) {
-                        arrayList.put(entry.getValue().getJSONObject());
+
+                    BetBean value = entry.getValue();
+                    if (value != null) {
+                        if(value.getAmount() < value.getBet_min()) {
+                            ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, value.getName() + getContext().getResources().getString(R.string.betminnum) + value.getBet_min(), ToastUtils.LENGTH_SHORT);
+                            return;
+                        }
+                        else if(value.getAmount() > value.getBet_max()){
+                            ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, value.getName() + getContext().getResources().getString(R.string.betmaxnum) + value.getBet_max(), ToastUtils.LENGTH_SHORT);
+                            return;
+                        }
+
+                        arrayList.put(value.getJSONObject());
                     }
                 }
                 JSONObject jsonObj = new JSONObject();

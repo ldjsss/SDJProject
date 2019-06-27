@@ -10,6 +10,9 @@ public class BetBean {
     private String bet_money = "";
     private int bet_site = 0;
     private String bet_win_money = "";
+    private long bet_min;
+    private long bet_max;
+    private String name;
 
     private int code = -1;
     private String odds_value = "";
@@ -46,7 +49,6 @@ public class BetBean {
         this.code = code;
     }
 
-
     public String getOdds_value() {
         return odds_value;
     }
@@ -77,10 +79,37 @@ public class BetBean {
         this.oddsid = oddsid;
     }
 
-    public BetBean(int amount, int oddsid, float willget) {
+    public long getBet_min() {
+        return bet_min;
+    }
+
+    public void setBet_min(long bet_min) {
+        this.bet_min = bet_min;
+    }
+
+    public long getBet_max() {
+        return bet_max;
+    }
+
+    public void setBet_max(long bet_max) {
+        this.bet_max = bet_max;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BetBean(int amount, int oddsid, float willget, long bet_max, long bet_min, String name) {
        this.amount = amount;
        this.oddsid = oddsid;
        this.willget = willget;
+       this.bet_max = bet_max;
+       this.bet_min = bet_min;
+       this.name = name;
     }
 
     @Override

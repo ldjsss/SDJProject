@@ -5,8 +5,8 @@ public class Odds{
     private int id;
     private int team_id;
     private int status;
-    private int bet_min;
-    private int bet_max;
+    private long bet_min;
+    private long bet_max;
     private long last_update;
     private int match_id;
 
@@ -49,19 +49,17 @@ public class Odds{
         this.status = status;
     }
 
-    public int getBet_min() {
+    public long getBet_min() {
         return bet_min;
     }
 
-    public void setBet_min(int bet_min) {
+    public void setBet_min(long bet_min) {
         this.bet_min = bet_min;
     }
 
-    public int getBet_max() {
-        return bet_max;
-    }
+    public long getBet_max() { return bet_max; }
 
-    public void setBet_max(int bet_max) {
+    public void setBet_max(long bet_max) {
         this.bet_max = bet_max;
     }
 

@@ -28,6 +28,7 @@ import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
+import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
@@ -276,6 +277,7 @@ public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LS
 
     @OnClick(R.id.toolbar_back_iv)
     public void onViewClicked() {
+        stopUpdate();
         drawerLayout.closeDrawer(Gravity.RIGHT);
     }
 
@@ -303,6 +305,5 @@ public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LS
         super.onDestroyView();
         stopUpdate();
     }
-
 
 }
