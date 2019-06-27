@@ -28,6 +28,10 @@ import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -144,24 +148,23 @@ public class DialogBetBottom extends Dialog {
         switch (view.getId()) {
             case R.id.betsurebtn:
                 Log.d("betsurebtn", "-->");
-//                JSONArray arrayList=new JSONArray();
-//                Iterator<Map.Entry<String, BetBean>> entries = betList.entrySet().iterator();
-//                while (entries.hasNext()) {
-//                    Map.Entry<String, BetBean> entry = entries.next();
-//                    if (entry.getValue() != null) {
-//                        arrayList.put(entry.getValue());
-//                    }
-//                }
-//                JSONObject jsonObj = new JSONObject();
-//                try {
-//                    jsonObj.put("datas", arrayList);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-
+                JSONArray arrayList=new JSONArray();
+                Iterator<Map.Entry<String, BetBean>> entries = betList.entrySet().iterator();
+                while (entries.hasNext()) {
+                    Map.Entry<String, BetBean> entry = entries.next();
+                    if (entry.getValue() != null) {
+                        arrayList.put(entry.getValue().getJSONObject());
+                    }
+                }
+                JSONObject jsonObj = new JSONObject();
+                try {
+                    jsonObj.put("datas", arrayList);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            //"{\"datas\": [{\"amount\": 0,\"oddsid\": 85759}]}"
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                HttpMsg.getInstance().sendBetList(SharePreUtils.getToken(getContext()),
-                        "{\"datas\": [{\"amount\": 0,\"oddsid\": 85759}]}", BetBean.class, new HttpMsg.Listener(){
+                HttpMsg.getInstance().sendBetList(SharePreUtils.getToken(getContext()), jsonObj.toString(), BetBean.class, new HttpMsg.Listener(){
                     @Override
                     public void onFinish(Object _res) {
                         BetBean res = (BetBean) _res;

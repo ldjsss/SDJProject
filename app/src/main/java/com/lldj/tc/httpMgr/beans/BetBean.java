@@ -1,12 +1,18 @@
 package com.lldj.tc.httpMgr.beans;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class BetBean {
-    private int amount;
-    private int oddsid;
-    private float willget;
-    private String bet_money;
-    private int bet_site;
-    private String bet_win_money;
+    private int amount = 0;
+    private int oddsid = 0;
+    private float willget = 0;
+    private String bet_money = "";
+    private int bet_site = 0;
+    private String bet_win_money = "";
+
+    private int code = -1;
+    private String odds_value = "";
 
     public String getBet_money() {
         return bet_money;
@@ -40,13 +46,6 @@ public class BetBean {
         this.code = code;
     }
 
-    public int getOdds_id() {
-        return odds_id;
-    }
-
-    public void setOdds_id(int odds_id) {
-        this.odds_id = odds_id;
-    }
 
     public String getOdds_value() {
         return odds_value;
@@ -56,11 +55,6 @@ public class BetBean {
         this.odds_value = odds_value;
     }
 
-    private int code;
-    private int odds_id;
-    private String odds_value;
-
-
     public float getWillget() {
         return willget;
     }
@@ -69,9 +63,7 @@ public class BetBean {
         this.willget = willget;
     }
 
-    public int getAmount() {
-        return amount;
-    }
+    public int getAmount() { return amount; }
 
     public void setAmount(int amount) {
         this.amount = amount;
@@ -101,8 +93,18 @@ public class BetBean {
                 ", bet_site=" + bet_site +
                 ", bet_win_money='" + bet_win_money + '\'' +
                 ", code=" + code +
-                ", odds_id=" + odds_id +
                 ", odds_value='" + odds_value + '\'' +
                 '}';
+    }
+
+    public JSONObject getJSONObject() {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put("amount", getAmount());
+            jsonObj.put("oddsid", getOddsid());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  jsonObj;
     }
 }

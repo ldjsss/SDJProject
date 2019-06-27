@@ -247,7 +247,6 @@ public class HttpTool {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
                 // 构建请求参数
                 StringBuffer sb = new StringBuffer();
                 if (params != null) {
