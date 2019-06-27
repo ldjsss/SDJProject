@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:id="@+id/betbottomlayout1">
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,8 +19,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_weight="1"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10">
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -31,14 +31,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/currentBetTitle"
-                        android:textSize="22sp"
+                        android:textSize="18sp"
                         android:textColor="@color/color_cdc3b3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textSize="22sp"
+                        android:textSize="18sp"
                         android:textColor="@color/color_cdc3b3"
                         android:layout_marginStart="@dimen/dp_10"
                         android:id="@+id/betcouttv"/>
@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/maxGetTitle"
-                        android:textSize="22sp"
+                        android:textSize="18sp"
                         android:textColor="@color/color_cdc3b3" />
 
                     <TextView
@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/betgetcouttv"
                         android:text="0"
-                        android:textSize="22sp"
+                        android:textSize="18sp"
                         android:textColor="@color/color_8e6c37"
                         android:layout_marginStart="@dimen/dp_10"/>
 
@@ -84,8 +84,8 @@
 
         <TextView
             android:id="@+id/betsurebtn"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:background="@drawable/rec_00be0a_round100"
@@ -93,13 +93,13 @@
             android:text="@string/makesurebet"
             android:textColor="@color/black"
             android:layout_marginEnd="@dimen/dp_10"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/packup"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textColor="@color/color_8e6c37"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/betsurebtn"
@@ -108,7 +108,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:id="@+id/betbottomlayout2"
         android:visibility="gone">
 
@@ -119,13 +119,13 @@
             android:layout_centerVertical="true"
             android:text="@string/haveselect"
             android:layout_marginStart="@dimen/dp_10"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textColor="@color/color_cdc3b3" />
 
         <TextView
             android:id="@+id/betselectcount"
-            android:layout_width="60dp"
-            android:layout_height="32dp"
+            android:layout_width="55dp"
+            android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:background="@drawable/rec_tipcount"
             android:gravity="center"
@@ -133,12 +133,12 @@
             android:textColor="@color/black"
             android:layout_toRightOf="@+id/haveselecttitle"
             android:layout_marginStart="@dimen/dimen_5"
-            android:textSize="25sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/lookbtn"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:background="@drawable/rec_00be0a_round100"
@@ -146,7 +146,7 @@
             android:text="@string/clickedlook"
             android:textColor="@color/black"
             android:layout_marginEnd="@dimen/dp_10"
-            android:textSize="25sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="60dp"
@@ -157,7 +157,7 @@
             android:textColor="@color/color_cdc3b3"
             android:layout_toLeftOf="@+id/lookbtn"
             android:layout_marginEnd="@dimen/dimen_5"
-            android:textSize="25sp" />
+            android:textSize="18sp" />
 
 
     </RelativeLayout>

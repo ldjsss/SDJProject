@@ -1,6 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50">
+
+        <ImageView
+            android:id="@+id/tv_logoicon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/main_navigation"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:id="@+id/tv_matchname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_logoicon"
+            android:text="Chinese soccer"
+            android:layout_centerVertical="true"
+            android:textSize="22sp"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_matchtstatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="roll"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:textSize="16sp"
+            android:textColor="#8993B4" />
+
+        <TextView
+            android:id="@+id/tv_matchtround"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="round1"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_matchtstatus"
+            android:textSize="16sp"
+            android:textColor="#8993B4"
+            android:layout_marginEnd="@dimen/dp_10"/>
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="#383b4a"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_matchvsname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chinese soccer-vs-Chinese soccer"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:textColor="#545D71" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <TextView
+                android:id="@+id/tv_starttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="start: 2019/06/25 15:44:00"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:textColor="#545D71" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <TextView
+                android:id="@+id/tv_odds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bets: 2.7"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:textColor="#545D71" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/betvictoryicon"
+            android:src="@mipmap/main_victory"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <com.lldj.tc.toolslibrary.view.DashedLine
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_height="1dp">
+
+    </com.lldj.tc.toolslibrary.view.DashedLine>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout1">
+
+            <TextView
+                android:id="@+id/tv_bettype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/onebet"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_betsureing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/betsureing"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:textSize="16sp"
+                android:textColor="#74ACC3" />
+
+            <TextView
+                android:id="@+id/tv_havepay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/havepay"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:textSize="16sp"
+                android:textColor="#74ACC3"
+                android:background="@drawable/rec_nulltext"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout1">
+
+            <TextView
+                android:id="@+id/tv_betmoneytitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/betmoney"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:textSize="16sp"
+                android:textColor="#BDC5DE" />
+
+            <TextView
+                android:id="@+id/tv_betmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_betmoneytitle"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_marginStart="@dimen/dp_10"/>
+
+            <TextView
+                android:id="@+id/tv_willget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tv_willgettitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/maxGetTitle"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tv_willget"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_marginEnd="@dimen/dp_10"/>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_warm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/betsurewarm"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:textColor="#545D71"
+            android:layout_marginStart="@dimen/dp_10"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/betnumlayout">
+            <TextView
+                android:id="@+id/tv_betnumtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/betnum"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:textColor="#545D71" />
+            <TextView
+                android:id="@+id/tv_betnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_betnumtitle"
+                android:textSize="16sp"
+                android:textColor="#545D71"
+                android:layout_marginStart="@dimen/dp_10"/>
+
+            <TextView
+                android:id="@+id/tv_bettime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2019/06/26 10:01:52"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:textSize="16sp"
+                android:textColor="#545D71" />
+
+        </RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>

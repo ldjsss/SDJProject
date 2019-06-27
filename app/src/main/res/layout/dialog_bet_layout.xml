@@ -74,12 +74,12 @@
     <ExpandableListView
         android:id="@+id/expandableListView"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="165dp"
         android:layout_below="@+id/bettitlelayout"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:id="@+id/viewlayout"
         android:layout_below="@+id/expandableListView"/>
 
