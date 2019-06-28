@@ -19,7 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.beans.BetBean;
+import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.mainUtil.EventType;
@@ -50,7 +50,7 @@ public class DialogBet extends Dialog {
     @BindView(R.id.moneyhave)
     TextView moneyhave;
     private ExpandableListView expandableListView;
-    private Map<String, BetBean> betList = new HashMap();
+    private Map<String, BetModel> betList = new HashMap();
 
     //注意，字符数组不要写成{{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
     private String[][] childs = {{"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}};
@@ -210,7 +210,7 @@ public class DialogBet extends Dialog {
             String ID = data.getTag();
 
             Odds odd = getTeamOddsByID(_data, ID);
-            BetBean betinfo = betList.get(ID);
+            BetModel betinfo = betList.get(ID);
 
             if (odd == null) return convertView;
 
@@ -298,7 +298,7 @@ public class DialogBet extends Dialog {
             ObData data = groups.get(groupPosition);
             ResultsModel _data = (ResultsModel) data.getValue();
             String ID = data.getTag();
-            BetBean betinfo = betList.get(ID);
+            BetModel betinfo = betList.get(ID);
             Odds odd = getTeamOddsByID(_data, ID);
 
             String _tag = tag.substring(2, tag.length());
@@ -326,7 +326,7 @@ public class DialogBet extends Dialog {
                 int willGet = 0;
                 if(!TextUtils.isEmpty(text) && Float.parseFloat(text) > 0) {
                     willGet = (int)(Float.parseFloat(text) * Float.parseFloat(odd.getOdds()));
-                    betList.put(ID, new BetBean((int)Float.parseFloat(text), Integer.parseInt(ID), willGet, odd.getBet_max(), odd.getBet_min(), odd.getName()));
+                    betList.put(ID, new BetModel((int)Float.parseFloat(text), Integer.parseInt(ID), willGet, odd.getBet_max(), odd.getBet_min(), odd.getName()));
                 }else
                 {
                     betList.put(ID, null);

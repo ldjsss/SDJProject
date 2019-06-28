@@ -222,6 +222,11 @@ public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LS
                         jingcairecycleview.refreshComplete();
                     }
                 }
+                else{
+                    RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
+                    jingcairecycleview.refreshComplete();
+                }
+
             }
         });
     }

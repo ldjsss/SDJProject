@@ -25,11 +25,6 @@
             android:name="CP_CHANNEL"
             android:value="CP_SDJ_A100" />
 
-        <activity
-            android:name=".firstpage.MatchDetailFrament"
-            android:label="@string/title_activity_match_detail"
-            android:theme="@style/AppTheme.NoActionBar" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.sdj.auction.fileprovider"

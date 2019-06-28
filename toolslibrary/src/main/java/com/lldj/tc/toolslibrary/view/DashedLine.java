@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 public class DashedLine extends View {
-    int mColor = Color.BLUE;
+    int mColor = Color.rgb(56, 59, 74);
     public DashedLine(Context context, AttributeSet attrs) {
         super(context, attrs);
     }

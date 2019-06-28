@@ -61,7 +61,6 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.ViewType = getArguments().getInt("ARG");
-//        Clog.e("sssssss", " -----------xcl onCreate = " + ViewType);
     }
 
     @Override

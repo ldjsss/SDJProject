@@ -1,9 +1,9 @@
-package com.lldj.tc.httpMgr.beans;
+package com.lldj.tc.httpMgr.beans.FormatModel.matchModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BetBean {
+public class BetModel {
     private int amount = 0;
     private int oddsid = 0;
     private float willget = 0;
@@ -103,7 +103,7 @@ public class BetBean {
         this.name = name;
     }
 
-    public BetBean(int amount, int oddsid, float willget, long bet_max, long bet_min, String name) {
+    public BetModel(int amount, int oddsid, float willget, long bet_max, long bet_min, String name) {
        this.amount = amount;
        this.oddsid = oddsid;
        this.willget = willget;
@@ -114,7 +114,7 @@ public class BetBean {
 
     @Override
     public String toString() {
-        return "BetBean{" +
+        return "BetModel{" +
                 "amount=" + amount +
                 ", oddsid=" + oddsid +
                 ", willget=" + willget +
