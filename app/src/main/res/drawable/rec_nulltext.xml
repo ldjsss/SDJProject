@@ -11,8 +11,8 @@
     <!-- 矩形的边线 -->
 
     <gradient
-        android:endColor="@color/white"
-        android:startColor="@color/white" />
+        android:endColor="@android:color/transparent"
+        android:startColor="@android:color/transparent" />
 </shape>
 
 

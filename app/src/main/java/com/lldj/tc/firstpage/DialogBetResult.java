@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
@@ -71,5 +72,17 @@ public class DialogBetResult extends Dialog {
 
         fullScreenImmersive(getWindow().getDecorView());
         show();
+    }
+
+    @OnClick({R.id.bt_betlist, R.id.bt_continue})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_betlist:
+                Toast.makeText(getContext(),"---------------test1",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.bt_continue:
+                dismiss();
+                break;
+        }
     }
 }

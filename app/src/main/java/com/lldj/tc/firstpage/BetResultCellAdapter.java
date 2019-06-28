@@ -34,9 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BetResultCellAdapter extends RecyclerView.Adapter<BetResultCellAdapter.MyViewHolder> {
-    //当前上下文对象
     Context context;
-    //RecyclerView填充Item数据的List对象
     private List<BetModel> datas = new ArrayList<>();
 
     public BetResultCellAdapter(Context context, List<BetModel> datas){
@@ -44,7 +42,6 @@ public class BetResultCellAdapter extends RecyclerView.Adapter<BetResultCellAdap
         this.datas = datas;
     }
 
-    //创建ViewHolder
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -54,25 +51,32 @@ public class BetResultCellAdapter extends RecyclerView.Adapter<BetResultCellAdap
         return holder;
     }
 
-    //绑定数据
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-//        holder.textView.setText(datas.get(position));
+        BetModel _data = datas.get(position);
+        holder.tv_matchname.setText((TextUtils.isEmpty(_data.getName()) ? "unknow": _data.getName()));
+        holder.tv_odds.setText(_data.getOdds_value());
+        holder.tv_betmoney.setText(_data.getBet_money());
+        holder.tv_willget.setText(_data.getBet_win_money());
     }
 
-    //返回Item的数量
     @Override
     public int getItemCount() {
         return datas.size();
     }
 
-    //继承RecyclerView.ViewHolder抽象类的自定义ViewHolder
     class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView textView;
+        TextView tv_matchname;
+        TextView tv_odds;
+        TextView tv_betmoney;
+        TextView tv_willget;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-//            textView = itemView.findViewById(R.id.text);
+            tv_matchname = itemView.findViewById(R.id.tv_matchname);
+            tv_odds = itemView.findViewById(R.id.tv_odds);
+            tv_betmoney = itemView.findViewById(R.id.tv_betmoney);
+            tv_willget = itemView.findViewById(R.id.tv_willget);
         }
     }
 }
