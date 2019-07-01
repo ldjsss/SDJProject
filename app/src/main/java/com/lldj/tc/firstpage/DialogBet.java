@@ -72,7 +72,7 @@ public class DialogBet extends Dialog {
         ButterKnife.bind(this, view);
         Window window = this.getWindow();
         window.setGravity(Gravity.BOTTOM);
-        window.setWindowAnimations(R.style.main_menu_animStyle);
+        window.setWindowAnimations(R.style.main_bet_animStyle);
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         WindowManager.LayoutParams layoutParams = window.getAttributes();
@@ -111,7 +111,13 @@ public class DialogBet extends Dialog {
                         ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getContext().getResources().getString(R.string.maxSelect), ToastUtils.LENGTH_SHORT);
                         return;
                     }
-                    groups.add(0, data);
+                    if(! addDataToGroups(data)){
+                        Log.d("addDataToGroups", "remove have add cell");
+                        if(groups.size()<=0){
+                            if(groups.size()<=0) HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
+                            return;
+                        }
+                    }
                     update();
                     if(expandableListView != null) expandableListView.expandGroup(0);
                 }
@@ -123,11 +129,23 @@ public class DialogBet extends Dialog {
 
     }
 
+    private Boolean addDataToGroups(ObData data){
+        Log.d("addDataToGroups", data.toString());
+        for (int i = 0; i < groups.size(); i++) {
+            if(groups.get(i).getTag().equals(data.getTag())){
+                groups.remove(i);
+                return false;
+            }
+        }
+
+        groups.add(0, data);
+        return true;
+    }
+
     private void update(){
         ObData _data = new ObData(EventType.BETCHANGE, betList);
         _data.setTag(groups.size()+"");
         AppUtils.dispatchEvent(_data);
-        _myExpandableListView.notifyDataSetChanged();
         gamebettotalcount.setText(groups.size() + "");
 
         if(maxHeight <= 0) maxHeight = screenHeight - findViewById(R.id.viewlayout).getLayoutParams().height - findViewById(R.id.bettitlelayout).getLayoutParams().height;
@@ -139,6 +157,7 @@ public class DialogBet extends Dialog {
         if(newHeight > maxHeight)newHeight = maxHeight;
         if(expandableListView != null)expandableListView.getLayoutParams().height = newHeight;
 
+        _myExpandableListView.notifyDataSetChanged();
     }
 
     public List<ObData> getGroups(){
@@ -246,8 +265,11 @@ public class DialogBet extends Dialog {
                     String ID = data.getTag();
                     groups.remove(groupPosition);
                     betList.remove(ID);
+                    if(groups.size()<=0) {
+                        HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
+                        return;
+                    }
                     update();
-                    if(groups.size()<=0) HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
                 }
             });
 

@@ -73,7 +73,7 @@ public class DialogBetBottom extends Dialog {
         ButterKnife.bind(this, view);
         Window window = this.getWindow();
         window.setGravity(Gravity.BOTTOM);
-        window.setWindowAnimations(R.style.main_menu_animStyle);
+        window.setWindowAnimations(R.style.main_bet_animStyle2);
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         WindowManager.LayoutParams layoutParams = window.getAttributes();
