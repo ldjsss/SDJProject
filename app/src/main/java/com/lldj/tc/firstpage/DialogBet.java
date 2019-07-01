@@ -146,7 +146,10 @@ public class DialogBet extends Dialog {
         AppUtils.dispatchEvent(new ObData(EventType.SELECTGROUPS, groups));
 
         if(groups.size()<=0){
-            if(groups.size()<=0) HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
+            if(groups.size()<=0) {
+                AppUtils.dispatchEvent(new ObData(EventType.SELECTGROUPS, null));
+                HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
+            }
             return;
         }
 
@@ -172,6 +175,7 @@ public class DialogBet extends Dialog {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.deleteall:
+                AppUtils.dispatchEvent(new ObData(EventType.SELECTGROUPS, null));
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
                 break;
             case R.id.closelayout:
@@ -269,10 +273,6 @@ public class DialogBet extends Dialog {
                     String ID = data.getTag();
                     groups.remove(groupPosition);
                     betList.remove(ID);
-                    if(groups.size()<=0) {
-                        HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
-                        return;
-                    }
                     update();
                 }
             });
