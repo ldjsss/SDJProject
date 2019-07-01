@@ -150,6 +150,10 @@ public class DialogBetBottom extends Dialog {
         switch (view.getId()) {
             case R.id.betsurebtn:
                 Log.d("betsurebtn", "-->");
+                if(totalBet <= 0){
+                    ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getContext().getResources().getString(R.string.inputBetNum), ToastUtils.LENGTH_SHORT);
+                    return;
+                }
                 JSONArray arrayList=new JSONArray();
                 Iterator<Map.Entry<String, BetModel>> entries = betList.entrySet().iterator();
                 while (entries.hasNext()) {

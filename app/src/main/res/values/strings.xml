@@ -70,6 +70,7 @@
     <string name="betresult">订单提交结果</string>
     <string name="lookbetlist">查看投注记录</string>
     <string name="continuebet">继续投注</string>
+    <string name="inputBetNum">请输入下注金额</string>
 
 
     <string name="input_tel_num">请输入手机号</string>
