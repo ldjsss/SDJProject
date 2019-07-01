@@ -16,13 +16,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.beans.MatchBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
+import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.event.Observable;
+import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
@@ -51,6 +56,7 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
     private BaseFragment middleFragment;
     private Disposable disposable;
     private int disTime = 4000;
+    private Observer<ObData> observer;
 
     @BindView(R.id.subject_lrecycleview)
     LRecyclerView subjectLrecycleview;
@@ -61,6 +67,18 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.ViewType = getArguments().getInt("ARG");
+
+        observer = new Observer<ObData>() {
+            @Override
+            public void onUpdate(Observable<ObData> observable, ObData data) {
+                if (data.getKey().equalsIgnoreCase(EventType.SELECTGROUPS)) {
+                    if (mAdapter != null){
+                        mAdapter.updateSelect((List<ObData>)data.getValue());
+                    }
+                }
+            }
+        };
+        AppUtils.registEvent(observer);
     }
 
     @Override
@@ -219,4 +237,10 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
         disposable = null;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        AppUtils.unregisterEvent(observer);
+        observer = null;
+    }
 }

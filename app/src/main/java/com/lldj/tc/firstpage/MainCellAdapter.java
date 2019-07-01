@@ -50,6 +50,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
     private int ViewType;
     private String[] statusText;
     private int[] winBmp;
+    private List<ObData> groups = null;
 
     public MainCellAdapter(Context mContext, int _viewType) {
         this.mContext = mContext;
@@ -62,6 +63,11 @@ public class MainCellAdapter extends RecyclerView.Adapter {
         mlist = plist;
 
         AppUtils.dispatchEvent(new ObData(EventType.UPDATEMATCHLIST, mlist));
+        notifyDataSetChanged();
+    }
+
+    public void updateSelect(List<ObData> _groups){
+        this.groups = _groups;
         notifyDataSetChanged();
     }
 
@@ -220,6 +226,8 @@ public class MainCellAdapter extends RecyclerView.Adapter {
             playname1.setText(team1.getTeam_short_name());
             gametime.setText(_data.getStart_time());
 
+            setSelect(odds);
+
             if (status == 2) {
                 gamestatusicon.setImageResource(R.mipmap.match_status_1);
             } else {
@@ -366,6 +374,35 @@ public class MainCellAdapter extends RecyclerView.Adapter {
                     }
 
                     break;
+            }
+        }
+
+        private void setSelect(List<Odds> odds){
+            if (odds == null) return;
+
+            boolean _select = false;
+            boolean _select1 = false;
+            if(groups != null) {
+                for (int i = 0; i < groups.size(); i++) {
+                    if (odds.get(0)!=null && (odds.get(0).getId() + "").equals(groups.get(i).getTag())) _select = true;
+                    if (odds.get(1)!=null && (odds.get(1).getId() + "").equals(groups.get(i).getTag())) _select1 = true;
+                }
+            }
+            if(_select){
+                playname0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
+                playovername0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
+            }
+            else{
+                playname0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
+                playovername0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
+            }
+            if(_select1){
+                playname1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
+                playovername1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
+            }
+            else{
+                playname1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
+                playovername1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
             }
         }
 

@@ -31,6 +31,7 @@ import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
+import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 import java.util.ArrayList;
@@ -116,6 +117,18 @@ public class DialogBet extends Dialog {
                     }
                     update();
                     if(expandableListView != null) expandableListView.expandGroup(0);
+                }
+
+                else if (data.getKey().equalsIgnoreCase(EventType.BETDETAILUI)) {
+                    RxTimerUtilPro.timer(100, new RxTimerUtilPro.IRxNext() {
+                        @Override
+                        public void doNext(long number) {
+                            AppUtils.dispatchEvent(new ObData(EventType.SELECTGROUPS, groups));
+                        }
+
+                        @Override
+                        public void onComplete() { }
+                    });
                 }
             }
         };
