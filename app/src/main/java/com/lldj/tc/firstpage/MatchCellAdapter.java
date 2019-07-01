@@ -10,11 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
+import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
@@ -41,9 +43,9 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     private viewHolder mHolder  = null;
-    private int ViewType;
     private int[] winBmp;
     private ResultsModel tData;
+    private List<ObData> groups = null;
 
 
     Map<String, List<Odds>> mlist = new HashMap<>();
@@ -52,13 +54,16 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
         this.mContext = mContext;
     }
 
-    public void changeData(Map<String, List<Odds>> plist, int ViewType, ResultsModel _data) {
+    public void changeData(Map<String, List<Odds>> plist, ResultsModel _data) {
+        this.mlist = plist;
+        this.tData = _data;
+        if(winBmp == null) winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
 
-        mlist = plist;
-        ViewType = ViewType;
-        tData = _data;
-       if(winBmp == null) winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
+        notifyDataSetChanged();
+    }
 
+    public void updateSelect(List<ObData> _groups){
+        this.groups = _groups;
         notifyDataSetChanged();
     }
 
@@ -149,6 +154,8 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
                         ((TextView) view.findViewById(R.id.playovername0)).setText(TextUtils.isEmpty(odd1.getName())? "unknown" : odd1.getName());
                         String _oddstring = odd1.getOdds();
 
+                        setSelect((TextView)view.findViewById(R.id.playcellselect0), odd1.getId()+"");
+
                         TextView tv_odds = (TextView) view.findViewById(R.id.playbetnum0);
                         ImageView im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon0);
                         ImageView im_lock = (ImageView) view.findViewById(R.id.playlockicon0);
@@ -198,6 +205,7 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
                             _statue = odd2.getStatus();
 
                             ((TextView) view.findViewById(R.id.playovername1)).setText(TextUtils.isEmpty(odd2.getName())? "unknown" : odd2.getName());
+                            setSelect((TextView)view.findViewById(R.id.playcellselect1), odd2.getId()+"");
 
                             tv_odds = (TextView) view.findViewById(R.id.playbetnum1);
                             im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon1);
@@ -255,6 +263,21 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
 
         }
 
+        private void setSelect(TextView _text, String matchID){
+            boolean _select = false;
+            if(groups != null) {
+                for (int i = 0; i < groups.size(); i++) {
+                    if (groups.get(i).getTag().equals(matchID)) _select = true;
+                }
+            }
+            if(_select){
+                _text.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
+            }
+            else{
+                _text.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
+            }
+        }
+
         private void betClick(ResultsModel data, String tag){
             RxTimerUtil.timer(50, new RxTimerUtil.IRxNext() {
                 @Override
@@ -279,5 +302,4 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
 
 
     }
-
 }

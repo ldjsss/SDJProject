@@ -17,17 +17,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.httpMgr.beans.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Team;
+import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.GlobalVariable;
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.event.Observable;
+import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
@@ -35,6 +41,7 @@ import com.lldj.tc.toolslibrary.view.StrokeTextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -100,6 +107,7 @@ public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LS
     private String[] statusText;
     private int disTime = 4000;
     private Disposable disposable;
+    private Observer<ObData> observer;
 
     @Override
     public int getContentView() {
@@ -120,6 +128,18 @@ public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LS
         mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
         fullScreenImmersive(mContext.getWindow().getDecorView());
         mContext.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+
+        observer = new Observer<ObData>() {
+            @Override
+            public void onUpdate(Observable<ObData> observable, ObData data) {
+                if (data.getKey().equalsIgnoreCase(EventType.SELECTGROUPS)) {
+                    if (mAdapter != null){
+                        mAdapter.updateSelect((List<ObData>)data.getValue());
+                    }
+                }
+            }
+        };
+        AppUtils.registEvent(observer);
 
     }
 
@@ -217,7 +237,7 @@ public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LS
                     }
 
                     if (mAdapter != null){
-                        mAdapter.changeData(oddMap, ViewType, _data);
+                        mAdapter.changeData(oddMap, _data);
                         RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
                         jingcairecycleview.refreshComplete();
                     }
@@ -309,6 +329,9 @@ public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LS
     public void onDestroyView() {
         super.onDestroyView();
         stopUpdate();
+
+        AppUtils.unregisterEvent(observer);
+        observer = null;
     }
 
 }

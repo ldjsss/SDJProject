@@ -6,4 +6,5 @@ public class EventType {
     public static final String BETDETAILUI = "BETDETAILUI";
     public static final String BETCHANGE = "BETCHANGE";
     public static final String HIDEBETLIST = "HIDEBETLIST";
+    public static final String SELECTGROUPS = "SELECTGROUPS";
 }

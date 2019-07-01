@@ -113,10 +113,6 @@ public class DialogBet extends Dialog {
                     }
                     if(! addDataToGroups(data)){
                         Log.d("addDataToGroups", "remove have add cell");
-                        if(groups.size()<=0){
-                            if(groups.size()<=0) HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
-                            return;
-                        }
                     }
                     update();
                     if(expandableListView != null) expandableListView.expandGroup(0);
@@ -146,6 +142,14 @@ public class DialogBet extends Dialog {
         ObData _data = new ObData(EventType.BETCHANGE, betList);
         _data.setTag(groups.size()+"");
         AppUtils.dispatchEvent(_data);
+
+        AppUtils.dispatchEvent(new ObData(EventType.SELECTGROUPS, groups));
+
+        if(groups.size()<=0){
+            if(groups.size()<=0) HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
+            return;
+        }
+
         gamebettotalcount.setText(groups.size() + "");
 
         if(maxHeight <= 0) maxHeight = screenHeight - findViewById(R.id.viewlayout).getLayoutParams().height - findViewById(R.id.bettitlelayout).getLayoutParams().height;
