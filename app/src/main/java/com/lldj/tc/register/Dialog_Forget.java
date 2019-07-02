@@ -39,7 +39,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * description: 忘记密码<p>
  */
-public class ForgetDialog extends Dialog {
+public class Dialog_Forget extends Dialog {
 
     @BindView(R.id.toolbar_title_tv)
     StrokeTextView toolbarTitleTv;
@@ -64,7 +64,7 @@ public class ForgetDialog extends Dialog {
     private Disposable getCodeDisposable;
     private int codeTime = 120;
 
-    public ForgetDialog(@NonNull Context context, int themeResId) {
+    public Dialog_Forget(@NonNull Context context, int themeResId) {
         super(context, themeResId);
 
         View view = View.inflate(context, R.layout.dialog_forgetpassword, null);

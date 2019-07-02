@@ -23,8 +23,8 @@ import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.JsonBean;
-import com.lldj.tc.register.ForgetDialog;
-import com.lldj.tc.register.RegisterDialog;
+import com.lldj.tc.register.Dialog_Forget;
+import com.lldj.tc.register.DialogRegister;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
@@ -41,13 +41,13 @@ import butterknife.OnClick;
  */
 
 
-public class LoginCellAdapter extends RecyclerView.Adapter {
+public class Adapter_LoginCell extends RecyclerView.Adapter {
 
     private Context mContext;
     private ArrayList<String> mlist = new ArrayList<>();
     private viewHolder mHolder = null;
 
-    public LoginCellAdapter(Context mContext) {
+    public Adapter_LoginCell(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -82,7 +82,7 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
 
     class viewHolder extends RecyclerView.ViewHolder {
 
-        private ForgetDialog lossFrament = null;
+        private Dialog_Forget lossFrament = null;
 
         @BindView(R.id.frameaddlayout)
         FrameLayout frameaddlayout;
@@ -122,7 +122,7 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.forget_psw_tv:
-                    new ForgetDialog(mContext, R.style.DialogTheme).show();
+                    new Dialog_Forget(mContext, R.style.DialogTheme).show();
                     break;
                 case R.id.login_tv:
                     if (!checkAll()) return;
@@ -140,7 +140,7 @@ public class LoginCellAdapter extends RecyclerView.Adapter {
                     break;
                 case R.id.register_tv:
 
-                    new RegisterDialog(mContext, R.style.DialogTheme).show();
+                    new DialogRegister(mContext, R.style.DialogTheme).show();
 
                     break;
                 case R.id.just_look_tv:

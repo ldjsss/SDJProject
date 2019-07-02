@@ -1,4 +1,4 @@
-package com.lldj.tc.firstpage;
+package com.lldj.tc.match;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,8 +12,6 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 
 import com.lldj.tc.R;
-import com.lldj.tc.mainUtil.HandlerType;
-import com.lldj.tc.toolslibrary.handler.HandlerInter;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

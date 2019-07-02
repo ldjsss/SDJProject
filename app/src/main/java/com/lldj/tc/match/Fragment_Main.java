@@ -1,4 +1,4 @@
-package com.lldj.tc.firstpage;
+package com.lldj.tc.match;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -45,9 +45,9 @@ import io.reactivex.disposables.Disposable;
 /**
  * main ui
  */
-public class MainFragment extends BaseFragment implements LRecyclerView.LScrollListener {
+public class Fragment_Main extends BaseFragment implements LRecyclerView.LScrollListener {
 
-    private MainCellAdapter mAdapter = null;
+    private Adapter_MainCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
     private ResultsModel[] alist; //展示数据列表
     private ArrayList<ResultsModel> mlist = new ArrayList<>(); //全部数据列表
@@ -94,16 +94,16 @@ public class MainFragment extends BaseFragment implements LRecyclerView.LScrollL
 
         if(lAdapter == null){
             subjectLrecycleview.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-            mAdapter = new MainCellAdapter(mContext, ViewType);
+            mAdapter = new Adapter_MainCell(mContext, ViewType);
             lAdapter = new LRecyclerViewAdapter(getActivity(), mAdapter);
             subjectLrecycleview.setAdapter(lAdapter);
             subjectLrecycleview.setLScrollListener(this);
 
             if (ViewType >1) {
-                middleFragment = new CalendarFragment();
+                middleFragment = new Fragment_Calendar();
             }
             else{
-                middleFragment = new BannerFragment();
+                middleFragment = new Fragment_Banner();
             }
 
             FragmentManager fragmentManager = getFragmentManager();

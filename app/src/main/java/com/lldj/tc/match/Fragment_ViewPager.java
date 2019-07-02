@@ -1,4 +1,4 @@
-package com.lldj.tc.firstpage;
+package com.lldj.tc.match;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FragmentViewPager extends BaseFragment {
+public class Fragment_ViewPager extends BaseFragment {
 
     @BindView(R.id.toolbar_left_menu_iv)
     ImageView toolbarLeftMenuIv;
@@ -31,7 +31,7 @@ public class FragmentViewPager extends BaseFragment {
     TabLayout tabLayout;
     @BindView(R.id.firstpage_viewpager)
     ViewPager firstpageViewpager;
-    private MainPagerAdapter mPagerAdapter;
+    private Adapter_MainPager mPagerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class FragmentViewPager extends BaseFragment {
 
     //初始化viewpager
     public void initViewPager() {
-        mPagerAdapter = new MainPagerAdapter(mContext, mContext.getSupportFragmentManager());
+        mPagerAdapter = new Adapter_MainPager(mContext, mContext.getSupportFragmentManager());
         firstpageViewpager.setAdapter(mPagerAdapter);
         tabLayout.setupWithViewPager(firstpageViewpager);
         definedTablayout();
@@ -123,7 +123,7 @@ public class FragmentViewPager extends BaseFragment {
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEFTMENU);
                 break;
             case R.id.toolbar_gameselect:
-                Toast.makeText(mContext,"---------------test1",Toast.LENGTH_SHORT).show();
+                HandlerInter.getInstance().sendEmptyMessage(HandlerType.GAMESELECT);
                 break;
             case R.id.connectservice:
                 Toast.makeText(mContext,"---------------test2",Toast.LENGTH_SHORT).show();

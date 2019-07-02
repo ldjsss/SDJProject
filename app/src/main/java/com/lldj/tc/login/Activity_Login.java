@@ -13,7 +13,7 @@ import android.widget.VideoView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lldj.tc.MainUIActivity;
+import com.lldj.tc.Activity_MainUI;
 import com.lldj.tc.R;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
@@ -35,14 +35,14 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LoginRecycleView extends BaseActivity implements HandlerInter.HandleMsgListener, LRecyclerView.LScrollListener {
+public class Activity_Login extends BaseActivity implements HandlerInter.HandleMsgListener, LRecyclerView.LScrollListener {
     @BindView(R.id.loginrecycleview)
     LRecyclerView loginrecycleview;
 
     LinearLayoutManager layoutManager;
     @BindView(R.id.videoView)
     VideoView videoView;
-    private LoginCellAdapter mAdapter = null;
+    private Adapter_LoginCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
     private ArrayList<String> mlist = new ArrayList<>();
 
@@ -90,14 +90,14 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
                             ResultsModel ret = (ResultsModel)res.getResult();
                             SharePreUtils.getInstance().setUserInfo(mContext, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername());
                             Toast.makeText(mContext, getResources().getString(R.string.getUseInfoSucc),Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(mContext, MainUIActivity.class));
+                            startActivity(new Intent(mContext, Activity_MainUI.class));
                             finish();
                         }
                     }
                 });
                 break;
             case HandlerType.JUSTLOOK:
-                startActivity(new Intent(mContext, MainUIActivity.class));
+                startActivity(new Intent(mContext, Activity_MainUI.class));
                 finish();
                 break;
             case HandlerType.SHOWTOAST:
@@ -114,7 +114,7 @@ public class LoginRecycleView extends BaseActivity implements HandlerInter.Handl
         ButterKnife.bind(this);
         layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         loginrecycleview.setLayoutManager(layoutManager);
-        mAdapter = new LoginCellAdapter(mContext);
+        mAdapter = new Adapter_LoginCell(mContext);
         lAdapter = new LRecyclerViewAdapter(this, mAdapter);
         loginrecycleview.setAdapter(lAdapter);
         loginrecycleview.setLScrollListener(this);

@@ -39,7 +39,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * description: 注册<p>
  */
-public class RegisterDialog extends Dialog {
+public class DialogRegister extends Dialog {
 
 
     @BindView(R.id.toolbar_back_iv)
@@ -80,7 +80,7 @@ public class RegisterDialog extends Dialog {
     private Disposable getCodeDisposable;
     private int codeTime = 120;
 
-    public RegisterDialog(@NonNull Context context, int themeResId) {
+    public DialogRegister(@NonNull Context context, int themeResId) {
         super(context, themeResId);
 
         View view = View.inflate(context, R.layout.dialog_register, null);

@@ -1,4 +1,4 @@
-package com.lldj.tc.firstpage;
+package com.lldj.tc.match;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -10,13 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
@@ -39,7 +37,7 @@ import butterknife.ButterKnife;
  */
 
 
-public class MatchCellAdapter extends RecyclerView.Adapter {
+public class Adapter_MatchCell extends RecyclerView.Adapter {
 
     private Context mContext;
     private viewHolder mHolder  = null;
@@ -50,7 +48,7 @@ public class MatchCellAdapter extends RecyclerView.Adapter {
 
     Map<String, List<Odds>> mlist = new HashMap<>();
 
-    public MatchCellAdapter(Context mContext) {
+    public Adapter_MatchCell(Context mContext) {
         this.mContext = mContext;
     }
 

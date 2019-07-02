@@ -1,4 +1,4 @@
-package com.lldj.tc.firstpage;
+package com.lldj.tc.match;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -17,13 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainPagerAdapter extends FragmentStatePagerAdapterCompat {
+public class Adapter_MainPager extends FragmentStatePagerAdapterCompat {
     private Resources mResources;
     private String[] mTitle;
     public List<Fragment> fragmentList = new ArrayList<>();  //创建List，用来管理所有要添加到ViewPager的Fragment
 
 
-    public MainPagerAdapter(Context content, FragmentManager fm) {
+    public Adapter_MainPager(Context content, FragmentManager fm) {
         super(fm);
         mResources = content.getResources();
         mTitle = new String[]{mResources.getString(R.string.matchTodayTitle), mResources.getString(R.string.matchCurrentTitle), mResources.getString(R.string.matchFrontTitle), mResources.getString(R.string.matchOverTitle)};
@@ -35,7 +35,7 @@ public class MainPagerAdapter extends FragmentStatePagerAdapterCompat {
     private void setUpFragments() {
         fragmentList.clear();
         for (int i = 0; i < mTitle.length; i++) {
-            MainFragment fragment = new MainFragment();
+            Fragment_Main fragment = new Fragment_Main();
             Bundle bundle = new Bundle();
             bundle.putInt("ARG", i);
             fragment.setArguments(bundle);

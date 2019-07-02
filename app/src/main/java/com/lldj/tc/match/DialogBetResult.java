@@ -1,8 +1,6 @@
-package com.lldj.tc.firstpage;
+package com.lldj.tc.match;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -18,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.view.BaseDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DialogBetResult extends Dialog {
+public class DialogBetResult extends BaseDialog {
 
     private List<BetModel> datas = new ArrayList<>();
 
@@ -51,26 +50,13 @@ public class DialogBetResult extends Dialog {
         window.setAttributes(layoutParams);
     }
 
-    private void fullScreenImmersive(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            view.setSystemUiVisibility(uiOptions);
-        }
-    }
-
     public void showView(List<BetModel> list) {
         int len = list.size() >= 2 ? 2 : 1;
         betlrecycleview.getLayoutParams().height = betlrecycleview.getLayoutParams().height * len;
         betlrecycleview.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        betlrecycleview.setAdapter(new BetResultCellAdapter(getContext(), list));
+        betlrecycleview.setAdapter(new Adapter_BetResultCell(getContext(), list));
         betlrecycleview.setItemAnimator(new DefaultItemAnimator());
 
-        fullScreenImmersive(getWindow().getDecorView());
         show();
     }
 

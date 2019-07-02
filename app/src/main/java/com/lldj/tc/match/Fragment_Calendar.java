@@ -1,16 +1,12 @@
-package com.lldj.tc.firstpage;
+package com.lldj.tc.match;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import androidx.fragment.app.Fragment;
+
 import com.lldj.tc.R;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 
-import butterknife.ButterKnife;
-
-public class CalendarFragment extends BaseFragment {
+public class Fragment_Calendar extends BaseFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

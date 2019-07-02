@@ -1,4 +1,4 @@
-package com.lldj.tc.firstpage;
+package com.lldj.tc.match;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -42,7 +42,7 @@ import butterknife.OnClick;
  */
 
 
-public class MainCellAdapter extends RecyclerView.Adapter {
+public class Adapter_MainCell extends RecyclerView.Adapter {
 
     private Context mContext;
     private List<ResultsModel> mlist = new ArrayList<>();
@@ -52,7 +52,7 @@ public class MainCellAdapter extends RecyclerView.Adapter {
     private int[] winBmp;
     private List<ObData> groups = null;
 
-    public MainCellAdapter(Context mContext, int _viewType) {
+    public Adapter_MainCell(Context mContext, int _viewType) {
         this.mContext = mContext;
         this.ViewType = _viewType;
         statusText = new String[]{"", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.matchCurrentTitle), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};

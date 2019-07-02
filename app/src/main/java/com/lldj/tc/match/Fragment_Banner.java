@@ -1,12 +1,10 @@
-package com.lldj.tc.firstpage;
+package com.lldj.tc.match;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.lldj.tc.R;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
@@ -18,10 +16,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class BannerFragment extends BaseFragment {
+public class Fragment_Banner extends BaseFragment {
 
     Unbinder unbinder;
     @BindView(R.id.tv_banner2)

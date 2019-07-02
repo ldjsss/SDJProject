@@ -5,11 +5,12 @@ import android.os.Message;
 import android.widget.FrameLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
-import com.lldj.tc.firstpage.DialogBet;
-import com.lldj.tc.firstpage.DialogBetBottom;
-import com.lldj.tc.firstpage.DialogSet;
-import com.lldj.tc.firstpage.FragmentViewPager;
-import com.lldj.tc.firstpage.MatchDetailFrament;
+import com.lldj.tc.match.DialogBet;
+import com.lldj.tc.match.DialogBetBottom;
+import com.lldj.tc.match.DialogGameSelect;
+import com.lldj.tc.match.DialogSet;
+import com.lldj.tc.match.Fragment_ViewPager;
+import com.lldj.tc.match.Frament_MatchDetail;
 import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.toolslibrary.event.ObData;
@@ -19,13 +20,13 @@ import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
-import java.util.List;
+
 import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainUIActivity extends BaseActivity implements HandlerInter.HandleMsgListener {
+public class Activity_MainUI extends BaseActivity implements HandlerInter.HandleMsgListener {
 
     @BindView(R.id.mainflayout)
     FrameLayout mainflayout;
@@ -34,7 +35,7 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
 
     private DialogBet dialogBet;
     private DialogBetBottom dialogBetBottom;
-    private MatchDetailFrament detailDialog;
+    private Frament_MatchDetail detailDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,8 +52,8 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
         ButterKnife.bind(this);
 
 //        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);        //禁止手势滑动
-        getSupportFragmentManager().beginTransaction().add(R.id.mainflayout, new FragmentViewPager()).commit();
-        detailDialog = new MatchDetailFrament();
+        getSupportFragmentManager().beginTransaction().add(R.id.mainflayout, new Fragment_ViewPager()).commit();
+        detailDialog = new Frament_MatchDetail();
         getSupportFragmentManager().beginTransaction().replace(R.id.mainright, detailDialog).commit();
 
         registEvent(new Observer<ObData>() {
@@ -95,6 +96,9 @@ public class MainUIActivity extends BaseActivity implements HandlerInter.HandleM
                 dialogBet = null;
                 if(dialogBetBottom != null) dialogBetBottom.dismiss();
                 dialogBetBottom = null;
+                break;
+            case HandlerType.GAMESELECT:
+                new DialogGameSelect(mContext, R.style.DialogTheme).show();
                 break;
         }
     }

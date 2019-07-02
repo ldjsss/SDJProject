@@ -1,8 +1,6 @@
-package com.lldj.tc.firstpage;
+package com.lldj.tc.match;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,9 +16,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
+
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
+import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
@@ -32,19 +31,21 @@ import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
+import com.lldj.tc.toolslibrary.view.BaseDialog;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.view.ViewGroup.FOCUS_BEFORE_DESCENDANTS;
 
-public class DialogBet extends Dialog {
+public class DialogBet extends BaseDialog {
 
     @BindView(R.id.gamebettotalcount)
     TextView gamebettotalcount;
@@ -373,24 +374,6 @@ public class DialogBet extends Dialog {
             }
             update();
         }
-    }
-
-    private void fullScreenImmersive(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            view.setSystemUiVisibility(uiOptions);
-        }
-    }
-
-    @Override
-    public void show() {
-        super.show();
-        fullScreenImmersive(getWindow().getDecorView());
     }
 
 }

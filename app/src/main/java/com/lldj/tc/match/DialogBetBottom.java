@@ -1,8 +1,6 @@
-package com.lldj.tc.firstpage;
+package com.lldj.tc.match;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -28,6 +26,7 @@ import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
+import com.lldj.tc.toolslibrary.view.BaseDialog;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 import org.json.JSONArray;
@@ -36,13 +35,14 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DialogBetBottom extends Dialog {
+public class DialogBetBottom extends BaseDialog {
     @BindView(R.id.betcouttv)
     TextView betcouttv;
     @BindView(R.id.betgetcouttv)
@@ -119,25 +119,6 @@ public class DialogBetBottom extends Dialog {
         betselectcount.setText(selectCount);
     }
 
-
-    private void fullScreenImmersive(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            view.setSystemUiVisibility(uiOptions);
-        }
-    }
-
-    @Override
-    public void show() {
-        super.show();
-        fullScreenImmersive(getWindow().getDecorView());
-    }
-
     @Override
     public void dismiss() {
         super.dismiss();
@@ -187,6 +168,7 @@ public class DialogBetBottom extends Dialog {
                         BetMatchBean res = (BetMatchBean) _res;
                         if(res.getCode() == GlobalVariable.succ){
                             new DialogBetResult(getContext(), R.style.DialogTheme).showView(res.getResult());
+                            removeHaveBet(res.getResult());
                         }
                     }
                 });
@@ -199,5 +181,16 @@ public class DialogBetBottom extends Dialog {
 
                 break;
         }
+    }
+
+    // because this list is used as a reference, it can be removed here and written here for the time being. This usage is not encouraged
+    private void removeHaveBet(List<BetModel> list){
+        if(list == null) return;
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < betList.size(); j++) {
+                if(list.get(i).getOddsid() == betList.get(j).getOddsid()) betList.remove(j);
+            }
+        }
+
     }
 }

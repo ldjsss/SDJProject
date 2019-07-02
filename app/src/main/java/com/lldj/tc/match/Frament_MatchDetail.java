@@ -1,4 +1,4 @@
-package com.lldj.tc.firstpage;
+package com.lldj.tc.match;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.httpMgr.beans.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
@@ -34,14 +33,12 @@ import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
 import com.lldj.tc.toolslibrary.util.AppUtils;
-import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +50,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * description: <p>
  */
-public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LScrollListener{
+public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.LScrollListener{
     @BindView(R.id.toolbar_back_iv)
     ImageView toolbarBackIv;
     @BindView(R.id.toolbar_title_tv)
@@ -98,7 +95,7 @@ public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LS
     private ResultsModel _matchData;
     private int ViewType;
     private int matchId;
-    private MatchCellAdapter mAdapter = null;
+    private Adapter_MatchCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
     private int mTotal = 0;
     private LinearLayoutManager layoutManager;
@@ -256,7 +253,7 @@ public class MatchDetailFrament extends BaseFragment implements LRecyclerView.LS
         if(layoutManager == null) {
             layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
             jingcairecycleview.setLayoutManager(layoutManager);
-            mAdapter = new MatchCellAdapter(getContext());
+            mAdapter = new Adapter_MatchCell(getContext());
             lAdapter = new LRecyclerViewAdapter(getContext(), mAdapter);
             jingcairecycleview.setAdapter(lAdapter);
             jingcairecycleview.setLScrollListener(this);
