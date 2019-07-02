@@ -211,6 +211,17 @@ public class AppUtils {
         return dm.widthPixels;
     }
 
+    /**
+     * 获取屏幕高度
+     *
+     * @param context
+     * @return
+     */
+    public static int getScreenHeight(Context context) {
+        DisplayMetrics dm = getDisplayMetrics(context);
+        return dm.heightPixels;
+    }
+
 
     // 获取资源字符串
     public static String getString(Context context, int strId) {

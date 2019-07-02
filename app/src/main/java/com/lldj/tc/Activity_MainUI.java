@@ -98,7 +98,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                 dialogBetBottom = null;
                 break;
             case HandlerType.GAMESELECT:
-                new DialogGameSelect(mContext, R.style.DialogTheme).show();
+                new DialogGameSelect(mContext, R.style.DialogTheme).showView();
                 break;
         }
     }
