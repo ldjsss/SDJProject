@@ -23,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DialogGameSelect extends BaseDialog {
     List<ResultsModel> list;
@@ -49,12 +50,12 @@ public class DialogGameSelect extends BaseDialog {
     }
 
     public void showView() {
-        HttpMsg.getInstance().sendGetGameList(MatchBean.class, new HttpMsg.Listener(){
+        HttpMsg.getInstance().sendGetGameList(MatchBean.class, new HttpMsg.Listener() {
             @Override
             public void onFinish(Object _res) {
                 MatchBean res = (MatchBean) _res;
-                if(res.getCode() == GlobalVariable.succ){
-                    list = (List<ResultsModel>)res.getResult();
+                if (res.getCode() == GlobalVariable.succ) {
+                    list = (List<ResultsModel>) res.getResult();
 
                     gamerecycleview.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
                     gamerecycleview.setAdapter(new Adapter_GameSelect(getContext(), list));
@@ -64,5 +65,19 @@ public class DialogGameSelect extends BaseDialog {
         });
 
         show();
+    }
+
+    @OnClick({R.id.toolbar_left_menu_iv, R.id.toolbar_gameselect, R.id.connectservice, R.id.tv_selectgame})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_left_menu_iv:
+                break;
+            case R.id.toolbar_gameselect:
+                break;
+            case R.id.connectservice:
+                break;
+            case R.id.tv_selectgame:
+                break;
+        }
     }
 }
