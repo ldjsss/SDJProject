@@ -8,6 +8,12 @@ import java.util.List;
 
 public class ResultsModel {
 
+    public ResultsModel(int id, String name, String logo) {
+        this.id = id;
+        this.name = name;
+        this.logo = logo;
+    }
+
     private String access_token;
     private String expires_in;
     private String openid;
