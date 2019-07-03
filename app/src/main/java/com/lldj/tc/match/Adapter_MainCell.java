@@ -391,19 +391,15 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             }
             if(_select){
                 playname0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
-                playovername0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
             }
             else{
                 playname0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
-                playovername0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
             }
             if(_select1){
                 playname1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
-                playovername1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
             }
             else{
                 playname1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
-                playovername1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
             }
         }
 

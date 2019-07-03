@@ -85,10 +85,10 @@
                 android:id="@+id/gamestatus1"
                 android:singleLine="true"
                 android:textSize="14sp"
-                android:text="未开始"
+                android:text="00:00:00"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="38dp"
-                android:textColor="@color/white" />
+                android:textColor="@color/color_cdc3b3" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -184,27 +184,17 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="10dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/match_status_0"
-                    android:id="@+id/gamestatusicon"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="3dp"/>
+                android:layout_marginBottom="25dp">
 
                 <TextView
-                    android:id="@+id/gamestatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/color_8e6c37"
-                    android:text="@string/matchStatusFront"
-                    android:layout_below="@+id/gamestatusicon"
+                    android:id="@+id/gamestatus"
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    android:text="未开始"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="0dp"
-                    />
+                    android:textColor="@color/white" />
             </RelativeLayout>
         </RelativeLayout>
 

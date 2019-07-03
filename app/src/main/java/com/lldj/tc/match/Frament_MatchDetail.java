@@ -89,8 +89,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     TextView gameplaycount;
     @BindView(R.id.gamestatus1)
     TextView gamestatus1;
-    @BindView(R.id.gamestatusicon)
-    ImageView gamestatusicon;
 
     private ResultsModel _matchData;
     private int ViewType;
@@ -116,7 +114,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
         ButterKnife.bind(this, view);
 
-        if (statusText == null)statusText = new String[]{"", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.matchCurrentTitle), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
+        if (statusText == null)statusText = new String[]{"unknown", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.gameing), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
 
         ImmersionBar.with((Activity)mContext).titleBar(toolbarRootLayout).init();
 
@@ -137,7 +135,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             }
         };
         AppUtils.registEvent(observer);
-
     }
 
     private void fullScreenImmersive(View view) {
@@ -155,6 +152,9 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     public void showView(int ViewType, int matchId, DrawerLayout drawerLayout){
         this.ViewType = ViewType;
         this.matchId  = matchId;
+
+        gamestatus.setVisibility(View.GONE);
+
         onRefresh();
 
         this.drawerLayout = drawerLayout;
@@ -186,14 +186,15 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     playnamecommon1.setText(team1.getTeam_short_name());
                     matchtime.setText(_data.getStart_time());
 
-                    if (status == 2) { //gameing
-                        gamestatusicon.setImageResource(R.mipmap.match_status_1);
-                        startUpdate();
-                    } else { //other
-                        gamestatusicon.setImageResource(R.mipmap.match_status_0);
-                        stopUpdate();
-                    }
+                    if (status == 2) startUpdate();
+                    else stopUpdate();
+
+                    gamestatus1.setText(status == 2 ? getResources().getString(R.string.gameing) : "21:00:00");
+                    matchwin0.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
+                    matchwin1.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
+
                     gamestatus.setText(statusText[status]);
+                    gamestatus.setVisibility(status == 2 ? View.GONE : View.VISIBLE);
 
                     HttpTool.getBitmapUrl(team0.getTeam_logo(), new HttpTool.bmpListener() {
                         @Override

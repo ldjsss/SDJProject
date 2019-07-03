@@ -223,13 +223,12 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                         mlist.add(alist[i]);
                     }
 
-                    tvNoMatch.setVisibility(mlist.size()>0?View.GONE:View.VISIBLE);
-
                     mAdapter.changeData(mlist);
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
                     subjectLrecycleview.refreshComplete(); //刷新完成
                     Toast.makeText(mContext, getResources().getString(R.string.getGameListSucc), Toast.LENGTH_SHORT).show();
                 }
+                tvNoMatch.setVisibility(mlist.size()>0?View.GONE:View.VISIBLE);
             }
         });
     }
