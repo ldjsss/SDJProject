@@ -46,6 +46,7 @@ public class ResultsModel {
     private int play_count;
     private List<Team> team;
     private List<Odds> odds;
+    private String live_url;
 
     private int code;
     private int bet_site;
@@ -175,6 +176,11 @@ public class ResultsModel {
     }
     public void setShort_name(String short_name) {
         this.short_name = short_name;
+    }
+
+    public String getLive_url() { return live_url; }
+    public void setLive_url(String live_url) {
+        this.live_url = live_url;
     }
 
     public int getToday() {

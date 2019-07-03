@@ -3,6 +3,7 @@ package com.lldj.tc.match;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -38,6 +39,7 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
+import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,6 +95,14 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     TextView gamestatus1;
     @BindView(R.id.looklayout)
     RelativeLayout looklayout;
+    @BindView(R.id.imglayout0)
+    RelativeLayout imglayout0;
+    @BindView(R.id.imglayout1)
+    RelativeLayout imglayout1;
+    @BindView(R.id.videocontroller1)
+    fm.jiecao.jcvideoplayer_lib.JCVideoPlayer videocontroller1;
+    @BindView(R.id.vidiolayout)
+    RelativeLayout vidiolayout;
 
     private ResultsModel _matchData;
     private int ViewType;
@@ -275,12 +285,10 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
+            public void onTabUnselected(TabLayout.Tab tab) { }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
+            public void onTabReselected(TabLayout.Tab tab) { }
         });
 
         tabLayout.removeAllTabs();
@@ -290,12 +298,10 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     }
 
     @Override
-    public void onScrollUp() {
-    }
+    public void onScrollUp() { }
 
     @Override
-    public void onScrollDown() {
-    }
+    public void onScrollDown() { }
 
     @Override
     public void onBottom() {
@@ -313,6 +319,9 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     public void onViewClicked() {
         stopUpdate();
         drawerLayout.closeDrawer(Gravity.RIGHT);
+
+
+        
     }
 
     private void startUpdate() {
@@ -347,5 +356,23 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     @OnClick(R.id.lookmatch)
     public void onClick() {
         Toast.makeText(mContext, "去直播", Toast.LENGTH_SHORT).show();
+        playMatch();
+    }
+
+    private void playMatch() {
+        if(_matchData == null) return;
+        if(TextUtils.isEmpty(_matchData.getLive_url())) {
+            ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getResources().getString(R.string.nogamelooking), ToastUtils.LENGTH_SHORT);
+            return;
+        }
+        videocontroller1.setUp(_matchData.getLive_url(), _matchData.getTournament_name() + "/" + _matchData.getMatch_short_name());
+//        videocontroller1.ivThumb.setThumbInCustomProject("视频/MP3缩略图地址");
+        vidiolayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        videocontroller1.releaseAllVideos();
     }
 }

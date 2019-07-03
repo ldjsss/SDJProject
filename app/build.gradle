@@ -66,14 +66,12 @@ dependencies {
     //如果您没有迁移到AndroidX，请使用1.0.0。
     implementation 'com.google.android:flexbox:1.0.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
-    //glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-//    implementation 'jp.wasabeef:glide-transformations:3.3.0'
-    //glide
 
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'androidx.annotation:annotation:1.0.0'
+    implementation 'fm.jiecao:jiecaovideoplayer:2.0'
 
 
 }

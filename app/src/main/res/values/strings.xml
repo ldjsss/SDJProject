@@ -75,6 +75,7 @@
     <string name="allgames">全部</string>
     <string name="noGames">暂无比赛信息</string>
     <string name="gameing">进行中</string>
+    <string name="nogamelooking">当前无直播</string>
 
 
     <string name="input_tel_num">请输入手机号</string>

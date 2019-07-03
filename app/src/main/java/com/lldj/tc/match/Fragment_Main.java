@@ -81,6 +81,9 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                 } else if (data.getKey().equalsIgnoreCase(EventType.SELECTGAMEID)) {
                     onRefresh();
                 }
+                else if (data.getKey().equalsIgnoreCase(EventType.BETDETAILUI)) {
+                    stopUpdate();
+                }
             }
         };
         AppUtils.registEvent(observer);
