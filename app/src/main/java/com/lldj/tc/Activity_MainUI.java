@@ -35,6 +35,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
     private DialogBet dialogBet;
     private DialogBetBottom dialogBetBottom;
     private Frament_MatchDetail detailDialog;
+    private DialogGameSelect dialogGameSelect;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,14 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                 dialogBetBottom = null;
                 break;
             case HandlerType.GAMESELECT:
-                new DialogGameSelect(mContext, R.style.DialogTheme).showView();
+                if(dialogGameSelect != null) return;
+                dialogGameSelect = new DialogGameSelect(mContext, R.style.DialogTheme);
+                dialogGameSelect.showView();
+                break;
+            case HandlerType.HIDGAMESELECT:
+                if(dialogGameSelect == null) return;
+                dialogGameSelect.dismiss();
+                dialogGameSelect = null;
                 break;
         }
     }

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
@@ -34,13 +35,14 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
     private Context context;
     private Adapter_GameSelect.MyViewHolder mHolder  = null;
     private List<ResultsModel> datas = new ArrayList<>();
-    private int selectID = 0;
+    public int selectID = 0;
 
     public Adapter_GameSelect(Context context, List<ResultsModel> datas){
         this.context = context;
         this.datas = datas;
 
         this.datas.add(0, new ResultsModel(0, context.getResources().getString(R.string.allgames), "ssss"));
+        selectID = SharePreUtils.getInstance().getSelectGame(context);
     }
 
     @NonNull

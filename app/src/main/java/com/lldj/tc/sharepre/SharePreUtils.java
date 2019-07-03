@@ -96,6 +96,13 @@ public class SharePreUtils {
         return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.IP, "");
     }
 
+    public static void setSelectGame(Context context, int id) {
+        SharedPreferencesUtil.setValue(context, SharedKeys.SELECTGAME, id);
+    }
+
+    public static int getSelectGame(Context context) {
+        return SharedPreferencesUtil.getSharedPreferences(context).getInt(SharedKeys.SELECTGAME, 0);
+    }
 
 
 

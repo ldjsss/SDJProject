@@ -15,9 +15,13 @@ import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.httpMgr.beans.MatchBean;
+import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.GlobalVariable;
 import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
 import java.util.List;
 import butterknife.BindView;
@@ -25,7 +29,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DialogGameSelect extends BaseDialog {
-    List<ResultsModel> list;
+    private List<ResultsModel> list;
+    private Adapter_GameSelect adapter;
     @BindView(R.id.gamerecycleview)
     RecyclerView gamerecycleview;
 
@@ -56,8 +61,9 @@ public class DialogGameSelect extends BaseDialog {
                 if (res.getCode() == GlobalVariable.succ) {
                     list = (List<ResultsModel>) res.getResult();
 
+                    if(adapter == null) adapter = new Adapter_GameSelect(getContext(), list);
                     gamerecycleview.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-                    gamerecycleview.setAdapter(new Adapter_GameSelect(getContext(), list));
+                    gamerecycleview.setAdapter(adapter);
                     gamerecycleview.setItemAnimator(new DefaultItemAnimator());
                 }
             }
@@ -73,13 +79,15 @@ public class DialogGameSelect extends BaseDialog {
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEFTMENU);
                 break;
             case R.id.toolbar_gameselect:
-                dismiss();
+                HandlerInter.getInstance().sendEmptyMessage(HandlerType.HIDGAMESELECT);
                 break;
             case R.id.connectservice:
                 Toast.makeText(getContext(),"---------------test2",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_selectgame:
-
+                SharePreUtils.getInstance().setSelectGame(getContext(), adapter.selectID);
+                if(adapter != null) AppUtils.dispatchEvent(new ObData(EventType.SELECTGAMEID, adapter.selectID));
+                HandlerInter.getInstance().sendEmptyMessage(HandlerType.HIDGAMESELECT);
                 break;
         }
     }

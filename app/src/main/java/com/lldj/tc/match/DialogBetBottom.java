@@ -186,9 +186,14 @@ public class DialogBetBottom extends BaseDialog {
     // because this list is used as a reference, it can be removed here and written here for the time being. This usage is not encouraged
     private void removeHaveBet(List<BetModel> list){
         if(list == null) return;
+        BetModel betInfo, listInfo;
         for (int i = 0; i < list.size(); i++) {
+            betInfo = list.get(i);
             for (int j = 0; j < betList.size(); j++) {
-                if(list.get(i).getOddsid() == betList.get(j).getOddsid()) betList.remove(j);
+                listInfo = betList.get(j);
+                if(betInfo.getCode() == GlobalVariable.succ && betInfo.getOddsid() == listInfo.getOddsid()) {
+                    betList.remove(j);
+                }
             }
         }
 

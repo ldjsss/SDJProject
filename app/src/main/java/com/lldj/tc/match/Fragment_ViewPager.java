@@ -39,9 +39,7 @@ public class Fragment_ViewPager extends BaseFragment {
     }
 
     @Override
-    public int getContentView() {
-        return R.layout.activity_main_include_layout;
-    }
+    public int getContentView() { return R.layout.activity_main_include_layout; }
 
     @Override
     public void initView(View rootView) {
@@ -57,9 +55,7 @@ public class Fragment_ViewPager extends BaseFragment {
         definedTablayout();
         firstpageViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
             @Override
             public void onPageSelected(int position) {
@@ -68,9 +64,7 @@ public class Fragment_ViewPager extends BaseFragment {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
+            public void onPageScrollStateChanged(int state) { }
         });
     }
 
@@ -80,7 +74,6 @@ public class Fragment_ViewPager extends BaseFragment {
             TabLayout.Tab tab = tabLayout.getTabAt(i);//获得每一个tab
             tab.setCustomView(R.layout.tab_item);//给每一个tab设置view
             if (i == 0) {
-                // 设置第一个tab的TextView是被选择的样式
                 tab.getCustomView().findViewById(R.id.tab_text).setSelected(true);//第一个tab被选中
             }
             TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tab_text);
@@ -92,7 +85,6 @@ public class Fragment_ViewPager extends BaseFragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 tab.getCustomView().findViewById(R.id.tab_text).setSelected(true);
                 firstpageViewpager.setCurrentItem(tab.getPosition(), true);
-
             }
 
             @Override
@@ -101,11 +93,8 @@ public class Fragment_ViewPager extends BaseFragment {
             }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
-
     }
 
     public void updateTitle(int index, String title) {

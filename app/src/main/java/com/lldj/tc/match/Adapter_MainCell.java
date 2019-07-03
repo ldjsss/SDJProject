@@ -159,6 +159,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
         @OnClick({R.id.playname0, R.id.gamebg, R.id.playname1, R.id.playcelllayout0, R.id.playcelllayout1})
         public void onViewClicked(View view) {
+            if(getAdapterPosition() - 1 < 0) return;
             ResultsModel _data = mlist.get(getAdapterPosition() - 1);
             switch (view.getId()) {
                 case R.id.gamebg:

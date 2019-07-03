@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
+import com.lldj.tc.mainUtil.GlobalVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +37,14 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         BetModel _data = datas.get(position);
+        int _code = _data.getCode();
+
         holder.tv_matchname.setText((TextUtils.isEmpty(_data.getName()) ? "unknow": _data.getName()));
         holder.tv_odds.setText(_data.getOdds_value());
         holder.tv_betmoney.setText(_data.getBet_money());
         holder.tv_willget.setText(_data.getBet_win_money());
+
+//        if(_code != GlobalVariable.succ)
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
@@ -14,11 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.beans.MatchBean;
-import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
-import com.lldj.tc.mainUtil.EventType;
-import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
+import com.lldj.tc.httpMgr.beans.MatchBean;
+import com.lldj.tc.mainUtil.EventType;
+import com.lldj.tc.mainUtil.GlobalVariable;
+import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
@@ -31,11 +34,8 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
-import com.lldj.tc.mainUtil.GlobalVariable;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,6 +47,13 @@ import io.reactivex.disposables.Disposable;
  */
 public class Fragment_Main extends BaseFragment implements LRecyclerView.LScrollListener {
 
+    @BindView(R.id.tv_noMatch)
+    TextView tvNoMatch;
+    @BindView(R.id.subject_lrecycleview)
+    LRecyclerView subjectLrecycleview;
+    @BindView(R.id.layout_board)
+    FrameLayout layoutBoard;
+
     private Adapter_MainCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
     private ResultsModel[] alist; //展示数据列表
@@ -57,11 +64,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     private Disposable disposable;
     private int disTime = 4000;
     private Observer<ObData> observer;
-
-    @BindView(R.id.subject_lrecycleview)
-    LRecyclerView subjectLrecycleview;
-    @BindView(R.id.layout_board)
-    FrameLayout layoutBoard;
+    public int selectID = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,9 +75,11 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 if (data.getKey().equalsIgnoreCase(EventType.SELECTGROUPS)) {
-                    if (mAdapter != null){
-                        mAdapter.updateSelect((List<ObData>)data.getValue());
+                    if (mAdapter != null) {
+                        mAdapter.updateSelect((List<ObData>) data.getValue());
                     }
+                } else if (data.getKey().equalsIgnoreCase(EventType.SELECTGAMEID)) {
+                    onRefresh();
                 }
             }
         };
@@ -90,25 +95,24 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     public void initView(View rootView) {
         ButterKnife.bind(this, rootView);
 
-        layoutBoard.setId( 1000 + ViewType); //为解决复用后id重复，动态添加控件时加跑偏
+        layoutBoard.setId(1000 + ViewType); //为解决复用后id重复，动态添加控件时加跑偏
 
-        if(lAdapter == null){
+        if (lAdapter == null) {
             subjectLrecycleview.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
             mAdapter = new Adapter_MainCell(mContext, ViewType);
             lAdapter = new LRecyclerViewAdapter(getActivity(), mAdapter);
             subjectLrecycleview.setAdapter(lAdapter);
             subjectLrecycleview.setLScrollListener(this);
 
-            if (ViewType >1) {
+            if (ViewType > 1) {
                 middleFragment = new Fragment_Calendar();
-            }
-            else{
+            } else {
                 middleFragment = new Fragment_Banner();
             }
 
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add( 1000 + ViewType, middleFragment);
+            transaction.add(1000 + ViewType, middleFragment);
             transaction.commit();
         }
     }
@@ -133,7 +137,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         if (isVisible) {
             Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
             onRefresh();
-            if(ViewType == 1) startUpdate();
+            if (ViewType == 1) startUpdate();
         } else {
             Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
             stopUpdate();
@@ -141,10 +145,12 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     }
 
     @Override
-    public void onScrollUp() { }
+    public void onScrollUp() {
+    }
 
     @Override
-    public void onScrollDown() { }
+    public void onScrollDown() {
+    }
 
     @Override
     public void onBottom() {
@@ -162,7 +168,8 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     }
 
     @Override
-    public void onScrolled(int distanceX, int distanceY) { }
+    public void onScrolled(int distanceX, int distanceY) {
+    }
 
     public void loadData() {
         int mLen = mlist.size();
@@ -185,18 +192,25 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 //        Log.e("currentPosition", "selectView currentPosition===" + position);
     }
 
-    private void getMatchData(){
-        HttpMsg.getInstance().sendGetMatchList(ViewType + 1, MatchBean.class, new HttpMsg.Listener(){
+    private void getMatchData() {
+        HttpMsg.getInstance().sendGetMatchList(ViewType + 1, MatchBean.class, new HttpMsg.Listener() {
             @Override
             public void onFinish(Object _res) {
                 MatchBean res = (MatchBean) _res;
-                if(res.getCode() == GlobalVariable.succ){
+                if (res.getCode() == GlobalVariable.succ) {
                     mlist.clear();
-                    List<ResultsModel> _list = (List<ResultsModel>)res.getResult();
+                    List<ResultsModel> _list = (List<ResultsModel>) res.getResult();
 
-                    Collections.sort(_list, (Comparator<Object>) (o1, o2) -> {
-                        return ((ResultsModel) o1).getStart_time().compareTo(((ResultsModel) o2).getStart_time());
-                    });
+                    selectID = SharePreUtils.getInstance().getSelectGame(getContext());
+                    if (selectID != 0) {
+                        for (int i = _list.size() - 1; i >= 0; i--) {
+                            if (_list.get(i).getGame_id() != selectID) _list.remove(i);
+                        }
+                    }
+
+//                    Collections.sort(_list, (Comparator<Object>) (o1, o2) -> {
+//                        return ((ResultsModel) o1).getStart_time().compareTo(((ResultsModel) o2).getStart_time());
+//                    });
 
                     alist = new ResultsModel[_list.size()];
 
@@ -209,16 +223,18 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                         mlist.add(alist[i]);
                     }
 
+                    tvNoMatch.setVisibility(mlist.size()>0?View.GONE:View.VISIBLE);
+
                     mAdapter.changeData(mlist);
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
                     subjectLrecycleview.refreshComplete(); //刷新完成
-                    Toast.makeText(mContext, getResources().getString(R.string.getGameListSucc),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, getResources().getString(R.string.getGameListSucc), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void startUpdate(){
+    private void startUpdate() {
         if (disposable != null) return;
 
         disposable = RxTimerUtilPro.interval(disTime, new RxTimerUtilPro.IRxNext() {
@@ -228,11 +244,12 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
             }
 
             @Override
-            public void onComplete() { }
+            public void onComplete() {
+            }
         });
     }
 
-    private void stopUpdate(){
+    private void stopUpdate() {
         RxTimerUtilPro.cancel(disposable);
         disposable = null;
     }

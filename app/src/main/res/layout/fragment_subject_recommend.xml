@@ -14,12 +14,26 @@
         android:id="@+id/layout_board">
     </FrameLayout>
 
-    <com.lldj.tc.toolslibrary.recycleview.LRecyclerView
-        android:id="@+id/subject_lrecycleview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:overScrollMode="never" />
+        android:layout_height="match_parent">
+        <com.lldj.tc.toolslibrary.recycleview.LRecyclerView
+            android:id="@+id/subject_lrecycleview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:overScrollMode="never" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_noMatch"
+            android:text="@string/noGames"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
 </LinearLayout>

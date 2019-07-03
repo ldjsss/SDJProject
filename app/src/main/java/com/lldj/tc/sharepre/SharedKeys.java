@@ -17,7 +17,7 @@ public class SharedKeys {
     public static final String PHONE = "phone";
     //
     public static final String MONEY = "money";
-    //科室
+    //
     public static final String TOKEN = "token";
     //
     public static final String DEVICES = "devices";
@@ -25,6 +25,8 @@ public class SharedKeys {
     public static final String IP = "ip";
     //
     public static final String CHANNEL= "channel";
-    //认证 临时id num
+    //
     public static final String VERIFY_TEMP_ID_NUM= "verify_temp_id_num";
+
+    public static final String SELECTGAME = "select_game";
 }
