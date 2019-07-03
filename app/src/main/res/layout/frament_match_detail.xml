@@ -163,7 +163,7 @@
                 android:textSize="30sp"
                 android:text="0"
                 android:layout_toRightOf="@id/imglayout0"
-                android:layout_marginLeft="-20dp"
+                android:layout_marginLeft="-17dp"
                 android:layout_marginTop="28dp"
                 android:textColor="@color/white" />
 
@@ -175,7 +175,7 @@
                 android:textSize="30sp"
                 android:text="0"
                 android:layout_toLeftOf="@id/imglayout1"
-                android:layout_marginRight="-20dp"
+                android:layout_marginRight="-17dp"
                 android:layout_marginTop="28dp"
                 android:textColor="@color/white" />
 
@@ -192,10 +192,47 @@
                     android:id="@+id/gamestatus"
                     android:singleLine="true"
                     android:textSize="14sp"
-                    android:text="未开始"
+                    android:text="@string/matchStatusFront"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/white" />
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:layout_height="28dp"
+                android:id="@+id/looklayout"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="18dp"
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/lookmatch"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/look_match_bt"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/arrowplay"
+                    android:textSize="20sp"
+                    android:text="▶"
+                    android:textColor="#78CFFD"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:singleLine="true"
+                    android:text="直播"
+                    android:gravity="center"
+                    android:textColor="#78CFFD"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+
         </RelativeLayout>
 
     </LinearLayout>

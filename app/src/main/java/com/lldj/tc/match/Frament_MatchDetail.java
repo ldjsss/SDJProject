@@ -10,17 +10,19 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.JsonBean;
 import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Team;
+import com.lldj.tc.httpMgr.beans.JsonBean;
 import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.GlobalVariable;
 import com.lldj.tc.toolslibrary.event.ObData;
@@ -50,7 +52,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * description: <p>
  */
-public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.LScrollListener{
+public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.LScrollListener {
     @BindView(R.id.toolbar_back_iv)
     ImageView toolbarBackIv;
     @BindView(R.id.toolbar_title_tv)
@@ -89,6 +91,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     TextView gameplaycount;
     @BindView(R.id.gamestatus1)
     TextView gamestatus1;
+    @BindView(R.id.looklayout)
+    RelativeLayout looklayout;
 
     private ResultsModel _matchData;
     private int ViewType;
@@ -114,9 +118,10 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
         ButterKnife.bind(this, view);
 
-        if (statusText == null)statusText = new String[]{"unknown", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.gameing), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
+        if (statusText == null)
+            statusText = new String[]{"unknown", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.gameing), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
 
-        ImmersionBar.with((Activity)mContext).titleBar(toolbarRootLayout).init();
+        ImmersionBar.with((Activity) mContext).titleBar(toolbarRootLayout).init();
 
         toolbarTitleTv.setText(mContext.getString(R.string.matchDetialTitle));
 
@@ -128,8 +133,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 if (data.getKey().equalsIgnoreCase(EventType.SELECTGROUPS)) {
-                    if (mAdapter != null){
-                        mAdapter.updateSelect((List<ObData>)data.getValue());
+                    if (mAdapter != null) {
+                        mAdapter.updateSelect((List<ObData>) data.getValue());
                     }
                 }
             }
@@ -149,9 +154,9 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         }
     }
 
-    public void showView(int ViewType, int matchId, DrawerLayout drawerLayout){
+    public void showView(int ViewType, int matchId, DrawerLayout drawerLayout) {
         this.ViewType = ViewType;
-        this.matchId  = matchId;
+        this.matchId = matchId;
 
         gamestatus.setVisibility(View.GONE);
 
@@ -164,19 +169,19 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
     @Override
     public void onRefresh() {
-        HttpMsg.getInstance().sendGetMatchDetial(matchId, JsonBean.class, new HttpMsg.Listener(){
+        HttpMsg.getInstance().sendGetMatchDetial(matchId, JsonBean.class, new HttpMsg.Listener() {
             @Override
             public void onFinish(Object _res) {
                 JsonBean res = (JsonBean) _res;
-                if(res.getCode() == GlobalVariable.succ){
-                    _matchData = (ResultsModel)res.getResult();
+                if (res.getCode() == GlobalVariable.succ) {
+                    _matchData = (ResultsModel) res.getResult();
 
                     ResultsModel _data = _matchData;
                     if (_data == null) return;
 
                     Team team0 = _data.getTeam() != null ? _data.getTeam().get(0) : null;
                     Team team1 = _data.getTeam() != null ? _data.getTeam().get(1) : null;
-                    List<Odds> odds = _data.getOdds() != null ? (List<Odds>)_data.getOdds() : null;
+                    List<Odds> odds = _data.getOdds() != null ? (List<Odds>) _data.getOdds() : null;
                     int status = _data.getStatus();
 
                     gamename.setText(_data.getTournament_name());
@@ -195,6 +200,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
                     gamestatus.setText(statusText[status]);
                     gamestatus.setVisibility(status == 2 ? View.GONE : View.VISIBLE);
+                    looklayout.setVisibility(status == 2 ? View.VISIBLE : View.GONE);
+
 
                     HttpTool.getBitmapUrl(team0.getTeam_logo(), new HttpTool.bmpListener() {
                         @Override
@@ -213,15 +220,15 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 //                    Log.w("-----detail data = ", _data.toString());
 
                     Map<String, List<Odds>> oddMap = new HashMap<>();
-                    if(odds != null) {
+                    if (odds != null) {
                         ArrayList<String> keys = new ArrayList<>();
                         mTotal = 0;
 
                         for (int i = 0; i < odds.size(); i++) {
-                            Odds _odd   = odds.get(i);
+                            Odds _odd = odds.get(i);
                             String _key = _odd.getMatch_stage();
                             List<Odds> itemList = oddMap.get(_key);
-                            if(itemList == null){
+                            if (itemList == null) {
                                 itemList = new ArrayList<>();
                                 keys.add(_key);
                             }
@@ -234,13 +241,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                         initList(oddMap, keys);
                     }
 
-                    if (mAdapter != null){
+                    if (mAdapter != null) {
                         mAdapter.changeData(oddMap, _data);
                         RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
                         jingcairecycleview.refreshComplete();
                     }
-                }
-                else{
+                } else {
                     RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
                     jingcairecycleview.refreshComplete();
                 }
@@ -249,9 +255,9 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         });
     }
 
-    private void initList(Map<String, List<Odds>> oddMap, ArrayList<String> keys){
+    private void initList(Map<String, List<Odds>> oddMap, ArrayList<String> keys) {
 
-        if(layoutManager == null) {
+        if (layoutManager == null) {
             layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
             jingcairecycleview.setLayoutManager(layoutManager);
             mAdapter = new Adapter_MatchCell(getContext());
@@ -269,9 +275,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) { }
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
             @Override
-            public void onTabReselected(TabLayout.Tab tab) { }
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
         });
 
         tabLayout.removeAllTabs();
@@ -281,10 +290,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     }
 
     @Override
-    public void onScrollUp() { }
+    public void onScrollUp() {
+    }
 
     @Override
-    public void onScrollDown() { }
+    public void onScrollDown() {
+    }
 
     @Override
     public void onBottom() {
@@ -295,7 +306,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     public void onScrolled(int distanceX, int distanceY) {
         int firstVisible = layoutManager.findFirstVisibleItemPosition();
         Log.e("firstVisible", firstVisible + "");
-       if(tabLayout != null) tabLayout.setScrollPosition(firstVisible - 1, 0 ,false);
+        if (tabLayout != null) tabLayout.setScrollPosition(firstVisible - 1, 0, false);
     }
 
     @OnClick(R.id.toolbar_back_iv)
@@ -304,7 +315,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         drawerLayout.closeDrawer(Gravity.RIGHT);
     }
 
-    private void startUpdate(){
+    private void startUpdate() {
         if (disposable != null) return;
 
         disposable = RxTimerUtilPro.interval(disTime, new RxTimerUtilPro.IRxNext() {
@@ -314,11 +325,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             }
 
             @Override
-            public void onComplete() { }
+            public void onComplete() {
+            }
         });
     }
 
-    private void stopUpdate(){
+    private void stopUpdate() {
         RxTimerUtilPro.cancel(disposable);
         disposable = null;
     }
@@ -332,4 +344,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         observer = null;
     }
 
+    @OnClick(R.id.lookmatch)
+    public void onClick() {
+        Toast.makeText(mContext, "去直播", Toast.LENGTH_SHORT).show();
+    }
 }
