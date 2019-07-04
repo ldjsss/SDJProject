@@ -74,14 +74,15 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         observer = new Observer<ObData>() {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
-                if (data.getKey().equalsIgnoreCase(EventType.SELECTGROUPS)) {
+                String _key = data.getKey();
+                if (_key.equalsIgnoreCase(EventType.SELECTGROUPS)) {
                     if (mAdapter != null) {
                         mAdapter.updateSelect((List<ObData>) data.getValue());
                     }
-                } else if (data.getKey().equalsIgnoreCase(EventType.SELECTGAMEID)) {
+                } else if (_key.equalsIgnoreCase(EventType.SELECTGAMEID) || _key.equalsIgnoreCase(EventType.DETIALHIDE)) {
                     onRefresh();
                 }
-                else if (data.getKey().equalsIgnoreCase(EventType.BETDETAILUI)) {
+                else if (_key.equalsIgnoreCase(EventType.BETDETAILUI)) {
                     stopUpdate();
                 }
             }
@@ -132,6 +133,8 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         Clog.e("onRefresh", "onRefresh = " + ViewType);
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
         getMatchData();
+
+        if (ViewType <= 1) startUpdate();
     }
 
     @Override
@@ -140,7 +143,6 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         if (isVisible) {
             Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
             onRefresh();
-            if (ViewType == 1) startUpdate();
         } else {
             Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
             stopUpdate();

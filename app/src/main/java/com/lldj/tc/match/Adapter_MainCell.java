@@ -219,12 +219,12 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             gamename.setText(_data.getTournament_name());
             gamenamecount.setText("/ " + _data.getRound());
             gameplaycount.setText("+" + _data.getPlay_count());
-            playnamecommon0.setText(team0.getTeam_short_name());
-            playnamecommon1.setText(team1.getTeam_short_name());
-            playovername0.setText(team0.getTeam_short_name());
-            playovername1.setText(team1.getTeam_short_name());
-            playname0.setText(team0.getTeam_short_name());
-            playname1.setText(team1.getTeam_short_name());
+            playnamecommon0.setText(team0.getTeam_name());
+            playnamecommon1.setText(team1.getTeam_name());
+            playovername0.setText(team0.getTeam_name());
+            playovername1.setText(team1.getTeam_name());
+            playname0.setText(team0.getTeam_name());
+            playname1.setText(team1.getTeam_name());
             gametime.setText(_data.getStart_time());
 
             setSelect(odds);

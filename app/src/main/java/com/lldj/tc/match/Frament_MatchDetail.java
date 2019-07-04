@@ -320,8 +320,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         stopUpdate();
         drawerLayout.closeDrawer(Gravity.RIGHT);
 
-
-        
+        AppUtils.dispatchEvent(new ObData(EventType.DETIALHIDE, null));
     }
 
     private void startUpdate() {
@@ -355,7 +354,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
     @OnClick(R.id.lookmatch)
     public void onClick() {
-        Toast.makeText(mContext, "去直播", Toast.LENGTH_SHORT).show();
         playMatch();
     }
 
