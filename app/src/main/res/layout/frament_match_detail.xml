@@ -239,17 +239,9 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <include layout="@layout/mediolayout"
             android:id="@+id/vidiolayout"
-            android:visibility="gone">
-            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
-                android:id="@+id/videocontroller1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </RelativeLayout>
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <LinearLayout

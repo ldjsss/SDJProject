@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/gametime"
             android:singleLine="true"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:text="13:00"
             android:layout_centerInParent="true"
             android:textColor="@color/white" />
@@ -95,19 +95,33 @@
             android:layout_centerInParent="true"
             android:textColor="@color/white" />
 
-        <ImageView
-            android:id="@+id/imgplayicon0"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:src="@mipmap/game_arena"
-            android:layout_marginStart="40dp"/>
-        <ImageView
-            android:id="@+id/imgplayicon1"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:src="@mipmap/game_arena"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="40dp"/>
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:id="@+id/imglayout0">
+            <ImageView
+                android:id="@+id/imgplayicon0"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/game_arena"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:id="@+id/imglayout1"
+            android:layout_alignParentEnd="true">
+            <ImageView
+                android:id="@+id/imgplayicon1"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/game_arena"/>
+
+        </RelativeLayout>
     </RelativeLayout>
 
     <LinearLayout

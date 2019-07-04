@@ -43,7 +43,7 @@ public class HttpTool {
 
 
     public static void sendGet(final String url, final msgListener listener) {
-        Clog.e("url", url);
+//        Clog.e("url", url);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -75,7 +75,7 @@ public class HttpTool {
                             buffer.append(temp);
                             buffer.append("\n");
                         }
-                        Log.w("HTTP", "buffer" + buffer.toString());
+//                        Log.w("HTTP", "buffer" + buffer.toString());
 
                         in.close();
                     }
@@ -117,7 +117,6 @@ public class HttpTool {
                 try {
                     URL _url=new URL(url);
                     httpURLConnection= (HttpURLConnection) _url.openConnection();
-
                     httpURLConnection.setConnectTimeout(timeout);//设置连接超时时间，单位ms
                     httpURLConnection.setReadTimeout(timeout);//设置读取超时时间，单位ms
                     httpURLConnection.setDoOutput(true);//设置是否向httpURLConnection输出，因为post请求参数要放在http正文内，所以要设置为true
@@ -180,8 +179,8 @@ public class HttpTool {
             @Override
             public void run() {
                 HttpURLConnection httpURLConnection = null;
-                System.out.println("url:" + url);
-                System.out.println("params:" + params);
+//                System.out.println("url:" + url);
+//                System.out.println("params:" + params);
                 try {
                     URL _url = new URL(url);
                     httpURLConnection = (HttpURLConnection) _url.openConnection();
@@ -258,8 +257,8 @@ public class HttpTool {
                     }
                     sb.substring(0, sb.length() - 1);
                 }
-                System.out.println("send_url:" + url);
-                System.out.println("send_data:" + sb.toString());
+//                System.out.println("send_url:" + url);
+//                System.out.println("send_data:" + sb.toString());
 
                 HttpURLConnection con = null;
 
@@ -300,7 +299,7 @@ public class HttpTool {
                             buffer.append(temp);
                             buffer.append("\n");
                         }
-                        Log.w("HTTP", "buffer" + buffer.toString());
+//                        Log.w("HTTP", "buffer" + buffer.toString());
                         in.close();
                     }
                     con.disconnect();

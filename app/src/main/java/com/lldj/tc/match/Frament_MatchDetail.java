@@ -11,7 +11,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,6 +48,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -99,10 +100,14 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     RelativeLayout imglayout0;
     @BindView(R.id.imglayout1)
     RelativeLayout imglayout1;
-    @BindView(R.id.videocontroller1)
-    fm.jiecao.jcvideoplayer_lib.JCVideoPlayer videocontroller1;
     @BindView(R.id.vidiolayout)
     RelativeLayout vidiolayout;
+    @BindView(R.id.lookmatch)
+    TextView lookmatch;
+    @BindView(R.id.arrowplay)
+    TextView arrowplay;
+    @BindView(R.id.videoplayer)
+    JZVideoPlayerStandard videoplayer;
 
     private ResultsModel _matchData;
     private int ViewType;
@@ -164,16 +169,13 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         }
     }
 
-    public void showView(int ViewType, int matchId, DrawerLayout drawerLayout) {
+    public void showView(int ViewType, int matchId) {
         this.ViewType = ViewType;
         this.matchId = matchId;
 
-        gamestatus.setVisibility(View.GONE);
+//        gamestatus.setVisibility(View.GONE);
 
         onRefresh();
-
-        this.drawerLayout = drawerLayout;
-        drawerLayout.openDrawer(Gravity.RIGHT);
 
     }
 
@@ -285,10 +287,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) { }
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) { }
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
         });
 
         tabLayout.removeAllTabs();
@@ -298,10 +302,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     }
 
     @Override
-    public void onScrollUp() { }
+    public void onScrollUp() {
+    }
 
     @Override
-    public void onScrollDown() { }
+    public void onScrollDown() {
+    }
 
     @Override
     public void onBottom() {
@@ -313,14 +319,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         int firstVisible = layoutManager.findFirstVisibleItemPosition();
         Log.e("firstVisible", firstVisible + "");
         if (tabLayout != null) tabLayout.setScrollPosition(firstVisible - 1, 0, false);
-    }
-
-    @OnClick(R.id.toolbar_back_iv)
-    public void onViewClicked() {
-        stopUpdate();
-        drawerLayout.closeDrawer(Gravity.RIGHT);
-
-        AppUtils.dispatchEvent(new ObData(EventType.DETIALHIDE, null));
     }
 
     private void startUpdate() {
@@ -352,25 +350,62 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         observer = null;
     }
 
-    @OnClick(R.id.lookmatch)
-    public void onClick() {
-        playMatch();
-    }
-
     private void playMatch() {
-        if(_matchData == null) return;
-        if(TextUtils.isEmpty(_matchData.getLive_url())) {
+        if (_matchData == null) return;
+        if (TextUtils.isEmpty(_matchData.getLive_url())) {
             ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getResources().getString(R.string.nogamelooking), ToastUtils.LENGTH_SHORT);
             return;
         }
-        videocontroller1.setUp(_matchData.getLive_url(), _matchData.getTournament_name() + "/" + _matchData.getMatch_short_name());
-//        videocontroller1.ivThumb.setThumbInCustomProject("视频/MP3缩略图地址");
+        System.out.println("url:" + _matchData.getLive_url());
+//        String s3 = "http://v.yongjiujiexi.com/20180304/B0cYHQvY/index.m3u8";
+//        videoplayer.setUp(s3, JZVideoPlayerStandard.NORMAL_ORIENTATION, _matchData.getTournament_name() + "/" + _matchData.getMatch_short_name());
+        videoplayer.setUp(_matchData.getLive_url(), JZVideoPlayerStandard.NORMAL_ORIENTATION, _matchData.getTournament_name() + "/" + _matchData.getMatch_short_name());
+//        videoplayer.fullscreenButton.setVisibility(View.GONE);
+        videoplayer.progressBar.setVisibility(View.GONE);
+        videoplayer.currentTimeTextView.setVisibility(View.GONE);
+        videoplayer.totalTimeTextView.setVisibility(View.GONE);
+        videoplayer.tinyBackImageView.setVisibility(View.GONE);
+        videoplayer.batteryLevel.setVisibility(View.GONE);
+        videoplayer.startButton.setVisibility(View.GONE);
+        videoplayer.setVideoImageDisplayType(JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
+        videoplayer.TOOL_BAR_EXIST = false;
+        videoplayer.ACTION_BAR_EXIST = false;
+        videoplayer.startVideo();
+
+        //        videocontroller1.ivThumb.setThumbInCustomProject("视频/MP3缩略图地址");
+
+
         vidiolayout.setVisibility(View.VISIBLE);
     }
+
 
     @Override
     public void onPause() {
         super.onPause();
-        videocontroller1.releaseAllVideos();
+        videoplayer.releaseAllVideos();
+    }
+
+    @OnClick({R.id.medioclose, R.id.lookmatch, R.id.toolbar_back_iv})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.medioclose:
+                videoplayer.releaseAllVideos();
+                vidiolayout.setVisibility(View.GONE);
+                break;
+            case R.id.lookmatch:
+                playMatch();
+                break;
+            case R.id.toolbar_back_iv:
+                AppUtils.dispatchEvent(new ObData(EventType.DETIALHIDE, null));
+                break;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopUpdate();
+        videoplayer.releaseAllVideos();
+        vidiolayout.setVisibility(View.GONE);
     }
 }
