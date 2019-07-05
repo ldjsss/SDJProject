@@ -37,6 +37,8 @@ import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -214,9 +216,9 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                         }
                     }
 
-//                    Collections.sort(_list, (Comparator<Object>) (o1, o2) -> {
-//                        return ((ResultsModel) o1).getStart_time().compareTo(((ResultsModel) o2).getStart_time());
-//                    });
+                    Collections.sort(_list, (Comparator<ResultsModel>) (o1, o2) -> {
+                        return (int)(o1.getStart_time_ms() - o2.getStart_time_ms());
+                    });
 
                     alist = new ResultsModel[_list.size()];
 
@@ -232,7 +234,6 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     mAdapter.changeData(mlist);
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
                     subjectLrecycleview.refreshComplete(); //刷新完成
-                    Toast.makeText(mContext, getResources().getString(R.string.getGameListSucc), Toast.LENGTH_SHORT).show();
                 }
                 tvNoMatch.setVisibility(mlist.size()>0?View.GONE:View.VISIBLE);
             }

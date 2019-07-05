@@ -553,6 +553,18 @@ public class AppUtils {
         return sdf.format(new Date(time));
     }
 
+    public static String getFormatTime4(long time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        if ((time + "").length() == 10) time *= 1000;
+        return sdf.format(new Date(time));
+    }
+
+    public static String getFormatTime5(long time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        if ((time + "").length() == 10) time *= 1000;
+        return sdf.format(new Date(time));
+    }
+
     /*
      * 将时间戳转换为时间
      */

@@ -6,7 +6,7 @@ import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
 import java.util.List;
 
 
-public class ResultsModel {
+public class ResultsModel{
 
     public ResultsModel(int id, String name, String logo) {
         this.id = id;
@@ -40,6 +40,24 @@ public class ResultsModel {
     private String match_short_name;
     private String start_time;
     private String end_time;
+    private long start_time_ms;
+    private long end_time_ms;
+    public long getStart_time_ms() {
+        return start_time_ms;
+    }
+
+    public void setStart_time_ms(long start_time_ms) {
+        this.start_time_ms = start_time_ms;
+    }
+
+    public long getEnd_time_ms() {
+        return end_time_ms;
+    }
+
+    public void setEnd_time_ms(long end_time_ms) {
+        this.end_time_ms = end_time_ms;
+    }
+
     private String round;
     private String tournament_name;
     private String tournament_short_name;
@@ -310,7 +328,6 @@ public class ResultsModel {
         this.odds = odds;
     }
 
-
     @Override
     public String toString() {
         return "ResultsModel{" +
@@ -335,17 +352,19 @@ public class ResultsModel {
                 ", match_short_name='" + match_short_name + '\'' +
                 ", start_time='" + start_time + '\'' +
                 ", end_time='" + end_time + '\'' +
+                ", start_time_ms='" + start_time_ms + '\'' +
+                ", end_time_ms='" + end_time_ms + '\'' +
                 ", round='" + round + '\'' +
                 ", tournament_name='" + tournament_name + '\'' +
                 ", tournament_short_name='" + tournament_short_name + '\'' +
                 ", play_count=" + play_count +
                 ", team=" + team +
                 ", odds=" + odds +
+                ", live_url='" + live_url + '\'' +
                 ", code=" + code +
                 ", bet_site=" + bet_site +
                 ", bet_money='" + bet_money + '\'' +
                 ", bet_win_money='" + bet_win_money + '\'' +
-                ", odds='" + odds + '\'' +
                 ", odds_id='" + odds_id + '\'' +
                 '}';
     }

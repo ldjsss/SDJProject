@@ -94,15 +94,11 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
             for (int i = 0; i < 3; i++) {
                 int _len = pos*3+i;
 
-                Log.w("-----datas.size() = ", datas.size() + "");
-                Log.w("_len = ", _len + "");
                 if(datas.size() > _len){
-                    Log.w("sssssss ", "have");
                     _data = datas.get(_len);
                     layout[i].setVisibility(_data == null?View.GONE:View.VISIBLE);
                 }
                 else{
-                    Log.w("nononon ", "nonono");
                     layout[i].setVisibility(View.GONE);
                     layout[i].setTag("-1");
                     _data = null;

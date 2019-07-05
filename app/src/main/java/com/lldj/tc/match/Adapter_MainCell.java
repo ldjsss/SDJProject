@@ -225,7 +225,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             playovername1.setText(team1.getTeam_name());
             playname0.setText(team0.getTeam_name());
             playname1.setText(team1.getTeam_name());
-            gametime.setText(_data.getStart_time());
+            gametime.setText(AppUtils.getFormatTime5(_data.getStart_time_ms()));
 
             setSelect(odds);
 

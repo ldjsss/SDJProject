@@ -132,8 +132,13 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fullScreenImmersive(mContext.getWindow().getDecorView());
-
+        AppUtils.fullScreenImmersive(mContext.getWindow().getDecorView());
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
     }
 
     @Override
@@ -161,18 +166,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             }
         };
         AppUtils.registEvent(observer);
-    }
-
-    private void fullScreenImmersive(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            view.setSystemUiVisibility(uiOptions);
-        }
     }
 
     public void showView(int ViewType, int matchId) {
@@ -207,12 +200,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     gameplaycount.setText("+" + _data.getPlay_count());
                     playnamecommon0.setText(team0.getTeam_short_name());
                     playnamecommon1.setText(team1.getTeam_short_name());
-                    matchtime.setText(_data.getStart_time());
+                    matchtime.setText(AppUtils.getFormatTime2(_data.getStart_time_ms()));
 
                     if (status == 2) startUpdate();
                     else stopUpdate();
 
-                    gamestatus1.setText(status == 2 ? getResources().getString(R.string.gameing) : "21:00:00");
+                    gamestatus1.setText(status == 2 ? getResources().getString(R.string.gameing) : AppUtils.getFormatTime4(_data.getStart_time_ms()));
                     matchwin0.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
                     matchwin1.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
 
