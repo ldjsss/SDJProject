@@ -3,6 +3,7 @@ package com.lldj.tc.match;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -129,8 +130,14 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     }
 
     @Override
-    public void initView(View view) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fullScreenImmersive(mContext.getWindow().getDecorView());
 
+    }
+
+    @Override
+    public void initView(View view) {
         ButterKnife.bind(this, view);
 
         if (statusText == null)
@@ -141,7 +148,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         toolbarTitleTv.setText(mContext.getString(R.string.matchDetialTitle));
 
         mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
-        fullScreenImmersive(mContext.getWindow().getDecorView());
         mContext.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
 
         observer = new Observer<ObData>() {
@@ -341,15 +347,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         disposable = null;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        stopUpdate();
-
-        AppUtils.unregisterEvent(observer);
-        observer = null;
-    }
-
     private void playMatch() {
         if (_matchData == null) return;
         if (TextUtils.isEmpty(_matchData.getLive_url())) {
@@ -405,6 +402,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     public void onDestroy() {
         super.onDestroy();
         stopUpdate();
+        AppUtils.unregisterEvent(observer);
+        observer = null;
         videoplayer.releaseAllVideos();
         vidiolayout.setVisibility(View.GONE);
     }

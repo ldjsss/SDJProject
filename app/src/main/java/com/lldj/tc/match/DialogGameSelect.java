@@ -1,6 +1,7 @@
 package com.lldj.tc.match;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,7 @@ public class DialogGameSelect extends BaseDialog {
                 MatchBean res = (MatchBean) _res;
                 if (res.getCode() == GlobalVariable.succ) {
                     list = (List<ResultsModel>) res.getResult();
+                    list.add(0, new ResultsModel(0, getContext().getResources().getString(R.string.allgames), "ssss"));
 
                     if(adapter == null) adapter = new Adapter_GameSelect(getContext(), list);
                     gamerecycleview.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));

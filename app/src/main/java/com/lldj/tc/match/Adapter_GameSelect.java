@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
+import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
+import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -36,12 +41,12 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
     private Adapter_GameSelect.MyViewHolder mHolder  = null;
     private List<ResultsModel> datas = new ArrayList<>();
     public int selectID = 0;
+    private boolean frashLine = false;
 
     public Adapter_GameSelect(Context context, List<ResultsModel> datas){
         this.context = context;
-        this.datas = datas;
+        this.datas.addAll(datas);
 
-        this.datas.add(0, new ResultsModel(0, context.getResources().getString(R.string.allgames), "ssss"));
         selectID = SharePreUtils.getInstance().getSelectGame(context);
     }
 
@@ -61,7 +66,7 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
 
         this.mHolder = (Adapter_GameSelect.MyViewHolder) holder;
 
-        this.mHolder.bottomCommon();
+        this.mHolder.bottomCommon(position);
 
     }
 
@@ -84,22 +89,26 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
             }
         }
 
-        public void bottomCommon() {
-            int pos = getAdapterPosition();
+        public void bottomCommon(int pos) {
+            ResultsModel _data = null;
             for (int i = 0; i < 3; i++) {
                 int _len = pos*3+i;
-                ResultsModel _data = null;
 
-                if(datas.size() >= _len){
+                Log.w("-----datas.size() = ", datas.size() + "");
+                Log.w("_len = ", _len + "");
+                if(datas.size() > _len){
+                    Log.w("sssssss ", "have");
                     _data = datas.get(_len);
-                    layout[i].setVisibility(View.VISIBLE);
+                    layout[i].setVisibility(_data == null?View.GONE:View.VISIBLE);
                 }
                 else{
+                    Log.w("nononon ", "nonono");
                     layout[i].setVisibility(View.GONE);
-                    return;
+                    layout[i].setTag("-1");
+                    _data = null;
                 }
 
-                int _id = _data.getId();
+                int _id = _data == null ? -1:_data.getId();
                 View view = layout[i].findViewById(R.id.game_view);
 
                 if(view == null) {
@@ -110,27 +119,34 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
                     view.getLayoutParams().height = oneWidth;
                     layout[i].addView(view);
                     view.setId(R.id.game_view);
-
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            selectID = (int) v.getTag();
+                            int _selectID = (int) v.getTag();
+                            if(selectID == _selectID) return;
+                            selectID = _selectID;
                             notifyDataSetChanged();
                         }
                     });
                 }
 
                 Object _tag = view.getTag();
-                if(_tag == null || (int)view.getTag() != _id){
+                if((_tag == null || (int)view.getTag() != _id) && _data != null && frashLine == false){
                     ImageView img = (ImageView) view.findViewById(R.id.imggameicon);
-                    HttpTool.getBitmapUrl(_data.getLogo(), new HttpTool.bmpListener() {
-                        @Override
-                        public void onFinish(Bitmap bitmap) {
-                            if (bitmap != null) img.setImageBitmap(bitmap);
-                        }
-                    });
+                    if(_id == 0 ){
+                        img.setImageResource(R.mipmap.game_arena);
+                    }
+                    else {
+                        HttpTool.getBitmapUrl(_data.getLogo(), new HttpTool.bmpListener() {
+                            @Override
+                            public void onFinish(Bitmap bitmap) {
+                                if (bitmap != null) img.setImageBitmap(bitmap);
+                            }
+                        });
+                    }
+
+                    ((TextView)view.findViewById(R.id.gamename)).setText(_data.getName());
                 }
-                ((TextView)view.findViewById(R.id.gamename)).setText(_data.getName());
 
                 setViewColor(view, (selectID == _id));
 
