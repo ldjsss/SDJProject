@@ -49,7 +49,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="-4dp"
                 android:singleLine="true"
-                android:text="1.2"
+                android:text=""
                 android:textColor="@color/color_cdc3b3"
                 android:textSize="17sp" />
 
@@ -60,7 +60,8 @@
                 android:src="@mipmap/main_courage"
                 android:layout_toRightOf="@id/gamebet0"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/imggamelock0"
@@ -143,7 +144,7 @@
                 android:id="@+id/gamebet1"
                 android:singleLine="true"
                 android:textSize="17sp"
-                android:text="1.2"
+                android:text=""
                 android:layout_centerInParent="true"
                 android:textColor="@color/color_cdc3b3" />
 
@@ -154,7 +155,8 @@
                 android:src="@mipmap/main_courage"
                 android:layout_toLeftOf="@id/gamebet1"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginRight="5dp"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/imggamelock1"

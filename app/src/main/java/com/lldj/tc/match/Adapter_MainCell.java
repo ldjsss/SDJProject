@@ -3,6 +3,7 @@ package com.lldj.tc.match;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Team;
+import com.lldj.tc.mainUtil.Utils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
@@ -250,102 +252,87 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                 }
             });
 
-            switch (_type) {
-                case 0:
+            gameresult.setText(team0.getScore().getTotal() + " - " + team1.getScore().getTotal());
+
+
+            Odds odd0 = getOddData(odds, "final", team0.getTeam_id());
+            Odds odd1 = getOddData(odds, "final", team1.getTeam_id());
+            updateArrow(odd0, (String)gamebet0.getText(), imggamearrow0);
+            updateArrow(odd1, (String)gamebet1.getText(), imggamearrow1);
+            if(team0.getTeam_name().equalsIgnoreCase("we") && team1.getTeam_name().equalsIgnoreCase("tes")){
+                Log.e("ssss", "ssss");
+            }
+            if(odd0!=null){
+                int _status = odd0.getStatus();
+                gamebet0.setText(odd0.getOdds());
+                if(_status <= 2){
+
+                    imggamelock0.setVisibility(_status == 2 ? View.VISIBLE: View.GONE);
+                    gamebet0.setVisibility(_status == 2 ? View.GONE: View.VISIBLE);
+
+                    gamebetlayout0.setVisibility(View.VISIBLE);
+                    playnamecommon0.setVisibility(View.VISIBLE);
+                    playname0.setText("");
+                }
+                else if(_status == 4){
                     gamebetlayout0.setVisibility(View.GONE);
-                    gamebetlayout1.setVisibility(View.GONE);
-                    playname0.setVisibility(View.VISIBLE);
-                    playname1.setVisibility(View.VISIBLE);
                     playnamecommon0.setVisibility(View.GONE);
+                    playname0.setVisibility(View.VISIBLE);
+                }
+            }
+            else {
+                gamebetlayout0.setVisibility(View.GONE);
+                playnamecommon0.setVisibility(View.GONE);
+            }
+
+            if(odd1!=null){
+                int _status = odd1.getStatus();
+                gamebet1.setText(odd1.getOdds());
+
+                if(_status <= 2){
+                    imggamelock1.setVisibility(_status == 2 ? View.VISIBLE: View.GONE);
+                    gamebet1.setVisibility(_status == 2 ? View.GONE: View.VISIBLE);
+
+                    gamebetlayout1.setVisibility(View.VISIBLE);
+                    playnamecommon1.setVisibility(View.VISIBLE);
+                    playname1.setText("");
+                }
+                else if(_status == 4){
+                    gamebetlayout1.setVisibility(View.GONE);
                     playnamecommon1.setVisibility(View.GONE);
+                    playname1.setVisibility(View.VISIBLE);
+                }
+            }
+            else {
+                gamebetlayout1.setVisibility(View.GONE);
+                playnamecommon1.setVisibility(View.GONE);
+            }
+
+
+            switch (_type) {
+                 case 0:
                     bottomgamelayout.setVisibility(View.VISIBLE);
                     bottomoverlayout.setVisibility(View.GONE);
                     gameresult.setVisibility(View.GONE);
                     gametime.setVisibility(View.VISIBLE);
 
-                    //show final bet
-                    Odds odd = getOddData(odds, "final", team0.getTeam_id());
-                    if (odd != null) {
-                        int _status = odd.getStatus();
-                        if(_status == 2){ //lock bet
-                            gamebet0.setVisibility(View.GONE);
-                            imggamearrow0.setVisibility(View.GONE);
-                        }
-                        else if (!TextUtils.isEmpty(odd.getOdds())) {
-                            gamebet0.setVisibility(View.VISIBLE);
-                            imggamearrow0.setVisibility(View.VISIBLE);
-                            imggamelock0.setVisibility(View.GONE);
-                            gamebet0.setText(odd.getOdds());
-
-//                            Utils.setFlickerAnimation(imggamearrow0, 13);
-                        }
-                        gamebetlayout0.setVisibility(View.VISIBLE);
-                        playnamecommon0.setVisibility(View.VISIBLE);
-                        playname0.setText("");
-                    }
-                    odd = getOddData(odds, "final", team1.getTeam_id());
-                    if (odd != null) {
-                        int _status = odd.getStatus();
-                        if(_status == 2){ //lock bet
-                            gamebet1.setVisibility(View.GONE);
-                            imggamearrow1.setVisibility(View.GONE);
-                        }
-                        else if (!TextUtils.isEmpty(odd.getOdds())) {
-                            gamebet1.setVisibility(View.VISIBLE);
-                            imggamearrow1.setVisibility(View.VISIBLE);
-                            imggamelock1.setVisibility(View.GONE);
-                            gamebet1.setText(odd.getOdds());
-//                            Utils.setFlickerAnimation(imggamearrow1, 5);
-                        }
-                        gamebetlayout1.setVisibility(View.VISIBLE);
-                        playnamecommon1.setVisibility(View.VISIBLE);
-                        playname1.setText("");
-                    }
                     break;
                 case 1:
-                    gamebetlayout0.setVisibility(View.VISIBLE);
-                    gamebetlayout1.setVisibility(View.VISIBLE);
-                    playname0.setText("");
-                    playname1.setText("");
-                    playnamecommon0.setVisibility(View.VISIBLE);
-                    playnamecommon1.setVisibility(View.VISIBLE);
-                    imggamelock0.setVisibility(View.GONE);
-                    imggamelock1.setVisibility(View.GONE);
+
                     bottomgamelayout.setVisibility(View.VISIBLE);
                     bottomoverlayout.setVisibility(View.GONE);
-                    gametime.setVisibility(View.GONE);
                     gameresult.setVisibility(View.VISIBLE);
-
-
-                    gameresult.setText(team0.getScore().getTotal() + " - " + team1.getScore().getTotal());
+                    gametime.setVisibility(View.GONE);
 
                     gamestatusicon.setBackgroundResource(R.mipmap.match_status_1);
                     break;
                 case 2:
-                    gamebetlayout0.setVisibility(View.VISIBLE);
-                    gamebetlayout1.setVisibility(View.VISIBLE);
-                    playname0.setText("");
-                    playname1.setText("");
-                    imggamearrow0.setVisibility(View.GONE);
-                    imggamearrow1.setVisibility(View.GONE);
-                    playnamecommon0.setVisibility(View.VISIBLE);
-                    playnamecommon1.setVisibility(View.VISIBLE);
-                    imggamelock0.setVisibility(View.GONE);
-                    imggamelock1.setVisibility(View.GONE);
-
                     bottomgamelayout.setVisibility(View.VISIBLE);
                     bottomoverlayout.setVisibility(View.GONE);
-
-                    gametime.setVisibility(View.VISIBLE);
                     gameresult.setVisibility(View.GONE);
+                    gametime.setVisibility(View.VISIBLE);
                     break;
                 case 3:
-                    gamebetlayout0.setVisibility(View.GONE);
-                    gamebetlayout1.setVisibility(View.GONE);
-                    playname0.setVisibility(View.GONE);
-                    playname1.setVisibility(View.GONE);
-                    playnamecommon0.setVisibility(View.GONE);
-                    playnamecommon1.setVisibility(View.GONE);
 
                     bottomgamelayout.setVisibility(View.GONE);
                     bottomoverlayout.setVisibility(View.VISIBLE);
@@ -353,7 +340,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                     gametime.setVisibility(View.GONE);
                     gameresult.setVisibility(View.VISIBLE);
 
-                    Odds _odd = getOddData(odds, "final", team0.getTeam_id());
+                    Odds _odd = odd0;
                     String win = "";
                     if(_odd != null)win = _odd.getWin();
                     if(!TextUtils.isEmpty(win) && Integer.parseInt(win)>=0) {
@@ -364,7 +351,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                         playvictoryicon0.setVisibility(View.GONE);
                     }
 
-                    _odd = getOddData(odds, "final", team1.getTeam_id());
+                    _odd = odd1;
                     if(_odd != null)win = _odd.getWin();
                     if(!TextUtils.isEmpty(win) && Integer.parseInt(win)>=0) {
                         playvictoryicon1.setImageResource(winBmp[Integer.parseInt(win)]);
@@ -400,6 +387,27 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             }
             else{
                 playname1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
+            }
+        }
+
+        private void updateArrow(Odds odd, String _last, ImageView imggamearrow){
+            if(odd == null) return;
+            int _status = odd.getStatus();
+            if(_status == 2){ //lock bet
+                imggamearrow.setVisibility(View.GONE);
+            }
+            else if(_status == 1){
+                if (!TextUtils.isEmpty(odd.getOdds())) {
+                    String _current = odd.getOdds();
+                    if(!TextUtils.isEmpty(_last)){
+                        float lastOdds = Float.parseFloat(_last);
+                        float curOdds  = Float.parseFloat(_current);
+                        if(curOdds > lastOdds)imggamearrow.setImageResource(R.mipmap.main_courage);
+                        else imggamearrow.setImageResource(R.mipmap.main_warning);
+
+                        if(curOdds != lastOdds) Utils.setFlickerAnimation(imggamearrow, 5);
+                    }
+                }
             }
         }
 

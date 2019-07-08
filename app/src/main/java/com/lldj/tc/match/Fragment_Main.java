@@ -65,7 +65,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     private int ViewType;
     private BaseFragment middleFragment;
     private Disposable disposable;
-    private int disTime = 5000;
+    private int disTime = 10000;
     private Observer<ObData> observer;
     public int selectID = 0;
 

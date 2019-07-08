@@ -123,6 +123,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private int disTime = 4000;
     private Disposable disposable;
     private Observer<ObData> observer;
+    private int lastSelectIndex = -1;
 
     @Override
     public int getContentView() {
@@ -171,8 +172,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     public void showView(int ViewType, int matchId) {
         this.ViewType = ViewType;
         this.matchId = matchId;
-
-//        gamestatus.setVisibility(View.GONE);
 
         onRefresh();
 
@@ -281,8 +280,10 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                int tabPosition = tab.getPosition();
-                layoutManager.scrollToPositionWithOffset(tabPosition + 1, 0);
+                int tabPosition = tab.getPosition() + 1;
+                if(lastSelectIndex != tabPosition) layoutManager.scrollToPositionWithOffset(tabPosition, 0);
+
+                lastSelectIndex = tabPosition;
             }
 
             @Override
