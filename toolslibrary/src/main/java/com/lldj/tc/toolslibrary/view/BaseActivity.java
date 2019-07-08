@@ -39,6 +39,7 @@ public abstract class BaseActivity extends FragmentActivity{
 
         mHandler = HandlerInter.getInstance();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//        ScreenAdapterTools.getInstance().loadView((ViewGroup) getWindow().getDecorView());
 
     }
 

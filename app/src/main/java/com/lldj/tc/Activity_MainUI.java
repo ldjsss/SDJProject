@@ -51,7 +51,6 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mHandler.setHandleMsgListener(this);
-
     }
 
     @Override
@@ -133,10 +132,3 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
     }
 
 }
-
-//post请求数据
-//    JSONObject body = new JSONObject();
-//    body.put("username", "panghao");
-//    body.put("password", "12345");
-
-

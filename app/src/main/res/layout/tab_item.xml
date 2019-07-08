@@ -13,18 +13,19 @@
         android:textColor="@color/color_cdc3b3"
         android:singleLine="true"
         android:ellipsize="marquee"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:text="demo"/>
 
     <TextView
         android:id="@+id/tab_no_reading_count_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="666"
+        android:text="0"
         android:singleLine="true"
         android:ellipsize="marquee"
         android:textColor="@color/color_cdc3b3"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        />
 
 
 </LinearLayout>

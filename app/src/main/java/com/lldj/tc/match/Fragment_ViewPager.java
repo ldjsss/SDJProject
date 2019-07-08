@@ -3,6 +3,7 @@ package com.lldj.tc.match;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,8 +12,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
+import com.lldj.tc.mainUtil.EventType;
 import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.event.Observable;
+import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 
 import butterknife.BindView;
@@ -41,9 +47,11 @@ public class Fragment_ViewPager extends BaseFragment {
     @Override
     public int getContentView() { return R.layout.activity_main_include_layout; }
 
+
     @Override
     public void initView(View rootView) {
         ButterKnife.bind(this, rootView);
+
         initViewPager();
     }
 
@@ -66,6 +74,15 @@ public class Fragment_ViewPager extends BaseFragment {
             @Override
             public void onPageScrollStateChanged(int state) { }
         });
+
+        this.registEvent(new Observer<ObData>() {
+            @Override
+            public void onUpdate(Observable<ObData> observable, ObData data) {
+                if (data.getKey().equalsIgnoreCase(EventType.MATCHCOUNT)) {
+                    updateTitle(Integer.parseInt(data.getTag()), data.getValue() + "");
+                }
+            }
+        });
     }
 
     //自定义tab布局
@@ -73,10 +90,12 @@ public class Fragment_ViewPager extends BaseFragment {
         for (int i = 0; i < mPagerAdapter.getCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);//获得每一个tab
             tab.setCustomView(R.layout.tab_item);//给每一个tab设置view
+            View cusView = tab.getCustomView();
+//            AppUtils.screenAdapterLoadView((ViewGroup)cusView);
             if (i == 0) {
-                tab.getCustomView().findViewById(R.id.tab_text).setSelected(true);//第一个tab被选中
+                cusView.findViewById(R.id.tab_text).setSelected(true);//第一个tab被选中
             }
-            TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tab_text);
+            TextView textView = (TextView) cusView.findViewById(R.id.tab_text);
             textView.setText(mPagerAdapter.getPageTitle(i));//设置tab上的文字
 
         }

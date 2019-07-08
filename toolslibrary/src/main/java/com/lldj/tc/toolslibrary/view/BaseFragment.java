@@ -2,17 +2,15 @@ package com.lldj.tc.toolslibrary.view;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observer;
@@ -103,6 +101,7 @@ public abstract class BaseFragment extends Fragment {
         if (getContentView() != 0) {
             if (rootView == null) {
                 rootView = inflater.inflate(getContentView(), container, false);
+//                AppUtils.screenAdapterLoadView((ViewGroup)rootView);
                 initView(rootView);
             } else {
                 ViewGroup parent = (ViewGroup) rootView.getParent();
@@ -110,6 +109,7 @@ public abstract class BaseFragment extends Fragment {
                     parent.removeView(rootView);
                 }
             }
+
             return rootView;
         }
         return null;

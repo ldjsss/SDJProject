@@ -18,10 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
 import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
-import com.lldj.tc.mainUtil.EventType;
-import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Team;
+import com.lldj.tc.mainUtil.EventType;
+import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.mainUtil.Utils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
@@ -156,6 +156,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
         public viewHolder(View itemView) {
             super(itemView);
+//            AppUtils.screenAdapterLoadView((ViewGroup)itemView);
             ButterKnife.bind(this, itemView);
         }
 

@@ -123,7 +123,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private int disTime = 4000;
     private Disposable disposable;
     private Observer<ObData> observer;
-    private int lastSelectIndex = -1;
 
     @Override
     public int getContentView() {
@@ -275,30 +274,30 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             jingcairecycleview.setAdapter(lAdapter);
             jingcairecycleview.setLScrollListener(this);
             jingcairecycleview.setNoMore(true);//禁止加载更多
+
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    int tabPosition = tab.getPosition();
+                    layoutManager.scrollToPositionWithOffset(tabPosition + 1, 0);
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+                }
+            });
         }
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int tabPosition = tab.getPosition() + 1;
-                if(lastSelectIndex != tabPosition) layoutManager.scrollToPositionWithOffset(tabPosition, 0);
-
-                lastSelectIndex = tabPosition;
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-
-        tabLayout.removeAllTabs();
-        for (int i = 0; i < keys.size(); i++) {
-            tabLayout.addTab(tabLayout.newTab().setText(keys.get(i)));
-        }
+       if(tabLayout.getTabCount() != keys.size()){
+           tabLayout.removeAllTabs();
+           for (int i = 0; i < keys.size(); i++) {
+               tabLayout.addTab(tabLayout.newTab().setText(keys.get(i)));
+           }
+       }
     }
 
     @Override

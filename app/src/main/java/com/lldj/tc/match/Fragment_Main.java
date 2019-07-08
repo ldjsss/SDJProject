@@ -125,13 +125,6 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        return rootView;
-    }
-
-    @Override
     public void onRefresh() {//请求全部数据
         Clog.e("onRefresh", "onRefresh = " + ViewType);
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
@@ -236,6 +229,10 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     subjectLrecycleview.refreshComplete(); //刷新完成
                 }
                 tvNoMatch.setVisibility(mlist.size()>0?View.GONE:View.VISIBLE);
+
+                ObData _data = new ObData(EventType.MATCHCOUNT, mlist.size());
+                _data.setTag(ViewType + "");
+                AppUtils.dispatchEvent(_data);
             }
         });
     }

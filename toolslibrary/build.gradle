@@ -43,4 +43,7 @@ dependencies {
 
     implementation'com.android.support:multidex:1.0.1'
 
+//    implementation 'me.yatoooon:screenadaptation:1.1.1'
+
+
 }

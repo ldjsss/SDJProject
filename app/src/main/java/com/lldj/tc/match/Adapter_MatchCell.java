@@ -90,6 +90,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
         public viewHolder(View itemView) {
             super(itemView);
+//            AppUtils.screenAdapterLoadView((ViewGroup)itemView);
             ButterKnife.bind(this, itemView);
         }
 
@@ -132,11 +133,13 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                     LayoutInflater inflater = LayoutInflater.from(mContext);
                     View view = inflater.inflate(R.layout.matchdetialonetitle, null);
                     view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+//                    AppUtils.screenAdapterLoadView((ViewGroup)view);
                     detailitembg.addView(view);
                     ((TextView)view.findViewById(R.id.myposition)).setText(key);
 
                     view = inflater.inflate(R.layout.matchdetailonebet, null);
                     view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+//                    AppUtils.screenAdapterLoadView((ViewGroup)view);
                     detailitembg.addView(view);
                     ((TextView)view.findViewById(R.id.matchplayname)).setText(_key);
 
@@ -144,6 +147,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                     for (int i = 0; i < len; i++) {
                         view = inflater.inflate(R.layout.gamedetialitem, null);
                         view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+//                        AppUtils.screenAdapterLoadView((ViewGroup)view);
                         detailitembg.addView(view);
 
                         Odds odd1 = _odds.get(i*2);

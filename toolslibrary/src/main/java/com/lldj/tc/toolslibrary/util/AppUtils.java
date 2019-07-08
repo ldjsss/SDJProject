@@ -96,6 +96,18 @@ public class AppUtils {
         observable.notifyObserver(data);
     }
 
+//    public static void screenAdapterStart(Context content){
+//        ScreenAdapterTools.init(content);
+//    }
+//
+//    public static void screenAdapterRest(Context content){
+//        ScreenAdapterTools.getInstance().reset(content);
+//    }
+//
+//    public static void screenAdapterLoadView(ViewGroup rootView){
+//        ScreenAdapterTools.getInstance().loadView(rootView);
+//    }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String getFromAssets(Context ct, String fileName) {
         String Result = "";
