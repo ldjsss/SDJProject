@@ -166,6 +166,10 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             }
         };
         AppUtils.registEvent(observer);
+
+        matchtime.setVisibility(View.GONE);
+        matchwin0.setVisibility(View.GONE);
+        matchwin1.setVisibility(View.GONE);
     }
 
     public void showView(int ViewType, int matchId) {
@@ -198,12 +202,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     gameplaycount.setText("+" + _data.getPlay_count());
                     playnamecommon0.setText(team0.getTeam_short_name());
                     playnamecommon1.setText(team1.getTeam_short_name());
-                    matchtime.setText(AppUtils.getFormatTime2(_data.getStart_time_ms()));
+                    matchtime.setText(status == 2 ? getResources().getString(R.string.gameing):AppUtils.getFormatTime2(_data.getStart_time_ms()));
 
                     if (status == 2) startUpdate();
                     else stopUpdate();
 
-                    gamestatus1.setText(status == 2 ? getResources().getString(R.string.gameing) : AppUtils.getFormatTime4(_data.getStart_time_ms()));
+                    gamestatus1.setText((status == 2 || status == 3) ? "-":AppUtils.getFormatTime4(_data.getStart_time_ms()));
                     matchwin0.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
                     matchwin1.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
 

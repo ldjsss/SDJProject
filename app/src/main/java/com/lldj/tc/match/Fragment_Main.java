@@ -91,6 +91,8 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
             }
         };
         AppUtils.registEvent(observer);
+
+        Log.e(AppUtils.getScreenWidth(getContext()) + "--------", AppUtils.getScreenHeight(getContext()) + "------");
     }
 
     @Override
