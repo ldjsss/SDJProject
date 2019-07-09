@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:id="@+id/reslayoutpar1"
     android:orientation="vertical"
-    android:background="@color/color_bg"
     android:focusable="true"
     android:focusableInTouchMode="true">
 

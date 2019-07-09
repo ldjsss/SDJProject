@@ -18,7 +18,6 @@ import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.httpMgr.beans.JsonBean;
 import com.lldj.tc.mainUtil.GlobalVariable;
 import com.lldj.tc.mainUtil.HandlerType;
-import com.lldj.tc.register.Adapter_Register;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleDialog.BaseRecycleDialog;

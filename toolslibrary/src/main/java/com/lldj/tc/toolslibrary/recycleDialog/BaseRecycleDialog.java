@@ -40,6 +40,10 @@ public class BaseRecycleDialog extends BaseDialog implements LRecyclerView.LScro
 
     }
 
+    public void setbBckground(int color ){
+        findViewById(R.id.basebackgroud).setBackgroundColor(color);
+    }
+
     public void showView(RecycleCell _mAdapter) {
         if(_mAdapter == null) return;
 

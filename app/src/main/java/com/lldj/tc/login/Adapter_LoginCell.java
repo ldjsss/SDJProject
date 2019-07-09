@@ -24,12 +24,8 @@ import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.httpMgr.beans.JsonBean;
 import com.lldj.tc.mainUtil.GlobalVariable;
 import com.lldj.tc.mainUtil.HandlerType;
-import com.lldj.tc.register.Adapter_Register;
-import com.lldj.tc.register.DialogRegister;
-import com.lldj.tc.register.Dialog_Forget;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
-import com.lldj.tc.toolslibrary.recycleDialog.BaseRecycleDialog;
 import com.lldj.tc.toolslibrary.recycleDialog.RecycleCell;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 
@@ -80,8 +76,6 @@ public class Adapter_LoginCell extends RecycleCell {
 
     class viewHolder extends RecyclerView.ViewHolder {
 
-        private Dialog_Forget lossFrament = null;
-
         @BindView(R.id.frameaddlayout)
         FrameLayout frameaddlayout;
         @BindView(R.id.tel_num_et)
@@ -94,7 +88,6 @@ public class Adapter_LoginCell extends RecycleCell {
         private int screenHeight = 0;
         private String userCount = "";
         private String password = "";
-        //密码是否显示
         private boolean mPswIsShow = false;
 
         public viewHolder(View itemView) {
@@ -120,7 +113,7 @@ public class Adapter_LoginCell extends RecycleCell {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.forget_psw_tv:
-                    new Dialog_Forget(mContext, R.style.DialogTheme).show();
+                    Adapter_Forget.showView(mContext);
                     break;
                 case R.id.login_tv:
                     if (!checkAll()) return;
@@ -137,7 +130,7 @@ public class Adapter_LoginCell extends RecycleCell {
                     });
                     break;
                 case R.id.register_tv:
-                    Adapter_Register.showRegister(mContext);
+                    Adapter_Register.showView(mContext);
                     break;
                 case R.id.just_look_tv:
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.JUSTLOOK);

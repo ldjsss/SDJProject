@@ -1,13 +1,11 @@
-package com.lldj.tc.register;
+package com.lldj.tc.login;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Message;
+import android.os.Build;
 import android.text.TextUtils;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +14,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,12 +23,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
-import com.lldj.tc.httpMgr.beans.JsonBean;
-import com.lldj.tc.login.Adapter_LoginCell;
-import com.lldj.tc.mainUtil.GlobalVariable;
 import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.httpMgr.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
@@ -40,7 +34,9 @@ import com.lldj.tc.toolslibrary.recycleDialog.RecycleCell;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
+import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
+import com.lldj.tc.mainUtil.GlobalVariable;
 
 import java.util.ArrayList;
 
@@ -49,23 +45,21 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
 
-public class Adapter_Register extends RecycleCell {
-    public static BaseRecycleDialog register;
-    private static Disposable getCodeDisposable;
+public class Adapter_Forget extends RecycleCell {
 
-    private String phoneNum = "";
-    private String userCount = "";
-    private String password = "";
-    private String password1 = "";
-    private String phoneCode = "";
-    private String userName = "";
-    private int codeTime = 120;
+    public static BaseRecycleDialog forget;
+    private static Disposable getCodeDisposable;
 
     private Context mContext;
     private ArrayList<String> mlist = new ArrayList<>();
-    private Adapter_Register.viewHolder mHolder = null;
+    private Adapter_Forget.viewHolder mHolder = null;
 
-    public Adapter_Register(Context mContext) {
+    private String phoneNum = "";
+    private String password = "";
+    private String phoneCode = "";
+    private int codeTime = 120;
+
+    public Adapter_Forget(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -77,12 +71,12 @@ public class Adapter_Register extends RecycleCell {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Adapter_Register.viewHolder(LayoutInflater.from(mContext).inflate(R.layout.dialog_register, parent, false));
+        return new Adapter_Forget.viewHolder(LayoutInflater.from(mContext).inflate(R.layout.dialog_forgetpassword, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        this.mHolder = (Adapter_Register.viewHolder) holder;
+        this.mHolder = (Adapter_Forget.viewHolder) holder;
     }
 
     @Override
@@ -91,69 +85,59 @@ public class Adapter_Register extends RecycleCell {
     }
 
     public static void dismiss() {
-        if(register != null) register.dismiss();
-        register = null;
+        if(forget != null) forget.dismiss();
+        forget = null;
         if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
     }
 
-    public static void showRegister(Context content){
-        if(register != null) return;
-        register = new BaseRecycleDialog(content, R.style.DialogTheme);
-        register.setOnDismissListener(new DialogInterface.OnDismissListener() {
+    public static void showView(Context context){
+        if(forget != null) return;
+        forget = new BaseRecycleDialog(context, R.style.DialogTheme);
+        forget.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 dismiss();
             }
         });
-        Window window = register.getWindow();
+        forget.setbBckground(context.getResources().getColor(R.color.color_bg));
+        Window window = forget.getWindow();
         window.setGravity(Gravity.RIGHT);
         window.setWindowAnimations(R.style.Anim_fade);
-        register.showView(new Adapter_Register(content));
+        forget.showView(new Adapter_Forget(context));
     }
 
 
-    //////////////////////////////////////////////////
-    //////////////////////////////////////////////////
-
 
     class viewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.toolbar_back_iv)
-        ImageView toolbarBackIv;
         @BindView(R.id.toolbar_title_tv)
-        TextView toolbarTitleTv;
+        StrokeTextView toolbarTitleTv;
         @BindView(R.id.toolbar_root_layout)
         RelativeLayout toolbarRootLayout;
         @BindView(R.id.connectservice)
         RelativeLayout connectservice;
-        @BindView(R.id.restel_num_et)
-        EditText restelNumEt;
-        @BindView(R.id.res_paset)
-        EditText resPaset;
-        @BindView(R.id.res_repaset)
-        EditText resRepaset;
         @BindView(R.id.rescodetel_num_et)
         EditText rescodetelNumEt;
-        @BindView(R.id.resget_verify_codebtn)
-        Button resgetVerifyCodebtn;
         @BindView(R.id.resverifycode_et)
         EditText resverifycodeEt;
-        @BindView(R.id.register_tv)
-        TextView registerTv;
-        @BindView(R.id.resview_line33)
-        View resviewLine33;
-        @BindView(R.id.resname_et)
-        EditText resnameEt;
-        @BindView(R.id.reslayoutpar1)
-        RelativeLayout reslayoutpar1;
+        @BindView(R.id.respsw_title)
+        TextView respswTitle;
+        @BindView(R.id.res_paset)
+        EditText resPaset;
+        @BindView(R.id.reslayoutpar)
+        RelativeLayout reslayoutpar;
+        @BindView(R.id.resget_verify_codebtn)
+        Button resgetVerifyCodebtn;
 
         public viewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
             connectservice.setVisibility(View.VISIBLE);
-            ImmersionBar.with((Activity) mContext).titleBar(toolbarRootLayout).init();
-            toolbarTitleTv.setText(mContext.getResources().getString(R.string.register_str));
+            ImmersionBar.with((Activity)mContext).titleBar(toolbarRootLayout).init();
+            toolbarTitleTv.setText(mContext.getResources().getString(R.string.forget_pswTitle));
+
         }
+
 
         @OnClick({R.id.toolbar_back_iv, R.id.toolbar_title_tv, R.id.connectservice, R.id.resget_verify_codebtn, R.id.register_tv})
         public void onClick(View view) {
@@ -180,7 +164,7 @@ public class Adapter_Register extends RecycleCell {
                         @Override
                         public void doNext(long number) {
                             codeTime--;
-                            if (codeTime <=0 ){
+                            if (codeTime <= 0) {
                                 if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
                                 getCodeDisposable = null;
                                 resgetVerifyCodebtn.setEnabled(true);
@@ -191,36 +175,35 @@ public class Adapter_Register extends RecycleCell {
                         }
 
                         @Override
-                        public void onComplete() {}
+                        public void onComplete() {
+                        }
                     });
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                    HttpMsg.getInstance().sendGetCode(phoneNum, JsonBean.class, new HttpMsg.Listener(){
+                    HttpMsg.getInstance().sendGetCode(phoneNum, JsonBean.class, new HttpMsg.Listener() {
                         @Override
                         public void onFinish(Object _res) {
-                            JsonBean res = (JsonBean)_res;
+                            JsonBean res = (JsonBean) _res;
                             if(res.getCode() == GlobalVariable.succ) {
                                 Toast.makeText(mContext, mContext.getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-
                     break;
                 case R.id.register_tv:
                     if (!checkAll()) return;
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                    HttpMsg.getInstance().sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(mContext), "", JsonBean.class, new HttpMsg.Listener(){
+                    HttpMsg.getInstance().sendForgetKey(phoneNum, password, phoneCode, JsonBean.class, new HttpMsg.Listener() {
                         @Override
                         public void onFinish(Object _res) {
                             JsonBean res = (JsonBean) _res;
-                            if(res.getCode() == GlobalVariable.succ){
-                                SharePreUtils.getInstance().setRegistInfo(mContext, userCount, password, userName, phoneNum, AppUtils.getChannel(mContext), "");
-                                Toast.makeText(mContext, mContext.getResources().getString(R.string.registSucc),Toast.LENGTH_SHORT).show();
+                            if(res.getCode() == GlobalVariable.succ) {
+                                Toast.makeText(mContext, mContext.getResources().getString(R.string.passwordHaveChange), Toast.LENGTH_SHORT).show();
+                                SharePreUtils.setPassWord(mContext, password);
                                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.REGISTSUCC);
                                 dismiss();
                             }
                         }
                     });
-                    ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, "注册！", ToastUtils.LENGTH_SHORT);
                     break;
             }
         }
@@ -231,39 +214,20 @@ public class Adapter_Register extends RecycleCell {
 
         private boolean checkAll() {
 
-            userCount = restelNumEt.getText().toString().trim();
             password = resPaset.getText().toString().trim();
-            password1 = resRepaset.getText().toString().trim();
             phoneNum = rescodetelNumEt.getText().toString().trim();
             phoneCode = resverifycodeEt.getText().toString().trim();
-            userName = resnameEt.getText().toString().trim();
 
-            if (TextUtils.isEmpty(userCount) || userCount.length() < 6 || userCount.length() > 16) {
-                showToast(R.string.errorRemind);
-                return false;
-            }
-            if (TextUtils.isEmpty(password) || password.length() < 6 || password.length() > 16) {
-                showToast(R.string.errorRemind1);
-                return false;
-            }
-            if (TextUtils.isEmpty(password1) || password1.length() < 6 || password1.length() > 16) {
-                showToast(R.string.errorRemind2);
-                return false;
-            }
-            if (!TextUtils.equals(password, password1)) {
-                showToast(R.string.errorRemind3);
-                return false;
-            }
-            if (TextUtils.isEmpty(userName)) {
-                showToast(R.string.errorRemind4);
-                return false;
-            }
-            if (!AppUtils.isMobileNO(phoneNum)) {
+            if (TextUtils.isEmpty(phoneNum) || !AppUtils.isMobileNO(phoneNum)) {
                 showToast(R.string.errorRemind5);
                 return false;
             }
             if (TextUtils.isEmpty(phoneCode)) {
                 showToast(R.string.errorRemind6);
+                return false;
+            }
+            if (TextUtils.isEmpty(password) || password.length() < 6 || password.length() > 16) {
+                showToast(R.string.errorRemind1);
                 return false;
             }
 
@@ -272,7 +236,6 @@ public class Adapter_Register extends RecycleCell {
 
 
     }
-
 
 }
 
