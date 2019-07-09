@@ -106,8 +106,6 @@ public class Adapter_Forget extends RecycleCell {
         forget.showView(new Adapter_Forget(context));
     }
 
-
-
     class viewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.toolbar_title_tv)
         StrokeTextView toolbarTitleTv;

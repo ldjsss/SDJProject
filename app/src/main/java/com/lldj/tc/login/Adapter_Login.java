@@ -35,13 +35,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Adapter_LoginCell extends RecycleCell {
+public class Adapter_Login extends RecycleCell {
 
     private Context mContext;
     private ArrayList<String> mlist = new ArrayList<>();
     private viewHolder mHolder = null;
 
-    public Adapter_LoginCell(Context mContext) {
+    public Adapter_Login(Context mContext) {
         this.mContext = mContext;
     }
 
