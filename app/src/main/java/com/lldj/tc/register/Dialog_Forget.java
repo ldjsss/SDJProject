@@ -27,6 +27,7 @@ import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
+import com.lldj.tc.toolslibrary.view.BaseDialog;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.mainUtil.GlobalVariable;
@@ -39,12 +40,14 @@ import io.reactivex.disposables.Disposable;
 /**
  * description: 忘记密码<p>
  */
-public class Dialog_Forget extends Dialog {
+public class Dialog_Forget extends BaseDialog {
 
     @BindView(R.id.toolbar_title_tv)
     StrokeTextView toolbarTitleTv;
     @BindView(R.id.toolbar_root_layout)
     RelativeLayout toolbarRootLayout;
+    @BindView(R.id.connectservice)
+    RelativeLayout connectservice;
     @BindView(R.id.rescodetel_num_et)
     EditText rescodetelNumEt;
     @BindView(R.id.resverifycode_et)
@@ -81,6 +84,7 @@ public class Dialog_Forget extends Dialog {
         layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE; //核心代码是这个属性。
         window.setAttributes(layoutParams);
 
+        connectservice.setVisibility(View.VISIBLE);
         ImmersionBar.with((Activity)context).titleBar(toolbarRootLayout).init();
         toolbarTitleTv.setText(context.getResources().getString(R.string.forget_pswTitle));
 
@@ -183,30 +187,5 @@ public class Dialog_Forget extends Dialog {
         return true;
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
-        if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
-    }
-
-    private void fullScreenImmersive(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            view.setSystemUiVisibility(uiOptions);
-        }
-    }
-
-    @Override
-    public void show() {
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
-        super.show();
-        fullScreenImmersive(getWindow().getDecorView());
-        this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
-    }
 }
 

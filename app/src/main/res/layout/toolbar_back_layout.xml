@@ -30,7 +30,7 @@
     <com.lldj.tc.toolslibrary.view.StrokeTextView
         android:id="@+id/toolbar_title_tv"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="match_parent"
         android:text="@string/title"
         android:textSize="20sp"
         app:outerColor="#000000"
@@ -39,4 +39,31 @@
         android:gravity="center_vertical"
         android:singleLine="true"
         android:ellipsize="end"/>
+
+    <RelativeLayout
+        android:id="@+id/connectservice"
+        android:layout_width="100dp"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_alignParentEnd="true"
+        android:paddingEnd="5dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/main_service"
+            android:layout_centerVertical="true"
+            android:id="@+id/imservice" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/connectservice"
+            android:textColor="@color/colorService"
+            android:textSize="15sp"
+            android:layout_toLeftOf="@+id/imservice"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dimen_5"/>
+    </RelativeLayout>
 </RelativeLayout>

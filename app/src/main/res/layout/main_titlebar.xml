@@ -37,29 +37,32 @@
             android:src="@mipmap/main_navigation"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"/>
+
         <RelativeLayout
             android:id="@+id/connectservice"
-            android:layout_width="95dp"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/toolbar_height"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:paddingEnd="5dp">
+            android:paddingEnd="5dp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:src="@mipmap/main_service"
+                android:layout_centerVertical="true"
+                android:id="@+id/imservice" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/connectservice"
-                android:layout_centerVertical="true"
                 android:textColor="@color/colorService"
-                android:textSize="15sp"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:src="@mipmap/main_service" />
-
+                android:textSize="15sp"
+                android:layout_toLeftOf="@+id/imservice"
+                android:layout_marginEnd="@dimen/dimen_5"/>
         </RelativeLayout>
     </RelativeLayout>
 
