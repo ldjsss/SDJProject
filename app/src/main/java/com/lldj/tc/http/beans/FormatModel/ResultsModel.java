@@ -1,7 +1,7 @@
-package com.lldj.tc.httpMgr.beans.FormatModel;
+package com.lldj.tc.http.beans.FormatModel;
 
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Team;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
+import com.lldj.tc.http.beans.FormatModel.matchModel.Team;
+import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
 
 import java.util.List;
 

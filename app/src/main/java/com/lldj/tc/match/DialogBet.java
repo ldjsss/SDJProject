@@ -18,11 +18,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
-import com.lldj.tc.mainUtil.EventType;
-import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.http.beans.FormatModel.ResultsModel;
+import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
+import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;

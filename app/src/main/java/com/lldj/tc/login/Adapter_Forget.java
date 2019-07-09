@@ -1,20 +1,16 @@
 package com.lldj.tc.login;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,9 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.mainUtil.HandlerType;
-import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.JsonBean;
+import com.lldj.tc.utils.HandlerType;
+import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
@@ -33,10 +29,9 @@ import com.lldj.tc.toolslibrary.recycleDialog.BaseRecycleDialog;
 import com.lldj.tc.toolslibrary.recycleDialog.RecycleCell;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
-import com.lldj.tc.toolslibrary.view.BaseDialog;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
-import com.lldj.tc.mainUtil.GlobalVariable;
+import com.lldj.tc.utils.GlobalVariable;
 
 import java.util.ArrayList;
 

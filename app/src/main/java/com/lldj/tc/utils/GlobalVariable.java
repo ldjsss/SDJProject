@@ -1,4 +1,4 @@
-package com.lldj.tc.mainUtil;
+package com.lldj.tc.utils;
 
 /**
  */

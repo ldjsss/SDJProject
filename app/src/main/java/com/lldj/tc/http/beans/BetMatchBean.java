@@ -1,6 +1,6 @@
-package com.lldj.tc.httpMgr.beans;
+package com.lldj.tc.http.beans;
 
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
+import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
 
 import java.util.List;
 

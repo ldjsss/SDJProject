@@ -8,8 +8,8 @@ import android.widget.RelativeLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.lldj.tc.mainUtil.EventType;
-import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.match.DialogBet;
 import com.lldj.tc.match.DialogBetBottom;
 import com.lldj.tc.match.DialogGameSelect;

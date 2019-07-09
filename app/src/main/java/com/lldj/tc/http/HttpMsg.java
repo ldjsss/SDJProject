@@ -1,12 +1,12 @@
-package com.lldj.tc.httpMgr;
+package com.lldj.tc.http;
 
 import android.os.Bundle;
 import android.os.Message;
 
 import com.google.gson.Gson;
-import com.lldj.tc.httpMgr.beans.BaseBean;
-import com.lldj.tc.mainUtil.GlobalVariable;
-import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.http.beans.BaseBean;
+import com.lldj.tc.utils.GlobalVariable;
+import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;

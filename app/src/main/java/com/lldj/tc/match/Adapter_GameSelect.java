@@ -2,12 +2,7 @@ package com.lldj.tc.match;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,25 +10,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
-import com.lldj.tc.mainUtil.EventType;
+import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.sharepre.SharePreUtils;
-import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
-import com.lldj.tc.toolslibrary.util.Clog;
-import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.MyViewHolder> {

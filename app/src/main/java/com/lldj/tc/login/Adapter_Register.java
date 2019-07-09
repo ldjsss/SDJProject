@@ -20,10 +20,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.JsonBean;
-import com.lldj.tc.mainUtil.GlobalVariable;
-import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.JsonBean;
+import com.lldj.tc.utils.GlobalVariable;
+import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;

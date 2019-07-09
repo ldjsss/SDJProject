@@ -10,8 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
-import com.lldj.tc.mainUtil.GlobalVariable;
+import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
 
 import java.util.ArrayList;
 import java.util.List;

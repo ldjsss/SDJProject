@@ -1,14 +1,10 @@
 package com.lldj.tc.match;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,12 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
-import com.lldj.tc.httpMgr.beans.MatchBean;
-import com.lldj.tc.mainUtil.EventType;
-import com.lldj.tc.mainUtil.GlobalVariable;
-import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.FormatModel.ResultsModel;
+import com.lldj.tc.http.beans.MatchBean;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.GlobalVariable;
+import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
@@ -94,7 +90,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         };
         AppUtils.registEvent(observer);
 
-        Log.e(AppUtils.getScreenWidth(getContext()) + "--------", AppUtils.getScreenHeight(getContext()) + "------");
+//        Log.e(AppUtils.getScreenWidth(getContext()) + "--------", AppUtils.getScreenHeight(getContext()) + "------");
     }
 
     @Override

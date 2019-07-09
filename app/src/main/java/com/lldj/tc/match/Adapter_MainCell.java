@@ -17,12 +17,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Team;
-import com.lldj.tc.mainUtil.EventType;
-import com.lldj.tc.mainUtil.HandlerType;
-import com.lldj.tc.mainUtil.Utils;
+import com.lldj.tc.http.beans.FormatModel.ResultsModel;
+import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
+import com.lldj.tc.http.beans.FormatModel.matchModel.Team;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.HandlerType;
+import com.lldj.tc.utils.Utils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.http.HttpTool;
@@ -400,13 +400,12 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             else if(_status == 1){
                 if (!TextUtils.isEmpty(odd.getOdds())) {
                     String _current = odd.getOdds();
-                    if(!TextUtils.isEmpty(_last)){
+                    if(!TextUtils.isEmpty(_last) && !TextUtils.isEmpty(_current) && !_last.equalsIgnoreCase(_current)){
                         float lastOdds = Float.parseFloat(_last);
                         float curOdds  = Float.parseFloat(_current);
                         if(curOdds > lastOdds)imggamearrow.setImageResource(R.mipmap.main_courage);
                         else imggamearrow.setImageResource(R.mipmap.main_warning);
-
-                        if(curOdds != lastOdds) Utils.setFlickerAnimation(imggamearrow, 5);
+                        Utils.setFlickerAnimation(imggamearrow, 5);
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package com.lldj.tc.httpMgr.beans;
+package com.lldj.tc.http.beans;
 
 public class BaseBean {
 

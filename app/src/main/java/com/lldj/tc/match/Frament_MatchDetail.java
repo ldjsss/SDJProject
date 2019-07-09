@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -19,13 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Odds;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.Team;
-import com.lldj.tc.httpMgr.beans.JsonBean;
-import com.lldj.tc.mainUtil.EventType;
-import com.lldj.tc.mainUtil.GlobalVariable;
+import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.FormatModel.ResultsModel;
+import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
+import com.lldj.tc.http.beans.FormatModel.matchModel.Team;
+import com.lldj.tc.http.beans.JsonBean;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
@@ -123,6 +122,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private int disTime = 4000;
     private Disposable disposable;
     private Observer<ObData> observer;
+    private String gaming = "";
 
     @Override
     public int getContentView() {
@@ -139,6 +139,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+
+        gaming = getResources().getString(R.string.gameing);
     }
 
     @Override
@@ -167,7 +169,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         };
         AppUtils.registEvent(observer);
 
-        matchtime.setVisibility(View.GONE);
+        matchtime.setText("");
+        gamestatus1.setText("");
         matchwin0.setVisibility(View.GONE);
         matchwin1.setVisibility(View.GONE);
     }
@@ -202,12 +205,11 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     gameplaycount.setText("+" + _data.getPlay_count());
                     playnamecommon0.setText(team0.getTeam_short_name());
                     playnamecommon1.setText(team1.getTeam_short_name());
-                    matchtime.setText(status == 2 ? getResources().getString(R.string.gameing):AppUtils.getFormatTime2(_data.getStart_time_ms()));
-
+                    matchtime.setText(status == 2 ? gaming:AppUtils.getFormatTime2(_data.getStart_time_ms()));
                     if (status == 2) startUpdate();
                     else stopUpdate();
 
-                    gamestatus1.setText((status == 2 || status == 3) ? "-":AppUtils.getFormatTime4(_data.getStart_time_ms()));
+                    gamestatus1.setText((status == 2 || status == 3) ? "":AppUtils.getFormatTime4(_data.getStart_time_ms()));
                     matchwin0.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
                     matchwin1.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
 

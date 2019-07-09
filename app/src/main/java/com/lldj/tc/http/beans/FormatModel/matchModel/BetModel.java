@@ -1,4 +1,4 @@
-package com.lldj.tc.httpMgr.beans.FormatModel.matchModel;
+package com.lldj.tc.http.beans.FormatModel.matchModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;

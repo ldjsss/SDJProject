@@ -13,12 +13,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.HttpMsg;
-import com.lldj.tc.httpMgr.beans.BetMatchBean;
-import com.lldj.tc.httpMgr.beans.FormatModel.matchModel.BetModel;
-import com.lldj.tc.mainUtil.EventType;
-import com.lldj.tc.mainUtil.GlobalVariable;
-import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.BetMatchBean;
+import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.GlobalVariable;
+import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;

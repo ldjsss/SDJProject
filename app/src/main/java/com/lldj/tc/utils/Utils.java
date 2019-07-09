@@ -1,12 +1,10 @@
-package com.lldj.tc.mainUtil;
+package com.lldj.tc.utils;
 
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 
-import com.lldj.tc.toolslibrary.event.ObData;
-import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 
 public class Utils {

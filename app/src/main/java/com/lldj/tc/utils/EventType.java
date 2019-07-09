@@ -1,4 +1,4 @@
-package com.lldj.tc.mainUtil;
+package com.lldj.tc.utils;
 
 public class EventType {
     public static final String UPDATEMATCHLIST = "UPDATEMATCHLIST";
