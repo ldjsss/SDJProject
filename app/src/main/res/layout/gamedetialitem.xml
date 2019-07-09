@@ -5,18 +5,18 @@
     android:orientation="vertical"
     android:id="@+id/bottomoverlayout">
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_20"></LinearLayout>
+        android:layout_height="@dimen/dimen_20"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:layout_width="110dp"
+            android:layout_width="match_parent"
             android:layout_marginStart="10dp"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:id="@+id/playcelllayout0"
             android:orientation="horizontal"
             android:layout_weight = "1">
@@ -53,46 +53,48 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:layout_width="85dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/playovername0"
                     android:text="ABCD"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     android:textColor="@color/color_cdc3b3"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="@dimen/dp_10"
-                    android:layout_weight="3"/>
+                    android:layout_weight="1"/>
 
                 <RelativeLayout
-                    android:layout_width="45dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1.92">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/playdetailarrowicon0"
-                        android:src="@mipmap/main_courage" />
+                        android:src="@mipmap/main_courage"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/dimen_10"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/playbetnum0"
                         android:text="0.00"
                         android:singleLine="true"
-                        android:textSize="15sp"
+                        android:textSize="13sp"
                         android:textColor="@color/color_cdc3b3"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/dimen_10"/>
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/playdetailarrowicon0" />
                 </RelativeLayout>
 
             </LinearLayout>
         </RelativeLayout>
-        <LinearLayout
-            android:layout_width="@dimen/dimen_40"
-            android:layout_height="match_parent"></LinearLayout>
+        <View
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="match_parent"></View>
         <RelativeLayout
-            android:layout_width="110dp"
+            android:layout_width="match_parent"
             android:layout_marginEnd="10dp"
             android:layout_alignParentRight="true"
             android:layout_height="@dimen/dp_40"
@@ -150,7 +152,7 @@
                             android:id="@+id/playbetnum1"
                             android:text="0.00"
                             android:singleLine="true"
-                            android:textSize="15sp"
+                            android:textSize="13sp"
                             android:textColor="@color/color_cdc3b3" />
                     </LinearLayout>
 
@@ -165,7 +167,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/playovername1"
                             android:text="ABCD"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textColor="@color/color_cdc3b3"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="@dimen/dp_10" />
