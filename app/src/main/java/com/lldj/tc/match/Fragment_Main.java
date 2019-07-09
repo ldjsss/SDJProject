@@ -68,6 +68,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     private int disTime = 10000;
     private Observer<ObData> observer;
     public int selectID = 0;
+    private List<ResultsModel> gameList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                         mAdapter.updateSelect((List<ObData>) data.getValue());
                     }
                 } else if (_key.equalsIgnoreCase(EventType.SELECTGAMEID) || _key.equalsIgnoreCase(EventType.DETIALHIDE)) {
+                    if(_key.equalsIgnoreCase(EventType.SELECTGAMEID)) gameList = (List<ResultsModel>)data.getValue();
                     onRefresh();
                 }
                 else if (_key.equalsIgnoreCase(EventType.BETDETAILUI)) {
@@ -230,7 +232,16 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
                     subjectLrecycleview.refreshComplete(); //刷新完成
                 }
+
                 tvNoMatch.setVisibility(mlist.size()>0?View.GONE:View.VISIBLE);
+                if(tvNoMatch.getVisibility() == View.VISIBLE && gameList != null) {
+                    int _select = SharePreUtils.getInstance().getSelectGame(getContext());
+                    for (int i = 0; i < gameList.size(); i++) {
+                        if(gameList.get(i).getId() == _select){
+                            tvNoMatch.setText(String.format(getString(R.string.noGames), gameList.get(i).getName()));
+                        }
+                    }
+                }
 
                 ObData _data = new ObData(EventType.MATCHCOUNT, mlist.size());
                 _data.setTag(ViewType + "");

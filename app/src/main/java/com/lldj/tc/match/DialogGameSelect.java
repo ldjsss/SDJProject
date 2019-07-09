@@ -101,7 +101,7 @@ public class DialogGameSelect extends BaseDialog {
                 break;
             case R.id.tv_selectgame:
                 SharePreUtils.getInstance().setSelectGame(getContext(), adapter.selectID);
-                if(adapter != null) AppUtils.dispatchEvent(new ObData(EventType.SELECTGAMEID, adapter.selectID));
+                if(adapter != null) AppUtils.dispatchEvent(new ObData(EventType.SELECTGAMEID, list));
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.HIDGAMESELECT);
                 break;
         }
