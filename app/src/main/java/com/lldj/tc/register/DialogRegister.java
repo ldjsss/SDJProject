@@ -1,9 +1,7 @@
 package com.lldj.tc.register;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -20,9 +18,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.lldj.tc.R;
-import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
 import com.lldj.tc.httpMgr.beans.JsonBean;
+import com.lldj.tc.mainUtil.GlobalVariable;
+import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
@@ -30,7 +29,6 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
-import com.lldj.tc.mainUtil.GlobalVariable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -149,15 +147,15 @@ public class DialogRegister extends BaseDialog {
                     public void onComplete() {}
                 });
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-//                HttpMsg.sendGetCode(phoneNum, new HttpMsg.Listener(){
-//                    @Override
-//                    public void onFinish(Object _res) {
-//                        JsonBean res = (JsonBean)_res;
-//                        if(res.getCode() == GlobalVariable.succ) {
-//                            Toast.makeText(getContext(), getContext().getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
+                HttpMsg.getInstance().sendGetCode(phoneNum, JsonBean.class, new HttpMsg.Listener(){
+                    @Override
+                    public void onFinish(Object _res) {
+                        JsonBean res = (JsonBean)_res;
+                        if(res.getCode() == GlobalVariable.succ) {
+                            Toast.makeText(getContext(), getContext().getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
                 break;
             case R.id.register_tv:

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/loginlayout"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <ImageView
+        android:id="@+id/photo_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_tv"
+        android:layout_marginTop="120dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/main_logo"/>
+
+    <!--手机号-->
+    <include
+        layout="@layout/tel_include_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/photo_iv"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"/>
+    <!--密码-->
+    <include
+        layout="@layout/psw_include_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tel_root_layout"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <RelativeLayout
+        android:id="@+id/forget_psw_layout"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/psw_root_layout"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginTop="2dp">
+
+        <!--忘记密码-->
+        <TextView
+            android:id="@+id/forget_psw_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_alignParentEnd="true"
+            android:padding="5dp"
+            android:text="@string/forget_psw"
+            android:textColor="@color/color_544a36"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <!--登录-->
+    <TextView
+        android:id="@+id/login_tv"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_below="@id/forget_psw_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rec_00be0a_round100"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textColor="@color/black"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:textSize="20sp" />
+    <!--注册-->
+    <TextView
+        android:id="@+id/register_tv"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:background="@drawable/rec_1a1c26_round100"
+        android:text="@string/register_str"
+        android:textColor="@color/color_8e6c37"
+        android:layout_below="@id/login_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/just_look_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="@string/just_looking_around"
+        android:textColor="@color/color_544a36"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_below="@id/just_look_tv"
+        android:layout_alignStart="@id/just_look_tv"
+        android:layout_alignEnd="@id/just_look_tv"
+        android:layout_marginTop="-5dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/color_544a36" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:layout_below="@id/just_look_tv"></View>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="660dp"
+        android:id="@+id/frameaddlayout"
+        android:background="@color/color_bg"
+        android:visibility="gone"
+        >
+    </FrameLayout>
+
+</RelativeLayout>

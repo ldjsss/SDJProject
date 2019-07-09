@@ -19,16 +19,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
-import com.lldj.tc.mainUtil.HandlerType;
 import com.lldj.tc.httpMgr.HttpMsg;
+import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.httpMgr.beans.JsonBean;
-import com.lldj.tc.register.Dialog_Forget;
+import com.lldj.tc.mainUtil.GlobalVariable;
+import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.register.Adapter_Register;
 import com.lldj.tc.register.DialogRegister;
+import com.lldj.tc.register.Dialog_Forget;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
+import com.lldj.tc.toolslibrary.recycleDialog.BaseRecycleDialog;
+import com.lldj.tc.toolslibrary.recycleDialog.RecycleCell;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
-import com.lldj.tc.mainUtil.GlobalVariable;
 
 import java.util.ArrayList;
 
@@ -36,12 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * description: login<p>
- */
-
-
-public class Adapter_LoginCell extends RecyclerView.Adapter {
+public class Adapter_LoginCell extends RecycleCell {
 
     private Context mContext;
     private ArrayList<String> mlist = new ArrayList<>();
@@ -63,7 +61,7 @@ public class Adapter_LoginCell extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new viewHolder(LayoutInflater.from(mContext).inflate(R.layout.activity_login, parent, false));
+        return new viewHolder(LayoutInflater.from(mContext).inflate(R.layout.dialog_login, parent, false));
     }
 
     @Override
@@ -139,9 +137,7 @@ public class Adapter_LoginCell extends RecyclerView.Adapter {
                     });
                     break;
                 case R.id.register_tv:
-
-                    new DialogRegister(mContext, R.style.DialogTheme).show();
-
+                    Adapter_Register.showRegister(mContext);
                     break;
                 case R.id.just_look_tv:
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.JUSTLOOK);

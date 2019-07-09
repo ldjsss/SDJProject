@@ -5,14 +5,11 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.Activity_MainUI;
 import com.lldj.tc.R;
@@ -21,12 +18,12 @@ import com.lldj.tc.httpMgr.beans.FormatModel.ResultsModel;
 import com.lldj.tc.httpMgr.beans.JsonBean;
 import com.lldj.tc.mainUtil.GlobalVariable;
 import com.lldj.tc.mainUtil.HandlerType;
+import com.lldj.tc.register.Adapter_Register;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
-import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
+import com.lldj.tc.toolslibrary.recycleDialog.BaseRecycleDialog;
+import com.lldj.tc.toolslibrary.recycleDialog.RecycleCell;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
-import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
-import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
@@ -36,21 +33,19 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Activity_Login extends BaseActivity implements HandlerInter.HandleMsgListener, LRecyclerView.LScrollListener {
-    @BindView(R.id.loginrecycleview)
-    LRecyclerView loginrecycleview;
-
+public class Activity_Login extends BaseActivity implements HandlerInter.HandleMsgListener {
     LinearLayoutManager layoutManager;
     @BindView(R.id.videoView)
     VideoView videoView;
-    private Adapter_LoginCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
     private ArrayList<String> mlist = new ArrayList<>();
+
+    private RecycleCell recycleCell;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loginrecycleview);
+        setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
         mHandler.setHandleMsgListener(this);
@@ -73,24 +68,28 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         videoView.setLayoutParams(layoutParams);
 
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN );
+        recycleCell = new Adapter_LoginCell(this);
+        (new BaseRecycleDialog(this, R.style.DialogTheme)).showView(recycleCell);
 
     }
 
     @Override
+    protected void initData() { }
+
+    @Override
     public void handleMsg(Message msg) {
-        if (mAdapter != null) mAdapter.handleMsg(msg);
+        if(recycleCell != null) recycleCell.handleMsg(msg);
         switch (msg.what) {
             case HandlerType.GOTOMAIN:
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                HttpMsg.getInstance().sendGetUserInfo(SharePreUtils.getInstance().getToken(mContext), SharePreUtils.getInstance().getUserId(mContext), JsonBean.class, new HttpMsg.Listener(){
+                HttpMsg.getInstance().sendGetUserInfo(SharePreUtils.getInstance().getToken(mContext), SharePreUtils.getInstance().getUserId(mContext), JsonBean.class, new HttpMsg.Listener() {
                     @Override
                     public void onFinish(Object _res) {
                         JsonBean res = (JsonBean) _res;
-                        if(res.getCode() == GlobalVariable.succ){
-                            ResultsModel ret = (ResultsModel)res.getResult();
+                        if (res.getCode() == GlobalVariable.succ) {
+                            ResultsModel ret = (ResultsModel) res.getResult();
                             SharePreUtils.getInstance().setUserInfo(mContext, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername());
-                            Toast.makeText(mContext, getResources().getString(R.string.getUseInfoSucc),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, getResources().getString(R.string.getUseInfoSucc), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(mContext, Activity_MainUI.class));
                             finish();
                         }
@@ -110,37 +109,4 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
         }
     }
 
-    @Override
-    protected void initData() {
-        ButterKnife.bind(this);
-        layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        loginrecycleview.setLayoutManager(layoutManager);
-        mAdapter = new Adapter_LoginCell(mContext);
-        lAdapter = new LRecyclerViewAdapter(this, mAdapter);
-        loginrecycleview.setAdapter(lAdapter);
-        loginrecycleview.setLScrollListener(this);
-        loginrecycleview.setPullRefreshEnabled(false);
-        setFirstData();
-    }
-
-    private void setFirstData() {
-        mlist.add("测试");
-        mAdapter.changeData(mlist);
-        RecyclerViewStateUtils.setFooterViewState(mContext, loginrecycleview, 10, LoadingFooter.State.Normal, null);
-    }
-
-    @Override
-    public void onRefresh() { }
-
-    @Override
-    public void onScrollUp() { }
-
-    @Override
-    public void onScrollDown() { }
-
-    @Override
-    public void onBottom() { }
-
-    @Override
-    public void onScrolled(int distanceX, int distanceY) { }
 }
