@@ -87,7 +87,7 @@ public class Adapter_Forget extends RecycleCell {
 
     public static void showView(Context context){
         if(forget != null) return;
-        forget = new BaseRecycleDialog(context, R.style.DialogTheme);
+        forget = new BaseRecycleDialog(context, R.style.DialogTheme, null);
         forget.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {

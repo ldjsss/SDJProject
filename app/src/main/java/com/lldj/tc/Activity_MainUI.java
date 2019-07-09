@@ -8,12 +8,12 @@ import android.widget.RelativeLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.lldj.tc.match.Adapter_Set;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.match.DialogBet;
 import com.lldj.tc.match.DialogBetBottom;
 import com.lldj.tc.match.DialogGameSelect;
-import com.lldj.tc.match.DialogSet;
 import com.lldj.tc.match.Fragment_ViewPager;
 import com.lldj.tc.match.Frament_MatchDetail;
 import com.lldj.tc.toolslibrary.event.ObData;
@@ -84,7 +84,8 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
     public void handleMsg(Message msg) {
         switch (msg.what) {
             case HandlerType.LEFTMENU:
-                new DialogSet(this, R.style.DialogTheme).show();
+//                new DialogSet(this, R.style.DialogTheme).show();
+                Adapter_Set.showView(this);
                 break;
             case HandlerType.LEFTBACK:
                 break;

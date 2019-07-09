@@ -68,7 +68,7 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
         videoView.setLayoutParams(layoutParams);
 
         recycleCell = new Adapter_Login(this);
-        BaseRecycleDialog _dialog = new BaseRecycleDialog(this, R.style.DialogTheme);
+        BaseRecycleDialog _dialog = new BaseRecycleDialog(this, R.style.DialogTheme, null);
         _dialog.setCancelable(false);
         _dialog.showView(recycleCell);
 

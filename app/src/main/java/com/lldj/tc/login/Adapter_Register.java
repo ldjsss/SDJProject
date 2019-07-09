@@ -89,7 +89,7 @@ public class Adapter_Register extends RecycleCell {
 
     public static void showView(Context context){
         if(register != null) return;
-        register = new BaseRecycleDialog(context, R.style.DialogTheme);
+        register = new BaseRecycleDialog(context, R.style.DialogTheme, null);
         register.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {

@@ -25,10 +25,10 @@ public class BaseRecycleDialog extends BaseDialog implements LRecyclerView.LScro
     private RecycleCell mAdapter = null;
     private ArrayList<String> mlist = new ArrayList<>();
 
-    public BaseRecycleDialog(@NonNull Context context, int themeResId) {
+    public BaseRecycleDialog(@NonNull Context context, int themeResId, View view) {
         super(context, themeResId);
 
-        View view = View.inflate(context, R.layout.base_recycleview, null);
+        if(view == null)view = View.inflate(context, R.layout.base_recycleview, null);
         setContentView(view);
 
         Window window = this.getWindow();
