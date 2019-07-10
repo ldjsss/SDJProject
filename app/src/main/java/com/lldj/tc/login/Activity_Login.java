@@ -9,25 +9,19 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.lldj.tc.Activity_MainUI;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.JsonBean;
-import com.lldj.tc.utils.GlobalVariable;
-import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleDialog.BaseRecycleDialog;
-import com.lldj.tc.toolslibrary.recycleDialog.RecycleCell;
-import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
-
-import java.util.ArrayList;
+import com.lldj.tc.utils.GlobalVariable;
+import com.lldj.tc.utils.HandlerType;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

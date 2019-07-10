@@ -56,12 +56,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="下午好！"
+                    android:text="@string/goodmorning"
                     android:textColor="@color/white"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="st54166"
+                    android:text="@string/visitor"
                     android:textColor="@color/white"/>
 
             </LinearLayout>

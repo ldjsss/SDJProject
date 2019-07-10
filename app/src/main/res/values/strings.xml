@@ -76,6 +76,11 @@
     <string name="noGames">暂无%s比赛信息</string>
     <string name="gameing">进行中</string>
     <string name="nogamelooking">当前无直播</string>
+    <string name="visitor">游客</string>
+    <string name="goodmorning">上午好！</string>
+    <string name="goodafternoon">中午好！</string>
+    <string name="Goodafternoon">下午好！</string>
+    <string name="goodnight">晚上好！</string>
 
 
     <string name="input_tel_num">请输入手机号</string>
@@ -92,7 +97,7 @@
     <string name="title">title</string>
     <string name="register_ok">注册完成</string>
     <string name="tips">温馨提示</string>
-<string name="title_activity_match_detail">MatchDetailActivity</string>
+    <string name="title_activity_match_detail">MatchDetailActivity</string>
     <string name="myinformation">个人资料</string>
 
 </resources>
