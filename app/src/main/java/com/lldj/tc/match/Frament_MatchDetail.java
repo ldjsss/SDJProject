@@ -52,9 +52,6 @@ import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 import io.reactivex.disposables.Disposable;
 
-/**
- * description: <p>
- */
 public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.LScrollListener {
     @BindView(R.id.toolbar_back_iv)
     ImageView toolbarBackIv;
@@ -123,6 +120,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private Disposable disposable;
     private Observer<ObData> observer;
     private String gaming = "";
+    private boolean select = false;
 
     @Override
     public int getContentView() {
@@ -258,14 +256,11 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
                     if (mAdapter != null) {
                         mAdapter.changeData(oddMap, _data);
-                        RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
-                        jingcairecycleview.refreshComplete();
-                    }
-                } else {
-                    RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
-                    jingcairecycleview.refreshComplete();
-                }
 
+                    }
+                }
+                RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
+                jingcairecycleview.refreshComplete();
             }
         });
     }
@@ -279,13 +274,15 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             lAdapter = new LRecyclerViewAdapter(getContext(), mAdapter);
             jingcairecycleview.setAdapter(lAdapter);
             jingcairecycleview.setLScrollListener(this);
-            jingcairecycleview.setNoMore(true);//禁止加载更多
+            jingcairecycleview.setNoMore(true);
 
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     int tabPosition = tab.getPosition();
-                    layoutManager.scrollToPositionWithOffset(tabPosition + 1, 0);
+                    Log.e("onTabSelected", tabPosition + "");
+                    select = true;
+                    layoutManager.scrollToPosition(tabPosition + 1);
                 }
 
                 @Override
@@ -316,14 +313,15 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
     @Override
     public void onBottom() {
-        Log.e("打印", "滚动到底部");
+//        Log.e("打印", "滚动到底部");
     }
 
     @Override
     public void onScrolled(int distanceX, int distanceY) {
-        int firstVisible = layoutManager.findFirstVisibleItemPosition();
-        Log.e("firstVisible", firstVisible + "");
-        if (tabLayout != null) tabLayout.setScrollPosition(firstVisible - 1, 0, false);
+        int pos = layoutManager.findLastVisibleItemPosition() - 2;
+        Log.e("pos", pos + "");
+        if (tabLayout != null && select == false) tabLayout.setScrollPosition(pos < 0 ? 0 : pos, 0, false);
+        select = false;
     }
 
     private void startUpdate() {
