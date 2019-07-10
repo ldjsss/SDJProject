@@ -210,14 +210,13 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             });
         }
 
-        //刷新底部显示状态 0 只显示战队，无倍注显示，无法押获胜  显示战队和倍注，未开始状态 1 显示战队和倍注，滚盘状态 / 显示战队，锁盘，滚盘状态 3 已结束
         public void bottomCommon(int _type) {
 
             ResultsModel _data = mlist.get(getAdapterPosition() - 1);
             Team team0    = _data.getTeam() != null ? _data.getTeam().get(0) : null;
             Team team1    = _data.getTeam() != null ? _data.getTeam().get(1) : null;
             List<Odds> odds = _data.getOdds() != null ? _data.getOdds() : null;
-            int status = _data.getStatus();
+            int matchStatus = _data.getStatus();//1:未开始2:滚盘3:已结束4:已取消或异常
 
             gamename.setText(_data.getTournament_name());
             gamenamecount.setText("/ " + _data.getRound());
@@ -232,12 +231,10 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
             setSelect(odds);
 
-            if (status == 2) {
-                gamestatusicon.setImageResource(R.mipmap.match_status_1);
-            } else {
-                gamestatusicon.setImageResource(R.mipmap.match_status_0);
-            }
-            gamestatus.setText(statusText[status]);
+            gamestatus.setText(statusText[matchStatus]);
+            gamestatusicon.setImageResource(matchStatus == 2 ? R.mipmap.match_status_1 : R.mipmap.match_status_0);
+            gameresult.setVisibility((matchStatus == 2 || matchStatus == 3) ? View.VISIBLE : View.GONE);
+            gametime.setVisibility((matchStatus == 2 || matchStatus == 3) ? View.GONE : View.VISIBLE);
 
             HttpTool.getBitmapUrl(team0.getTeam_logo(), new bmpListener() {
                 @Override
@@ -311,32 +308,21 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                  case 0:
                     bottomgamelayout.setVisibility(View.VISIBLE);
                     bottomoverlayout.setVisibility(View.GONE);
-                    gameresult.setVisibility(View.GONE);
-                    gametime.setVisibility(View.VISIBLE);
 
                     break;
                 case 1:
 
                     bottomgamelayout.setVisibility(View.VISIBLE);
                     bottomoverlayout.setVisibility(View.GONE);
-                    gameresult.setVisibility(View.VISIBLE);
-                    gametime.setVisibility(View.GONE);
-
-                    gamestatusicon.setBackgroundResource(R.mipmap.match_status_1);
                     break;
                 case 2:
                     bottomgamelayout.setVisibility(View.VISIBLE);
                     bottomoverlayout.setVisibility(View.GONE);
-                    gameresult.setVisibility(View.GONE);
-                    gametime.setVisibility(View.VISIBLE);
                     break;
                 case 3:
 
                     bottomgamelayout.setVisibility(View.GONE);
                     bottomoverlayout.setVisibility(View.VISIBLE);
-
-                    gametime.setVisibility(View.GONE);
-                    gameresult.setVisibility(View.VISIBLE);
 
                     Odds _odd = odd0;
                     String win = "";
