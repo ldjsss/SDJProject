@@ -255,14 +255,11 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
             gameresult.setText(team0.getScore().getTotal() + " - " + team1.getScore().getTotal());
 
-
             Odds odd0 = getOddData(odds, "final", team0.getTeam_id());
             Odds odd1 = getOddData(odds, "final", team1.getTeam_id());
-            updateArrow(odd0, (String)gamebet0.getText(), imggamearrow0);
-            updateArrow(odd1, (String)gamebet1.getText(), imggamearrow1);
-            if(team0.getTeam_name().equalsIgnoreCase("we") && team1.getTeam_name().equalsIgnoreCase("tes")){
-                Log.e("ssss", "ssss");
-            }
+            updateArrow(odd0, gamebet0, imggamearrow0);
+            updateArrow(odd1, gamebet1, imggamearrow1);
+
             if(odd0!=null){
                 int _status = odd0.getStatus();
                 gamebet0.setText(odd0.getOdds());
@@ -391,24 +388,27 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             }
         }
 
-        private void updateArrow(Odds odd, String _last, ImageView imggamearrow){
-            if(odd == null) return;
-            int _status = odd.getStatus();
-            if(_status == 2){ //lock bet
-                imggamearrow.setVisibility(View.GONE);
+        private void updateArrow(Odds odd, TextView betText, ImageView imggamearrow){
+            if(odd == null || betText == null) return;
+            int _status     = odd.getStatus();
+            String _last    = (String)betText.getText();
+            int _tag        = betText.getTag() == null ? -1 : Integer.parseInt((String)betText.getTag());
+            String _current = odd.getOdds();
+
+            if( _status == 1
+                && _tag == odd.getMatch_id()
+                && !TextUtils.isEmpty(_last)
+                && !TextUtils.isEmpty(_current)
+                && !_last.equalsIgnoreCase(_current)){
+
+                float lastOdds = Float.parseFloat(_last);
+                float curOdds  = Float.parseFloat(_current);
+                if(curOdds > lastOdds)imggamearrow.setImageResource(R.mipmap.main_courage);
+                else imggamearrow.setImageResource(R.mipmap.main_warning);
+                Utils.setFlickerAnimation(imggamearrow, 5);
+                betText.setTag(odd.getMatch_id());
             }
-            else if(_status == 1){
-                if (!TextUtils.isEmpty(odd.getOdds())) {
-                    String _current = odd.getOdds();
-                    if(!TextUtils.isEmpty(_last) && !TextUtils.isEmpty(_current) && !_last.equalsIgnoreCase(_current)){
-                        float lastOdds = Float.parseFloat(_last);
-                        float curOdds  = Float.parseFloat(_current);
-                        if(curOdds > lastOdds)imggamearrow.setImageResource(R.mipmap.main_courage);
-                        else imggamearrow.setImageResource(R.mipmap.main_warning);
-                        Utils.setFlickerAnimation(imggamearrow, 5);
-                    }
-                }
-            }
+            else imggamearrow.setVisibility(View.GONE);
         }
 
         private Odds getOddData(List<Odds> odds, String key, int team_id) {

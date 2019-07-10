@@ -33,13 +33,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class Activity_Login extends BaseActivity implements HandlerInter.HandleMsgListener {
-    LinearLayoutManager layoutManager;
     @BindView(R.id.videoView)
     VideoView videoView;
-    private LRecyclerViewAdapter lAdapter = null;
-    private ArrayList<String> mlist = new ArrayList<>();
-
-    private RecycleCell recycleCell;
+    private BaseRecycleDialog _dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,11 +63,17 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         videoView.setLayoutParams(layoutParams);
 
-        recycleCell = new Adapter_Login(this);
-        BaseRecycleDialog _dialog = new BaseRecycleDialog(this, R.style.DialogTheme, null);
+        _dialog = new BaseRecycleDialog(this, R.style.DialogTheme, null);
         _dialog.setCancelable(false);
-        _dialog.showView(recycleCell);
+        _dialog.showView(new Adapter_Login(this));
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        _dialog.dismiss();
+        _dialog = null;
     }
 
     @Override
@@ -79,7 +81,7 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
 
     @Override
     public void handleMsg(Message msg) {
-        if(recycleCell != null) recycleCell.handleMsg(msg);
+        if(_dialog != null) _dialog.getRecycleCell().handleMsg(msg);
         switch (msg.what) {
             case HandlerType.GOTOMAIN:
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);

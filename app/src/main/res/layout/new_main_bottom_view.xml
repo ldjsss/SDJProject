@@ -53,7 +53,7 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="45dp"
-                android:src="@mipmap/zhiyi_icon" />
+                android:src="@mipmap/main_navigation" />
 
         </LinearLayout>
         <LinearLayout
