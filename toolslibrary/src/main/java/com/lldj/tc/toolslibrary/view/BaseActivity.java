@@ -3,6 +3,7 @@ package com.lldj.tc.toolslibrary.view;
 import android.annotation.TargetApi;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -185,6 +186,16 @@ public abstract class BaseActivity extends FragmentActivity{
     }
     protected boolean isImmersionBarEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode== KeyEvent.KEYCODE_BACK) {
+//            moveTaskToBack(true);
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

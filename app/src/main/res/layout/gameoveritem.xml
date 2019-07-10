@@ -36,7 +36,6 @@
     <RelativeLayout
         android:layout_width="125dp"
         android:layout_marginEnd="10dp"
-        android:layout_alignParentRight="true"
         android:layout_height="match_parent"
         android:id="@+id/playcelllayout1"
         android:layout_weight = "1">

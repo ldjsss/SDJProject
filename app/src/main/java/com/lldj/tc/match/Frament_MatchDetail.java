@@ -305,22 +305,26 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
     @Override
     public void onScrollUp() {
+
     }
 
     @Override
     public void onScrollDown() {
+
     }
 
     @Override
     public void onBottom() {
 //        Log.e("打印", "滚动到底部");
+        if (tabLayout != null && select == false) tabLayout.setScrollPosition(mTotal - 1, 0, false);
     }
 
     @Override
     public void onScrolled(int distanceX, int distanceY) {
-        int pos = layoutManager.findLastVisibleItemPosition() - 2;
-        Log.e("pos", pos + "");
-        if (tabLayout != null && select == false) tabLayout.setScrollPosition(pos < 0 ? 0 : pos, 0, false);
+        int pos = layoutManager.findFirstVisibleItemPosition();
+        Log.e("pos", pos + "  distanceY = " + distanceY) ;
+        if(distanceY <= 0) pos = 0;
+        if (tabLayout != null && select == false) tabLayout.setScrollPosition(pos, 0, false);
         select = false;
     }
 

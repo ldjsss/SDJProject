@@ -81,8 +81,16 @@
     <string name="goodafternoon">中午好！</string>
     <string name="Goodafternoon">下午好！</string>
     <string name="goodnight">晚上好！</string>
-
-
+    <string name="wallet">钱包</string>
+    <string name="surplus">余额</string>
+    <string name="BettingRecord">投注记录</string>
+    <string name="message">消息</string>
+    <string name="activity">活动</string>
+    <string name="rules">玩法规则</string>
+    <string name="about">关于</string>
+    <string name="version">版本</string>
+    <string name="agency">代理</string>
+    <string name="contactus">联系我们</string>
     <string name="input_tel_num">请输入手机号</string>
     <string name="set_psw">设置密码(6-18位字母数字组合)</string>
     <string name="verify_code_login">验证码登录</string>
