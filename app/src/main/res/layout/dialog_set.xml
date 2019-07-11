@@ -20,16 +20,21 @@
             android:padding="@dimen/dp_10"
             android:src="@mipmap/main_back"
             android:layout_centerVertical="true"/>
-        <TextView
+        <com.lldj.tc.toolslibrary.view.StrokeTextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/myinformation"
-            android:layout_centerInParent="true"
-            android:textColor="@color/white"/>
+            android:textSize="20sp"
+            app:outerColor="#000000"
+            app:innnerColor="#ffffff"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:ellipsize="end"/>
         <ImageView
             android:id="@+id/imset"
-            android:layout_width="@dimen/toolbar_height"
-            android:layout_height="@dimen/toolbar_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
             android:src="@mipmap/main_settings"
             android:layout_centerVertical="true"
@@ -61,15 +66,16 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/dp_20"
-                android:background="@drawable/rec_stroke_round4_969696">
+                android:background="@drawable/rec_stroke_969696">
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"></View>
+                    android:layout_height="30dp"></View>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/goodmorning"
-                    android:textColor="@color/color_cdc3b3"/>
+                    android:textColor="@color/color_cdc3b3"
+                    android:id="@+id/hellow"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp"></View>
@@ -77,29 +83,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/visitor"
-                    android:textColor="@color/color_cdc3b3"/>
+                    android:textColor="@color/color_cdc3b3"
+                    android:textSize="18sp"
+                    android:id="@+id/tvname"/>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"></View>
+                    android:layout_height="30dp"></View>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="#1B1E2A"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"></View>
-
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/dimen_60"
+                    android:id="@+id/packlayout">
                     <ImageView
                         android:id="@+id/packed_iv"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
-                        android:src="@mipmap/main_version"
+                        android:src="@mipmap/main_wallet"
                         android:layout_centerVertical="true"
                         />
                     <TextView
@@ -109,6 +114,7 @@
                         android:layout_toEndOf="@id/packed_iv"
                         android:layout_marginStart="@dimen/dp_10"
                         android:text="@string/wallet"
+                        android:textSize="18sp"
                         android:textColor="@color/color_cdc3b3"/>
                     <ImageView
                         android:id="@+id/right_arrow"
@@ -129,6 +135,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:text="@string/surplus"
+                            android:textSize="18sp"
                             android:textColor="@color/color_cdc3b3"/>
                         <TextView
                             android:layout_width="wrap_content"
@@ -136,29 +143,28 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/dp_10"
                             android:text="¥0"
-                            android:textColor="#86E5D8"/>
+                            android:textSize="18sp"
+                            android:textColor="#86E5D8"
+                            android:id="@+id/moneycur"/>
 
                     </LinearLayout>
 
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"></View>
-
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50"
-                android:layout_marginTop="@dimen/dp_40"
-                android:background="@drawable/rec_stroke_round4_969696">
+                android:layout_height="@dimen/dimen_60"
+                android:layout_marginTop="@dimen/dp_60"
+                android:background="@drawable/rec_stroke_969696"
+                android:id="@+id/recordlayout">
 
                 <ImageView
                     android:id="@+id/record_iv"
                     android:layout_width="33dp"
                     android:layout_height="33dp"
-                    android:src="@mipmap/main_version"
+                    android:src="@mipmap/main_record"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20" />
 
@@ -169,6 +175,7 @@
                     android:layout_toEndOf="@id/record_iv"
                     android:textColor="@color/color_cdc3b3"
                     android:text="@string/BettingRecord"
+                    android:textSize="18sp"
                     android:layout_marginStart="@dimen/dp_10"/>
 
                 <ImageView
@@ -188,13 +195,14 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50"
-                android:background="@drawable/rec_stroke_round4_969696">
+                android:layout_height="@dimen/dimen_60"
+                android:background="@drawable/rec_stroke_969696"
+                android:id="@+id/messlayout">
                 <ImageView
                     android:id="@+id/msg_iv"
                     android:layout_width="33dp"
                     android:layout_height="33dp"
-                    android:src="@mipmap/main_version"
+                    android:src="@mipmap/main_notification"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
                     />
@@ -205,6 +213,7 @@
                     android:layout_toEndOf="@id/msg_iv"
                     android:textColor="@color/color_cdc3b3"
                     android:text="@string/message"
+                    android:textSize="18sp"
                     android:layout_marginStart="@dimen/dp_10"/>
                 <ImageView
                     android:layout_width="33dp"
@@ -220,15 +229,17 @@
                     android:background="#1B1E2A"
                     android:layout_alignParentBottom="true"/>
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50"
-                android:background="@drawable/rec_stroke_round4_969696">
+                android:layout_height="@dimen/dimen_60"
+                android:background="@drawable/rec_stroke_969696"
+                android:id="@+id/activitylayout">
                 <ImageView
                     android:id="@+id/activity_iv"
                     android:layout_width="33dp"
                     android:layout_height="33dp"
-                    android:src="@mipmap/main_version"
+                    android:src="@mipmap/main_move"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
                     />
@@ -239,6 +250,7 @@
                     android:textColor="@color/color_cdc3b3"
                     android:text="@string/activity"
                     android:layout_toEndOf="@id/activity_iv"
+                    android:textSize="18sp"
                     android:layout_marginStart="@dimen/dp_10"/>
                 <ImageView
                     android:layout_width="33dp"
@@ -257,9 +269,10 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50"
-                android:layout_marginTop="@dimen/dp_40"
-                android:background="@drawable/rec_stroke_round4_969696">
+                android:layout_height="@dimen/dimen_60"
+                android:layout_marginTop="@dimen/dp_60"
+                android:background="@drawable/rec_stroke_969696"
+                android:id="@+id/rulelayout">
                 <ImageView
                     android:id="@+id/rule_iv"
                     android:layout_width="33dp"
@@ -275,6 +288,7 @@
                     android:textColor="@color/color_cdc3b3"
                     android:text="@string/rules"
                     android:layout_toEndOf="@id/rule_iv"
+                    android:textSize="18sp"
                     android:layout_marginStart="@dimen/dp_10"/>
                 <ImageView
                     android:layout_width="33dp"
@@ -293,8 +307,9 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50"
-                android:background="@drawable/rec_stroke_round4_969696">
+                android:layout_height="@dimen/dimen_60"
+                android:background="@drawable/rec_stroke_969696"
+                android:id="@+id/aboutlayout">
                 <ImageView
                     android:layout_width="33dp"
                     android:layout_height="33dp"
@@ -308,6 +323,7 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/color_cdc3b3"
                     android:text="@string/about"
+                    android:textSize="18sp"
                     android:layout_marginStart="63dp"/>
                 <ImageView
                     android:layout_width="33dp"
@@ -323,10 +339,11 @@
                     android:background="#1B1E2A"
                     android:layout_alignParentBottom="true"/>
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50"
-                android:background="@drawable/rec_stroke_round4_969696">
+                android:layout_height="@dimen/dimen_60"
+                android:background="@drawable/rec_stroke_969696">
                 <ImageView
                     android:layout_width="33dp"
                     android:layout_height="33dp"
@@ -340,6 +357,7 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/color_cdc3b3"
                     android:text="@string/version"
+                    android:textSize="18sp"
                     android:layout_marginStart="63dp"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -347,8 +365,10 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/dimen_20"
-                    android:textColor="@color/white"
-                    android:text="v1.0.0(100)"/>
+                    android:textColor="@color/color_cdc3b3"
+                    android:text="v1.0.0(100)"
+                    android:textSize="18sp"
+                    android:id="@+id/version"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -380,7 +400,9 @@
             android:textColor="@color/color_cdc3b3"
             android:background="@drawable/rec_nulltext"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:textSize="18sp"
+            android:id="@+id/agency"/>
         <View
             android:layout_width="@dimen/dp_37"
             android:layout_height="match_parent"
@@ -393,7 +415,9 @@
             android:gravity="center"
             android:background="@drawable/rec_nulltext"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:textSize="18sp"
+            android:id="@+id/contatus"/>
 
         <View
             android:layout_width="@dimen/dp_37"

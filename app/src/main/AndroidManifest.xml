@@ -67,7 +67,7 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity
-            android:name=".login.Activity_Login"
+            android:name=".Activity_Login"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />

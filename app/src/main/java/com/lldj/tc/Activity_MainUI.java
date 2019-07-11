@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.lldj.tc.login.Activity_Login;
 import com.lldj.tc.match.Dialog_Set;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.utils.EventType;

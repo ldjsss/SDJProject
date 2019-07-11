@@ -121,10 +121,11 @@ public class SharePreUtils {
         setToken(context, token);
     }
 
-    public static void setUserInfo(Context context, final String openid, final String mobile, final String money, final String username) {
+    public static void setUserInfo(Context context, final String openid, final String mobile, final String money, final String username, final String name) {
         setUserId(context, openid);
         setPhone(context, mobile);
-        setName(context, username);
+        setUserName(context, username);
         setMoney(context, money);
+        setName(context, name);
     }
 }

@@ -1,4 +1,4 @@
-package com.lldj.tc.login;
+package com.lldj.tc;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -20,6 +20,8 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.JsonBean;
+import com.lldj.tc.login.Dialog_Forget;
+import com.lldj.tc.login.Dialog_Register;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
@@ -177,7 +179,7 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
                         JsonBean res = (JsonBean) _res;
                         if (res.getCode() == GlobalVariable.succ) {
                             ResultsModel ret = (ResultsModel) res.getResult();
-                            SharePreUtils.getInstance().setUserInfo(mContext, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername());
+                            SharePreUtils.getInstance().setUserInfo(mContext, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername(), "");
                             Toast.makeText(mContext, getResources().getString(R.string.getUseInfoSucc), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(mContext, Activity_MainUI.class));
                             finish();
