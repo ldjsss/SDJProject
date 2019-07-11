@@ -48,11 +48,11 @@ public class Fragment_Banner extends BaseFragment {
 
     private void initData() {
         msgList = new ArrayList<>();
-        msgList.add("学好Java、Android、C#、C、ios、html+css+js");
-        msgList.add("走遍天下都不怕！！！！！");
-        msgList.add("不是我吹，就怕你做不到，哈哈");
-        msgList.add("superluo");
-        msgList.add("你是最棒的，奔跑吧孩子！");
+        msgList.add("欢迎各位来到闪电竞！");
+        msgList.add("Welcome to the lightning race！");
+        msgList.add("大家好，我是闪电竟，欢迎大家的到来！");
+        msgList.add("Hello, everyone, I am lightning unexpectedly！");
+        msgList.add("闪电竞！闪电竞！闪电竞！闪电竞！闪电竞！");
         /**
          * 设置数据，方式一
          */

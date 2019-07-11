@@ -55,8 +55,8 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 
     private Adapter_MainCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
-    private ResultsModel[] alist; //展示数据列表
-    private ArrayList<ResultsModel> mlist = new ArrayList<>(); //全部数据列表
+    private ResultsModel[] alist;
+    private ArrayList<ResultsModel> mlist = new ArrayList<>();
     private int pageSize = 10;
     private int ViewType;
     private BaseFragment middleFragment;
@@ -102,7 +102,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     public void initView(View rootView) {
         ButterKnife.bind(this, rootView);
 
-        layoutBoard.setId(1000 + ViewType); //为解决复用后id重复，动态添加控件时加跑偏
+        layoutBoard.setId(1000 + ViewType); //In order to solve id duplication after reuse, add deviation when adding control dynamically
 
         if (lAdapter == null) {
             subjectLrecycleview.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
@@ -125,7 +125,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     }
 
     @Override
-    public void onRefresh() {//请求全部数据
+    public void onRefresh() {
         Clog.e("onRefresh", "onRefresh = " + ViewType);
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
         getMatchData();
@@ -155,7 +155,6 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 
     @Override
     public void onBottom() {
-        Log.e("打印", "滚动到底部");
         LoadingFooter.State state = RecyclerViewStateUtils.getFooterViewState(subjectLrecycleview);
         if (state == LoadingFooter.State.Loading) {
             return;
@@ -181,7 +180,6 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         }
         mAdapter.changeData(mlist);
         RecyclerViewStateUtils.setFooterViewState(subjectLrecycleview, LoadingFooter.State.Normal);
-//        Log.e("数组长度", mlist.size() + "==");
         if (mlist.size() >= alist.length) {
             RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
         }
@@ -226,7 +224,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 
                     mAdapter.changeData(mlist);
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
-                    subjectLrecycleview.refreshComplete(); //刷新完成
+                    subjectLrecycleview.refreshComplete();
                 }
 
                 tvNoMatch.setVisibility(mlist.size()>0?View.GONE:View.VISIBLE);

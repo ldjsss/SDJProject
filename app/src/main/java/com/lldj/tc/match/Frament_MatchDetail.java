@@ -171,6 +171,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         gamestatus1.setText("");
         matchwin0.setVisibility(View.GONE);
         matchwin1.setVisibility(View.GONE);
+
+        initRecycleview();
     }
 
     public void showView(int ViewType, int matchId) {
@@ -251,7 +253,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                         }
 
                         mTotal = keys.size();
-                        initList(oddMap, keys);
+                        if(tabLayout != null && tabLayout.getTabCount() != keys.size()){
+                            tabLayout.removeAllTabs();
+                            for (int i = 0; i < keys.size(); i++) {
+                                tabLayout.addTab(tabLayout.newTab().setText(keys.get(i)));
+                            }
+                        }
                     }
 
                     if (mAdapter != null) {
@@ -265,7 +272,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         });
     }
 
-    private void initList(Map<String, List<Odds>> oddMap, ArrayList<String> keys) {
+    private void initRecycleview() {
 
         if (layoutManager == null) {
             layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
@@ -294,13 +301,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                 }
             });
         }
-
-       if(tabLayout.getTabCount() != keys.size()){
-           tabLayout.removeAllTabs();
-           for (int i = 0; i < keys.size(); i++) {
-               tabLayout.addTab(tabLayout.newTab().setText(keys.get(i)));
-           }
-       }
     }
 
     @Override

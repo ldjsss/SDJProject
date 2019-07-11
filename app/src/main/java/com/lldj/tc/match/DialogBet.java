@@ -54,7 +54,7 @@ public class DialogBet extends BaseDialog {
     private ExpandableListView expandableListView;
     private Map<String, BetModel> betList = new HashMap();
 
-    //注意，字符数组不要写成{{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
+    //Note that the character array is not written that {{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
     private String[][] childs = {{"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}};
     private Observer<ObData> observer;
     private List<ObData> groups = new ArrayList<>();
@@ -78,7 +78,7 @@ public class DialogBet extends BaseDialog {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         WindowManager.LayoutParams layoutParams = window.getAttributes();
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE; //核心代码是这个属性。
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         window.setAttributes(layoutParams);
 
         this.setCanceledOnTouchOutside(false);
@@ -205,7 +205,6 @@ public class DialogBet extends BaseDialog {
         observer = null;
     }
 
-    //为ExpandableListView自定义适配器
     class MyExpandableListView extends BaseExpandableListAdapter {
         @Override
         public int getGroupCount() {
@@ -213,7 +212,7 @@ public class DialogBet extends BaseDialog {
         }
 
         @Override
-        public int getChildrenCount(int groupPosition) { //参数groupPosition表示第几个一级列表
+        public int getChildrenCount(int groupPosition) {
             Log.d("smyhvae", "-->" + groupPosition);
             return childs[groupPosition].length;
         }
@@ -225,7 +224,7 @@ public class DialogBet extends BaseDialog {
 
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            return childs[groupPosition][childPosition];  //不要误写成groups[groupPosition][childPosition]
+            return childs[groupPosition][childPosition];
         }
 
         @Override
@@ -243,7 +242,7 @@ public class DialogBet extends BaseDialog {
             return true;
         }
 
-        //【重要】填充一级列表
+        //Fill the first level list
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             ObData data = groups.get(groupPosition);
@@ -303,7 +302,7 @@ public class DialogBet extends BaseDialog {
             return null;
         }
 
-        //【重要】填充二级列表
+        //Fill the secondary list
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
@@ -326,7 +325,7 @@ public class DialogBet extends BaseDialog {
             return convertView;
         }
 
-        //二级列表中的item是否能够被选中？可以改为true
+        //an the item in the secondary list be selected? I can change it to true
         @Override
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return true;

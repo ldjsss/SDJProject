@@ -1,14 +1,18 @@
 package com.lldj.tc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.lldj.tc.login.Activity_Login;
 import com.lldj.tc.match.Dialog_Set;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.match.DialogBet;
@@ -57,7 +61,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
     protected void initData() {
         ButterKnife.bind(this);
 
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);        //禁止手势滑动
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);        // gesture sliding is forbidden
         getSupportFragmentManager().beginTransaction().add(R.id.mainflayout, new Fragment_ViewPager()).commit();
 
         registEvent(new Observer<ObData>() {
@@ -84,6 +88,11 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
     public void handleMsg(Message msg) {
         switch (msg.what) {
             case HandlerType.LEFTMENU:
+                if(TextUtils.isEmpty(SharePreUtils.getUserId(mContext))){
+                    startActivity(new Intent(mContext, Activity_Login.class));
+                    finish();
+                    return;
+                }
                 new Dialog_Set(this, R.style.DialogTheme).show();
                 break;
             case HandlerType.LEFTBACK:
@@ -95,6 +104,10 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                 AppUtils.showLoading(mContext);
                 break;
             case HandlerType.SHOWBETDIA:
+                if(TextUtils.isEmpty(SharePreUtils.getUserId(mContext))){
+                    ToastUtils.show_middle_pic(this, R.mipmap.cancle_icon, getResources().getString(R.string.cannotbet), ToastUtils.LENGTH_SHORT);
+                    return;
+                }
                 if (dialogBet == null) dialogBet = new DialogBet(this, R.style.DialogTheme);
                 dialogBet.show();
                 if (dialogBetBottom == null)
@@ -127,7 +140,6 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //销毁移除所有消息，避免内存泄露
         mHandler.removeCallbacks(null);
     }
 

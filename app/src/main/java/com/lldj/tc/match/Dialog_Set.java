@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
@@ -14,6 +15,7 @@ import com.lldj.tc.R;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class Dialog_Set extends BaseDialog {
 
@@ -29,10 +31,21 @@ public class Dialog_Set extends BaseDialog {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         WindowManager.LayoutParams layoutParams = window.getAttributes();
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE; //核心代码是这个属性。
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         window.setAttributes(layoutParams);
 
         this.setCanceledOnTouchOutside(true);
     }
 
+    @OnClick({R.id.back_main_iv, R.id.imset})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back_main_iv:
+                dismiss();
+                break;
+            case R.id.imset:
+                Toast.makeText(getContext(),"---------------Not yet implemented ",Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
 }
