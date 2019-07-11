@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.lldj.tc.match.Dialog_Set;
+import com.lldj.tc.info.Dialog_Set;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
@@ -88,8 +88,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
         switch (msg.what) {
             case HandlerType.LEFTMENU:
                 if(TextUtils.isEmpty(SharePreUtils.getUserId(mContext))){
-                    startActivity(new Intent(mContext, Activity_Login.class));
-                    finish();
+                    HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEAVEGAME);
                     return;
                 }
                 new Dialog_Set(this, R.style.DialogTheme).show();
@@ -132,6 +131,10 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                 if (dialogGameSelect == null) return;
                 dialogGameSelect.dismiss();
                 dialogGameSelect = null;
+                break;
+            case HandlerType.LEAVEGAME:
+                startActivity(new Intent(mContext, Activity_Login.class));
+                finish();
                 break;
         }
     }

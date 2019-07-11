@@ -1,4 +1,4 @@
-package com.lldj.tc.match;
+package com.lldj.tc.info;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -61,14 +61,11 @@ public class Dialog_Set extends BaseDialog {
         tvname.setText(SharePreUtils.getUserName(context));
         hellow.setText(getGreetings());
 
-        HttpMsg.getInstance().sendGetUserInfo(SharePreUtils.getInstance().getToken(context), SharePreUtils.getInstance().getUserId(context), JsonBean.class, new HttpMsg.Listener() {
+        HttpMsg.getInstance().sendGetUserInfo(context, SharePreUtils.getInstance().getToken(context), JsonBean.class, new HttpMsg.Listener() {
             @Override
             public void onFinish(Object _res) {
                 JsonBean res = (JsonBean) _res;
                 if (res.getCode() == GlobalVariable.succ) {
-                    ResultsModel ret = (ResultsModel) res.getResult();
-                    SharePreUtils.getInstance().setUserInfo(context, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername(), "");
-                    Toast.makeText(context, context.getResources().getString(R.string.getUseInfoSucc), Toast.LENGTH_SHORT).show();
                     moneycur.setText("¥" + SharePreUtils.getMoney(context));
                     tvname.setText(SharePreUtils.getUserName(context));
                 }
@@ -79,11 +76,11 @@ public class Dialog_Set extends BaseDialog {
     private String getGreetings() {
         Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("HH");
-        String ret = "";
+        String ret = "hello";
         String str = df.format(date);
         int a = Integer.parseInt(str);
         if (a >= 0 && a <= 6) {
-            System.out.println("凌晨");
+            ret = getContext().getString(R.string.goodinthenmorning);
         }
         if (a > 6 && a <= 12) {
             ret = getContext().getString(R.string.goodmorning);
@@ -109,7 +106,7 @@ public class Dialog_Set extends BaseDialog {
                 dismiss();
                 break;
             case R.id.imset:
-                Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+                new Dialog_Info(getContext(), R.style.DialogTheme).show();
                 break;
             case R.id.packed_iv:
                 break;

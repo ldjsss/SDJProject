@@ -48,7 +48,7 @@
     <string name="willget">预计返回 </string>
     <string name="betmax">最大 </string>
     <string name="sure">确认 </string>
-    <string name="getUseInfoSucc">获取用户信息成功</string>
+    <string name="getUseInfoFail">获取用户信息失败</string>
     <string name="getGameListSucc">获取比赛列表成功</string>
     <string name="hadlock">已锁盘</string>
     <string name="maxSelect">最多可选择12场比赛</string>
@@ -77,6 +77,7 @@
     <string name="gameing">进行中</string>
     <string name="nogamelooking">当前无直播</string>
     <string name="visitor">游客</string>
+    <string name="goodinthenmorning">凌晨好！</string>
     <string name="goodmorning">上午好！</string>
     <string name="goodafternoon">中午好！</string>
     <string name="Goodafternoon">下午好！</string>
@@ -96,6 +97,12 @@
     <string name="register_ok">注册完成</string>
     <string name="myinformation">个人资料</string>
     <string name="cannotbet">您目前是游客身份不能进行投注</string>
+    <string name="setTitle">设置</string>
+    <string name="realname">真实姓名</string>
+    <string name="birth">出生日期</string>
+    <string name="changeph">修改手机号码</string>
+    <string name="changekey">修改密码</string>
+    <string name="exit">退出</string>
 
 </resources>
 

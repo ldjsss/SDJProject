@@ -1,10 +1,18 @@
 package com.lldj.tc.http;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.lldj.tc.Activity_MainUI;
+import com.lldj.tc.R;
 import com.lldj.tc.http.beans.BaseBean;
+import com.lldj.tc.http.beans.FormatModel.ResultsModel;
+import com.lldj.tc.http.beans.JsonBean;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
@@ -25,6 +33,7 @@ public class HttpMsg<T>{
     public static String baseUrl2 = "http://192.168.1.118:9002/";
     public static String baseUrl3 = "http://192.168.1.118:9004/";
     public static String baseUrl4 = "http://192.168.1.118:9000/";
+    public static String baseUrl5 = "http://192.168.1.118:9006/";
 
     private static void toastMess(String msg){
         if(msg == null) msg = "";
@@ -106,12 +115,23 @@ public class HttpMsg<T>{
         HttpTool.httpPost(baseUrl + "register/forget", URLParams, new HttpMsg().getListener(service, callbackListener));
     }
 
-    public void sendGetUserInfo(final String access_token, final String openid, Class<T>service, Listener callbackListener) {
+    public void sendGetUserInfo(Context context, final String access_token, Class<T>service, Listener callbackListener) {
         Map<String,String> URLParams = new HashMap();
         URLParams.put("access_token", access_token);
-        URLParams.put("openid", openid);
 
-        HttpTool.httpPost(baseUrl2 + "user/info", URLParams, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.sendPost(baseUrl5 + "user/info", access_token, "", new HttpMsg().getListener(service, new Listener(){
+            @Override
+            public void onFinish(Object msg) {
+                JsonBean res = (JsonBean) msg;
+                if (res.getCode() == GlobalVariable.succ) {
+                    ResultsModel ret = (ResultsModel) res.getResult();
+                    SharePreUtils.getInstance().setUserInfo(context, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername(), "");
+                }
+                else Toast.makeText(context, context.getResources().getString(R.string.getUseInfoFail), Toast.LENGTH_SHORT).show();
+
+                callbackListener.onFinish(msg);
+            }
+        }));
     }
 
     /////////////////////////

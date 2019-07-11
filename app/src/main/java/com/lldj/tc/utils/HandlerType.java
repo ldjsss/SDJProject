@@ -21,12 +21,14 @@ public class HandlerType {
     public static final int MATCHLIST = 12;
     public static final int GAMESELECT = 13;
     public static final int HIDGAMESELECT = 14;
+    public static final int LEAVEGAME = 15;
 
     public HandlerType(@Season int season) {
         System.out.println("Season :" + season);
     }
 
-    @IntDef({LEFTMENU, LEFTBACK, GOTOMAIN, SHOWTOAST, REGISTSUCC, LOADING, SHOWBETDIA, JUSTLOOK, MATCHLIST, HIDEBETDIA, DELETEBETDIA, GAMESELECT, HIDGAMESELECT})
+    @IntDef({LEFTMENU, LEFTBACK, GOTOMAIN, SHOWTOAST, REGISTSUCC, LOADING, SHOWBETDIA, JUSTLOOK, MATCHLIST,
+            HIDEBETDIA, DELETEBETDIA, GAMESELECT, HIDGAMESELECT, LEAVEGAME})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Season {
     }

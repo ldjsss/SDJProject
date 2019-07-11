@@ -173,14 +173,11 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
                 fillCount();
             case HandlerType.GOTOMAIN:
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                HttpMsg.getInstance().sendGetUserInfo(SharePreUtils.getInstance().getToken(mContext), SharePreUtils.getInstance().getUserId(mContext), JsonBean.class, new HttpMsg.Listener() {
+                HttpMsg.getInstance().sendGetUserInfo(mContext, SharePreUtils.getInstance().getToken(mContext), JsonBean.class, new HttpMsg.Listener() {
                     @Override
                     public void onFinish(Object _res) {
                         JsonBean res = (JsonBean) _res;
                         if (res.getCode() == GlobalVariable.succ) {
-                            ResultsModel ret = (ResultsModel) res.getResult();
-                            SharePreUtils.getInstance().setUserInfo(mContext, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername(), "");
-                            Toast.makeText(mContext, getResources().getString(R.string.getUseInfoSucc), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(mContext, Activity_MainUI.class));
                             finish();
                         }

@@ -269,5 +269,13 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         super.onDestroy();
         AppUtils.unregisterEvent(observer);
         observer = null;
+        stopUpdate();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopUpdate();
+    }
+
 }
