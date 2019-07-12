@@ -24,7 +24,6 @@ public class DialogManager {
     public BaseDialog show(BaseDialog dialog) {
         if(dialog == null) return null;
 
-        Log.e("----dialogList = ", dialogList.size() + "");
         String _tag = dialog.getClass().getSimpleName();
         BaseDialog _have = getDialog(_tag);
         if(_have == null){

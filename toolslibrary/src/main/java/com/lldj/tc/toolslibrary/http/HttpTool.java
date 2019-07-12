@@ -200,15 +200,15 @@ public class HttpTool {
                     os.close();  //关闭流对象
 
                     final int code = httpURLConnection.getResponseCode();
-                    String result = "";
-
+                    StringBuffer result = new StringBuffer();
                     if (code == HttpURLConnection.HTTP_OK) {
                         InputStreamReader in = new InputStreamReader(httpURLConnection.getInputStream());
                         BufferedReader bf = new BufferedReader(in);
-                        String recieveData = null;
 
-                        while ((recieveData = bf.readLine()) != null) {
-                            result += recieveData + "\n";
+                        String temp;
+                        while ((temp = bf.readLine()) != null) {
+                            result.append(temp);
+                            result.append("\n");
                         }
                         in.close();
                         httpURLConnection.disconnect();
@@ -217,7 +217,7 @@ public class HttpTool {
 
                     }
 
-                    final String ret = result;
+                    final String ret = result.toString();
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {

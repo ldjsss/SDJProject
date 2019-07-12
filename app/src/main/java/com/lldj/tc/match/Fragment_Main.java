@@ -197,7 +197,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
             public void onFinish(Object _res) {
                 MatchBean res = (MatchBean) _res;
                 if (res.getCode() == GlobalVariable.succ) {
-                    mlist.clear();
+
                     List<ResultsModel> _list = (List<ResultsModel>) res.getResult();
 
                     selectID = SharePreUtils.getInstance().getSelectGame(getContext());
@@ -214,6 +214,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     alist.clear();
                     alist.addAll(_list);
 
+                    mlist.clear();
                     int t = alist.size() > pageSize ? pageSize : alist.size();
                     for (int i = 0; i < t; i++) {
                         mlist.add(alist.get(i));
@@ -221,7 +222,6 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 
                     mAdapter.changeData(mlist);
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
-                    subjectLrecycleview.refreshComplete();
                 }
 
                 tvNoMatch.setVisibility(mlist.size()>0?View.GONE:View.VISIBLE);
@@ -230,13 +230,14 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     for (int i = 0; i < gameList.size(); i++) {
                         if(gameList.get(i).getId() == _select){
                             tvNoMatch.setText(String.format(getString(R.string.noGames), gameList.get(i).getName()));
+                            break;
                         }
                     }
                 }
 
-                ObData _data = new ObData(EventType.MATCHCOUNT, mlist.size());
-                _data.setTag(ViewType + "");
-                AppUtils.dispatchEvent(_data);
+                AppUtils.dispatchEvent(new ObData(EventType.MATCHCOUNT, mlist.size(), ViewType + ""));
+
+                subjectLrecycleview.refreshComplete();
             }
         });
     }
