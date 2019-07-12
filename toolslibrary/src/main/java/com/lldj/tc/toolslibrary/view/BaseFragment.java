@@ -84,7 +84,7 @@ public abstract class BaseFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mContext = getActivity();
-        Clog.d(getClass().getSimpleName(), "onAttach");
+//        Clog.d(getClass().getSimpleName(), "onAttach");
 
     }
 
@@ -93,7 +93,7 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mFragmentManager = mContext.getSupportFragmentManager();
         initVariable();
-        Clog.d(getClass().getSimpleName(), "onCreate");
+//        Clog.d(getClass().getSimpleName(), "onCreate");
     }
 
     @Override

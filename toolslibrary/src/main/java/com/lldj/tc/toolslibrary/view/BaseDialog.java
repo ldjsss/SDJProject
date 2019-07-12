@@ -9,9 +9,24 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 
+import java.util.ArrayList;
+
 public class BaseDialog extends Dialog {
+    private String tag = "";
+    public boolean isShow = false;
+    private ArrayList<Observer<ObData>> eventList = new ArrayList<>();
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
     protected BaseDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
     }
@@ -40,7 +55,40 @@ public class BaseDialog extends Dialog {
                     | View.SYSTEM_UI_FLAG_FULLSCREEN;
             view.setSystemUiVisibility(uiOptions);
         }
+        isShow = true;
 
         super.show();
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+
+        for (int i = 0; i < eventList.size(); i++) {
+            AppUtils.unregisterEvent(eventList.get(i));
+        }
+        eventList.clear();
+        isShow = false;
+    }
+
+    @Override
+    public void hide() {
+        super.hide();
+        isShow = false;
+    }
+
+    protected void registEvent(Observer<ObData> observer){
+        AppUtils.registEvent(observer);
+        eventList.add(observer);
+    }
+
+    protected void unregisterEvent(Observer<ObData> observer){
+        AppUtils.unregisterEvent(observer);
+        for (int i = 0; i < eventList.size(); i++) {
+            if (observer == eventList.get(i)){
+                eventList.remove(i);
+                break;
+            }
+        }
     }
 }

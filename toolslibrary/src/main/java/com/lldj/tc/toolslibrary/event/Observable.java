@@ -20,12 +20,24 @@ public class Observable<T> {
     }
 
     public synchronized void unregister(Observer<T> observer) {
-        mObservers.remove(observer);
+        if (observer == null){
+            throw new NullPointerException("observer == null");
+        }
+        synchronized (this) {
+            if (mObservers.contains(observer)) {
+                mObservers.remove(observer);
+            }
+        }
     }
 
-    public void notifyObserver(T data){
-        for (Observer<T> observer:mObservers) {
-            observer.onUpdate( this,data);
+    public synchronized void notifyObserver(T data){
+        synchronized (this) {
+            for (int i = 0; i < mObservers.size(); i++) {
+                mObservers.get(i).onUpdate(this,data);
+            }
+//            for (Observer<T> observer:mObservers) {
+//                observer.onUpdate( this,data);
+//            }
         }
     }
 

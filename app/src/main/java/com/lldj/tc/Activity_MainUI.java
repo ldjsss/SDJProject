@@ -27,6 +27,7 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -43,8 +44,6 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
     RelativeLayout mainright;
 
     private DialogBet dialogBet;
-    private DialogBetBottom dialogBetBottom;
-    private DialogGameSelect dialogGameSelect;
     private Frament_MatchDetail detailDialog;
 
     @Override
@@ -73,11 +72,32 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                     getSupportFragmentManager().beginTransaction().add(R.id.mainright, detailDialog).commit();
                     detailDialog.showView(_map.get("ViewType"), _map.get("id"));
                     drawerLayout.openDrawer(Gravity.RIGHT);
-                } else if (data.getKey().equalsIgnoreCase(EventType.DETIALHIDE)) {
+                }
+                else if (data.getKey().equalsIgnoreCase(EventType.DETIALHIDE)) {
                     if(detailDialog == null) return;
                     drawerLayout.closeDrawer(Gravity.RIGHT);
                     getSupportFragmentManager().beginTransaction().remove(detailDialog).commit();
                     detailDialog = null;
+                }
+                else if (data.getKey().equalsIgnoreCase(EventType.BETLISTADD)) {
+                    if(TextUtils.isEmpty(SharePreUtils.getUserId(mContext))){
+                        ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, getResources().getString(R.string.cannotbet), ToastUtils.LENGTH_SHORT);
+                        return;
+                    }
+
+                    if(dialogBet == null) {
+                        dialogBet = new DialogBet(mContext, R.style.DialogTheme);
+                    }
+                    DialogManager.getInstance().show(dialogBet);
+                    dialogBet.betListAdd(data);
+                }
+                else if (data.getKey().equalsIgnoreCase(EventType.SELECTGROUPS)) {
+                    List<ObData> groups = (List<ObData>)data.getValue();
+                    if(groups == null || groups.size() <=0 ) {
+                        DialogManager.getInstance().removeDialog("dialogBet");
+                        DialogManager.getInstance().removeDialog("dialogBetBottom");
+                        dialogBet = null;
+                    }
                 }
             }
         });
@@ -91,7 +111,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEAVEGAME);
                     return;
                 }
-                new Dialog_Set(this, R.style.DialogTheme).show();
+                DialogManager.getInstance().show(new Dialog_Set(this, R.style.DialogTheme));
                 break;
             case HandlerType.LEFTBACK:
                 break;
@@ -101,36 +121,8 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
             case HandlerType.LOADING:
                 AppUtils.showLoading(mContext);
                 break;
-            case HandlerType.SHOWBETDIA:
-                if(TextUtils.isEmpty(SharePreUtils.getUserId(mContext))){
-                    ToastUtils.show_middle_pic(this, R.mipmap.cancle_icon, getResources().getString(R.string.cannotbet), ToastUtils.LENGTH_SHORT);
-                    return;
-                }
-                if (dialogBet == null) dialogBet = new DialogBet(this, R.style.DialogTheme);
-                dialogBet.show();
-                if (dialogBetBottom == null)
-                    dialogBetBottom = new DialogBetBottom(this, R.style.DialogTheme);
-                dialogBetBottom.show();
-                break;
-            case HandlerType.HIDEBETDIA:
-                if (dialogBet != null) dialogBet.hide();
-                AppUtils.dispatchEvent(new ObData(EventType.HIDEBETLIST, null));
-                break;
-            case HandlerType.DELETEBETDIA:
-                if (dialogBet != null) dialogBet.dismiss();
-                dialogBet = null;
-                if (dialogBetBottom != null) dialogBetBottom.dismiss();
-                dialogBetBottom = null;
-                break;
             case HandlerType.GAMESELECT:
-                if (dialogGameSelect != null) return;
-                dialogGameSelect = new DialogGameSelect(mContext, R.style.DialogTheme);
-                dialogGameSelect.showView();
-                break;
-            case HandlerType.HIDGAMESELECT:
-                if (dialogGameSelect == null) return;
-                dialogGameSelect.dismiss();
-                dialogGameSelect = null;
+                DialogManager.getInstance().show(new DialogGameSelect(mContext, R.style.DialogTheme));
                 break;
             case HandlerType.LEAVEGAME:
                 startActivity(new Intent(mContext, Activity_Login.class));
@@ -143,6 +135,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
     protected void onDestroy() {
         super.onDestroy();
         mHandler.removeCallbacks(null);
+        DialogManager.getInstance().removeAll();
     }
 
 }

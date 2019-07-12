@@ -29,11 +29,7 @@ public class HttpMsg<T>{
         return ourInstance;
     }
 
-    public static String baseUrl = "http://192.168.1.118:9001/";
-    public static String baseUrl2 = "http://192.168.1.118:9002/";
-    public static String baseUrl3 = "http://192.168.1.118:9004/";
-    public static String baseUrl4 = "http://192.168.1.118:9000/";
-    public static String baseUrl5 = "http://192.168.1.118:9006/";
+    public static String baseUrl = "http://192.168.1.118/";
 
     private static void toastMess(String msg){
         if(msg == null) msg = "";
@@ -83,14 +79,14 @@ public class HttpMsg<T>{
         URLParams.put("username", username);
         URLParams.put("password", password);
 
-        HttpTool.httpPost(baseUrl2 + "login", URLParams, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.httpPost(baseUrl + "login", URLParams, new HttpMsg().getListener(service, callbackListener));
     }
 
     public void sendTokenLogin(final String token, Class<T>service, Listener callbackListener) {
         Map<String,String> URLParams = new HashMap();
         URLParams.put("access_token", token);
 
-        HttpTool.httpPost(baseUrl2 + "oauth2", URLParams, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.httpPost(baseUrl + "oauth2", URLParams, new HttpMsg().getListener(service, callbackListener));
     }
 
     public void sendRegister(final String username, final String password, String name, String mobile, String sms, String channel, String devices, Class<T>service, Listener callbackListener) {
@@ -119,13 +115,13 @@ public class HttpMsg<T>{
         Map<String,String> URLParams = new HashMap();
         URLParams.put("access_token", access_token);
 
-        HttpTool.sendPost(baseUrl5 + "user/info", access_token, "", new HttpMsg().getListener(service, new Listener(){
+        HttpTool.sendPost(baseUrl + "user/info", access_token, "", new HttpMsg().getListener(service, new Listener(){
             @Override
             public void onFinish(Object msg) {
                 JsonBean res = (JsonBean) msg;
                 if (res.getCode() == GlobalVariable.succ) {
                     ResultsModel ret = (ResultsModel) res.getResult();
-                    SharePreUtils.getInstance().setUserInfo(context, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername(), "");
+                    SharePreUtils.getInstance().setUserInfo(context, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername(), ret.getName());
                 }
                 else Toast.makeText(context, context.getResources().getString(R.string.getUseInfoFail), Toast.LENGTH_SHORT).show();
 
@@ -137,19 +133,19 @@ public class HttpMsg<T>{
     /////////////////////////
 
     public void sendGetGameList(Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(baseUrl3 + "game", new HttpMsg().getListener(service, callbackListener));
+        HttpTool.sendGet(baseUrl + "game", new HttpMsg().getListener(service, callbackListener));
     }
 
     public void sendGetMatchList(int type, Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(baseUrl3 + "match/type/" + type, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.sendGet(baseUrl + "match/type/" + type, new HttpMsg().getListener(service, callbackListener));
     }
 
     public void sendGetMatchDetial(int matchID, Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(baseUrl3 + "match/detail/" + matchID, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.sendGet(baseUrl + "match/detail/" + matchID, new HttpMsg().getListener(service, callbackListener));
     }
 
     public void sendBetList(String access_token, String json, Class<T>service, Listener callbackListener){
-        HttpTool.sendPost(baseUrl4 + "bet/submit", access_token, json, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.sendPost(baseUrl + "bet/submit", access_token, json, new HttpMsg().getListener(service, callbackListener));
     }
 
     public interface Listener<T> {

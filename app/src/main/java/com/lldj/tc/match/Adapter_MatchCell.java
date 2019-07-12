@@ -266,18 +266,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
         }
 
         private void betClick(ResultsModel data, String tag) {
-            RxTimerUtil.timer(50, new RxTimerUtil.IRxNext() {
-                @Override
-                public void doNext(long number) {
-                    ObData obj = new ObData(EventType.BETLISTADD, data);
-                    obj.setTag(tag);
-                    AppUtils.dispatchEvent(obj);
-                }
-
-                @Override
-                public void onComplete() {
-                }
-            });
+            AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, data, tag));
         }
 
         private Map.Entry<String, List<Odds>> getEntry(String key) {

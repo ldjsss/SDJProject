@@ -1,6 +1,6 @@
 package com.lldj.tc.toolslibrary.event;
 
-public class ObData {
+public class ObData implements Cloneable {
     private String key;
     private Object value;
     private String tag;
@@ -8,6 +8,12 @@ public class ObData {
     public ObData(String key, Object value){
         this.key = key;
         this.value = value;
+    }
+
+    public ObData(String key, Object value, String tag){
+        this.key = key;
+        this.value = value;
+        this.tag = tag;
     }
 
     public String getKey() { return key; }
@@ -30,6 +36,10 @@ public class ObData {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public ObData clone() throws CloneNotSupportedException {
+        return (ObData)super.clone();
     }
 
     @Override

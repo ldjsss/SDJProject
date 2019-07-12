@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 
+import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
@@ -106,7 +107,7 @@ public class Dialog_Set extends BaseDialog {
                 dismiss();
                 break;
             case R.id.imset:
-                new Dialog_Info(getContext(), R.style.DialogTheme).show();
+                DialogManager.getInstance().show(new Dialog_Info(getContext(), R.style.DialogTheme));
                 break;
             case R.id.packed_iv:
                 break;

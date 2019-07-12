@@ -5,7 +5,16 @@ import org.json.JSONObject;
 
 public class BetModel {
     private int amount = 0;
-    private int oddsid = 0;
+
+    public int getOdds_id() {
+        return odds_id;
+    }
+
+    public void setOdds_id(int odds_id) {
+        this.odds_id = odds_id;
+    }
+
+    private int odds_id = 0;
     private float willget = 0;
 
     private String bet_money = "";
@@ -70,14 +79,6 @@ public class BetModel {
         this.amount = amount;
     }
 
-    public int getOddsid() {
-        return oddsid;
-    }
-
-    public void setOddsid(int oddsid) {
-        this.oddsid = oddsid;
-    }
-
     public long getBet_min() {
         return bet_min;
     }
@@ -100,9 +101,9 @@ public class BetModel {
         this.name = name;
     }
 
-    public BetModel(int amount, int oddsid, float willget, long bet_max, long bet_min, String name) {
+    public BetModel(int amount, int odds_id, float willget, long bet_max, long bet_min, String name) {
        this.amount = amount;
-       this.oddsid = oddsid;
+       this.odds_id = odds_id;
        this.willget = willget;
        this.bet_max = bet_max;
        this.bet_min = bet_min;
@@ -113,7 +114,7 @@ public class BetModel {
     public String toString() {
         return "BetModel{" +
                 "amount=" + amount +
-                ", oddsid=" + oddsid +
+                ", odds_id=" + odds_id +
                 ", willget=" + willget +
                 ", bet_money='" + bet_money + '\'' +
                 ", bet_site=" + bet_site +
@@ -127,7 +128,7 @@ public class BetModel {
         JSONObject jsonObj = new JSONObject();
         try {
             jsonObj.put("amount", getAmount());
-            jsonObj.put("oddsid", getOddsid());
+            jsonObj.put("odds_id", getOdds_id());
         } catch (JSONException e) {
             e.printStackTrace();
         }

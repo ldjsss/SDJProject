@@ -137,10 +137,10 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
         if (isVisible) {
-            Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
+//            Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
             onRefresh();
         } else {
-            Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
+//            Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
             stopUpdate();
         }
     }

@@ -1,7 +1,6 @@
 package com.lldj.tc.match;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,6 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.BetMatchBean;
 import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
-import com.lldj.tc.utils.EventType;
-import com.lldj.tc.utils.GlobalVariable;
-import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
@@ -28,6 +24,9 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.GlobalVariable;
+import com.lldj.tc.utils.HandlerType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +58,6 @@ public class DialogBetBottom extends BaseDialog {
     TextView lookbtn;
     @BindView(R.id.betbottomlayout2)
     RelativeLayout betbottomlayout2;
-    private Observer<ObData> observer;
     private Map<String, BetModel> betList = new HashMap();
     private int totalBet = 0;
     private float totalGet = 0;
@@ -82,7 +80,7 @@ public class DialogBetBottom extends BaseDialog {
 
         this.setCanceledOnTouchOutside(false);
 
-        observer = new Observer<ObData>() {
+        registEvent(new Observer<ObData>() {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 if (data.getKey().equalsIgnoreCase(EventType.BETCHANGE)) {
@@ -108,9 +106,9 @@ public class DialogBetBottom extends BaseDialog {
                     betbottomlayout1.setVisibility(View.GONE);
                     betbottomlayout2.setVisibility(View.VISIBLE);
                 }
+
             }
-        };
-        AppUtils.registEvent(observer);
+        });
     }
 
     private void update() {
@@ -119,18 +117,11 @@ public class DialogBetBottom extends BaseDialog {
         betselectcount.setText(selectCount);
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
-        AppUtils.unregisterEvent(observer);
-        observer = null;
-    }
-
     @OnClick({R.id.betsurebtn, R.id.betbottomlayout2})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.betsurebtn:
-                Log.d("betsurebtn", "-->");
+//                Log.d("betsurebtn", "-->");
                 if(totalBet <= 0){
                     ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getContext().getResources().getString(R.string.inputBetNum), ToastUtils.LENGTH_SHORT);
                     return;
@@ -174,8 +165,8 @@ public class DialogBetBottom extends BaseDialog {
                 });
                 break;
             case R.id.betbottomlayout2:
-                Log.d("betbottomlayout2", "-->");
-                HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
+//                Log.d("betbottomlayout2", "-->");
+                AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, null));
                 betbottomlayout1.setVisibility(View.VISIBLE);
                 betbottomlayout2.setVisibility(View.GONE);
 
@@ -189,12 +180,13 @@ public class DialogBetBottom extends BaseDialog {
         BetModel betInfo, listInfo;
         for (int i = 0; i < list.size(); i++) {
             betInfo = list.get(i);
-            for (int j = 0; j < betList.size(); j++) {
-                listInfo = betList.get(j);
-                if(betInfo.getCode() == GlobalVariable.succ && betInfo.getOddsid() == listInfo.getOddsid()) {
-                    betList.remove(j);
-                }
-            }
+            if(betInfo.getCode() == GlobalVariable.succ) AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, betInfo, betInfo.getOdds_id() + ""));
+//            for (int j = 0; j < betList.size(); j++) {
+//                listInfo = betList.get(j);
+//                if(betInfo.getCode() == GlobalVariable.succ && betInfo.getOddsid() == listInfo.getOddsid()) {
+//                    betList.remove(j);
+//                }
+//            }
         }
 
     }

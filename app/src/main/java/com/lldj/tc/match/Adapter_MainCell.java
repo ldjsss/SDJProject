@@ -176,16 +176,14 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                         Toast.makeText(mContext, mContext.getResources().getString(R.string.hadlock), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
-                    betClick(_data, _data.getOdds().get(0).getId() + "");
+                    AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, _data, _data.getOdds().get(0).getId() + ""));
                     break;
                 case R.id.playname1:
                     if(_data.getOdds().get(1).getStatus() == 2){
                         Toast.makeText(mContext, mContext.getResources().getString(R.string.hadlock), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
-                    betClick(_data, _data.getOdds().get(1).getId() + "");
+                    AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, _data, _data.getOdds().get(1).getId() + ""));
                     break;
                 case R.id.playcelllayout0:
                     Toast.makeText(mContext, "ffffff", Toast.LENGTH_SHORT).show();
@@ -195,19 +193,6 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                     break;
 
             }
-        }
-
-        private void betClick(ResultsModel data, String tag){
-            RxTimerUtil.timer(50, new RxTimerUtil.IRxNext() {
-                @Override
-                public void doNext(long number) {
-                    ObData obj = new ObData(EventType.BETLISTADD, data);
-                    obj.setTag(tag);
-                    AppUtils.dispatchEvent(obj);
-                }
-                @Override
-                public void onComplete() { }
-            });
         }
 
         public void bottomCommon(int _type) {

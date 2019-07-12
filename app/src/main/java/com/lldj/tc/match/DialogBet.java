@@ -17,22 +17,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 
+import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
-import com.lldj.tc.utils.EventType;
-import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
-import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
+import com.lldj.tc.utils.EventType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +55,6 @@ public class DialogBet extends BaseDialog {
 
     //Note that the character array is not written that {{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
     private String[][] childs = {{"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}};
-    private Observer<ObData> observer;
     private List<ObData> groups = new ArrayList<>();
     private MyExpandableListView _myExpandableListView;
 
@@ -105,22 +103,10 @@ public class DialogBet extends BaseDialog {
             }
         });
 
-        observer = new Observer<ObData>() {
+        registEvent(new Observer<ObData>() {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
-                if (data.getKey().equalsIgnoreCase(EventType.BETLISTADD)) {
-                    if(groups.size()>childs.length){
-                        ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getContext().getResources().getString(R.string.maxSelect), ToastUtils.LENGTH_SHORT);
-                        return;
-                    }
-                    if(! addDataToGroups(data)){
-                        Log.d("addDataToGroups", "remove have add cell");
-                    }
-                    update();
-                    if(expandableListView != null) expandableListView.expandGroup(0);
-                }
-
-                else if (data.getKey().equalsIgnoreCase(EventType.BETDETAILUI)) {
+                if (data.getKey().equalsIgnoreCase(EventType.BETDETAILUI)) {
                     RxTimerUtilPro.timer(100, new RxTimerUtilPro.IRxNext() {
                         @Override
                         public void doNext(long number) {
@@ -132,17 +118,33 @@ public class DialogBet extends BaseDialog {
                     });
                 }
             }
-        };
-        AppUtils.registEvent(observer);
+        });
 
         moneyhave.setText(context.getResources().getString(R.string.moneyHave) + SharePreUtils.getMoney(context));
 
     }
 
+    public void betListAdd(ObData data){
+        if(data == null || data.getValue() == null) return;
+        if(groups.size()>childs.length){
+            ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getContext().getResources().getString(R.string.maxSelect), ToastUtils.LENGTH_SHORT);
+            return;
+        }
+        if(! addDataToGroups(data)){
+            Log.d("addDataToGroups", "remove have add cell");
+        }
+        if(groups.size() > 0) {
+            DialogManager.getInstance().show(new DialogBetBottom(getContext(), R.style.DialogTheme));
+        }
+
+        update();
+        if(expandableListView != null) expandableListView.expandGroup(0);
+    }
+
     private Boolean addDataToGroups(ObData data){
-        Log.d("addDataToGroups", data.toString());
+//        Log.d("addDataToGroups", data.toString());
         for (int i = 0; i < groups.size(); i++) {
-            if(groups.get(i).getTag().equals(data.getTag())){
+            if(groups.get(i).getTag().equalsIgnoreCase(data.getTag())){
                 groups.remove(i);
                 return false;
             }
@@ -160,10 +162,7 @@ public class DialogBet extends BaseDialog {
         AppUtils.dispatchEvent(new ObData(EventType.SELECTGROUPS, groups));
 
         if(groups.size()<=0){
-            if(groups.size()<=0) {
-                AppUtils.dispatchEvent(new ObData(EventType.SELECTGROUPS, null));
-                HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
-            }
+            close();
             return;
         }
 
@@ -189,20 +188,17 @@ public class DialogBet extends BaseDialog {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.deleteall:
-                AppUtils.dispatchEvent(new ObData(EventType.SELECTGROUPS, null));
-                HandlerInter.getInstance().sendEmptyMessage(HandlerType.DELETEBETDIA);
+                close();
                 break;
             case R.id.closelayout:
-                HandlerInter.getInstance().sendEmptyMessage(HandlerType.HIDEBETDIA);
+                AppUtils.dispatchEvent(new ObData(EventType.HIDEBETLIST, null));
+                DialogManager.getInstance().hideDialog(this);
                 break;
         }
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
-        AppUtils.unregisterEvent(observer);
-        observer = null;
+    private void close(){
+        AppUtils.dispatchEvent(new ObData(EventType.SELECTGROUPS, null));
     }
 
     class MyExpandableListView extends BaseExpandableListAdapter {
@@ -245,6 +241,7 @@ public class DialogBet extends BaseDialog {
         //Fill the first level list
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+
             ObData data = groups.get(groupPosition);
             ResultsModel _data = (ResultsModel) data.getValue();
             String ID = data.getTag();

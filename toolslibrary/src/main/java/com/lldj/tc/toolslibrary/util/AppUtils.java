@@ -14,6 +14,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import androidx.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
@@ -93,7 +95,13 @@ public class AppUtils {
     public static void dispatchEvent(ObData data){
         if (data == null) return;
         if (observable == null) observable = new Observable<ObData>();
-        observable.notifyObserver(data);
+        try {
+            observable.notifyObserver(data.clone());
+        }catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
     }
 
 //    public static void screenAdapterStart(Context content){

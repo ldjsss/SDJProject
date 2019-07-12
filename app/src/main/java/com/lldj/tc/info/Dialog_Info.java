@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 
+import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
@@ -41,8 +42,8 @@ public class Dialog_Info extends BaseDialog {
         setContentView(view);
         ButterKnife.bind(this, view);
         Window window = this.getWindow();
-        window.setGravity(Gravity.LEFT);
-        window.setWindowAnimations(R.style.Anim_left);
+        window.setGravity(Gravity.RIGHT);
+        window.setWindowAnimations(R.style.Anim_fade);
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         WindowManager.LayoutParams layoutParams = window.getAttributes();
@@ -59,7 +60,7 @@ public class Dialog_Info extends BaseDialog {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back_main_iv:
-                dismiss();
+                DialogManager.getInstance().removeDialog(this);
                 break;
             case R.id.brithlayout:
                 Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();

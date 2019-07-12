@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
@@ -53,7 +55,10 @@ public class DialogGameSelect extends BaseDialog {
         this.setCanceledOnTouchOutside(false);
     }
 
-    public void showView() {
+    @Override
+    public void show() {
+        super.show();
+
         HttpMsg.getInstance().sendGetGameList(MatchBean.class, new HttpMsg.Listener() {
             @Override
             public void onFinish(Object _res) {
@@ -69,8 +74,6 @@ public class DialogGameSelect extends BaseDialog {
                 }
             }
         });
-
-        show();
     }
 
     @OnClick({R.id.toolbar_left_menu_iv, R.id.toolbar_gameselect, R.id.connectservice, R.id.tv_selectgame})
@@ -80,7 +83,7 @@ public class DialogGameSelect extends BaseDialog {
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEFTMENU);
                 break;
             case R.id.toolbar_gameselect:
-                HandlerInter.getInstance().sendEmptyMessage(HandlerType.HIDGAMESELECT);
+                DialogManager.getInstance().removeDialog(this);
                 break;
             case R.id.connectservice:
                 Toast.makeText(getContext(),"---------------test2",Toast.LENGTH_SHORT).show();
@@ -88,7 +91,7 @@ public class DialogGameSelect extends BaseDialog {
             case R.id.tv_selectgame:
                 SharePreUtils.getInstance().setSelectGame(getContext(), adapter.selectID);
                 if(adapter != null) AppUtils.dispatchEvent(new ObData(EventType.SELECTGAMEID, list));
-                HandlerInter.getInstance().sendEmptyMessage(HandlerType.HIDGAMESELECT);
+                DialogManager.getInstance().removeDialog(this);
                 break;
         }
     }
