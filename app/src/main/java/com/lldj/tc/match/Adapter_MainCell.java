@@ -70,7 +70,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
     public void updateSelect(List<ObData> _groups){
         this.groups = _groups;
-//        notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     @NonNull
