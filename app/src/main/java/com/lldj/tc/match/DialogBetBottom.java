@@ -93,7 +93,7 @@ public class DialogBetBottom extends BaseDialog {
                     Iterator<Map.Entry<String, BetModel>> entries = betList.entrySet().iterator();
                     while (entries.hasNext()) {
                         Map.Entry<String, BetModel> entry = entries.next();
-                        Clog.e("--key " + entry.getKey(), " ---value " + (entry.getValue() == null ? "null" : entry.getValue().toString()));
+//                        Clog.e("--key " + entry.getKey(), " ---value " + (entry.getValue() == null ? "null" : entry.getValue().toString()));
                         if (entry.getValue() != null) {
                             totalBet += entry.getValue().getAmount();
                             totalGet += entry.getValue().getWillget();
@@ -174,19 +174,12 @@ public class DialogBetBottom extends BaseDialog {
         }
     }
 
-    // because this list is used as a reference, it can be removed here and written here for the time being. This usage is not encouraged
     private void removeHaveBet(List<BetModel> list){
         if(list == null) return;
         BetModel betInfo, listInfo;
         for (int i = 0; i < list.size(); i++) {
             betInfo = list.get(i);
             if(betInfo.getCode() == GlobalVariable.succ) AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, betInfo, betInfo.getOdds_id() + ""));
-//            for (int j = 0; j < betList.size(); j++) {
-//                listInfo = betList.get(j);
-//                if(betInfo.getCode() == GlobalVariable.succ && betInfo.getOddsid() == listInfo.getOddsid()) {
-//                    betList.remove(j);
-//                }
-//            }
         }
 
     }

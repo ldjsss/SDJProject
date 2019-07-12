@@ -180,7 +180,7 @@ public class HttpTool {
             public void run() {
                 HttpURLConnection httpURLConnection = null;
 //                System.out.println("url:" + url);
-                System.out.println("params:" + params);
+//                System.out.println("params:" + params);
                 try {
                     URL _url = new URL(url);
                     httpURLConnection = (HttpURLConnection) _url.openConnection();

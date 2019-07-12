@@ -55,7 +55,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 
     private Adapter_MainCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
-    private ResultsModel[] alist;
+    private ArrayList<ResultsModel> alist= new ArrayList<>();
     private ArrayList<ResultsModel> mlist = new ArrayList<>();
     private int pageSize = 10;
     private int ViewType;
@@ -159,7 +159,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         if (state == LoadingFooter.State.Loading) {
             return;
         }
-        if (mlist.size() < alist.length) {
+        if (mlist.size() < alist.size()) {
             RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.Loading, null);
             loadData();
         } else {
@@ -174,13 +174,13 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     public void loadData() {
         int mLen = mlist.size();
         int t = pageSize;
-        if (mLen + t > alist.length) t = alist.length - mLen;
+        if (mLen + t > alist.size()) t = alist.size() - mLen;
         for (int i = 0; i < t; i++) {
-            mlist.add(alist[mLen + i]);
+            mlist.add(alist.get(mLen + i));
         }
         mAdapter.changeData(mlist);
         RecyclerViewStateUtils.setFooterViewState(subjectLrecycleview, LoadingFooter.State.Normal);
-        if (mlist.size() >= alist.length) {
+        if (mlist.size() >= alist.size()) {
             RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
         }
     }
@@ -211,15 +211,12 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                         return (int)(o1.getStart_time_ms() - o2.getStart_time_ms());
                     });
 
-                    alist = new ResultsModel[_list.size()];
+                    alist.clear();
+                    alist.addAll(_list);
 
-                    for (int i = 0; i < _list.size(); i++) {
-                        alist[i] = _list.get(i);
-                    }
-
-                    int t = alist.length > pageSize ? pageSize : alist.length;
+                    int t = alist.size() > pageSize ? pageSize : alist.size();
                     for (int i = 0; i < t; i++) {
-                        mlist.add(alist[i]);
+                        mlist.add(alist.get(i));
                     }
 
                     mAdapter.changeData(mlist);
