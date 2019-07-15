@@ -11,13 +11,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
-import com.lldj.tc.utils.EventType;
-import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.HandlerType;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +55,8 @@ public class Fragment_ViewPager extends BaseFragment {
     }
 
     //初始化viewpager
-    public void initViewPager() {
+    private void initViewPager() {
+
         mPagerAdapter = new Adapter_MainPager(mContext, mContext.getSupportFragmentManager());
         firstpageViewpager.setAdapter(mPagerAdapter);
         tabLayout.setupWithViewPager(firstpageViewpager);
@@ -81,20 +83,23 @@ public class Fragment_ViewPager extends BaseFragment {
                 }
             }
         });
+
+//        AppUtils.reduceMarginsInTabs(tabLayout, 30);
+//        AppUtils.setIndicator(getContext(), tabLayout,20, 20);
     }
 
     //自定义tab布局
     public void definedTablayout() {
         for (int i = 0; i < mPagerAdapter.getCount(); i++) {
-            TabLayout.Tab tab = tabLayout.getTabAt(i);//获得每一个tab
-            tab.setCustomView(R.layout.tab_item);//给每一个tab设置view
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            tab.setCustomView(R.layout.tab_item);
             View cusView = tab.getCustomView();
 //            AppUtils.screenAdapterLoadView((ViewGroup)cusView);
             if (i == 0) {
-                cusView.findViewById(R.id.tab_text).setSelected(true);//第一个tab被选中
+                cusView.findViewById(R.id.tab_text).setSelected(true);
             }
             TextView textView = (TextView) cusView.findViewById(R.id.tab_text);
-            textView.setText(mPagerAdapter.getPageTitle(i));//设置tab上的文字
+            textView.setText(mPagerAdapter.getPageTitle(i));
 
         }
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

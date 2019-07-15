@@ -20,18 +20,17 @@ import java.util.List;
 public class Adapter_MainPager extends FragmentStatePagerAdapterCompat {
     private Resources mResources;
     private String[] mTitle;
-    public List<Fragment> fragmentList = new ArrayList<>();  //创建List，用来管理所有要添加到ViewPager的Fragment
+    public List<Fragment> fragmentList = new ArrayList<>();
 
 
-    public Adapter_MainPager(Context content, FragmentManager fm) {
+    public Adapter_MainPager(Context context, FragmentManager fm) {
         super(fm);
-        mResources = content.getResources();
+        mResources = context.getResources();
         mTitle = new String[]{mResources.getString(R.string.matchTodayTitle), mResources.getString(R.string.matchCurrentTitle), mResources.getString(R.string.matchFrontTitle), mResources.getString(R.string.matchOverTitle)};
 
         setUpFragments();
     }
 
-    //添加Fragment
     private void setUpFragments() {
         fragmentList.clear();
         for (int i = 0; i < mTitle.length; i++) {

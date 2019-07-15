@@ -1,4 +1,4 @@
-package com.lldj.tc;
+package com.lldj.tc.match;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +10,14 @@ import android.widget.RelativeLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.lldj.tc.DialogManager;
+import com.lldj.tc.R;
 import com.lldj.tc.info.Dialog_Set;
+import com.lldj.tc.login.Activity_Login;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.match.DialogBet;
-import com.lldj.tc.match.DialogBetBottom;
 import com.lldj.tc.match.DialogGameSelect;
 import com.lldj.tc.match.Fragment_ViewPager;
 import com.lldj.tc.match.Frament_MatchDetail;
@@ -53,6 +55,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mHandler.setHandleMsgListener(this);
+
     }
 
     @Override
@@ -112,6 +115,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                     return;
                 }
                 DialogManager.getInstance().show(new Dialog_Set(this, R.style.DialogTheme));
+//                DialogManager.getInstance().show(new Activity_Records(this, R.style.DialogTheme));
                 break;
             case HandlerType.LEFTBACK:
                 break;

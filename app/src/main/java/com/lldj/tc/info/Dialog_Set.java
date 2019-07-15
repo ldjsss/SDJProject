@@ -1,6 +1,7 @@
 package com.lldj.tc.info;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,6 @@ import androidx.annotation.StyleRes;
 import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
-import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.util.AppUtils;
@@ -28,6 +28,8 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
 public class Dialog_Set extends BaseDialog {
 
@@ -99,7 +101,7 @@ public class Dialog_Set extends BaseDialog {
         return ret;
     }
 
-    @OnClick({R.id.back_main_iv, R.id.imset, R.id.packed_iv, R.id.packlayout, R.id.record_iv, R.id.recordlayout,
+    @OnClick({R.id.back_main_iv, R.id.imset, R.id.packed_iv, R.id.packlayout, R.id.recordlayout,
             R.id.messlayout, R.id.activitylayout, R.id.rulelayout, R.id.aboutlayout, R.id.agency, R.id.contatus})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -114,11 +116,8 @@ public class Dialog_Set extends BaseDialog {
             case R.id.packlayout:
                 Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.record_iv:
-                Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.recordlayout:
-                Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+                getContext().startActivity(new Intent(getContext(), Activity_Records.class));
                 break;
             case R.id.messlayout:
                 Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();

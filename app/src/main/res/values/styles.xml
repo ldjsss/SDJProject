@@ -34,9 +34,30 @@
         <item name="tabIndicatorColor">@color/color_8e6c37</item>
         <item name="rippleColor">@android:color/white</item>
         <item name="android:layout_height">50dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
         <!--<item name="android:background">@drawable/white_round10_top</item>-->
         <item name="android:theme">@style/AppTheme</item>
         <item name="tabMode">fixed</item>
+        <item name="tabGravity">fill</item>
+    </style>
+
+    <style name="DetailFragment_TabLayout" parent="">
+        <!--Customize your theme here. -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="tabSelectedTextColor">@color/colorPrimary</item>
+        <item name="tabTextAppearance">@style/FristpageFragment_TabText</item>
+        <item name="tabTextColor">@color/color_989898</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabIndicatorColor">@color/color_8e6c37</item>
+        <item name="rippleColor">@android:color/white</item>
+        <item name="android:layout_height">50dp</item>
+        <!--<item name="android:background">@drawable/white_round10_top</item>-->
+        <item name="android:theme">@style/AppTheme</item>
+        <!--<item name="tabMode">fixed</item>-->
+        <!--<item name="tabGravity">fill</item>-->
+
+        <item name="tabMode">scrollable</item>
         <item name="tabGravity">fill</item>
     </style>
 

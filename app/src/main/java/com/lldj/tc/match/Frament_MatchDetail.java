@@ -258,6 +258,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                             for (int i = 0; i < keys.size(); i++) {
                                 tabLayout.addTab(tabLayout.newTab().setText(keys.get(i)));
                             }
+                            AppUtils.reduceMarginsInTabs(tabLayout, 10);
                         }
                     }
 

@@ -1,4 +1,4 @@
-package com.lldj.tc;
+package com.lldj.tc.login;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -15,13 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.lldj.tc.Activity_MainUI;
+import com.lldj.tc.match.Activity_MainUI;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.JsonBean;
-import com.lldj.tc.login.Dialog_Forget;
-import com.lldj.tc.login.Dialog_Register;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;

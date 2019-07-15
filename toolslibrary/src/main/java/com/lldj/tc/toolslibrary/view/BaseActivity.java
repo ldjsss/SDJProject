@@ -32,6 +32,7 @@ public abstract class BaseActivity extends FragmentActivity{
     protected Resources mResources;
     public    BaseActivity mContext;
     private   ArrayList<Observer<ObData>> eventList = new ArrayList<>();
+    public static FragmentActivity bActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public abstract class BaseActivity extends FragmentActivity{
         }
         super.onCreate(savedInstanceState);
         mContext = this;
+        bActivity = this;
 
         ImmersionBar.with(this).init();
 

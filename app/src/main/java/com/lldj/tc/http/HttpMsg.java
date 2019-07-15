@@ -1,13 +1,11 @@
 package com.lldj.tc.http;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.lldj.tc.Activity_MainUI;
 import com.lldj.tc.R;
 import com.lldj.tc.http.beans.BaseBean;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
@@ -144,8 +142,12 @@ public class HttpMsg<T>{
         HttpTool.sendGet(baseUrl + "match/detail/" + matchID, new HttpMsg().getListener(service, callbackListener));
     }
 
-    public void sendBetList(String access_token, String json, Class<T>service, Listener callbackListener){
+    public void sendBetList(final String access_token, final String json, Class<T>service, Listener callbackListener){
         HttpTool.sendPost(baseUrl + "bet/submit", access_token, json, new HttpMsg().getListener(service, callbackListener));
+    }
+
+    public void sendBetRecords(final String access_token, final String json, Class<T>service, Listener callbackListener) {
+        HttpTool.sendPost(baseUrl + "user/betrecord", access_token, json, new HttpMsg().getListener(service, callbackListener));
     }
 
     public interface Listener<T> {

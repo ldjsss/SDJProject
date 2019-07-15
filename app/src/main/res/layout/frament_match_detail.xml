@@ -255,12 +255,13 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
-            style="@style/FirstpageFragment_TabLayout"
+            style="@style/DetailFragment_TabLayout"
             android:layout_width="match_parent"
             app:tabPaddingStart="1dp"
             app:tabPaddingEnd="1dp"
             android:layout_height="wrap_content"
-            app:tabBackground="@color/transparent" />
+            app:tabBackground="@color/transparent"
+            app:tabIndicatorFullWidth="false"/>
         <com.lldj.tc.toolslibrary.recycleview.LRecyclerView
             android:id="@+id/jingcairecycleview"
             android:layout_width="match_parent"
