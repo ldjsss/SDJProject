@@ -1,6 +1,7 @@
 package com.lldj.tc.match;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.beans.BetMatchBean;
 import com.lldj.tc.http.beans.FormatModel.RecordModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
+import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 
 import java.util.ArrayList;
@@ -55,11 +57,11 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 //        BetModel _data = result ? datas.get(position) : null;
-        BetMatchBean.betResult _data = datas2.size()>= position ? datas2.get(position) : null;
-        BetModel record = _data != null ? _data.getRecord() : null;
+        BetMatchBean.betResult _data = datas2.size()> position ? datas2.get(position) : null;
+        BetModel record = _data != null ? _data.getRecord() : datas.get(position);
 
         holder.tv_matchname.setText(record == null ? "unknow": record.getOdds_name());
-        holder.tv_odds.setText(record == null ? "unknow": record.getBet_odds());
+        holder.tv_odds.setText(record == null ? "unknow": context.getString(R.string.betodds) + record.getBet_odds());
         holder.tv_betmoney.setText(record == null ? "unknow": record.getBet_money());
         holder.tv_willget.setText(record == null ? "unknow": record.getBet_win_money());
 
@@ -69,15 +71,31 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
         holder.tv_betsureing.setText(record == null ? context.getString(R.string.Failureoforders) : context.getString(R.string.betsureing));
         holder.tv_matchvsname.setText(record == null ? "unknow" : record.getMatch_short_name());
         holder.tv_starttime.setText(context.getString(R.string.starttime) + (record == null ? "unknow" : AppUtils.getFormatTime6(record.getStart_time())));
-        holder.tv_matchvsname.setText(context.getString(R.string.betodds) + (record == null ? "unknow" : record.getMatch_short_name()));
+        holder.tv_matchvsname.setText((record == null ? "unknow" : record.getMatch_short_name()));
+        holder.tv_matchtround.setText(record == null ? "unknow" : record.getMatch_stage());
+        holder.tv_matchtstatus.setText(record == null ? "unknow" : (record.getBet_site() == 0 ? context.getString(R.string.matchFrontTitle) : context.getString(R.string.matchCurrentTitle)));
 
         if(datas2.size() > 0){
             holder.betvictoryicon.setVisibility(View.GONE);
             holder.tv_havepay.setVisibility(View.GONE);
             holder.tv_betsureing.setVisibility(View.VISIBLE);
         }
+        else if(datas.size() > 0){
+            holder.betvictoryicon.setVisibility(View.GONE);
+            holder.tv_havepay.setVisibility(View.GONE);
+            holder.tv_betsureing.setVisibility(View.GONE);
+            holder.tv_betnum.setText(record.getOrder_num());
+            holder.tv_bettime.setText(AppUtils.getFormatTime6(record.getBet_created_time()));
+            holder.tv_betsureing.setVisibility(View.GONE);
+        }
 
-//        if(_code != GlobalVariable.succ)
+        HttpTool.getBitmapUrl(record.getGame_logo(), new HttpTool.bmpListener() {
+            @Override
+            public void onFinish(Bitmap bitmap) {
+                if (bitmap != null) holder.tv_logoicon.setImageBitmap(bitmap);
+            }
+        });
+
     }
 
     @Override
@@ -90,7 +108,7 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
         private TextView tv_odds;
         private TextView tv_betmoney;
         private TextView tv_willget;
-        private TextView tv_betnumtitle;
+        private TextView tv_bettime;
         private TextView tv_betnum;
         private TextView tv_warm;
         private RelativeLayout betnumlayout;
@@ -99,6 +117,9 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
         private TextView tv_betsureing;
         private TextView tv_matchvsname;
         private TextView tv_starttime;
+        private TextView tv_matchtround;
+        private TextView tv_matchtstatus;
+        private ImageView tv_logoicon;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -106,7 +127,7 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
             tv_odds = itemView.findViewById(R.id.tv_odds);
             tv_betmoney = itemView.findViewById(R.id.tv_betmoney);
             tv_willget = itemView.findViewById(R.id.tv_willget);
-            tv_betnumtitle = itemView.findViewById(R.id.tv_betnumtitle);
+            tv_bettime = itemView.findViewById(R.id.tv_bettime);
             tv_betnum = itemView.findViewById(R.id.tv_betnum);
             tv_warm = itemView.findViewById(R.id.tv_warm);
             betnumlayout = itemView.findViewById(R.id.betnumlayout);
@@ -115,6 +136,9 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
             tv_betsureing = itemView.findViewById(R.id.tv_betsureing);
             tv_matchvsname = itemView.findViewById(R.id.tv_matchvsname);
             tv_starttime = itemView.findViewById(R.id.tv_starttime);
+            tv_matchtround = itemView.findViewById(R.id.tv_matchtround);
+            tv_matchtstatus = itemView.findViewById(R.id.tv_matchtstatus);
+            tv_logoicon = itemView.findViewById(R.id.tv_logoicon);
         }
     }
 }

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 
 import java.io.BufferedReader;
@@ -148,7 +149,7 @@ public class HttpTool {
                         in.close();
                         httpURLConnection.disconnect();
                     } else {
-                        Log.w("HTTP", "Connction failed" + httpURLConnection.getResponseCode());
+                        Log.w("HTTP", "Connction failed = " + httpURLConnection.getResponseCode());
 
                     }
 
@@ -326,7 +327,7 @@ public class HttpTool {
     }
 
     public static void getBitmapUrl(final String url, final bmpListener listener ) {
-
+        if(AppUtils.isEmptyString(url)) return;
         new Thread(new Runnable(){
             @Override
             public void run() {

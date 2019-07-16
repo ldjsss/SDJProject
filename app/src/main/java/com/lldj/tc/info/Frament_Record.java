@@ -1,64 +1,49 @@
 package com.lldj.tc.info;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
-import com.lldj.tc.http.beans.BetMatchBean;
 import com.lldj.tc.http.beans.FormatModel.RecordModel;
-import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
-import com.lldj.tc.http.beans.MatchBean;
 import com.lldj.tc.http.beans.RecordBean;
 import com.lldj.tc.match.Adapter_BetResultCell;
-import com.lldj.tc.match.Adapter_MainCell;
-import com.lldj.tc.match.Fragment_Banner;
-import com.lldj.tc.match.Fragment_Calendar;
-import com.lldj.tc.utils.EventType;
-import com.lldj.tc.utils.GlobalVariable;
-import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
-import com.lldj.tc.toolslibrary.event.Observable;
-import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
 import com.lldj.tc.toolslibrary.util.AppUtils;
-import com.lldj.tc.toolslibrary.util.Clog;
-import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.GlobalVariable;
+import com.lldj.tc.utils.HandlerType;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.disposables.Disposable;
 
 
-public class Frament_Record extends BaseFragment implements LRecyclerView.LScrollListener{
+public class Frament_Record extends BaseFragment implements LRecyclerView.LScrollListener {
     @BindView(R.id.subject_lrecycleview)
     LRecyclerView subjectLrecycleview;
+    @BindView(R.id.layout_board)
+    FrameLayout layoutBoard;
 
     private Adapter_BetResultCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
     private int ViewType = 0;
 
-    private ArrayList<BetModel> alist= new ArrayList<>();
+    private ArrayList<BetModel> alist = new ArrayList<>();
     private ArrayList<BetModel> mlist = new ArrayList<>();
     private int pageSize = 10;
     private int curPage = 1;
@@ -89,6 +74,8 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
             subjectLrecycleview.setLScrollListener(this);
 
         }
+
+        layoutBoard.setVisibility(View.GONE);
     }
 
 
@@ -163,11 +150,11 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
                 RecordBean res = (RecordBean) _res;
                 if (res.getCode() == GlobalVariable.succ) {
 
-                    RecordModel _ret =  (RecordModel)res.getResult();
+                    RecordModel _ret = (RecordModel) res.getResult();
 
                     List<BetModel> _list = (List<BetModel>) _ret.getRecords();
                     pageSize = _ret.getPage_size();
-                    curPage  = _ret.getPage_num();
+                    curPage = _ret.getPage_num();
                     totalPage = _ret.getPages();
 
 //                    Collections.sort(_list, (Comparator<BetModel>) (o1, o2) -> {

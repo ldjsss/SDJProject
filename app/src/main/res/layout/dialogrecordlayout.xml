@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/color_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include layout="@layout/toolbar_back_layout"/>
@@ -19,7 +20,8 @@
             app:tabPaddingTop="2dp"
             app:tabPaddingBottom="2dp"
             app:tabBackground="@color/transparent"
-            app:tabIndicatorFullWidth="false"/>
+            app:tabIndicatorFullWidth="false"
+            android:background="#252A3B"/>
     </RelativeLayout>
 
     <androidx.viewpager.widget.ViewPager

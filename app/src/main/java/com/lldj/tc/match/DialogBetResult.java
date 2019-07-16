@@ -1,6 +1,7 @@
 package com.lldj.tc.match;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.http.beans.BetMatchBean;
 import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
+import com.lldj.tc.info.Activity_Records;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
 
@@ -25,6 +27,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
 public class DialogBetResult extends BaseDialog {
 
@@ -63,7 +67,8 @@ public class DialogBetResult extends BaseDialog {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_betlist:
-                Toast.makeText(getContext(),"---------------test1",Toast.LENGTH_SHORT).show();
+                bActivity.startActivity(new Intent(bActivity, Activity_Records.class));
+                dismiss();
                 break;
             case R.id.bt_continue:
                 dismiss();

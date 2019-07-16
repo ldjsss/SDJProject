@@ -39,10 +39,6 @@ public class Activity_Records extends BaseActivity {
     ImageView toolbarBackIv;
     @BindView(R.id.toolbar_title_tv)
     StrokeTextView toolbarTitleTv;
-    @BindView(R.id.imservice)
-    ImageView imservice;
-    @BindView(R.id.connectservice)
-    RelativeLayout connectservice;
     @BindView(R.id.toolbar_root_layout)
     RelativeLayout toolbarRootLayout;
     @BindView(R.id.recordtablayout)
