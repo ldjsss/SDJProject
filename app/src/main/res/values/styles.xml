@@ -40,6 +40,7 @@
         <item name="android:theme">@style/AppTheme</item>
         <item name="tabMode">fixed</item>
         <item name="tabGravity">fill</item>
+        <item name="tabMaxWidth">0dp</item>
     </style>
 
     <style name="DetailFragment_TabLayout" parent="">

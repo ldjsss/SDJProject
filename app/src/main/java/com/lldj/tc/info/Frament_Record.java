@@ -174,8 +174,6 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
                 }
 
-                AppUtils.dispatchEvent(new ObData(EventType.MATCHCOUNT, mlist.size(), ViewType + ""));
-
                 subjectLrecycleview.refreshComplete();
             }
         });

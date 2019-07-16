@@ -1,5 +1,6 @@
 package com.lldj.tc.match;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -60,6 +61,11 @@ public class Fragment_ViewPager extends BaseFragment {
         mPagerAdapter = new Adapter_MainPager(mContext, mContext.getSupportFragmentManager());
         firstpageViewpager.setAdapter(mPagerAdapter);
         tabLayout.setupWithViewPager(firstpageViewpager);
+        tabLayout.setTabRippleColor(null);
+        tabLayout.setTabIndicatorFullWidth(false);
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setCornerRadius(2);
+        tabLayout.setSelectedTabIndicator(gradientDrawable);
         definedTablayout();
         firstpageViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -79,7 +85,9 @@ public class Fragment_ViewPager extends BaseFragment {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 if (data.getKey().equalsIgnoreCase(EventType.MATCHCOUNT)) {
-                    updateTitle(Integer.parseInt(data.getTag()), data.getValue() + "");
+                    int _viewType = Integer.parseInt(data.getTag());
+                    String _matchNum = _viewType == 3 ? "" : data.getValue() + "";
+                    updateTitle(_viewType, _matchNum);
                 }
             }
         });

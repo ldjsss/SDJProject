@@ -235,7 +235,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     }
                 }
 
-                AppUtils.dispatchEvent(new ObData(EventType.MATCHCOUNT, mlist.size(), ViewType + ""));
+                AppUtils.dispatchEvent(new ObData(EventType.MATCHCOUNT, alist.size(), ViewType + ""));
 
                 subjectLrecycleview.refreshComplete();
             }

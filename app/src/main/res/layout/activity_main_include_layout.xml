@@ -28,7 +28,8 @@
             app:tabPaddingStart="1dp"
             app:tabPaddingEnd="1dp"
             app:tabBackground="@color/transparent"
-            app:tabIndicatorFullWidth="false"/>
+            app:tabIndicatorFullWidth="false"
+        />
     </RelativeLayout>
 
     <androidx.viewpager.widget.ViewPager
