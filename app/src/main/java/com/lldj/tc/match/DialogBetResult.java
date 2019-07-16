@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
+import com.lldj.tc.http.beans.BetMatchBean;
 import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
@@ -26,8 +27,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DialogBetResult extends BaseDialog {
-
-    private List<BetModel> datas = new ArrayList<>();
 
     @BindView(R.id.betlrecycleview)
     RecyclerView betlrecycleview;
@@ -50,11 +49,11 @@ public class DialogBetResult extends BaseDialog {
         window.setAttributes(layoutParams);
     }
 
-    public void showView(List<BetModel> list) {
+    public void showView(List<BetMatchBean.betResult> list) {
         int len = list.size() >= 2 ? 2 : 1;
         betlrecycleview.getLayoutParams().height = betlrecycleview.getLayoutParams().height * len;
         betlrecycleview.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        betlrecycleview.setAdapter(new Adapter_BetResultCell(getContext(), list));
+        betlrecycleview.setAdapter(new Adapter_BetResultCell(getContext(), true, list));
         betlrecycleview.setItemAnimator(new DefaultItemAnimator());
 
         show();

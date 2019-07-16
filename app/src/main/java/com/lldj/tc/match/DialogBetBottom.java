@@ -174,9 +174,9 @@ public class DialogBetBottom extends BaseDialog {
         }
     }
 
-    private void removeHaveBet(List<BetModel> list){
+    private void removeHaveBet(List<BetMatchBean.betResult> list){
         if(list == null) return;
-        BetModel betInfo, listInfo;
+        BetMatchBean.betResult betInfo;
         for (int i = 0; i < list.size(); i++) {
             betInfo = list.get(i);
             if(betInfo.getCode() == GlobalVariable.succ) AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, betInfo, betInfo.getOdds_id() + ""));

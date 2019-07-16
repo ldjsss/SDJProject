@@ -51,6 +51,7 @@
     <string name="getUseInfoFail">获取用户信息失败</string>
     <string name="getGameListSucc">获取比赛列表成功</string>
     <string name="hadlock">已锁盘</string>
+    <string name="unbet">当前状态不能下注</string>
     <string name="maxSelect">最多可选择12场比赛</string>
     <string name="currentBetTitle">本次投注</string>
     <string name="maxGetTitle">预计最高返还</string>
@@ -105,6 +106,9 @@
     <string name="havepay">已结算</string>
     <string name="notpay">未结算</string>
     <string name="recordTitle">投注记录</string>
+    <string name="Failureoforders">订单投注失败</string>
+    <string name="starttime">开始时间:</string>
+    <string name="betodds">赔率:</string>
 
 </resources>
 

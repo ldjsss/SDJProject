@@ -13,9 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.BetMatchBean;
+import com.lldj.tc.http.beans.FormatModel.RecordModel;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
+import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.http.beans.MatchBean;
+import com.lldj.tc.http.beans.RecordBean;
+import com.lldj.tc.match.Adapter_BetResultCell;
 import com.lldj.tc.match.Adapter_MainCell;
+import com.lldj.tc.match.Fragment_Banner;
+import com.lldj.tc.match.Fragment_Calendar;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
@@ -43,13 +50,24 @@ import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 
 
-public class Frament_Record extends BaseFragment{
+public class Frament_Record extends BaseFragment implements LRecyclerView.LScrollListener{
+    @BindView(R.id.subject_lrecycleview)
+    LRecyclerView subjectLrecycleview;
 
+    private Adapter_BetResultCell mAdapter = null;
+    private LRecyclerViewAdapter lAdapter = null;
+    private int ViewType = 0;
+
+    private ArrayList<BetModel> alist= new ArrayList<>();
+    private ArrayList<BetModel> mlist = new ArrayList<>();
+    private int pageSize = 10;
+    private int curPage = 1;
+    private int totalPage = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        this.ViewType = getArguments().getInt("ARG");
+        this.ViewType = getArguments().getInt("ARG");
 
     }
 
@@ -60,25 +78,120 @@ public class Frament_Record extends BaseFragment{
 
     @Override
     public void initView(View rootView) {
+
         ButterKnife.bind(this, rootView);
+
+        if (lAdapter == null) {
+            subjectLrecycleview.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+            mAdapter = new Adapter_BetResultCell(mContext, mlist);
+            lAdapter = new LRecyclerViewAdapter(getActivity(), mAdapter);
+            subjectLrecycleview.setAdapter(lAdapter);
+            subjectLrecycleview.setLScrollListener(this);
+
+        }
     }
 
+
+    @Override
+    public void onRefresh() {
+        HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
+        getMatchData();
+
+    }
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
         if (isVisible) {
 //            Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
+            onRefresh();
         } else {
 //            Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
         }
     }
 
+    @Override
+    public void onScrollUp() {
+    }
+
+    @Override
+    public void onScrollDown() {
+    }
+
+    @Override
+    public void onBottom() {
+        LoadingFooter.State state = RecyclerViewStateUtils.getFooterViewState(subjectLrecycleview);
+        if (state == LoadingFooter.State.Loading) {
+            return;
+        }
+        if (mlist.size() < alist.size()) {
+            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.Loading, null);
+            loadData();
+        } else {
+            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
+        }
+    }
+
+    @Override
+    public void onScrolled(int distanceX, int distanceY) {
+    }
+
+    public void loadData() {
+        int mLen = mlist.size();
+        int t = pageSize;
+        if (mLen + t > alist.size()) t = alist.size() - mLen;
+        for (int i = 0; i < t; i++) {
+            mlist.add(alist.get(mLen + i));
+        }
+        mAdapter.changeData(mlist);
+        RecyclerViewStateUtils.setFooterViewState(subjectLrecycleview, LoadingFooter.State.Normal);
+        if (mlist.size() >= alist.size()) {
+            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
+        }
+    }
 
     @Override
     public void selectView(int position) {
         super.onDestroyView();
 //        Log.e("currentPosition", "selectView currentPosition===" + position);
+    }
+
+    private void getMatchData() {
+        HttpMsg.getInstance().sendBetRecords(SharePreUtils.getToken(getContext()), curPage + "", ViewType + "", RecordBean.class, new HttpMsg.Listener() {
+            @Override
+            public void onFinish(Object _res) {
+                RecordBean res = (RecordBean) _res;
+                if (res.getCode() == GlobalVariable.succ) {
+
+                    RecordModel _ret =  (RecordModel)res.getResult();
+
+                    List<BetModel> _list = (List<BetModel>) _ret.getRecords();
+                    pageSize = _ret.getPage_size();
+                    curPage  = _ret.getPage_num();
+                    totalPage = _ret.getPages();
+
+//                    Collections.sort(_list, (Comparator<BetModel>) (o1, o2) -> {
+//                        return (int)(o1.getStart_time_ms() - o2.getStart_time_ms());
+//                    });
+
+                    alist.clear();
+                    alist.addAll(_list);
+
+                    mlist.clear();
+                    int t = alist.size() > pageSize ? pageSize : alist.size();
+                    for (int i = 0; i < t; i++) {
+                        mlist.add(alist.get(i));
+                    }
+
+                    mAdapter.changeData(mlist);
+                    RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
+                }
+
+                AppUtils.dispatchEvent(new ObData(EventType.MATCHCOUNT, mlist.size(), ViewType + ""));
+
+                subjectLrecycleview.refreshComplete();
+            }
+        });
     }
 
 }

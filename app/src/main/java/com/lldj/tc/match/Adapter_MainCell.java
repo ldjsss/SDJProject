@@ -174,15 +174,15 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                     AppUtils.dispatchEvent(new ObData(EventType.BETDETAILUI, _map));
                     break;
                 case R.id.playname0:
-                    if(_data.getOdds().get(0).getStatus() == 2){
-                        Toast.makeText(mContext, mContext.getResources().getString(R.string.hadlock), Toast.LENGTH_SHORT).show();
+                    if(_data.getOdds().get(0).getStatus() != 1){
+                        Toast.makeText(mContext, mContext.getResources().getString(R.string.unbet), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, _data, _data.getOdds().get(0).getId() + ""));
                     break;
                 case R.id.playname1:
-                    if(_data.getOdds().get(1).getStatus() == 2){
-                        Toast.makeText(mContext, mContext.getResources().getString(R.string.hadlock), Toast.LENGTH_SHORT).show();
+                    if(_data.getOdds().get(1).getStatus() != 1){
+                        Toast.makeText(mContext, mContext.getResources().getString(R.string.unbet), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, _data, _data.getOdds().get(1).getId() + ""));

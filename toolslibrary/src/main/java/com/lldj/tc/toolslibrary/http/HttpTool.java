@@ -179,8 +179,8 @@ public class HttpTool {
             @Override
             public void run() {
                 HttpURLConnection httpURLConnection = null;
-//                System.out.println("url:" + url);
-//                System.out.println("params:" + params);
+                System.out.println("url:" + url);
+                System.out.println("params:" + params);
                 try {
                     URL _url = new URL(url);
                     httpURLConnection = (HttpURLConnection) _url.openConnection();
@@ -242,7 +242,8 @@ public class HttpTool {
         }).start();
     }
 
-    public static void httpPost(final String url, final Map<String, String> params, final msgListener listener) {
+    public static void httpPost(final String url, final Map<String, String> params, final msgListener listener, final String token) {
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -282,6 +283,7 @@ public class HttpTool {
 
                     con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                     con.setRequestProperty("connection", "keep-alive");
+                    con.setRequestProperty("Authorization", token);
                     OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), "UTF-8");
                     osw.write(sb.toString());
                     osw.flush();

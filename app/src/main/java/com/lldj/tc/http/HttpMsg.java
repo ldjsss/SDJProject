@@ -43,7 +43,7 @@ public class HttpMsg<T>{
         return new HttpTool.msgListener(){
             @Override
             public void onFinish(int code, String msg) {
-//                System.out.println("ret:" + code + " msg:" + msg);
+                System.out.println("ret:" + code + " msg:" + msg);
                 if(code == HttpURLConnection.HTTP_OK) {
                     Object data = new Gson().fromJson(msg, service);
                     listener.onFinish(data);
@@ -66,7 +66,7 @@ public class HttpMsg<T>{
         Map<String,String> URLParams = new HashMap();
         URLParams.put("mobile", phone);
 
-        HttpTool.httpPost(baseUrl + "register/sms", URLParams, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.httpPost(baseUrl + "register/sms", URLParams, new HttpMsg().getListener(service, callbackListener), "");
 
 //        HttpTool.sendGet(baseUrl + "register/sms?mobile=" + phone, callbackListener);
 
@@ -77,14 +77,14 @@ public class HttpMsg<T>{
         URLParams.put("username", username);
         URLParams.put("password", password);
 
-        HttpTool.httpPost(baseUrl + "login", URLParams, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.httpPost(baseUrl + "login", URLParams, new HttpMsg().getListener(service, callbackListener), "");
     }
 
     public void sendTokenLogin(final String token, Class<T>service, Listener callbackListener) {
         Map<String,String> URLParams = new HashMap();
         URLParams.put("access_token", token);
 
-        HttpTool.httpPost(baseUrl + "oauth2", URLParams, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.httpPost(baseUrl + "oauth2", URLParams, new HttpMsg().getListener(service, callbackListener), "");
     }
 
     public void sendRegister(final String username, final String password, String name, String mobile, String sms, String channel, String devices, Class<T>service, Listener callbackListener) {
@@ -97,7 +97,7 @@ public class HttpMsg<T>{
         URLParams.put("channel", channel);
         URLParams.put("devices", devices);
 
-        HttpTool.httpPost(baseUrl + "register/submit", URLParams, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.httpPost(baseUrl + "register/submit", URLParams, new HttpMsg().getListener(service, callbackListener), "");
     }
 
     public void sendForgetKey(final String mobile, final String password, String sms, Class<T>service, Listener callbackListener) {
@@ -106,7 +106,7 @@ public class HttpMsg<T>{
         URLParams.put("password", password);
         URLParams.put("sms", sms);
 
-        HttpTool.httpPost(baseUrl + "register/forget", URLParams, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.httpPost(baseUrl + "register/forget", URLParams, new HttpMsg().getListener(service, callbackListener), "");
     }
 
     public void sendGetUserInfo(Context context, final String access_token, Class<T>service, Listener callbackListener) {
@@ -146,8 +146,12 @@ public class HttpMsg<T>{
         HttpTool.sendPost(baseUrl + "bet/submit", access_token, json, new HttpMsg().getListener(service, callbackListener));
     }
 
-    public void sendBetRecords(final String access_token, final String json, Class<T>service, Listener callbackListener) {
-        HttpTool.sendPost(baseUrl + "user/betrecord", access_token, json, new HttpMsg().getListener(service, callbackListener));
+    public void sendBetRecords(final String access_token, final String page_num, final String status, Class<T>service, Listener callbackListener) {
+        Map<String,String> URLParams = new HashMap();
+        URLParams.put("page_num", page_num);
+        URLParams.put("status", page_num);
+
+        HttpTool.httpPost(baseUrl + "user/betrecord", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
     public interface Listener<T> {

@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#252A3B"
     android:layout_marginStart="@dimen/dp_10"
     android:layout_marginEnd="@dimen/dp_10">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:id="@+id/bettitlelayout"
-        android:gravity="center_vertical">
-        <!--android:background="@drawable/rec_bettitle"-->
+        android:gravity="center_vertical"
+        android:background="#252A3B"
+        >
 
 
         <ImageView
@@ -32,42 +32,6 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:id="@+id/deleteall"
             android:textColor="#74ACC3"/>
-        <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:id="@+id/closelayout">-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textSize="18sp"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:text="@string/moneyHave"-->
-                <!--android:textColor="@color/color_1a1c26"-->
-                <!--android:id="@+id/moneyhave"/>-->
-
-            <!--<View-->
-                <!--android:layout_width="@dimen/dp_1"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginStart="@dimen/dp_10"-->
-                <!--android:id="@+id/closeline"-->
-                <!--android:background="@color/color_1a1c26"/>-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="×"-->
-                <!--android:textSize="30sp"-->
-                <!--android:layout_marginEnd="@dimen/dp_20"-->
-                <!--android:layout_marginStart="@dimen/dimen_20"-->
-                <!--android:id="@+id/close"-->
-                <!--android:textColor="@color/color_1a1c26"/>-->
-
-        <!--</LinearLayout>-->
-
     </RelativeLayout>
 
     <View
@@ -79,10 +43,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/betlrecycleview"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:overScrollMode="never" />
+        android:layout_height="255dp"
+        android:overScrollMode="never"
+        android:background="@color/black"/>
 
     <View
         android:id="@+id/betlineview2"
@@ -94,7 +57,8 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="#252A3B">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -636,6 +636,12 @@ public class AppUtils {
         return sdf.format(new Date(time));
     }
 
+    public static String getFormatTime6(long time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        if ((time + "").length() == 10) time *= 1000;
+        return sdf.format(new Date(time));
+    }
+
     /*
      * 将时间戳转换为时间
      */
