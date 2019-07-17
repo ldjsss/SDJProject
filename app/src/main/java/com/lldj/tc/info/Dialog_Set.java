@@ -124,10 +124,14 @@ public class Dialog_Set extends BaseDialog {
                 Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rulelayout:
-                getContext().startActivity(new Intent(getContext(), Activity_Webview.class));
+                Intent intent = new Intent(getContext(), Activity_Webview.class);
+                intent.putExtra("url", "http://192.168.1.53:8080/rule.html");
+                getContext().startActivity(intent);
                 break;
             case R.id.aboutlayout:
-                Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(getContext(), Activity_Webview.class);
+                intent1.putExtra("url", "http://192.168.1.53:8080/about.html");
+                getContext().startActivity(intent1);
                 break;
             case R.id.agency:
                 Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();

@@ -1,7 +1,9 @@
 package com.lldj.tc.info;
 
+import android.content.Intent;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.SslErrorHandler;
@@ -13,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.lldj.tc.R;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 
@@ -35,6 +38,8 @@ public class Activity_Webview extends BaseActivity {
     @BindView(R.id.rulewebview)
     WebView rulewebview;
 
+    private String url = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,20 +51,19 @@ public class Activity_Webview extends BaseActivity {
         params.windowAnimations = R.style.Anim_fade;
         getWindow().setAttributes(params);
 
-
-    }
-
-    @Override
-    protected void initData() {
-        ButterKnife.bind(this);
+        Intent intent = getIntent();
+        url = intent.getStringExtra("url");
+//        Log.e("", "onCreate: -----------OneActivity:"+ url );
 
         ImmersionBar.with(this).titleBar(toolbarRootLayout).init();
         toolbarTitleTv.setText(getResources().getString(R.string.rules));
 
+        if(AppUtils.isEmptyString(url)) return;
+
         rulewebview.setBackgroundColor(getResources().getColor(R.color.color_bg));
         rulewebview.loadDataWithBaseURL(null, "加载中。。", "text/html", "utf-8",null);
         rulewebview.setVisibility(View.VISIBLE);
-        rulewebview.loadUrl("http://192.168.1.53:8080/rule.html");
+        rulewebview.loadUrl(url);
         WebSettings settings = rulewebview.getSettings();
         settings.setDefaultTextEncodingName("utf-8") ;
         settings.setJavaScriptEnabled(true);
@@ -76,6 +80,12 @@ public class Activity_Webview extends BaseActivity {
                 handler.proceed();
             }
         });
+
+    }
+
+    @Override
+    protected void initData() {
+        ButterKnife.bind(this);
 
     }
 
