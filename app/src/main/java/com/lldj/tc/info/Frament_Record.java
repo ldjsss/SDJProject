@@ -44,10 +44,10 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
     private int ViewType = 0;
 
     private ArrayList<BetModel> alist = new ArrayList<>();
-    private ArrayList<BetModel> mlist = new ArrayList<>();
     private int pageSize = 10;
     private int curPage = 1;
     private int totalPage = 1;
+    private int total = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
 
         if (lAdapter == null) {
             subjectLrecycleview.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-            mAdapter = new Adapter_BetResultCell(mContext, mlist);
+            mAdapter = new Adapter_BetResultCell(mContext, alist);
             lAdapter = new LRecyclerViewAdapter(getActivity(), mAdapter);
             subjectLrecycleview.setAdapter(lAdapter);
             subjectLrecycleview.setLScrollListener(this);
@@ -111,9 +111,10 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
         if (state == LoadingFooter.State.Loading) {
             return;
         }
-        if (mlist.size() < alist.size()) {
+        if (curPage < totalPage) {
+            curPage++;
             RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.Loading, null);
-            loadData();
+            getMatchData();
         } else {
             RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
         }
@@ -121,20 +122,6 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
 
     @Override
     public void onScrolled(int distanceX, int distanceY) {
-    }
-
-    public void loadData() {
-        int mLen = mlist.size();
-        int t = pageSize;
-        if (mLen + t > alist.size()) t = alist.size() - mLen;
-        for (int i = 0; i < t; i++) {
-            mlist.add(alist.get(mLen + i));
-        }
-        mAdapter.changeData(mlist);
-        RecyclerViewStateUtils.setFooterViewState(subjectLrecycleview, LoadingFooter.State.Normal);
-        if (mlist.size() >= alist.size()) {
-            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
-        }
     }
 
     @Override
@@ -151,29 +138,17 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
                 if (res.getCode() == GlobalVariable.succ) {
 
                     RecordModel _ret = (RecordModel) res.getResult();
-
                     List<BetModel> _list = (List<BetModel>) _ret.getRecords();
                     pageSize = _ret.getPage_size();
                     curPage = _ret.getPage_num();
                     totalPage = _ret.getPages();
 
-//                    Collections.sort(_list, (Comparator<BetModel>) (o1, o2) -> {
-//                        return (int)(o1.getStart_time_ms() - o2.getStart_time_ms());
-//                    });
-
-                    alist.clear();
                     alist.addAll(_list);
 
-                    mlist.clear();
-                    int t = alist.size() > pageSize ? pageSize : alist.size();
-                    for (int i = 0; i < t; i++) {
-                        mlist.add(alist.get(i));
-                    }
-
-                    mAdapter.changeData(mlist);
-                    RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
+                    mAdapter.changeData(alist);
                 }
 
+                RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
                 subjectLrecycleview.refreshComplete();
             }
         });

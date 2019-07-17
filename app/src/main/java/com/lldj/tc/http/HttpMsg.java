@@ -149,7 +149,7 @@ public class HttpMsg<T>{
     public void sendBetRecords(final String access_token, final String page_num, final String status, Class<T>service, Listener callbackListener) {
         Map<String,String> URLParams = new HashMap();
         URLParams.put("page_num", page_num);
-        URLParams.put("status", page_num);
+        URLParams.put("status", status);
 
         HttpTool.httpPost(baseUrl + "user/betrecord", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
