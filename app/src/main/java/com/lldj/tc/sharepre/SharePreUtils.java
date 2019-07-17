@@ -104,7 +104,13 @@ public class SharePreUtils {
         return SharedPreferencesUtil.getSharedPreferences(context).getInt(SharedKeys.SELECTGAME, 0);
     }
 
+    public static void setRecharge_url(Context context, String url) {
+        SharedPreferencesUtil.setValue(context, SharedKeys.RECHARURL, url);
+    }
 
+    public static String getRecharge_url(Context context) {
+        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.RECHARURL, "");
+    }
 
 
     public static void setRegistInfo(Context context, final String username, final String password, String name, String mobile, String channel, String devices) {
@@ -121,11 +127,12 @@ public class SharePreUtils {
         setToken(context, token);
     }
 
-    public static void setUserInfo(Context context, final String openid, final String mobile, final String money, final String username, final String name) {
+    public static void setUserInfo(Context context, final String openid, final String mobile, final String money, final String username, final String name, final String url) {
         setUserId(context, openid);
         setPhone(context, mobile);
         setUserName(context, username);
         setMoney(context, money);
         setName(context, name);
+        setRecharge_url(context, url);
     }
 }

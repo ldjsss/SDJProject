@@ -109,6 +109,9 @@
     <string name="Failureoforders">订单投注失败</string>
     <string name="starttime">开始时间:</string>
     <string name="betodds">赔率:</string>
+    <string name="moneyhavetitle">钱包余额</string>
+    <string name="getmoney">提款</string>
+    <string name="selecttitle">选择存款方式</string>
 
 </resources>
 

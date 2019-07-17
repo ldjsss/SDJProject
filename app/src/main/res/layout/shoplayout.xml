@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_bg">
+
+    <include layout="@layout/toolbar_back_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rec_stroke_969696">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"></View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/moneyhavetitle"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:textColor="@color/color_cdc3b3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="0.00"
+            android:textSize="40sp"
+            android:gravity="center"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"></View>
+
+        <TextView
+            android:id="@+id/getmoney"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="@string/getmoney"
+            android:textSize="20sp"
+            android:textColor="#4B79BA"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:background="@drawable/rec_gameselect" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"></View>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"></View>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/selecttitle"
+            android:textSize="15sp"
+            android:textColor="@color/color_cdc3b3"
+            android:layout_marginStart="@dimen/dp_10"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"></View>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#383b4a"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp"></View>
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/shopwebview"
+        android:layerType="software"
+        android:background="@color/color_bg"></WebView>
+
+</LinearLayout>

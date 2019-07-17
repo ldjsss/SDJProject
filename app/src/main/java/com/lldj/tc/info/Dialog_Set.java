@@ -109,10 +109,8 @@ public class Dialog_Set extends BaseDialog {
             case R.id.imset:
                 DialogManager.getInstance().show(new Dialog_Info(getContext(), R.style.DialogTheme));
                 break;
-            case R.id.packed_iv:
-                break;
             case R.id.packlayout:
-                Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+                getContext().startActivity(new Intent(getContext(), Activity_Shop.class));
                 break;
             case R.id.recordlayout:
                 getContext().startActivity(new Intent(getContext(), Activity_Records.class));

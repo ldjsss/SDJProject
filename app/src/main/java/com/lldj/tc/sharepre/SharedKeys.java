@@ -29,4 +29,6 @@ public class SharedKeys {
     public static final String VERIFY_TEMP_ID_NUM= "verify_temp_id_num";
 
     public static final String SELECTGAME = "select_game";
+
+    public static final String RECHARURL = "RECHARURL";
 }

@@ -20,6 +20,7 @@ public class ResultsModel{
     private String mobile;
     private String money;
     private String username;
+    private String recharge_url;
 
     ////////////赛事相关
     private int early;
@@ -154,6 +155,13 @@ public class ResultsModel{
     }
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getRecharge_url() {
+        return recharge_url;
+    }
+    public void setRecharge_url(String recharge_url) {
+        this.recharge_url = recharge_url;
     }
 
     public int getEarly() {
