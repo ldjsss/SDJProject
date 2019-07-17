@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_bg">
+
+    <include layout="@layout/toolbar_back_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1C2031"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#212534">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="@string/bankcard"
+                    android:textSize="15sp"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:textColor="@color/color_cdc3b3" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text=""
+                        android:hint="@string/selectbankcard"
+                        android:textColorHint="#68718C"
+                        android:textSize="15sp"
+                        android:textColor="@color/white"
+                        android:id="@+id/tvbankcard"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="@string/bankwarm"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_cdc3b3" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"></View>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/moneytitle"
+            android:textSize="15sp"
+            android:layout_marginTop="@dimen/dp_25"
+            android:layout_marginStart="@dimen/dp_20"
+            android:textColor="@color/color_cdc3b3" />
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dimen_20">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥"
+                android:textSize="23sp"
+                android:layout_marginStart="@dimen/dp_20"
+                android:textColor="@color/color_cdc3b3"
+                android:layout_gravity="center_vertical"/>
+
+            <EditText
+                android:id="@+id/editmoney"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/transparent"
+                android:hint="@string/getmoneywarm"
+                android:textColor="@color/color_ebe3d7"
+                android:textColorHint="#68718C"
+                android:textCursorDrawable="@drawable/my_cursor"
+                android:layout_gravity="center_vertical"
+                android:inputType="number"
+                android:textSize="23sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#383b4a"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_20"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/tvmoneypoket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/moneypoket"
+                android:textSize="15sp"
+                android:layout_marginStart="@dimen/dp_20"
+                android:textColor="@color/color_cdc3b3"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/tvallget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/allget"
+                android:textSize="15sp"
+                android:layout_marginStart="@dimen/dp_20"
+                android:textColor="#4B79BA"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/btnsure"
+            android:textColor="@color/color_cdc3b3"
+            android:gravity="center"
+            android:background="@drawable/rec_nulltext"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18sp"
+            android:id="@+id/tbgetsure"
+            android:layout_marginStart="@dimen/dimen_30"
+            android:layout_marginEnd="@dimen/dimen_30"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="45dp"></View>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -31,4 +31,6 @@ public class SharedKeys {
     public static final String SELECTGAME = "select_game";
 
     public static final String RECHARURL = "RECHARURL";
+
+    public static final String BANKID = "BANKID";
 }

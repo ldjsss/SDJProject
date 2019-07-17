@@ -1,5 +1,6 @@
 package com.lldj.tc.info;
 
+import android.content.Intent;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.view.View;
@@ -54,7 +55,7 @@ public class Activity_Shop extends BaseActivity {
 
 
         ImmersionBar.with(this).titleBar(toolbarRootLayout).init();
-        toolbarTitleTv.setText(getResources().getString(R.string.rules));
+        toolbarTitleTv.setText(getResources().getString(R.string.wallet));
 
         shopwebview.setBackgroundColor(getResources().getColor(R.color.color_bg));
         shopwebview.setVisibility(View.VISIBLE);
@@ -99,7 +100,7 @@ public class Activity_Shop extends BaseActivity {
                 Toast.makeText(this, "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.getmoney:
-                Toast.makeText(this, "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, Activity_Getmoney.class));
                 break;
         }
     }

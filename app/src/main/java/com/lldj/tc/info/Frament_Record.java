@@ -137,8 +137,8 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
                 RecordBean res = (RecordBean) _res;
                 if (res.getCode() == GlobalVariable.succ) {
 
-                    RecordModel _ret = (RecordModel) res.getResult();
-                    List<BetModel> _list = (List<BetModel>) _ret.getRecords();
+                    RecordModel _ret = res.getResult();
+                    List<BetModel> _list =  _ret.getRecords();
                     pageSize = _ret.getPage_size();
                     curPage = _ret.getPage_num();
                     totalPage = _ret.getPages();

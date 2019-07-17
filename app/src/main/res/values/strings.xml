@@ -112,6 +112,16 @@
     <string name="moneyhavetitle">钱包余额</string>
     <string name="getmoney">提款</string>
     <string name="selecttitle">选择存款方式</string>
+    <string name="bankcard">银行卡</string>
+    <string name="selectbankcard">请添加提现银行卡</string>
+    <string name="bankwarm">10分钟内到账</string>
+    <string name="moneytitle">金额</string>
+    <string name="getmoneywarm">提款金额最低100元</string>
+    <string name="moneypoket">钱包余额 ￥ %s,</string>
+    <string name="allget">全部提现</string>
+    <string name="btnsure">确定</string>
+    <string name="getmoneytitle">提款</string>
+    <string name="inputmoneywarm">请输入提现金额</string>
 
 </resources>
 

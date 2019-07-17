@@ -112,6 +112,14 @@ public class SharePreUtils {
         return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.RECHARURL, "");
     }
 
+    public static void setSelectBank(Context context, int bankid) {
+        SharedPreferencesUtil.setValue(context, SharedKeys.BANKID, bankid);
+    }
+
+    public static int getSelectBank(Context context) {
+        return SharedPreferencesUtil.getSharedPreferences(context).getInt(SharedKeys.BANKID, -1);
+    }
+
 
     public static void setRegistInfo(Context context, final String username, final String password, String name, String mobile, String channel, String devices) {
         setUserName(context, username);
