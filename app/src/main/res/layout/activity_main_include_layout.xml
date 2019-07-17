@@ -9,33 +9,49 @@
 
     <include layout="@layout/main_titlebar" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp">-->
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="2dp"
-            android:background="@color/color_1a1c26" />
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="2dp"-->
+            <!--android:background="@color/color_1a1c26" />-->
+
+        <!--<com.google.android.material.tabs.TabLayout-->
+            <!--android:id="@+id/tab_layout"-->
+            <!--style="@style/FirstpageFragment_TabLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:tabPaddingStart="1dp"-->
+            <!--app:tabPaddingEnd="1dp"-->
+            <!--app:tabBackground="@color/transparent"-->
+            <!--app:tabIndicatorFullWidth="false"/>-->
+    <!--</RelativeLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rec_stroke_round4_969696"
+        android:layout_margin="@dimen/dp_10"
+        android:orientation="vertical">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             style="@style/FirstpageFragment_TabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabPaddingStart="1dp"
-            app:tabPaddingEnd="1dp"
             app:tabBackground="@color/transparent"
-            app:tabIndicatorFullWidth="false"
-        />
-    </RelativeLayout>
+            app:tabIndicatorFullWidth="false"/>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/firstpage_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"/>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/firstpage_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"/>
+
+    </LinearLayout>
 
 </LinearLayout>
