@@ -29,8 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
-
 public class Dialog_Set extends BaseDialog {
 
     @BindView(R.id.moneycur)
@@ -126,7 +124,7 @@ public class Dialog_Set extends BaseDialog {
                 Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rulelayout:
-                Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+                getContext().startActivity(new Intent(getContext(), Activity_Webview.class));
                 break;
             case R.id.aboutlayout:
                 Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();

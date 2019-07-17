@@ -18,9 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
-import com.lldj.tc.match.Fragment_Main;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
-import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.FragmentStatePagerAdapterCompat;
