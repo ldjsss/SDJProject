@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.BankBean;
+import com.lldj.tc.http.beans.BaseBean;
 import com.lldj.tc.http.beans.FormatModel.RecordModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.http.beans.RecordBean;
@@ -95,13 +96,11 @@ public class Activity_Getmoney extends BaseActivity {
                     _list =  res.getResult();
 
                     if(_list.size() > 0){
-                        tvbankcard.setText(SharePreUtils.getName(mContext) + " " + _list.get(0).getCard_name());
-                        tvbankcard.setTag(_list.get(0).getId());
+                        setBankinfo(_list.get(0));
                     }
                     for (BankBean.BankModel bank: _list) {
                         if(bank.getId() == bankid){
-                            tvbankcard.setText(SharePreUtils.getName(mContext) + " " + bank.getCard_name());
-                            tvbankcard.setTag(bank.getId());
+                            setBankinfo(bank);
                             break;
                         }
                     }
@@ -109,6 +108,15 @@ public class Activity_Getmoney extends BaseActivity {
             }
         });
 
+    }
+
+    private void setBankinfo(BankBean.BankModel bank){
+        if(bank == null) return;
+        String cardNum = bank.getCard();
+        if(TextUtils.isEmpty(cardNum) || cardNum.length() < 4) return;
+        String addString = cardNum.substring(cardNum.length() - 4, cardNum.length());
+        tvbankcard.setText(SharePreUtils.getName(mContext) + " " + bank.getCard_name() + "(" + addString + ")");
+        tvbankcard.setTag(bank.getId());
     }
 
     @Override
@@ -143,9 +151,20 @@ public class Activity_Getmoney extends BaseActivity {
                 }
                 int _bankid = (int)_id;
 
-                Toast.makeText(this, "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
-
                 SharePreUtils.setSelectBank(this, _bankid);
+
+                HttpMsg.getInstance().sendGetCash(SharePreUtils.getToken(this), _money, _bankid+"", BaseBean.class, new HttpMsg.Listener() {
+                    @Override
+                    public void onFinish(Object _res) {
+                        BankBean res = (BankBean) _res;
+                        if (res.getCode() == GlobalVariable.succ) {
+                            Toast.makeText(mContext, "---------------succ ", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(mContext, "---------------fail ", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 break;
         }
     }
