@@ -110,7 +110,9 @@ public class Dialog_Set extends BaseDialog {
                 DialogManager.getInstance().show(new Dialog_Info(getContext(), R.style.DialogTheme));
                 break;
             case R.id.packlayout:
-                getContext().startActivity(new Intent(getContext(), Activity_Shop.class));
+                Intent _intent = new Intent(getContext(), Activity_Shop.class);
+                _intent.putExtra("Anim_fade", R.style.Anim_fade);
+                getContext().startActivity(_intent);
                 break;
             case R.id.recordlayout:
                 getContext().startActivity(new Intent(getContext(), Activity_Records.class));

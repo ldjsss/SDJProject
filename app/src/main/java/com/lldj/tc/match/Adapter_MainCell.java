@@ -177,14 +177,14 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                     AppUtils.dispatchEvent(new ObData(EventType.BETDETAILUI, _map));
                     break;
                 case R.id.playname0:
-                    if(_data.getOdds().get(0).getStatus() != 1){
+                    if(_data == null || _data.getOdds() == null || _data.getOdds().size() < 1 || _data.getOdds().get(0).getStatus() != 1){
                         Toast.makeText(mContext, mContext.getResources().getString(R.string.unbet), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, _data, _data.getOdds().get(0).getId() + ""));
                     break;
                 case R.id.playname1:
-                    if(_data.getOdds().get(1).getStatus() != 1){
+                    if(_data == null || _data.getOdds() == null || _data.getOdds().size() < 2 || _data.getOdds().get(1).getStatus() != 1){
                         Toast.makeText(mContext, mContext.getResources().getString(R.string.unbet), Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -203,25 +203,33 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
         public void bottomCommon(int _type) {
 
             ResultsModel _data = mlist.get(getAdapterPosition() - 1);
-            if(_data == null || _data.getTeam() == null || _data.getTeam().size() < 2) {
+            if(_data == null) {
                 Toast.makeText(mContext, "--------service data error ", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            gamename.setText(_data.getTournament_name());
+            gamenamecount.setText("/ " + _data.getRound());
+            gameplaycount.setText("+" + _data.getPlay_count());
+            gametime.setText(AppUtils.getFormatTime5(_data.getStart_time_ms()));
+
+
+            if(_data.getTeam() == null || _data.getTeam().size() < 2) {
+                Toast.makeText(mContext, "--------service Team data error ", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Team team0    = _data.getTeam() != null ? _data.getTeam().get(0) : null;
             Team team1    = _data.getTeam() != null ? _data.getTeam().get(1) : null;
             List<Odds> odds = _data.getOdds() != null ? _data.getOdds() : null;
             int matchStatus = _data.getStatus();//1:未开始2:滚盘3:已结束4:已取消或异常
 
-            gamename.setText(_data.getTournament_name());
-            gamenamecount.setText("/ " + _data.getRound());
-            gameplaycount.setText("+" + _data.getPlay_count());
             playnamecommon0.setText(team0.getTeam_name());
             playnamecommon1.setText(team1.getTeam_name());
             playovername0.setText(team0.getTeam_name());
             playovername1.setText(team1.getTeam_name());
             playname0.setText(team0.getTeam_name());
             playname1.setText(team1.getTeam_name());
-            gametime.setText(AppUtils.getFormatTime5(_data.getStart_time_ms()));
 
             setSelect(odds);
 

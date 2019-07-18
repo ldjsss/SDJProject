@@ -19,6 +19,7 @@ import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
+import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.utils.GlobalVariable;
@@ -26,6 +27,7 @@ import com.lldj.tc.utils.GlobalVariable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
 
 public class Activity_Shop extends BaseActivity {
     @BindView(R.id.toolbar_back_iv)
@@ -44,16 +46,23 @@ public class Activity_Shop extends BaseActivity {
     WebView shopwebview;
     @BindView(R.id.tvservices)
     TextView tvservices;
+    @BindView(R.id.tvmoney)
+    TextView tvmoney;
+
+    private Disposable disposable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent intent = getIntent();
+        int Anim_fade = intent.getIntExtra("Anim_fade", 0);
+
         setContentView(R.layout.shoplayout);
         ButterKnife.bind(this);
 
         WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.windowAnimations = R.style.Anim_fade;
+        params.windowAnimations = Anim_fade;
         getWindow().setAttributes(params);
 
 
@@ -84,12 +93,32 @@ public class Activity_Shop extends BaseActivity {
         tvservices.setVisibility(View.GONE);
         connectservice.setVisibility(View.VISIBLE);
 
+        tvmoney.setText(SharePreUtils.getMoney(this));
+
+        disposable = RxTimerUtilPro.interval(3000, new RxTimerUtilPro.IRxNext() {
+            @Override
+            public void doNext(long number) {
+                getInfo();
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });
+
     }
 
     @Override
     protected void initData() {
         ButterKnife.bind(this);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxTimerUtilPro.cancel(disposable);
+        disposable = null;
     }
 
     @OnClick({R.id.toolbar_back_iv, R.id.connectservice, R.id.getmoney})
@@ -104,17 +133,19 @@ public class Activity_Shop extends BaseActivity {
                 break;
             case R.id.getmoney:
                 startActivity(new Intent(this, Activity_Getmoney.class));
+                overridePendingTransition(0, R.anim.out_to_left);
+                finish();
                 break;
         }
     }
 
-    private void getInfo(){
+    private void getInfo() {
         HttpMsg.getInstance().sendGetUserInfo(mContext, SharePreUtils.getInstance().getToken(mContext), JsonBean.class, new HttpMsg.Listener() {
             @Override
             public void onFinish(Object _res) {
                 JsonBean res = (JsonBean) _res;
                 if (res.getCode() == GlobalVariable.succ) {
-//                    tvmoneypoket.setText(String.format(getResources().getString(R.string.moneypoket), SharePreUtils.getMoney(mContext)));
+                    tvmoney.setText(SharePreUtils.getMoney(mContext));
                 }
             }
         });

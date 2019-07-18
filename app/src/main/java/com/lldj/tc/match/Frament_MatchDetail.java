@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -193,7 +194,10 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     _matchData = (ResultsModel) res.getResult();
 
                     ResultsModel _data = _matchData;
-                    if (_data == null) return;
+                    if (_data == null || _data.getTeam().size() < 2) {
+                        Toast.makeText(mContext, "services data error !!!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
                     Team team0 = _data.getTeam() != null ? _data.getTeam().get(0) : null;
                     Team team1 = _data.getTeam() != null ? _data.getTeam().get(1) : null;

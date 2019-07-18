@@ -1,5 +1,6 @@
 package com.lldj.tc.info;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,21 +9,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.BankBean;
 import com.lldj.tc.http.beans.BaseBean;
-import com.lldj.tc.http.beans.FormatModel.RecordModel;
-import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.http.beans.JsonBean;
-import com.lldj.tc.http.beans.RecordBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
-import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
-import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
-import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
@@ -126,14 +121,18 @@ public class Activity_Getmoney extends BaseActivity {
 
     }
 
-    @OnClick({R.id.toolbar_back_iv, R.id.tvbankcard, R.id.tvallget, R.id.tbgetsure})
+    @OnClick({R.id.toolbar_back_iv, R.id.selectlayout, R.id.tvallget, R.id.tbgetsure})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back_iv:
+                Intent _intent = new Intent(this, Activity_Shop.class);
+                _intent.putExtra("Anim_fade", R.style.Anim_left);
+                startActivity(_intent);
                 finish();
                 overridePendingTransition(0, R.anim.out_to_right);
                 break;
-            case R.id.tvbankcard:
+            case R.id.selectlayout:
+                DialogManager.getInstance().show(new DialogSelectCard(mContext, R.style.DialogTheme, _list));
                 break;
             case R.id.tvallget:
                 String money = SharePreUtils.getMoney(this);
@@ -182,5 +181,11 @@ public class Activity_Getmoney extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DialogManager.getInstance().removeAll();
     }
 }

@@ -123,6 +123,8 @@
     <string name="getmoneytitle">提款</string>
     <string name="inputmoneywarm">请输入提现金额</string>
     <string name="getsucc">提现成功</string>
+    <string name="selectcard">选择提款卡</string>
+    <string name="addnewcard">使用新卡提现</string>
 
 </resources>
 

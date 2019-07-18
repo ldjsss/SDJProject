@@ -123,7 +123,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                 ToastUtils.show_middle_pic(this, R.mipmap.cancle_icon, msg.getData().getString("msg"), ToastUtils.LENGTH_SHORT);
                 break;
             case HandlerType.LOADING:
-                AppUtils.showLoading(mContext);
+                AppUtils.showLoading(bActivity);
                 break;
             case HandlerType.GAMESELECT:
                 DialogManager.getInstance().show(new DialogGameSelect(mContext, R.style.DialogTheme));
