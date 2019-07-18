@@ -17,7 +17,10 @@ import androidx.annotation.StyleRes;
 import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
 import com.lldj.tc.http.beans.BankBean;
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
+import com.lldj.tc.utils.EventType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,13 +66,13 @@ public class DialogSelectCard extends BaseDialog {
             String addString = cardNum.substring(cardNum.length() - 4, cardNum.length());
             ((TextView)addView.findViewById(R.id.bankName)).setText(bank.getCard_name() + "(" + addString + ")");
             LinearLayout bankcelllayout = addView.findViewById(R.id.bankcelllayout);
-            addView.setTag(bank.getId());
+            addView.setTag(i);
             bankcelllayout.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    int _id = (int)v.getTag();
-
-                    Toast.makeText(getContext(), "---------------_id " + _id, Toast.LENGTH_SHORT).show();
+                    int _index = (int)v.getTag();
+                    AppUtils.dispatchEvent(new ObData(EventType.SELECTBANK, _list.get(_index)));
+                    DialogManager.getInstance().removeDialog("DialogSelectCard");
                 }
             });
         }

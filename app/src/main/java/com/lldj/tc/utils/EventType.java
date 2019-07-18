@@ -10,4 +10,5 @@ public class EventType {
     public static final String SELECTGAMEID = "SELECTGAMEID";
     public static final String DETIALHIDE = "DETIALHIDE";
     public static final String MATCHCOUNT = "MATCHCOUNT";
+    public static final String SELECTBANK = "SELECTBANK";
 }

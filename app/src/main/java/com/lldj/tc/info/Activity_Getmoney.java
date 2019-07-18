@@ -3,6 +3,7 @@ package com.lldj.tc.info;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -16,15 +17,22 @@ import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.BankBean;
 import com.lldj.tc.http.beans.BaseBean;
 import com.lldj.tc.http.beans.JsonBean;
+import com.lldj.tc.match.DialogBet;
+import com.lldj.tc.match.Frament_MatchDetail;
 import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.event.Observable;
+import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
+import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -100,6 +108,17 @@ public class Activity_Getmoney extends BaseActivity {
                             break;
                         }
                     }
+                }
+            }
+        });
+
+        registEvent(new Observer<ObData>() {
+            @Override
+            public void onUpdate(Observable<ObData> observable, ObData data) {
+                if (data.getKey().equalsIgnoreCase(EventType.SELECTBANK)) {
+                    BankBean.BankModel _bank = (BankBean.BankModel) data.getValue();
+                    if(_bank == null) return;
+                    setBankinfo(_bank);
                 }
             }
         });
