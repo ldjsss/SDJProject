@@ -134,8 +134,8 @@ public class HttpMsg<T>{
         HttpTool.sendGet(baseUrl + "game", new HttpMsg().getListener(service, callbackListener));
     }
 
-    public void sendGetMatchList(int type, Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(baseUrl + "match/type/" + type, new HttpMsg().getListener(service, callbackListener));
+    public void sendGetMatchList(int type, int page_num, String game_ids, Class<T>service, Listener callbackListener) {
+        HttpTool.sendGet(baseUrl + "match/type/" + type + "?page_num=" + page_num + game_ids, new HttpMsg().getListener(service, callbackListener));
     }
 
     public void sendGetMatchDetial(int matchID, Class<T>service, Listener callbackListener) {
@@ -156,6 +156,14 @@ public class HttpMsg<T>{
 
     public void sendBankList(final String access_token, Class<T>service, Listener callbackListener) {
         HttpTool.httpPost(baseUrl + "user/banks", null, new HttpMsg().getListener(service, callbackListener), access_token);
+    }
+
+    public void sendGetCash(final String access_token, final String amount, final String bind_id, Class<T>service, Listener callbackListener) {
+        Map<String,String> URLParams = new HashMap();
+        URLParams.put("amount", amount);
+        URLParams.put("bind_id", bind_id);
+
+        HttpTool.httpPost(baseUrl + "user/cash", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
     public interface Listener<T> {

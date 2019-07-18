@@ -23,6 +23,7 @@ public class ResultsModel{
     private String recharge_url;
 
     ////////////赛事相关
+    private int page_num;
     private int early;
     private int id;
     private int live;
@@ -43,6 +44,7 @@ public class ResultsModel{
     private String end_time;
     private long start_time_ms;
     private long end_time_ms;
+
     public long getStart_time_ms() {
         return start_time_ms;
     }
@@ -57,6 +59,14 @@ public class ResultsModel{
 
     public void setEnd_time_ms(long end_time_ms) {
         this.end_time_ms = end_time_ms;
+    }
+
+    public int getPage_num() {
+        return page_num;
+    }
+
+    public void setPage_num(int page_num) {
+        this.page_num = page_num;
     }
 
     private String round;

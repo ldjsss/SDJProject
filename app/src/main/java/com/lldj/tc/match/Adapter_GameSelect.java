@@ -3,6 +3,7 @@ package com.lldj.tc.match;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,18 +24,42 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
+
 public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.MyViewHolder> {
     private Context context;
     private Adapter_GameSelect.MyViewHolder mHolder  = null;
     private List<ResultsModel> datas = new ArrayList<>();
-    public int selectID = 0;
+    public List<Integer> selects = new ArrayList();
     private boolean frashLine = false;
+
+    private ResultsModel firstData;
 
     public Adapter_GameSelect(Context context, List<ResultsModel> datas){
         this.context = context;
+        if(firstData == null)firstData = new ResultsModel(0, bActivity.getResources().getString(R.string.allgames), "ssss");
+        datas.add(0, firstData);
         this.datas.addAll(datas);
 
-        selectID = SharePreUtils.getInstance().getSelectGame(context);
+        String _selectsStr = SharePreUtils.getInstance().getSelectGame(context);
+        if(TextUtils.isEmpty(_selectsStr)) {
+            selects.add(firstData.getId());
+            return;
+        }
+        String[] strs = _selectsStr.split("&game_ids=");
+        for (int i = 0; i < strs.length; i++) {
+            if(!TextUtils.isEmpty(strs[i])) selects.add(Integer.parseInt(strs[i]));
+        }
+    }
+
+    public String getSelect(){
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < selects.size(); i++) {
+            buffer.append("&game_ids=");
+            buffer.append(selects.get(i));
+        }
+
+        return buffer.toString();
     }
 
     @NonNull
@@ -106,8 +131,7 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
                         @Override
                         public void onClick(View v) {
                             int _selectID = (int) v.getTag();
-                            if(selectID == _selectID) return;
-                            selectID = _selectID;
+                            addSelect(_selectID);
                             notifyDataSetChanged();
                         }
                     });
@@ -131,11 +155,37 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
                     ((TextView)view.findViewById(R.id.gamename)).setText(_data.getName());
                 }
 
-                setViewColor(view, (selectID == _id));
+                setViewColor(view, containID(_id) >= 0 ? true : false);
 
                 view.setTag(_id);
             }
 
+        }
+
+        private void addSelect(int selectID){
+            int index = containID(selectID);
+            if(selectID == firstData.getId()) {
+                selects.clear();
+                selects.add(selectID);
+            }
+            else {
+                if(index >= 0){
+                    selects.remove(index);
+                    if(selects.size() <= 0)selects.add(firstData.getId());
+                }
+                else{
+                   int _zero = containID(firstData.getId());
+                    if(_zero >= 0) selects.remove(_zero);
+                    selects.add(selectID);
+                }
+            }
+        }
+
+        private int containID(int selectID){
+            for (int i = 0; i < selects.size(); i++) {
+                if (selects.get(i) == selectID) return i;
+            }
+            return -1;
         }
 
         private void setViewColor(View v, boolean select){

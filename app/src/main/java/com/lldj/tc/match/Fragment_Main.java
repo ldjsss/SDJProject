@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,6 +16,8 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.MatchBean;
+import com.lldj.tc.http.beans.PageMatchBean;
+import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
@@ -56,15 +59,16 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     private Adapter_MainCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
     private ArrayList<ResultsModel> alist= new ArrayList<>();
-    private ArrayList<ResultsModel> mlist = new ArrayList<>();
-    private int pageSize = 10;
+    public int page_size = 10;
+    public int page_num = 1;
+    public int pages = 0;
+    public int total = 0;
     private int ViewType;
     private BaseFragment middleFragment;
     private Disposable disposable;
     private int disTime = 10000;
     private Observer<ObData> observer;
-    public int selectID = 0;
-    private List<ResultsModel> gameList;
+    private String selects = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,8 +83,13 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     if (mAdapter != null) {
                         mAdapter.updateSelect((List<ObData>) data.getValue());
                     }
-                } else if (_key.equalsIgnoreCase(EventType.SELECTGAMEID) || _key.equalsIgnoreCase(EventType.DETIALHIDE)) {
-                    if(_key.equalsIgnoreCase(EventType.SELECTGAMEID)) gameList = (List<ResultsModel>)data.getValue();
+                } else if ( _key.equalsIgnoreCase(EventType.DETIALHIDE)) {
+                    onRefresh();
+                }
+                else if (_key.equalsIgnoreCase(EventType.SELECTGAMEID)) {
+                    alist.clear();
+                    page_num = 1;
+                    selects = SharePreUtils.getInstance().getSelectGame(getContext());
                     onRefresh();
                 }
                 else if (_key.equalsIgnoreCase(EventType.BETDETAILUI)) {
@@ -89,6 +98,8 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
             }
         };
         AppUtils.registEvent(observer);
+
+        selects = SharePreUtils.getInstance().getSelectGame(getContext());
 
 //        Log.e(AppUtils.getScreenWidth(getContext()) + "--------", AppUtils.getScreenHeight(getContext()) + "------");
     }
@@ -159,30 +170,17 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         if (state == LoadingFooter.State.Loading) {
             return;
         }
-        if (mlist.size() < alist.size()) {
-            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.Loading, null);
-            loadData();
+        if (page_num < pages) {
+            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, page_size, LoadingFooter.State.Loading, null);
+            page_num ++;
+            getMatchData();
         } else {
-            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
+            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, page_size, LoadingFooter.State.TheEnd, null);
         }
     }
 
     @Override
     public void onScrolled(int distanceX, int distanceY) {
-    }
-
-    public void loadData() {
-        int mLen = mlist.size();
-        int t = pageSize;
-        if (mLen + t > alist.size()) t = alist.size() - mLen;
-        for (int i = 0; i < t; i++) {
-            mlist.add(alist.get(mLen + i));
-        }
-        mAdapter.changeData(mlist);
-        RecyclerViewStateUtils.setFooterViewState(subjectLrecycleview, LoadingFooter.State.Normal);
-        if (mlist.size() >= alist.size()) {
-            RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.TheEnd, null);
-        }
     }
 
     @Override
@@ -191,51 +189,48 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 //        Log.e("currentPosition", "selectView currentPosition===" + position);
     }
 
-    private void getMatchData() {
-        HttpMsg.getInstance().sendGetMatchList(ViewType + 1, MatchBean.class, new HttpMsg.Listener() {
+    private void getMatchData() {//"&game_ids=" + selectID
+        HttpMsg.getInstance().sendGetMatchList(ViewType + 1, page_num, selects, PageMatchBean.class, new HttpMsg.Listener() {
             @Override
             public void onFinish(Object _res) {
-                MatchBean res = (MatchBean) _res;
+                PageMatchBean res = (PageMatchBean) _res;
                 if (res.getCode() == GlobalVariable.succ) {
+                    PageMatchBean.matchModel _result = res.getResult();
+                    if(_result == null) {
+                        Toast.makeText(mContext, "--------service data error ", Toast.LENGTH_SHORT).show();
+                        page_size = 10;
+                        pages = 0;
+                        total = 0;
+                    }
+                    else {
+                        page_size = _result.getPage_size();
+                        pages = _result.getPages();
+                        total = _result.getTotal();
+                    }
 
-                    List<ResultsModel> _list = (List<ResultsModel>) res.getResult();
+//                    Collections.sort(_list, (Comparator<ResultsModel>) (o1, o2) -> {
+//                        return (int)(o1.getStart_time_ms() - o2.getStart_time_ms());
+//                    });
 
-                    selectID = SharePreUtils.getInstance().getSelectGame(getContext());
-                    if (selectID != 0) {
-                        for (int i = _list.size() - 1; i >= 0; i--) {
-                            if (_list.get(i).getGame_id() != selectID) _list.remove(i);
+                    if(page_num <= 1) {
+                        alist.clear();
+                    }
+                    else{
+                        for (int i = alist.size() - 1; i > 0; i--) {
+//                            Clog.e("-------i = " + i, "alist size = " + alist.size());
+                            if (alist.get(i).getPage_num() == page_num) alist.remove(i);
                         }
                     }
 
-                    Collections.sort(_list, (Comparator<ResultsModel>) (o1, o2) -> {
-                        return (int)(o1.getStart_time_ms() - o2.getStart_time_ms());
-                    });
+                    if(_result != null && _result.getDatas() != null)alist.addAll(_result.getDatas());
 
-                    alist.clear();
-                    alist.addAll(_list);
+                    tvNoMatch.setVisibility(alist.size()>0?View.GONE:View.VISIBLE);
 
-                    mlist.clear();
-                    int t = alist.size() > pageSize ? pageSize : alist.size();
-                    for (int i = 0; i < t; i++) {
-                        mlist.add(alist.get(i));
-                    }
-
-                    mAdapter.changeData(mlist);
-                    RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
+                    mAdapter.changeData(alist);
+                    RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, page_size, LoadingFooter.State.Normal, null);
                 }
 
-                tvNoMatch.setVisibility(mlist.size()>0?View.GONE:View.VISIBLE);
-                if(tvNoMatch.getVisibility() == View.VISIBLE && gameList != null) {
-                    int _select = SharePreUtils.getInstance().getSelectGame(getContext());
-                    for (int i = 0; i < gameList.size(); i++) {
-                        if(gameList.get(i).getId() == _select){
-                            tvNoMatch.setText(String.format(getString(R.string.noGames), gameList.get(i).getName()));
-                            break;
-                        }
-                    }
-                }
-
-                AppUtils.dispatchEvent(new ObData(EventType.MATCHCOUNT, alist.size(), ViewType + ""));
+                AppUtils.dispatchEvent(new ObData(EventType.MATCHCOUNT, total, ViewType + ""));
 
                 subjectLrecycleview.refreshComplete();
             }

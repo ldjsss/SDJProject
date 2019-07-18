@@ -20,6 +20,7 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Team;
+import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.utils.Utils;
@@ -38,6 +39,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
 /**
  * description: <p>
@@ -200,6 +203,10 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
         public void bottomCommon(int _type) {
 
             ResultsModel _data = mlist.get(getAdapterPosition() - 1);
+            if(_data == null || _data.getTeam() == null || _data.getTeam().size() < 2) {
+                Toast.makeText(mContext, "--------service data error ", Toast.LENGTH_SHORT).show();
+                return;
+            }
             Team team0    = _data.getTeam() != null ? _data.getTeam().get(0) : null;
             Team team1    = _data.getTeam() != null ? _data.getTeam().get(1) : null;
             List<Odds> odds = _data.getOdds() != null ? _data.getOdds() : null;

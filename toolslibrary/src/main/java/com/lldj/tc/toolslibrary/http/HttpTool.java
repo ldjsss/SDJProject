@@ -44,7 +44,7 @@ public class HttpTool {
 
 
     public static void sendGet(final String url, final msgListener listener) {
-//        Clog.e("url", url);
+        Clog.e("url", url);
         new Thread(new Runnable() {
             @Override
             public void run() {

@@ -73,7 +73,7 @@
     <string name="inputBetNum">请输入下注金额</string>
     <string name="gameselectTitle">游戏筛选</string>
     <string name="allgames">全部</string>
-    <string name="noGames">暂无%s比赛信息</string>
+    <string name="noGames">暂无相关比赛信息</string>
     <string name="gameing">进行中</string>
     <string name="nogamelooking">当前无直播</string>
     <string name="visitor">游客</string>
@@ -122,6 +122,7 @@
     <string name="btnsure">确定</string>
     <string name="getmoneytitle">提款</string>
     <string name="inputmoneywarm">请输入提现金额</string>
+    <string name="getsucc">提现成功</string>
 
 </resources>
 

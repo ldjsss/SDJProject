@@ -15,10 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lldj.tc.R;
+import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
+import com.lldj.tc.utils.GlobalVariable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -103,6 +106,18 @@ public class Activity_Shop extends BaseActivity {
                 startActivity(new Intent(this, Activity_Getmoney.class));
                 break;
         }
+    }
+
+    private void getInfo(){
+        HttpMsg.getInstance().sendGetUserInfo(mContext, SharePreUtils.getInstance().getToken(mContext), JsonBean.class, new HttpMsg.Listener() {
+            @Override
+            public void onFinish(Object _res) {
+                JsonBean res = (JsonBean) _res;
+                if (res.getCode() == GlobalVariable.succ) {
+//                    tvmoneypoket.setText(String.format(getResources().getString(R.string.moneypoket), SharePreUtils.getMoney(mContext)));
+                }
+            }
+        });
     }
 
 }

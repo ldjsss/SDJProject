@@ -64,8 +64,7 @@ public class DialogGameSelect extends BaseDialog {
             public void onFinish(Object _res) {
                 MatchBean res = (MatchBean) _res;
                 if (res.getCode() == GlobalVariable.succ) {
-                    list = (List<ResultsModel>) res.getResult();
-                    list.add(0, new ResultsModel(0, getContext().getResources().getString(R.string.allgames), "ssss"));
+                    list = res.getResult();
 
                     if(adapter == null) adapter = new Adapter_GameSelect(getContext(), list);
                     gamerecycleview.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
@@ -89,8 +88,9 @@ public class DialogGameSelect extends BaseDialog {
                 Toast.makeText(getContext(),"---------------test2",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_selectgame:
-                SharePreUtils.getInstance().setSelectGame(getContext(), adapter.selectID);
-                if(adapter != null) AppUtils.dispatchEvent(new ObData(EventType.SELECTGAMEID, list));
+                String selects = adapter.getSelect();
+                SharePreUtils.getInstance().setSelectGame(getContext(), selects);
+                if(adapter != null) AppUtils.dispatchEvent(new ObData(EventType.SELECTGAMEID, selects));
                 DialogManager.getInstance().removeDialog(this);
                 break;
         }

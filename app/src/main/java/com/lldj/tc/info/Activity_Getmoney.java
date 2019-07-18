@@ -16,6 +16,7 @@ import com.lldj.tc.http.beans.BankBean;
 import com.lldj.tc.http.beans.BaseBean;
 import com.lldj.tc.http.beans.FormatModel.RecordModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
+import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.http.beans.RecordBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
@@ -156,16 +157,30 @@ public class Activity_Getmoney extends BaseActivity {
                 HttpMsg.getInstance().sendGetCash(SharePreUtils.getToken(this), _money, _bankid+"", BaseBean.class, new HttpMsg.Listener() {
                     @Override
                     public void onFinish(Object _res) {
-                        BankBean res = (BankBean) _res;
+                        BaseBean res = (BaseBean) _res;
                         if (res.getCode() == GlobalVariable.succ) {
-                            Toast.makeText(mContext, "---------------succ ", Toast.LENGTH_SHORT).show();
+                            getInfo();
+                            ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, mContext.getResources().getString(R.string.getsucc), ToastUtils.LENGTH_SHORT);
+                            editmoney.setText("");
                         }
                         else{
-                            Toast.makeText(mContext, "---------------fail ", Toast.LENGTH_SHORT).show();
+                            ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, res.getMessage() + "code:" + res.getCode(), ToastUtils.LENGTH_SHORT);
                         }
                     }
                 });
                 break;
         }
+    }
+
+    private void getInfo(){
+        HttpMsg.getInstance().sendGetUserInfo(mContext, SharePreUtils.getInstance().getToken(mContext), JsonBean.class, new HttpMsg.Listener() {
+            @Override
+            public void onFinish(Object _res) {
+                JsonBean res = (JsonBean) _res;
+                if (res.getCode() == GlobalVariable.succ) {
+                    tvmoneypoket.setText(String.format(getResources().getString(R.string.moneypoket), SharePreUtils.getMoney(mContext)));
+                }
+            }
+        });
     }
 }

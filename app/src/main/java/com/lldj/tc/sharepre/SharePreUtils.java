@@ -96,12 +96,12 @@ public class SharePreUtils {
         return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.IP, "");
     }
 
-    public static void setSelectGame(Context context, int id) {
-        SharedPreferencesUtil.setValue(context, SharedKeys.SELECTGAME, id);
+    public static void setSelectGame(Context context, String select) {
+        SharedPreferencesUtil.setValue(context, SharedKeys.SELECTGAME, select);
     }
 
-    public static int getSelectGame(Context context) {
-        return SharedPreferencesUtil.getSharedPreferences(context).getInt(SharedKeys.SELECTGAME, 0);
+    public static String getSelectGame(Context context) {
+        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.SELECTGAME, "");
     }
 
     public static void setRecharge_url(Context context, String url) {
