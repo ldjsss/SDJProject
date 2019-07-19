@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="@string/bankcard"
+                    android:text="@string/cardman"
                     android:textSize="15sp"
                     android:layout_marginStart="@dimen/dp_20"
                     android:textColor="@color/color_cdc3b3" />
@@ -46,17 +46,17 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text=""
-                        android:hint="@string/selectbankcard"
+                        android:hint="@string/cardname"
                         android:textColorHint="#68718C"
                         android:textSize="15sp"
                         android:textColor="@color/white"
-                        android:id="@+id/tvbankcard"/>
+                        android:id="@+id/tvbankcardman"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:text="@string/bankwarm"
+                        android:text="@string/cardwarm"
                         android:textSize="12sp"
                         android:textColor="@color/color_cdc3b3" />
                 </LinearLayout>
@@ -72,42 +72,43 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/moneytitle"
+            android:text="@string/cardnumtitle"
             android:textSize="15sp"
             android:layout_marginTop="@dimen/dp_25"
             android:layout_marginStart="@dimen/dp_20"
             android:textColor="@color/color_cdc3b3" />
         
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/dimen_20">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="￥"
-                android:textSize="23sp"
-                android:layout_marginStart="@dimen/dp_20"
-                android:textColor="@color/color_cdc3b3"
-                android:layout_gravity="center_vertical"/>
-
             <EditText
-                android:id="@+id/editmoney"
+                android:id="@+id/editaddcardnum"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@color/transparent"
-                android:hint="@string/getmoneywarm"
+                android:hint="@string/addcardnum"
                 android:textColor="@color/color_ebe3d7"
                 android:textColorHint="#68718C"
                 android:textCursorDrawable="@drawable/my_cursor"
                 android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dp_20"
                 android:inputType="number"
-                android:maxLength="20"
+                android:maxLength="30"
                 android:textSize="23sp" />
 
-        </LinearLayout>
+            <ImageView
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:src="@mipmap/user_camera"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:id="@+id/camera"/>
+
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
@@ -116,32 +117,60 @@
             android:layout_marginStart="@dimen/dimen_20"
             android:layout_marginEnd="@dimen/dimen_20"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_20">
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/dp_20"
+            android:id="@+id/selectbanklayout">
 
             <TextView
-                android:id="@+id/tvmoneypoket"
+                android:id="@+id/tvbanktitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/moneypoket"
+                android:text="@string/cardbank"
                 android:textSize="15sp"
                 android:layout_marginStart="@dimen/dp_20"
                 android:textColor="@color/color_cdc3b3"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#383b4a"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tvbanktitle"
+                android:layout_marginStart="@dimen/dp_10"/>
 
             <TextView
-                android:id="@+id/tvallget"
+                android:id="@+id/bankname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/allget"
+                android:text=""
                 android:textSize="15sp"
-                android:layout_marginStart="@dimen/dp_20"
-                android:textColor="#4B79BA"
-                android:layout_gravity="center_vertical"/>
+                android:hint="@string/cardbankname"
+                android:textColor="@color/color_ebe3d7"
+                android:textColorHint="#68718C"
+                android:layout_gravity="center_vertical"
+                android:layout_toRightOf="@+id/tvbanktitle"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="31dp"/>
 
-        </LinearLayout>
+            <ImageView
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:src="@mipmap/main_next"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dimen_20"/>
+
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#383b4a"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_20"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -153,7 +182,7 @@
             android:background="@drawable/rec_nulltext"
             android:layout_gravity="center_horizontal"
             android:textSize="18sp"
-            android:id="@+id/tbgetsure"
+            android:id="@+id/addsure"
             android:layout_marginStart="@dimen/dimen_30"
             android:layout_marginEnd="@dimen/dimen_30"/>
 

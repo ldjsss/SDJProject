@@ -1,6 +1,7 @@
 package com.lldj.tc.info;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -28,6 +29,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
 public class DialogSelectCard extends BaseDialog {
     @BindView(R.id.close)
@@ -85,7 +88,9 @@ public class DialogSelectCard extends BaseDialog {
             @Override
             public void onClick(View v) {
                 DialogManager.getInstance().removeDialog("DialogSelectCard");
-                Toast.makeText(getContext(), "------------dddddd---_id ", Toast.LENGTH_SHORT).show();
+                getContext().startActivity(new Intent(getContext(), Activity_AddCard.class));
+                bActivity.overridePendingTransition(0, R.anim.out_to_left);
+                bActivity.finish();
             }
         });
     }

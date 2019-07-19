@@ -91,6 +91,7 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+        <activity android:name=".info.Activity_AddCard" />
     </application>
 
 </manifest>

@@ -69,11 +69,14 @@ public class Activity_Getmoney extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent intent = getIntent();
+        int Anim_fade = intent.getIntExtra("Anim_fade", R.style.Anim_fade);
+
         setContentView(R.layout.getcashlayout);
         ButterKnife.bind(this);
 
         WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.windowAnimations = R.style.Anim_fade;
+        params.windowAnimations = Anim_fade;
         getWindow().setAttributes(params);
 
         bankid = SharePreUtils.getSelectBank(this);
@@ -182,7 +185,6 @@ public class Activity_Getmoney extends BaseActivity {
                             editmoney.setText("");
                         }
                         else{
-                            ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, res.getMessage() + "code:" + res.getCode(), ToastUtils.LENGTH_SHORT);
                         }
                     }
                 });

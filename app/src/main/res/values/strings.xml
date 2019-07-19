@@ -125,6 +125,14 @@
     <string name="getsucc">提现成功</string>
     <string name="selectcard">选择提款卡</string>
     <string name="addnewcard">使用新卡提现</string>
+    <string name="cardman">持卡人</string>
+    <string name="cardname">请联系客服添加或修改姓名</string>
+    <string name="cardwarm">提款卡姓名需与注册账号姓名一致</string>
+    <string name="cardnumtitle">卡号</string>
+    <string name="addcardnum">请添加提款卡号</string>
+    <string name="cardbank">开户银行</string>
+    <string name="cardbankname">请选择提款银行</string>
+    <string name="addcardtitle">添加提款卡</string>
 
 </resources>
 
