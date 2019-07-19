@@ -3,14 +3,16 @@ package com.lldj.tc.info;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
@@ -37,9 +39,11 @@ public class DialogSelectCard extends BaseDialog {
     TextView close;
     @BindView(R.id.addlayout)
     LinearLayout addlayout;
+    @BindView(R.id.addparlayout)
+    RelativeLayout addparlayout;
     private List<BankBean.BankModel> _list = new ArrayList();
 
-    public DialogSelectCard(@NonNull Context context, @StyleRes int themeResId, List<BankBean.BankModel> _list) {
+    public DialogSelectCard(@NonNull Context context, @StyleRes int themeResId, List<BankBean.BankModel> _list, boolean add) {
         super(context, themeResId);
 
         this._list = _list;
@@ -62,29 +66,34 @@ public class DialogSelectCard extends BaseDialog {
             View addView = View.inflate(context, R.layout.bankcelllayout, null);
             addView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             addlayout.addView(addView);
+            Log.e("---addlayout.height = " + addlayout.getLayoutParams().height, "--addparlayout.height = " + addparlayout.getLayoutParams().height);
+            if(addlayout.getLayoutParams().height > addparlayout.getLayoutParams().height) addlayout.getLayoutParams().height = addparlayout.getLayoutParams().height;
 
             BankBean.BankModel bank = _list.get(i);
             String cardNum = bank.getCard();
-            if(TextUtils.isEmpty(cardNum) || cardNum.length() < 4) return;
-            String addString = cardNum.substring(cardNum.length() - 4, cardNum.length());
-            ((TextView)addView.findViewById(R.id.bankName)).setText(bank.getCard_name() + "(" + addString + ")");
+            String addString = (!TextUtils.isEmpty(cardNum) && cardNum.length() > 4) ? "(" + cardNum.substring(cardNum.length() - 4, cardNum.length()) + ")" : "";
+            ((TextView) addView.findViewById(R.id.bankName)).setText(bank.getCard_name() + addString);
             LinearLayout bankcelllayout = addView.findViewById(R.id.bankcelllayout);
             addView.setTag(i);
-            bankcelllayout.setOnClickListener(new View.OnClickListener(){
+            bankcelllayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int _index = (int)v.getTag();
+                    int _index = (int) v.getTag();
                     AppUtils.dispatchEvent(new ObData(EventType.SELECTBANK, _list.get(_index)));
                     DialogManager.getInstance().removeDialog("DialogSelectCard");
                 }
             });
+
+            if(bank.getLogo() > 0) ((ImageView)addView.findViewById(R.id.bankicon)).setImageResource(bank.getLogo());
         }
+
+        if(!add) return;
 
         View addBankView = View.inflate(context, R.layout.addbankcelllayout, null);
         addBankView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         addlayout.addView(addBankView);
 
-        addBankView.findViewById(R.id.addbankcelllayout).setOnClickListener(new View.OnClickListener(){
+        addBankView.findViewById(R.id.addbankcelllayout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogManager.getInstance().removeDialog("DialogSelectCard");

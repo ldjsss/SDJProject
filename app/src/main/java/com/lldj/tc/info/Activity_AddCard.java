@@ -2,6 +2,7 @@ package com.lldj.tc.info;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -11,10 +12,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
+import com.lldj.tc.http.beans.BankBean;
+import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.event.Observable;
+import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
+import com.lldj.tc.utils.EventType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +56,8 @@ public class Activity_AddCard extends BaseActivity {
     @BindView(R.id.addsure)
     TextView addsure;
 
+    private List<BankBean.BankModel> _list = new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +71,7 @@ public class Activity_AddCard extends BaseActivity {
 
 
         ImmersionBar.with(this).titleBar(toolbarRootLayout).init();
-        toolbarTitleTv.setText(getResources().getString(R.string.addcardtitle));
+        toolbarTitleTv.setText(getResourcesString(R.string.addcardtitle));
 
         editaddcardnum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -69,6 +82,37 @@ public class Activity_AddCard extends BaseActivity {
             }
         });
 
+        registEvent(new Observer<ObData>() {
+            @Override
+            public void onUpdate(Observable<ObData> observable, ObData data) {
+                if (data.getKey().equalsIgnoreCase(EventType.SELECTBANK)) {
+                    BankBean.BankModel _bank = (BankBean.BankModel) data.getValue();
+                    if(_bank == null) return;
+                    setBankinfo(_bank);
+                }
+            }
+        });
+
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_29), R.mipmap.user_bank_29));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_30), R.mipmap.user_bank_30));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_31), R.mipmap.user_bank_31));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_32), R.mipmap.user_bank_32));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_33), R.mipmap.user_bank_33));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_34), R.mipmap.user_bank_34));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_35), R.mipmap.user_bank_35));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_36), R.mipmap.user_bank_36));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_37), R.mipmap.user_bank_37));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_38), R.mipmap.user_bank_38));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_39), R.mipmap.user_bank_39));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_40), R.mipmap.user_bank_40));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_41), R.mipmap.user_bank_41));
+        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_42), R.mipmap.user_bank_42));
+
+    }
+
+    private void setBankinfo(BankBean.BankModel bank){
+        if(bank == null) return;
+        bankname.setText(bank.getCard_name());
     }
 
     @Override
@@ -86,7 +130,7 @@ public class Activity_AddCard extends BaseActivity {
                 Toast.makeText(this, getResourcesString(R.string.cardname), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.selectbanklayout:
-
+                DialogManager.getInstance().show(new DialogSelectCard(mContext, R.style.DialogTheme, _list, false));
                 break;
             case R.id.addsure:
 

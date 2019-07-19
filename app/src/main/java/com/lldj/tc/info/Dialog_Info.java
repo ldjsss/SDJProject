@@ -72,6 +72,7 @@ public class Dialog_Info extends BaseDialog {
                 Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.exitlayout:
+                DialogManager.getInstance().removeDialog(this);
                 SharePreUtils.setToken(getContext(), "");
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEAVEGAME);
                 break;

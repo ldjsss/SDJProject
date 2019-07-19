@@ -1,5 +1,7 @@
 package com.lldj.tc.http.beans;
 
+import androidx.annotation.DrawableRes;
+
 import java.util.List;
 
 public class BankBean {
@@ -33,13 +35,27 @@ public class BankBean {
     }
 
 
-    public class BankModel {
+    public static class BankModel {
 
         private String card;
         private String card_name;
         private String create_time;
         private int id = -11111;
         private int uid;
+        private int logo;
+
+        public BankModel() { }
+
+        public BankModel(String card_name, int logo) {
+            this.card_name = card_name;
+            this.logo = logo;
+        }
+
+        public BankModel(String card_name, int logo, String card) {
+            this.card_name = card_name;
+            this.logo = logo;
+            this.card = card;
+        }
 
         public String getCard() {
             return card;
@@ -79,6 +95,14 @@ public class BankBean {
 
         public void setUid(int uid) {
             this.uid = uid;
+        }
+
+        public int getLogo() {
+            return logo;
+        }
+
+        public void setLogo(int logo) {
+            this.logo = logo;
         }
     }
 }

@@ -115,7 +115,6 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                     return;
                 }
                 DialogManager.getInstance().show(new Dialog_Set(this, R.style.DialogTheme));
-//                DialogManager.getInstance().show(new Activity_Records(this, R.style.DialogTheme));
                 break;
             case HandlerType.LEFTBACK:
                 break;

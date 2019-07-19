@@ -7,7 +7,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"></View>
+        android:layout_height="5dp"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@mipmap/user_bank_29"
+            android:src="@mipmap/user_bank_29"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/dimen_10"
             android:id="@+id/bankicon"/>
@@ -34,6 +34,6 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"></View>
+        android:layout_height="5dp"></View>
 
 </LinearLayout>

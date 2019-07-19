@@ -134,5 +134,22 @@
     <string name="cardbankname">请选择提款银行</string>
     <string name="addcardtitle">添加提款卡</string>
 
+    <string name="user_bank_29">工商银行</string>
+    <string name="user_bank_30">建设银行</string>
+    <string name="user_bank_31">农业银行</string>
+    <string name="user_bank_32">招商银行</string>
+    <string name="user_bank_33">民生银行</string>
+    <string name="user_bank_34">交通银行</string>
+    <string name="user_bank_35">邮政储蓄银行</string>
+    <string name="user_bank_36">中国银行</string>
+    <string name="user_bank_37">兴业银行</string>
+    <string name="user_bank_38">光大银行</string>
+    <string name="user_bank_39">平安银行</string>
+    <string name="user_bank_40">中信银行</string>
+    <string name="user_bank_41">广东发展银行</string>
+    <string name="user_bank_42">上海浦东发展银行</string>
+
+
+
 </resources>
 

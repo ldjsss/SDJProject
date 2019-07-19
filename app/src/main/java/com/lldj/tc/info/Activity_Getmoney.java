@@ -154,7 +154,7 @@ public class Activity_Getmoney extends BaseActivity {
                 overridePendingTransition(0, R.anim.out_to_right);
                 break;
             case R.id.selectlayout:
-                DialogManager.getInstance().show(new DialogSelectCard(mContext, R.style.DialogTheme, _list));
+                DialogManager.getInstance().show(new DialogSelectCard(mContext, R.style.DialogTheme, _list, true));
                 break;
             case R.id.tvallget:
                 String money = SharePreUtils.getMoney(this);
