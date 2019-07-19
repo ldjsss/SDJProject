@@ -86,6 +86,8 @@ public class Activity_AddCard extends BaseActivity {
             }
         });
 
+        tvbankcardman.setText(SharePreUtils.getName(mContext));
+
         registEvent(new Observer<ObData>() {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {

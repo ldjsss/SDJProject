@@ -119,7 +119,7 @@ public class HttpMsg<T>{
                 JsonBean res = (JsonBean) msg;
                 if (res.getCode() == GlobalVariable.succ) {
                     ResultsModel ret = (ResultsModel) res.getResult();
-                    SharePreUtils.getInstance().setUserInfo(context, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername(), ret.getName(), ret.getRecharge_url());
+                    SharePreUtils.getInstance().setUserInfo(context, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername(), ret.getReal_name(), ret.getRecharge_url());
                 }
                 else Toast.makeText(context, context.getResources().getString(R.string.getUseInfoFail), Toast.LENGTH_SHORT).show();
 

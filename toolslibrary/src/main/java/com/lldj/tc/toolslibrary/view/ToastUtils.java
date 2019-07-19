@@ -37,10 +37,10 @@ public class ToastUtils {
         // handler的duration不能直接对应Toast的常量时长，在此针对Toast的常量相应定义时长
         switch (duration) {
             case LENGTH_SHORT:// Toast.LENGTH_SHORT值为0，对应的持续时间大概为1s
-                duration = 1000;
+                duration = 1500;
                 break;
             case LENGTH_LONG:// Toast.LENGTH_LONG值为1，对应的持续时间大概为3s
-                duration = 2000;
+                duration = 2500;
                 break;
             default:
                 break;
@@ -48,7 +48,7 @@ public class ToastUtils {
         if (null != toast) {
             textView.setText(msg);
         } else {
-            if (duration == 1000) {
+            if (duration <= 1500) {
                 toast = Toast.makeText(ctx, msg, Toast.LENGTH_SHORT);
             } else {
                 toast = Toast.makeText(ctx, msg, Toast.LENGTH_LONG);

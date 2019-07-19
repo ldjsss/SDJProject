@@ -21,6 +21,7 @@ public class ResultsModel{
     private String money;
     private String username;
     private String recharge_url;
+    private String real_name;
 
     ////////////赛事相关
     private int page_num;
@@ -330,7 +331,15 @@ public class ResultsModel{
         this.team = team;
     }
 
-//    public List<Odds> getOdds() {
+    public String getReal_name() {
+        return real_name;
+    }
+
+    public void setReal_name(String real_name) {
+        this.real_name = real_name;
+    }
+
+    //    public List<Odds> getOdds() {
 //        return odds;
 //    }
 //
