@@ -41,6 +41,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
+
 public class DialogBetBottom extends BaseDialog {
     @BindView(R.id.betcouttv)
     TextView betcouttv;
@@ -152,7 +154,7 @@ public class DialogBetBottom extends BaseDialog {
                     e.printStackTrace();
                 }
             //"{\"datas\": [{\"amount\": 0,\"oddsid\": 85759}]}"
-                HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
+                AppUtils.showLoading(bActivity);
                 HttpMsg.getInstance().sendBetList(SharePreUtils.getToken(getContext()), jsonObj.toString(), BetMatchBean.class, new HttpMsg.Listener(){
                     @Override
                     public void onFinish(Object _res) {

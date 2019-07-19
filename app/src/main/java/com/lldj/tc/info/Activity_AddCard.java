@@ -14,15 +14,19 @@ import android.widget.Toast;
 
 import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
+import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.BankBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
+import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.GlobalVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,13 +138,39 @@ public class Activity_AddCard extends BaseActivity {
                 break;
             case R.id.addsure:
 
+                String cardnum = editaddcardnum.getText().toString().trim();
+                String bank = bankname.getText().toString().trim();
+                if(TextUtils.isEmpty(bank)){
+                    ToastUtils.show_middle_pic(this, R.mipmap.cancle_icon, getResourcesString(R.string.cardbankname), ToastUtils.LENGTH_SHORT);
+                    return;
+                }
+                else if(TextUtils.isEmpty(cardnum)){
+                    ToastUtils.show_middle_pic(this, R.mipmap.cancle_icon, getResourcesString(R.string.addcardnum), ToastUtils.LENGTH_SHORT);
+                    return;
+                }
+
+                AppUtils.showLoading(this);
+                HttpMsg.getInstance().sendBindCard(SharePreUtils.getToken(this), cardnum, bank, BankBean.class, new HttpMsg.Listener() {
+                    @Override
+                    public void onFinish(Object _res) {
+                        BankBean res = (BankBean) _res;
+                        if (res.getCode() == GlobalVariable.succ) {
+                            ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, getResourcesString(R.string.addcardsucc), ToastUtils.LENGTH_SHORT);
+                            close();
+                        }
+                    }
+                });
                 break;
             case R.id.toolbar_back_iv:
-                Intent _intent = new Intent(this, Activity_Getmoney.class);
-                _intent.putExtra("Anim_fade", R.style.Anim_left);
-                startActivity(_intent);
-                finish();
+                close();
                 break;
         }
+    }
+
+    private void close(){
+        Intent _intent = new Intent(this, Activity_Getmoney.class);
+        _intent.putExtra("Anim_fade", R.style.Anim_left);
+        startActivity(_intent);
+        finish();
     }
 }

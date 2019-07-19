@@ -133,6 +133,7 @@
     <string name="cardbank">开户银行</string>
     <string name="cardbankname">请选择提款银行</string>
     <string name="addcardtitle">添加提款卡</string>
+    <string name="addcardsucc">添加成功</string>
 
     <string name="user_bank_29">工商银行</string>
     <string name="user_bank_30">建设银行</string>

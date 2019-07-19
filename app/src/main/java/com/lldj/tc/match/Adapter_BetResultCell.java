@@ -92,6 +92,7 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
 
         }
 
+        if(record == null) return;
         HttpTool.getBitmapUrl(record.getGame_logo(), new HttpTool.bmpListener() {
             @Override
             public void onFinish(Bitmap bitmap) {

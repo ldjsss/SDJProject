@@ -166,6 +166,14 @@ public class HttpMsg<T>{
         HttpTool.httpPost(baseUrl + "user/cash", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
+    public void sendBindCard(final String access_token, final String card, final String bank_name, Class<T>service, Listener callbackListener) {
+        Map<String,String> URLParams = new HashMap();
+        URLParams.put("bank_name", bank_name);
+        URLParams.put("card", card);
+
+        HttpTool.httpPost(baseUrl + "user/addbank", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
+    }
+
     public interface Listener<T> {
         void onFinish(T msg);
     }
