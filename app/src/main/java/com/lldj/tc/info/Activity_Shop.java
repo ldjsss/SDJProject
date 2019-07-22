@@ -129,7 +129,9 @@ public class Activity_Shop extends BaseActivity {
                 overridePendingTransition(0, R.anim.out_to_right);
                 break;
             case R.id.connectservice:
-                Toast.makeText(this, "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, Activity_tradings.class));
+                finish();
+                overridePendingTransition(0, R.anim.out_to_left);
                 break;
             case R.id.getmoney:
                 startActivity(new Intent(this, Activity_Getmoney.class));

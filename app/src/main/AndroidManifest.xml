@@ -92,6 +92,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity android:name=".info.Activity_AddCard" />
+        <activity android:name=".info.Activity_tradings" />
     </application>
 
 </manifest>

@@ -174,6 +174,14 @@ public class HttpMsg<T>{
         HttpTool.httpPost(baseUrl + "user/addbank", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
+    public void sendTradings(final String access_token, final String type, final String page_num, Class<T>service, Listener callbackListener) {
+        Map<String,String> URLParams = new HashMap();
+        URLParams.put("page_num", page_num);
+        URLParams.put("type", type);
+
+        HttpTool.httpPost(baseUrl + "user/traderecord", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
+    }
+
     public interface Listener<T> {
         void onFinish(T msg);
     }
