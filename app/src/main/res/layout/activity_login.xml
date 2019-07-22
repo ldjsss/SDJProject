@@ -33,6 +33,7 @@
             <!--手机号-->
             <include
                 layout="@layout/tel_include_layout"
+                android:id="@+id/tel_root_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/photo_iv"
@@ -43,6 +44,7 @@
             <!--密码-->
             <include
                 layout="@layout/psw_include_layout"
+                android:id="@+id/psw_root_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tel_root_layout"

@@ -2,7 +2,6 @@
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/psw_root_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal">
@@ -45,6 +44,7 @@
             android:textColor="@color/color_ebe3d7"
             android:textColorHint="@color/color_544a36"
             android:textCursorDrawable="@drawable/my_cursor"
+            android:singleLine="true"
             android:textSize="14sp" />
 
         <ImageView
