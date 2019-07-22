@@ -1,59 +1,52 @@
 package com.lldj.tc.info;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.http.beans.FormatModel.ResultsModel;
-import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
-import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.http.beans.TradingBean;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class Adapter_tradingCell extends RecyclerView.Adapter {
+
     private Context mContext;
     private viewHolder mHolder = null;
-    private int[] winBmp;
-    private ResultsModel tData;
-    private List<ObData> groups = null;
+    private List<TradingBean.TradeRecordDTO> mlist = null;
+    private String[]tradingsName;
+    private String[]tradingsStatus;
+    private String[]rechStatus;
 
-
-    private Map<String, List<Odds>> mlist = new HashMap<>();
 
     public Adapter_tradingCell(Context mContext) {
         this.mContext = mContext;
+        tradingsName = new String[]{"", "", "", mContext.getString(R.string.tradingsIn), mContext.getString(R.string.tradingsOut), mContext.getString(R.string.tradingsPre)};
+        tradingsStatus = new String[]{mContext.getString(R.string.tradingsreview), mContext.getString(R.string.tradingsWithdrawal), mContext.getString(R.string.tradingsSucc), mContext.getString(R.string.tradingsLost)};
+        rechStatus = new String[]{mContext.getString(R.string.tradingsreview), mContext.getString(R.string.tradingsSucc), mContext.getString(R.string.tradingsLost)};
     }
 
-    public void changeData(Map<String, List<Odds>> plist, ResultsModel _data) {
-        this.mlist = plist;
-        this.tData = _data;
-        if (winBmp == null) winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
-
-        notifyDataSetChanged();
-    }
-
-    public void updateSelect(List<ObData> _groups) {
-        this.groups = _groups;
+    public void changeData(ArrayList<TradingBean.TradeRecordDTO> mlist) {
+        this.mlist = mlist;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder holder = new viewHolder(LayoutInflater.from(mContext).inflate(R.layout.tradings_item_layout, parent, false));
+        RecyclerView.ViewHolder holder = new viewHolder(LayoutInflater.from(mContext).inflate(R.layout.trading_addlayout, parent, false));
         holder.isRecyclable();
         return holder;
     }
@@ -73,12 +66,14 @@ public class Adapter_tradingCell extends RecyclerView.Adapter {
 
     class viewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.myposition)
-        TextView myposition;
-        @BindView(R.id.addlayout)
-        LinearLayout addlayout;
-        @BindView(R.id.detailitembg)
-        LinearLayout detailitembg;
+        @BindView(R.id.tradingtitle)
+        TextView tradingtitle;
+        @BindView(R.id.tradingmoney)
+        TextView tradingmoney;
+        @BindView(R.id.tradingdata)
+        TextView tradingdata;
+        @BindView(R.id.tradingstatus)
+        TextView tradingstatus;
 
         public viewHolder(View itemView) {
             super(itemView);
@@ -86,158 +81,21 @@ public class Adapter_tradingCell extends RecyclerView.Adapter {
         }
 
         public void bottomCommon() {
+            int pos = getAdapterPosition() - 1;
+            TradingBean.TradeRecordDTO _data = mlist.get(pos);
+            if(_data == null) return;
+            tradingtitle.setText(tradingsName[_data.getType()]);
+            tradingmoney.setText(_data.getMoney());
+            tradingdata.setText(AppUtils.getFormatTime6(_data.getTime()));
 
-//            Map.Entry<String, List<Odds>> entry;
-//            int pos = getAdapterPosition() - 1;
-//            if (pos == 0) {
-//                entry = getEntry("final");
-//            } else entry = getEntry(pos + "");
-//
-//            if (entry != null) {
-//                String key = entry.getKey();
-//                List<Odds> odds = entry.getValue();
-//
-////                Log.w("-----detail odds = ", odds.toString());
-//
-//                Map<String, List<Odds>> oddMap = new HashMap<>();
-//                for (int i = 0; i < odds.size(); i++) {
-//                    Odds _odd = odds.get(i);
-//                    String _key = _odd.getGroup_name();
-//                    List<Odds> itemList = oddMap.get(_key);
-//                    if (itemList == null) {
-//                        itemList = new ArrayList<>();
-//                    }
-//                    itemList.add(_odd);
-//
-//                    oddMap.put(_key, itemList);
-//                }
-//
-//                Iterator<Map.Entry<String, List<Odds>>> entries = oddMap.entrySet().iterator();
-//                while (entries.hasNext()) {
-//                    Map.Entry<String, List<Odds>> _nentry = entries.next();
-//                    String _key = _nentry.getKey();
-//                    List<Odds> _odds = _nentry.getValue();
-//
-//                    myposition.setText(key);
-//                    matchplayname.setText(_key);
-//
-//                    addlayout.removeAllViews();
-//
-//                    View view;
-//                    LayoutInflater inflater = LayoutInflater.from(mContext);
-//                    int len = (int) Math.ceil(_odds.size() / 2.0);
-//                    for (int i = 0; i < len; i++) {
-//                        view = inflater.inflate(R.layout.gamedetialitem, null);
-//                        view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-////                        AppUtils.screenAdapterLoadView((ViewGroup)view);
-//                        addlayout.addView(view);
-//
-//                        Odds odd1 = _odds.get(i * 2);
-//                        int _statue = odd1.getStatus();
-//
-//                        ((TextView) view.findViewById(R.id.playovername0)).setText(TextUtils.isEmpty(odd1.getName()) ? "unknown" : odd1.getName());
-//                        String _oddstring = odd1.getOdds();
-//
-//                        setSelect((TextView) view.findViewById(R.id.playcellselect0), odd1.getId() + "");
-//
-//                        TextView tv_odds = (TextView) view.findViewById(R.id.playbetnum0);
-//                        ImageView im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon0);
-//                        ImageView im_lock = (ImageView) view.findViewById(R.id.playlockicon0);
-//                        if (_statue == 1) { //normal
-//                            im_lock.setVisibility(View.GONE);
-//                            if (_oddstring.equals("")) {
-//                                tv_odds.setVisibility(View.GONE);
-//                                im_arrows.setVisibility(View.GONE);
-//                            } else {
-//                                tv_odds.setText(_oddstring);
-//                                tv_odds.setVisibility(View.VISIBLE);
-//                            }
-//
-//                            ((RelativeLayout) view.findViewById(R.id.playcelllayout0)).setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
-//                                    betClick(tData, odd1.getId() + "");
-//                                }
-//                            });
-//                        } else if (_statue == 2) { //lock
-//                            tv_odds.setVisibility(View.GONE);
-//                            im_arrows.setVisibility(View.GONE);
-//                            im_lock.setVisibility(View.VISIBLE);
-//                        } else {
-//                            im_lock.setVisibility(View.GONE);
-//                            tv_odds.setVisibility(View.GONE);
-//                            im_arrows.setVisibility(View.GONE);
-//                        }
-//
-//                        //set player 1 win icon
-//                        String _win = odd1.getWin();
-//                        ImageView iv_win = (ImageView) view.findViewById(R.id.playvictoryicon0);
-//                        if (_win == null || _win.equals("") || Integer.parseInt(_win) < 0) {
-//                            iv_win.setVisibility(View.GONE);
-//                        } else {
-//                            iv_win.setImageResource(winBmp[Integer.parseInt(_win)]);
-//                            iv_win.setVisibility(View.VISIBLE);
-//                        }
-//
-//                        if (_odds.size() >= (i + 1) * 2) {
-//                            Odds odd2 = _odds.get(i * 2 + 1);
-//                            _oddstring = odd2.getOdds();
-//                            _statue = odd2.getStatus();
-//
-//                            ((TextView) view.findViewById(R.id.playovername1)).setText(TextUtils.isEmpty(odd2.getName()) ? "unknown" : odd2.getName());
-//                            setSelect((TextView) view.findViewById(R.id.playcellselect1), odd2.getId() + "");
-//
-//                            tv_odds = (TextView) view.findViewById(R.id.playbetnum1);
-//                            im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon1);
-//                            im_lock = (ImageView) view.findViewById(R.id.playlockicon1);
-//
-//                            if (_statue == 1) { //normal
-//                                im_lock.setVisibility(View.GONE);
-//                                if (_oddstring.equals("")) {
-//                                    tv_odds.setVisibility(View.GONE);
-//                                    im_arrows.setVisibility(View.GONE);
-//                                } else {
-//                                    tv_odds.setText(_oddstring);
-//                                    tv_odds.setVisibility(View.VISIBLE);
-//                                }
-//
-//                                ((RelativeLayout) view.findViewById(R.id.playcelllayout1)).setOnClickListener(new View.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(View v) {
-//                                        HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
-//                                        betClick(tData, odd2.getId() + "");
-//                                    }
-//                                });
-//                            } else if (_statue == 2) { //lock
-//                                tv_odds.setVisibility(View.GONE);
-//                                im_arrows.setVisibility(View.GONE);
-//                                im_lock.setVisibility(View.VISIBLE);
-//                            } else {
-//                                im_lock.setVisibility(View.GONE);
-//                                tv_odds.setVisibility(View.GONE);
-//                                im_arrows.setVisibility(View.GONE);
-//                            }
-//
-//                            //set player 2 win icon
-//                            _win = odd2.getWin();
-//                            iv_win = (ImageView) view.findViewById(R.id.playvictoryicon1);
-//                            if (_win == null || _win.equals("") || Integer.parseInt(_win) < 0) {
-//                                iv_win.setVisibility(View.GONE);
-//                            } else {
-//                                iv_win.setImageResource(winBmp[Integer.parseInt(_win)]);
-//                                iv_win.setVisibility(View.VISIBLE);
-//                            }
-//                        } else {
-//                            view.findViewById(R.id.betvisible1).setVisibility(View.GONE);
-//                        }
-//
-//                    }
-//
-//                }
-//
-//            }
-
+            int type = _data.getType();
+            if(type == 3){
+                tradingstatus.setText(rechStatus[_data.getRecharge_status()]);
+            }
+            else{
+                tradingstatus.setText(tradingsStatus[_data.getCash_status()]);
+            }
+            tradingstatus.setTextColor(Color.parseColor((_data.getRecharge_status() == 2 || _data.getCash_status() == 3) ? "#DC143C": "#4285F4"));
         }
 
 
