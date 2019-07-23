@@ -45,6 +45,10 @@ public class Dialog_Change extends BaseDialog {
     EditText resPaset;
     @BindView(R.id.res_repaset)
     EditText resRepaset;
+    @BindView(R.id.respsw_title)
+    TextView respsw_title;
+
+
     private String oldPassword = "";
     private String password = "";
     private String password1 = "";
@@ -73,6 +77,7 @@ public class Dialog_Change extends BaseDialog {
         toolbarTitleTv.setText(context.getResources().getString(R.string.changePassword));
 
         resTitle.setText(context.getString(R.string.oldPassword));
+        respsw_title.setText(context.getString(R.string.newPassword));
     }
 
 
