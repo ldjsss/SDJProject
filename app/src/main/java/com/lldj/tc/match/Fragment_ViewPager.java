@@ -8,10 +8,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
+import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.FormatModel.ResultsModel;
+import com.lldj.tc.http.beans.MatchBean;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
@@ -19,7 +25,10 @@ import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,6 +96,28 @@ public class Fragment_ViewPager extends BaseFragment {
                     int _viewType = Integer.parseInt(data.getTag());
                     String _matchNum = _viewType == 3 ? "" : data.getValue() + "";
                     updateTitle(_viewType, _matchNum);
+                }
+            }
+        });
+
+        HttpMsg.getInstance().sendGetGameList(MatchBean.class, new HttpMsg.Listener() {
+            @Override
+            public void onFinish(Object _res) {
+                MatchBean res = (MatchBean) _res;
+                if (res.getCode() == GlobalVariable.succ) {
+                    List<ResultsModel> list = res.getResult();
+                    if(list == null || list.size() <= 0) return;
+                    int today = 0, cur = 0, front = 0;
+                    for (int i = 0; i < list.size(); i++) {
+                        ResultsModel _model = list.get(i);
+                        today += _model.getToday();
+                        cur += _model.getLive();
+                        front += _model.getEarly();
+                    }
+
+                    updateTitle(0, today+"");
+                    updateTitle(1, cur+"");
+                    updateTitle(2, front+"");
                 }
             }
         });
