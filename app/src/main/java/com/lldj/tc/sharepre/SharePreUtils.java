@@ -1,10 +1,19 @@
 package com.lldj.tc.sharepre;
 
 import android.content.Context;
+import android.text.TextUtils;
+
+import com.lldj.tc.http.beans.FormatModel.ResultsModel;
+import com.lldj.tc.toolslibrary.util.AppUtils;
+
+import java.util.Calendar;
 
 
 public class SharePreUtils {
     public static SharePreUtils instance;
+
+    public boolean agent;
+    public String birthday;
 
     public static synchronized SharePreUtils getInstance() {
         if (null == instance) {
@@ -138,12 +147,18 @@ public class SharePreUtils {
 
     }
 
-    public static void setUserInfo(Context context, final String openid, final String mobile, final String money, final String username, final String name, final String url) {
-        setUserId(context, openid);
-        setPhone(context, mobile);
-        setUserName(context, username);
-        setMoney(context, money);
-        setName(context, name);
-        setRecharge_url(context, url);
+    public static void setUserInfo(Context context, ResultsModel ret) {
+
+        setUserId(context, ret.getOpenid());
+        setPhone(context, ret.getMobile());
+        setUserName(context, ret.getUsername());
+        setMoney(context, ret.getMoney());
+        setName(context, ret.getReal_name());
+        setRecharge_url(context, ret.getRecharge_url());
+
+        getInstance().agent = ret.isAgent();
+        getInstance().birthday = ret.getBirthday();
+
+        if(TextUtils.isEmpty(getInstance().birthday)) getInstance().birthday = Calendar.getInstance().getTimeInMillis() + "";
     }
 }

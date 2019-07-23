@@ -22,6 +22,8 @@ public class ResultsModel{
     private String username;
     private String recharge_url;
     private String real_name;
+    private boolean agent;
+    private String birthday;
 
     ////////////赛事相关
     private int page_num;
@@ -166,6 +168,22 @@ public class ResultsModel{
     }
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public boolean isAgent() {
+        return agent;
+    }
+
+    public void setAgent(boolean agent) {
+        this.agent = agent;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getRecharge_url() {

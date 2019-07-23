@@ -37,6 +37,7 @@
             android:textColorHint="@color/color_cdc3b3"
             android:textCursorDrawable="@drawable/my_cursor"
             android:singleLine="true"
+            android:inputType="number"
             android:textSize="14sp" />
 
         <View

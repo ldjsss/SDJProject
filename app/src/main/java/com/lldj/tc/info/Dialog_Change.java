@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 
+import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
@@ -85,7 +86,7 @@ public class Dialog_Change extends BaseDialog {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back_iv:
-                dismiss();
+                DialogManager.getInstance().removeDialog(this);
                 break;
             case R.id.register_tv:
                 if (!checkAll()) return;

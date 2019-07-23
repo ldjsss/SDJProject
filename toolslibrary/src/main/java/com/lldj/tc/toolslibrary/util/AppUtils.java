@@ -803,4 +803,14 @@ public class AppUtils {
         }
     }
 
+    public static boolean isNumer(String str) {
+        if(TextUtils.isEmpty(str)) return false;
+        Pattern pattern = Pattern.compile("-?[0-9]+.?[0-9]+");
+        Matcher isNum = pattern.matcher(str);
+        if (!isNum.matches()) {
+            return false;
+        }
+        return true;
+    }
+
 }

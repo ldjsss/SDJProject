@@ -43,7 +43,7 @@ public class HttpMsg<T>{
         return new HttpTool.msgListener(){
             @Override
             public void onFinish(int code, String msg) {
-//                System.out.println("ret:" + code + " msg:" + msg);
+                System.out.println("ret:" + code + " msg:" + msg);
                 if(code == HttpURLConnection.HTTP_OK) {
                     Object data = new Gson().fromJson(msg, service);
                     listener.onFinish(data);
@@ -118,8 +118,8 @@ public class HttpMsg<T>{
             public void onFinish(Object msg) {
                 JsonBean res = (JsonBean) msg;
                 if (res.getCode() == GlobalVariable.succ) {
-                    ResultsModel ret = (ResultsModel) res.getResult();
-                    SharePreUtils.getInstance().setUserInfo(context, ret.getOpenid(), ret.getMobile(), ret.getMoney(), ret.getUsername(), ret.getReal_name(), ret.getRecharge_url());
+                    ResultsModel ret = res.getResult();
+                    SharePreUtils.getInstance().setUserInfo(context, res.getResult());
                 }
                 else Toast.makeText(context, context.getResources().getString(R.string.getUseInfoFail), Toast.LENGTH_SHORT).show();
 
