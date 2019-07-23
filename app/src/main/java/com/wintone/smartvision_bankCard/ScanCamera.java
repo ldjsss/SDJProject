@@ -37,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lldj.tc.R;
+import com.lldj.tc.info.Activity_AddCard;
 import com.wintone.ShowResult;
 import com.wintone.bankcard.BankCardAPI;
 import com.wintone.view.ViewfinderView;
@@ -394,7 +395,7 @@ public class ScanCamera extends Activity implements Callback, PreviewCallback {
                 this.api.WTUnInitCardKernal();
                 this.mVibrator = (Vibrator) getApplication().getSystemService(VIBRATOR_SERVICE);
                 this.mVibrator.vibrate(100);
-                Intent intent = new Intent(this, ShowResult.class);
+                Intent intent = new Intent(this, Activity_AddCard.class);
                 intent.putExtra("PicR", pLineWarp);
                 intent.putExtra("StringR", recogval);
                 startActivity(intent);

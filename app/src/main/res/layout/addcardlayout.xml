@@ -109,6 +109,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/dp_20"
                 android:textCursorDrawable="@drawable/my_cursor"
+                android:singleLine="true"
                 android:textSize="23sp"
                 android:inputType="number" />
 
@@ -167,6 +168,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_toRightOf="@+id/tvbanktitle"
                 android:layout_centerVertical="true"
+                android:singleLine="true"
                 android:layout_marginStart="31dp"/>
 
             <ImageView

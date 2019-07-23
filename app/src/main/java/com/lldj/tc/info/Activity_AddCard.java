@@ -2,12 +2,12 @@ package com.lldj.tc.info;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,17 +24,16 @@ import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
-import com.lldj.tc.toolslibrary.util.StringUtil;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lsh.library.BankNumEditText;
-import com.wintone.smartvision_bankCard.ScanCamera;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
+import com.wintone.smartvision_bankCard.ScanCamera;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,15 +87,6 @@ public class Activity_AddCard extends BaseActivity{
         ImmersionBar.with(this).titleBar(toolbarRootLayout).init();
         toolbarTitleTv.setText(getResourcesString(R.string.addcardtitle));
 
-//        editaddcardnum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus) {
-//                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-//                }
-//            }
-//        });
-
         bankNumEditText = (BankNumEditText) findViewById(R.id.bankCardNum);
         bankNumEditText.setFullVerify(false).setBankNameListener(new BankNumEditText.BankNameListener() {
                     @Override
@@ -106,11 +96,30 @@ public class Activity_AddCard extends BaseActivity{
 
                     @Override
                     public void failure(int failCode, String failmsg) {
-                        bankname.setText(failCode+failmsg);
+                        bankname.setText(failmsg + failCode);
                     }
                 });
 
+        bankNumEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+
         tvbankcardman.setText(SharePreUtils.getName(mContext));
+
+        int[] picR = getIntent().getIntArrayExtra("PicR");
+        char[] StringR = getIntent().getCharArrayExtra("StringR");
+        if(StringR != null) {
+            String _str = String.valueOf(StringR);
+            bankNumEditText.setText(_str);
+            bankNumEditText.setText(bankNumEditText.getBankNum() + "");
+        }
+//        Bitmap bitmap = Bitmap.createBitmap(picR, 400, 80, Bitmap.Config.ARGB_8888);
+//        imageView.setImageBitmap(bitmap);
 
         registEvent(new Observer<ObData>() {
             @Override
@@ -146,6 +155,7 @@ public class Activity_AddCard extends BaseActivity{
                 @Override
                 public void onGranted() {
                     startActivity(new Intent(mContext, ScanCamera.class));
+                    finish();;
                 }
 
                 @Override
@@ -169,7 +179,6 @@ public class Activity_AddCard extends BaseActivity{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.camera:
-//                Toast.makeText(this, "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
                 onScanPress(view);
                 break;
             case R.id.selectlayout:
@@ -180,8 +189,7 @@ public class Activity_AddCard extends BaseActivity{
                 break;
             case R.id.addsure:
 
-                String cardnum = (bankNumEditText.getText().toString());
-                cardnum = cardnum.replaceAll("\\s*", "");
+                String cardnum = bankNumEditText.getBankNum().toString();
                 String bank = bankname.getText().toString().trim();
                 if(TextUtils.isEmpty(bank)){
                     ToastUtils.show_middle_pic(this, R.mipmap.cancle_icon, getResourcesString(R.string.cardbankname), ToastUtils.LENGTH_SHORT);
