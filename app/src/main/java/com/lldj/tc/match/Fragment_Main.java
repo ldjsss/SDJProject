@@ -183,12 +183,6 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     public void onScrolled(int distanceX, int distanceY) {
     }
 
-    @Override
-    public void selectView(int position) {
-        super.onDestroyView();
-//        Log.e("currentPosition", "selectView currentPosition===" + position);
-    }
-
     private void getMatchData() {//"&game_ids=" + selectID
         HttpMsg.getInstance().sendGetMatchList(ViewType + 1, page_num, selects, PageMatchBean.class, new HttpMsg.Listener() {
             @Override
@@ -208,10 +202,6 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                         total = _result.getTotal();
                     }
 
-//                    Collections.sort(_list, (Comparator<ResultsModel>) (o1, o2) -> {
-//                        return (int)(o1.getStart_time_ms() - o2.getStart_time_ms());
-//                    });
-
                     if(page_num <= 1) {
                         alist.clear();
                     }
@@ -223,6 +213,10 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     }
 
                     if(_result != null && _result.getDatas() != null)alist.addAll(_result.getDatas());
+
+                    Collections.sort(alist, (o1, o2) -> {
+                        return (int)(o1.getStart_time_ms() - o2.getStart_time_ms());
+                    });
 
                     tvNoMatch.setVisibility(alist.size()>0?View.GONE:View.VISIBLE);
 

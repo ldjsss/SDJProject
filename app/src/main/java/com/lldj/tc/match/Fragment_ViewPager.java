@@ -74,7 +74,6 @@ public class Fragment_ViewPager extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 Log.e("currentPosition", "currentPosition===" + position);
-                mPagerAdapter.selectView(position);
             }
 
             @Override

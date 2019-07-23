@@ -14,38 +14,33 @@ import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.FragmentStatePagerAdapterCompat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Adapter_MainPager extends FragmentStatePagerAdapterCompat {
     private Resources mResources;
     private String[] mTitle;
-    public List<Fragment> fragmentList = new ArrayList<>();
+    private Map<Integer,Fragment> fragmentList = new HashMap<>();
 
 
     public Adapter_MainPager(Context context, FragmentManager fm) {
         super(fm);
         mResources = context.getResources();
         mTitle = new String[]{mResources.getString(R.string.matchTodayTitle), mResources.getString(R.string.matchCurrentTitle), mResources.getString(R.string.matchFrontTitle), mResources.getString(R.string.matchOverTitle)};
-
-        setUpFragments();
     }
 
-    private void setUpFragments() {
-        fragmentList.clear();
-        for (int i = 0; i < mTitle.length; i++) {
-            Fragment_Main fragment = new Fragment_Main();
+    private Fragment getFrament(int position){
+        Fragment fragment = fragmentList.get(position);
+        if(fragment == null){
+            fragment = new Fragment_Main();
             Bundle bundle = new Bundle();
-            bundle.putInt("ARG", i);
+            bundle.putInt("ARG", position);
             fragment.setArguments(bundle);
-            fragmentList.add(fragment);
+            fragmentList.put(position, fragment);
         }
-    }
-
-    public void selectView(int position){
-        Log.e("currentPosition","selectView currentPosition==="+position);
-        BaseFragment fragment = (BaseFragment)getItem(position);
-        fragment.selectView(position);
+        return fragmentList.get(position);
     }
 
     @Override
@@ -54,7 +49,7 @@ public class Adapter_MainPager extends FragmentStatePagerAdapterCompat {
     }
 
     public Fragment getFragment(int position){
-        return fragmentList.get(position);
+        return getFrament(position);
     }
 
     @Nullable
@@ -65,7 +60,7 @@ public class Adapter_MainPager extends FragmentStatePagerAdapterCompat {
 
     @Override
     public Fragment getItem(int position) {
-        return fragmentList.get(position);
+        return getFrament(position);
     }
 }
 
