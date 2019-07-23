@@ -38,21 +38,23 @@ public class BankBean {
     public static class BankModel {
 
         private String card;
-        private String card_name;
+        private String bank_name;
         private String create_time;
         private int id = -11111;
         private int uid;
         private int logo;
+        private int bank_id;
+        private int status;
 
         public BankModel() { }
 
         public BankModel(String card_name, int logo) {
-            this.card_name = card_name;
+            this.bank_name = bank_name;
             this.logo = logo;
         }
 
-        public BankModel(String card_name, int logo, String card) {
-            this.card_name = card_name;
+        public BankModel(String bank_name, int logo, String card) {
+            this.bank_name = bank_name;
             this.logo = logo;
             this.card = card;
         }
@@ -65,12 +67,12 @@ public class BankBean {
             this.card = card;
         }
 
-        public String getCard_name() {
-            return card_name;
+        public String getBank_name() {
+            return bank_name;
         }
 
-        public void setCard_name(String card_name) {
-            this.card_name = card_name;
+        public void setBank_name(String bank_name) {
+            this.bank_name = bank_name;
         }
 
         public String getCreate_time() {
@@ -103,6 +105,22 @@ public class BankBean {
 
         public void setLogo(int logo) {
             this.logo = logo;
+        }
+
+        public int getBank_id() {
+            return bank_id;
+        }
+
+        public void setBank_id(int bank_id) {
+            this.bank_id = bank_id;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
         }
     }
 }

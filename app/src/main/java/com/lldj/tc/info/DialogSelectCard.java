@@ -46,7 +46,7 @@ public class DialogSelectCard extends BaseDialog {
     public DialogSelectCard(@NonNull Context context, @StyleRes int themeResId, List<BankBean.BankModel> _list, boolean add) {
         super(context, themeResId);
 
-        this._list = _list;
+        if(_list != null)this._list = _list;
 
         View view = View.inflate(context, R.layout.selectbanklayout, null);
         setContentView(view);
@@ -72,7 +72,7 @@ public class DialogSelectCard extends BaseDialog {
             BankBean.BankModel bank = _list.get(i);
             String cardNum = bank.getCard();
             String addString = (!TextUtils.isEmpty(cardNum) && cardNum.length() > 4) ? "(" + cardNum.substring(cardNum.length() - 4, cardNum.length()) + ")" : "";
-            ((TextView) addView.findViewById(R.id.bankName)).setText(bank.getCard_name() + addString);
+            ((TextView) addView.findViewById(R.id.bankName)).setText(bank.getBank_name() + addString);
             LinearLayout bankcelllayout = addView.findViewById(R.id.bankcelllayout);
             addView.setTag(i);
             bankcelllayout.setOnClickListener(new View.OnClickListener() {

@@ -72,6 +72,8 @@ public class Activity_AddCard extends BaseActivity{
 
     private BankNumEditText bankNumEditText;
 
+    private int bank_id = -1;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,20 +134,34 @@ public class Activity_AddCard extends BaseActivity{
             }
         });
 
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_29), R.mipmap.user_bank_29));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_30), R.mipmap.user_bank_30));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_31), R.mipmap.user_bank_31));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_32), R.mipmap.user_bank_32));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_33), R.mipmap.user_bank_33));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_34), R.mipmap.user_bank_34));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_35), R.mipmap.user_bank_35));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_36), R.mipmap.user_bank_36));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_37), R.mipmap.user_bank_37));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_38), R.mipmap.user_bank_38));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_39), R.mipmap.user_bank_39));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_40), R.mipmap.user_bank_40));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_41), R.mipmap.user_bank_41));
-        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_42), R.mipmap.user_bank_42));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_29), R.mipmap.user_bank_29));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_30), R.mipmap.user_bank_30));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_31), R.mipmap.user_bank_31));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_32), R.mipmap.user_bank_32));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_33), R.mipmap.user_bank_33));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_34), R.mipmap.user_bank_34));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_35), R.mipmap.user_bank_35));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_36), R.mipmap.user_bank_36));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_37), R.mipmap.user_bank_37));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_38), R.mipmap.user_bank_38));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_39), R.mipmap.user_bank_39));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_40), R.mipmap.user_bank_40));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_41), R.mipmap.user_bank_41));
+//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_42), R.mipmap.user_bank_42));
+
+        HttpMsg.getInstance().sendSuportBankList(SharePreUtils.getToken(this), BankBean.class, new HttpMsg.Listener() {
+            @Override
+            public void onFinish(Object _res) {
+                BankBean res = (BankBean) _res;
+                if (res.getCode() == GlobalVariable.succ) {
+                    List<BankBean.BankModel> list =  res.getResult();
+                    if(list != null) {
+                        _list.clear();
+                        _list.addAll(list);
+                    }
+                }
+            }
+        });
 
     }
 
@@ -167,7 +183,7 @@ public class Activity_AddCard extends BaseActivity{
 
     private void setBankinfo(BankBean.BankModel bank){
         if(bank == null) return;
-        bankname.setText(bank.getCard_name());
+        bankname.setText(bank.getBank_name());
     }
 
     @Override
@@ -200,12 +216,21 @@ public class Activity_AddCard extends BaseActivity{
                     return;
                 }
 
+                for (int i = 0; i < _list.size(); i++) {
+                    if(bank.indexOf(_list.get(i).getBank_name()) != -1){
+                        bank_id = _list.get(i).getBank_id();
+                        break;
+                    }
+                }
+
+
                 AppUtils.showLoading(this);
-                HttpMsg.getInstance().sendBindCard(SharePreUtils.getToken(this), cardnum, bank, BankBean.class, new HttpMsg.Listener() {
+                HttpMsg.getInstance().sendBindCard(SharePreUtils.getToken(this), cardnum, bank_id+"", BankBean.class, new HttpMsg.Listener() {
                     @Override
                     public void onFinish(Object _res) {
                         BankBean res = (BankBean) _res;
                         if (res.getCode() == GlobalVariable.succ) {
+                            SharePreUtils.setSelectBank(mContext, bank_id);
                             ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, getResourcesString(R.string.addcardsucc), ToastUtils.LENGTH_SHORT);
                             close();
                         }

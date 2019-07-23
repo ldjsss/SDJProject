@@ -133,7 +133,7 @@ public class Activity_Getmoney extends BaseActivity {
         String cardNum = bank.getCard();
         if(TextUtils.isEmpty(cardNum) || cardNum.length() < 4) return;
         String addString = cardNum.substring(cardNum.length() - 4, cardNum.length());
-        tvbankcard.setText(SharePreUtils.getName(mContext) + " " + bank.getCard_name() + "(" + addString + ")");
+        tvbankcard.setText(SharePreUtils.getName(mContext) + " " + bank.getBank_name() + "(" + addString + ")");
         tvbankcard.setTag(bank.getId());
     }
 

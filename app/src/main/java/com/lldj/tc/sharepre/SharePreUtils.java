@@ -133,6 +133,9 @@ public class SharePreUtils {
     public static void setLoginInfo(Context context, final String token, final String expires_in, final String openid) {
         setUserId(context, openid);
         setToken(context, token);
+
+        System.out.println("--------token:" + token);
+
     }
 
     public static void setUserInfo(Context context, final String openid, final String mobile, final String money, final String username, final String name, final String url) {

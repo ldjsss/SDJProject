@@ -166,12 +166,16 @@ public class HttpMsg<T>{
         HttpTool.httpPost(baseUrl + "user/cash", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
-    public void sendBindCard(final String access_token, final String card, final String bank_name, Class<T>service, Listener callbackListener) {
+    public void sendBindCard(final String access_token, final String card, final String bank_id, Class<T>service, Listener callbackListener) {
         Map<String,String> URLParams = new HashMap();
-        URLParams.put("bank_name", bank_name);
+        URLParams.put("bank_id", bank_id);
         URLParams.put("card", card);
 
         HttpTool.httpPost(baseUrl + "user/addbank", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
+    }
+
+    public void sendSuportBankList(final String access_token, Class<T>service, Listener callbackListener) {
+        HttpTool.httpPost(baseUrl + "user/sysbanks", null, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
     public void sendTradings(final String access_token, final String type, final String page_num, Class<T>service, Listener callbackListener) {
