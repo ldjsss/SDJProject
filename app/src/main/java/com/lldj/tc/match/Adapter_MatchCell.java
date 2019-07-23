@@ -22,6 +22,7 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
+import com.lldj.tc.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -156,11 +157,11 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                         TextView tv_odds = (TextView) view.findViewById(R.id.playbetnum0);
                         ImageView im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon0);
                         ImageView im_lock = (ImageView) view.findViewById(R.id.playlockicon0);
+                        updateArrow(odd1, tv_odds, im_arrows);
                         if (_statue == 1) { //normal
                             im_lock.setVisibility(View.GONE);
                             if (_oddstring.equals("")) {
                                 tv_odds.setVisibility(View.GONE);
-                                im_arrows.setVisibility(View.GONE);
                             } else {
                                 tv_odds.setText(_oddstring);
                                 tv_odds.setVisibility(View.VISIBLE);
@@ -175,12 +176,8 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                             });
                         } else if (_statue == 2) { //lock
                             tv_odds.setVisibility(View.GONE);
-                            im_arrows.setVisibility(View.GONE);
-                            im_lock.setVisibility(View.VISIBLE);
                         } else {
-                            im_lock.setVisibility(View.GONE);
                             tv_odds.setVisibility(View.GONE);
-                            im_arrows.setVisibility(View.GONE);
                         }
 
                         //set player 1 win icon
@@ -204,12 +201,11 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                             tv_odds = (TextView) view.findViewById(R.id.playbetnum1);
                             im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon1);
                             im_lock = (ImageView) view.findViewById(R.id.playlockicon1);
-
+                            updateArrow(odd2, tv_odds, im_arrows);
                             if (_statue == 1) { //normal
                                 im_lock.setVisibility(View.GONE);
                                 if (_oddstring.equals("")) {
                                     tv_odds.setVisibility(View.GONE);
-                                    im_arrows.setVisibility(View.GONE);
                                 } else {
                                     tv_odds.setText(_oddstring);
                                     tv_odds.setVisibility(View.VISIBLE);
@@ -224,12 +220,10 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                                 });
                             } else if (_statue == 2) { //lock
                                 tv_odds.setVisibility(View.GONE);
-                                im_arrows.setVisibility(View.GONE);
                                 im_lock.setVisibility(View.VISIBLE);
                             } else {
                                 im_lock.setVisibility(View.GONE);
                                 tv_odds.setVisibility(View.GONE);
-                                im_arrows.setVisibility(View.GONE);
                             }
 
                             //set player 2 win icon
@@ -251,6 +245,29 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
             }
 
+        }
+
+        private void updateArrow(Odds odd, TextView betText, ImageView imggamearrow){
+            if(odd == null || betText == null) return;
+            int _status     = odd.getStatus();
+            String _last    = (String)betText.getText();
+            int _tag        = betText.getTag() == null ? -1 : Integer.parseInt((String)betText.getTag());
+            String _current = odd.getOdds();
+
+            if( _status == 1
+                    && _tag == odd.getMatch_id()
+                    && !TextUtils.isEmpty(_last)
+                    && !TextUtils.isEmpty(_current)
+                    && !_last.equalsIgnoreCase(_current)){
+
+                float lastOdds = Float.parseFloat(_last);
+                float curOdds  = Float.parseFloat(_current);
+                if(curOdds > lastOdds)imggamearrow.setImageResource(R.mipmap.main_courage);
+                else imggamearrow.setImageResource(R.mipmap.main_warning);
+                Utils.setFlickerAnimation(imggamearrow, 5);
+                betText.setTag(odd.getMatch_id());
+            }
+            else imggamearrow.setImageAlpha(0);
         }
 
         private void setSelect(TextView _text, String matchID) {
