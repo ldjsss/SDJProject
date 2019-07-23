@@ -69,7 +69,8 @@ public class Dialog_Info extends BaseDialog {
                 Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.keylayout:
-                Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+                DialogManager.getInstance().show(new Dialog_Change(getContext(), R.style.DialogTheme));
                 break;
             case R.id.exitlayout:
                 DialogManager.getInstance().removeDialog(this);

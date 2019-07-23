@@ -170,7 +170,6 @@ public class Dialog_Register extends BaseDialog {
                         }
                     }
                 });
-                ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, "注册！", ToastUtils.LENGTH_SHORT);
                 break;
         }
     }

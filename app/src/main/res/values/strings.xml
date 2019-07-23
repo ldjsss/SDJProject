@@ -38,6 +38,7 @@
     <string name="errorRemind6">验证码不能为空</string>
     <string name="changePassword">修改密码</string>
     <string name="newPassword">新密码</string>
+    <string name="oldPassword">旧密码</string>
     <string name="forget_pswTitle">忘记密码</string>
     <string name="passwordHaveChange">密码已重置</string>
     <string name="loginsucc">登陆成功</string>
