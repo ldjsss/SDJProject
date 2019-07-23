@@ -7,45 +7,7 @@
     android:orientation="vertical"
     android:background="@color/color_bg">
 
-    <RelativeLayout
-        android:id="@+id/top_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_50"
-        android:layout_weight="1"
-        android:layout_marginTop="@dimen/dp_10">
-        <ImageView
-            android:id="@+id/back_main_iv"
-            android:layout_width="@dimen/toolbar_height"
-            android:layout_height="@dimen/toolbar_height"
-            android:padding="@dimen/dp_10"
-            android:src="@mipmap/main_back"
-            android:layout_centerVertical="true"/>
-        <com.lldj.tc.toolslibrary.view.StrokeTextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/myinformation"
-            android:textSize="20sp"
-            app:outerColor="#000000"
-            app:innnerColor="#ffffff"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:ellipsize="end"/>
-        <ImageView
-            android:id="@+id/imset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp_10"
-            android:src="@mipmap/main_settings"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="#1B1E2A"/>
-
-    </RelativeLayout>
+    <include layout="@layout/toolbar_back_layout"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

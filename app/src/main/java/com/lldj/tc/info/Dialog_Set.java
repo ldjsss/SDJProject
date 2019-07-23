@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,8 +19,10 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
+import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.utils.GlobalVariable;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +31,8 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
 public class Dialog_Set extends BaseDialog {
 
@@ -38,6 +44,18 @@ public class Dialog_Set extends BaseDialog {
     TextView tvname;
     @BindView(R.id.hellow)
     TextView hellow;
+    @BindView(R.id.toolbar_back_iv)
+    ImageView toolbarBackIv;
+    @BindView(R.id.imservice)
+    ImageView imservice;
+    @BindView(R.id.toolbar_root_layout)
+    RelativeLayout toolbarRootLayout;
+    @BindView(R.id.toolbar_title_tv)
+    StrokeTextView toolbarTitleTv;
+    @BindView(R.id.tvservices)
+    TextView tvservices;
+    @BindView(R.id.connectservice)
+    RelativeLayout connectservice;
 
     public Dialog_Set(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
@@ -60,6 +78,12 @@ public class Dialog_Set extends BaseDialog {
         moneycur.setText("¥" + SharePreUtils.getMoney(context));
         tvname.setText(SharePreUtils.getUserName(context));
         hellow.setText(getGreetings());
+
+        imservice.setImageResource(R.mipmap.main_settings);
+        tvservices.setVisibility(View.GONE);
+        connectservice.setVisibility(View.VISIBLE);
+        ImmersionBar.with(bActivity).titleBar(toolbarRootLayout).init();
+        toolbarTitleTv.setText(bActivity.getResources().getString(R.string.myinformation));
 
         HttpMsg.getInstance().sendGetUserInfo(context, SharePreUtils.getInstance().getToken(context), JsonBean.class, new HttpMsg.Listener() {
             @Override
@@ -98,14 +122,14 @@ public class Dialog_Set extends BaseDialog {
         return ret;
     }
 
-    @OnClick({R.id.back_main_iv, R.id.imset, R.id.packed_iv, R.id.packlayout, R.id.recordlayout,
+    @OnClick({R.id.packed_iv, R.id.packlayout, R.id.recordlayout, R.id.imservice, R.id.toolbar_back_iv,
             R.id.messlayout, R.id.activitylayout, R.id.rulelayout, R.id.aboutlayout, R.id.agency, R.id.contatus})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.back_main_iv:
+            case R.id.toolbar_back_iv:
                 dismiss();
                 break;
-            case R.id.imset:
+            case R.id.imservice:
                 getContext().startActivity(new Intent(getContext(), Activity_Info.class));
                 break;
             case R.id.packlayout:
