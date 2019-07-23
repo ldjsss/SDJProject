@@ -37,7 +37,7 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
 
     public Adapter_GameSelect(Context context, List<ResultsModel> datas){
         this.context = context;
-        if(firstData == null)firstData = new ResultsModel(0, bActivity.getResources().getString(R.string.allgames), "ssss");
+        if(firstData == null)firstData = new ResultsModel(0, bActivity.getResources().getString(R.string.allgames), "BankCardAPI");
         datas.add(0, firstData);
         this.datas.addAll(datas);
 

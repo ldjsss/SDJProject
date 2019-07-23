@@ -84,20 +84,33 @@
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/dimen_20">
 
-            <EditText
-                android:id="@+id/editaddcardnum"
+            <!--<EditText-->
+                <!--android:id="@+id/editaddcardnum"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:background="@color/transparent"-->
+                <!--android:hint="@string/addcardnum"-->
+                <!--android:textColor="@color/color_ebe3d7"-->
+                <!--android:textColorHint="#68718C"-->
+                <!--android:textCursorDrawable="@drawable/my_cursor"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_marginStart="@dimen/dp_20"-->
+                <!--android:inputType="number"-->
+                <!--android:maxLength="30"-->
+                <!--android:textSize="23sp" />-->
+
+            <com.lsh.library.BankNumEditText
+                android:id="@+id/bankCardNum"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/transparent"
+                android:layout_height="wrap_content"
                 android:hint="@string/addcardnum"
                 android:textColor="@color/color_ebe3d7"
                 android:textColorHint="#68718C"
-                android:textCursorDrawable="@drawable/my_cursor"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/dp_20"
-                android:inputType="number"
-                android:maxLength="30"
-                android:textSize="23sp" />
+                android:textCursorDrawable="@drawable/my_cursor"
+                android:textSize="23sp"
+                android:inputType="number" />
 
             <ImageView
                 android:layout_width="33dp"

@@ -1,6 +1,8 @@
 package com.lldj.tc.info;
 
+import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,11 +24,17 @@ import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.util.StringUtil;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
+import com.lsh.library.BankNumEditText;
+import com.wintone.smartvision_bankCard.ScanCamera;
+import com.mylhyl.acp.Acp;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Activity_AddCard extends BaseActivity {
+public class Activity_AddCard extends BaseActivity{
 
     @BindView(R.id.toolbar_back_iv)
     ImageView toolbarBackIv;
@@ -47,8 +55,8 @@ public class Activity_AddCard extends BaseActivity {
     TextView tvbankcardman;
     @BindView(R.id.selectlayout)
     LinearLayout selectlayout;
-    @BindView(R.id.editaddcardnum)
-    EditText editaddcardnum;
+//    @BindView(R.id.editaddcardnum)
+//    EditText editaddcardnum;
     @BindView(R.id.camera)
     ImageView camera;
     @BindView(R.id.tvbanktitle)
@@ -61,6 +69,9 @@ public class Activity_AddCard extends BaseActivity {
     TextView addsure;
 
     private List<BankBean.BankModel> _list = new ArrayList<>();
+    public static final int MY_SCAN_REQUEST_CODE = 10;
+
+    private BankNumEditText bankNumEditText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,14 +88,27 @@ public class Activity_AddCard extends BaseActivity {
         ImmersionBar.with(this).titleBar(toolbarRootLayout).init();
         toolbarTitleTv.setText(getResourcesString(R.string.addcardtitle));
 
-        editaddcardnum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                }
-            }
-        });
+//        editaddcardnum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+//                }
+//            }
+//        });
+
+        bankNumEditText = (BankNumEditText) findViewById(R.id.bankCardNum);
+        bankNumEditText.setFullVerify(false).setBankNameListener(new BankNumEditText.BankNameListener() {
+                    @Override
+                    public void success(String name) {
+                        bankname.setText(name);
+                    }
+
+                    @Override
+                    public void failure(int failCode, String failmsg) {
+                        bankname.setText(failCode+failmsg);
+                    }
+                });
 
         tvbankcardman.setText(SharePreUtils.getName(mContext));
 
@@ -116,6 +140,21 @@ public class Activity_AddCard extends BaseActivity {
 
     }
 
+    public void onScanPress(View view) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            Acp.getInstance(this).request(new AcpOptions.Builder().setPermissions(Manifest.permission.CAMERA).build(), new AcpListener() {
+                @Override
+                public void onGranted() {
+                    startActivity(new Intent(mContext, ScanCamera.class));
+                }
+
+                @Override
+                public void onDenied(List<String> permissions) {
+                }
+            });
+        }
+    }
+
     private void setBankinfo(BankBean.BankModel bank){
         if(bank == null) return;
         bankname.setText(bank.getCard_name());
@@ -130,7 +169,8 @@ public class Activity_AddCard extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.camera:
-                Toast.makeText(this, "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+                onScanPress(view);
                 break;
             case R.id.selectlayout:
                 Toast.makeText(this, getResourcesString(R.string.cardname), Toast.LENGTH_SHORT).show();
@@ -140,7 +180,8 @@ public class Activity_AddCard extends BaseActivity {
                 break;
             case R.id.addsure:
 
-                String cardnum = editaddcardnum.getText().toString().trim();
+                String cardnum = (bankNumEditText.getText().toString());
+                cardnum = cardnum.replaceAll("\\s*", "");
                 String bank = bankname.getText().toString().trim();
                 if(TextUtils.isEmpty(bank)){
                     ToastUtils.show_middle_pic(this, R.mipmap.cancle_icon, getResourcesString(R.string.cardbankname), ToastUtils.LENGTH_SHORT);
@@ -175,4 +216,5 @@ public class Activity_AddCard extends BaseActivity {
         startActivity(_intent);
         finish();
     }
+
 }

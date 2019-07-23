@@ -1,8 +1,10 @@
 package com.lldj.tc.login;
 
+import android.Manifest;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
@@ -27,6 +29,12 @@ import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
+import com.wintone.smartvision_bankCard.ScanCamera;
+import com.mylhyl.acp.Acp;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -34,7 +34,7 @@
     <string name="permission_recode_audio_hint" translatable="false">没有麦克风权限，无法开启这个功能，请开启权限。</string>
 
     <string-array name="permissions_exception">
-        <item>@string/permission_recode_audio_exception</item>
+        <!--<item>@string/permission_recode_audio_exception</item>-->
         <item>@string/permission_get_accounts_exception</item>
         <item>@string/permission_read_phone_exception</item>
         <item>@string/permission_call_phone_exception</item>
@@ -54,5 +54,5 @@
     <string name="permission_access_coarse_location_exception" translatable="false">获取定位权限异常，请检查您是否有开启此权限</string>
     <string name="permission_read_external_exception" translatable="false">获取存储权限异常，请检查您是否开启此权限</string>
     <string name="permission_white_external_exception" translatable="false">获取存储权限异常，请检查您是否开启此权限</string>
-    <string name="permission_recode_audio_exception" translatable="false">获取麦克风权限异常，请检查您是否开启次权限</string>
+    <!--<string name="permission_recode_audio_exception" translatable="false">获取麦克风权限异常，请检查您是否开启次权限</string>-->
 </resources>

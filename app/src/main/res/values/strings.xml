@@ -143,6 +143,10 @@
     <string name="tradingsWithdrawal">提现中</string>
     <string name="tradingsSucc">成功</string>
     <string name="tradingsLost">失败</string>
+    <string name="toast_momery">建议内存1GB,否则将影响使用体验</string>
+    <string name="toast_flash">当前设备不支持闪光灯</string>
+    <string name="toast_camera">无法启用相机</string>
+    <string name="only">您还可以免费使用</string>
 
     <string name="user_bank_29">工商银行</string>
     <string name="user_bank_30">建设银行</string>

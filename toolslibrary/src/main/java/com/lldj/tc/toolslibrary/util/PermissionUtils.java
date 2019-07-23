@@ -20,7 +20,6 @@ import java.util.Map;
 
 
 /**
- * Created by wang on 2017/4/20.
  */
 
 public class PermissionUtils {
