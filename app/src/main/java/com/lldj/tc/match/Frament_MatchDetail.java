@@ -24,6 +24,7 @@ import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Team;
 import com.lldj.tc.http.beans.JsonBean;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.toolslibrary.event.ObData;
@@ -122,6 +123,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private Observer<ObData> observer;
     private String gaming = "";
     private boolean select = false;
+    private Map<Integer,ResultsModel > _gamelist;
 
     @Override
     public int getContentView() {
@@ -140,6 +142,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         }
 
         gaming = getResources().getString(R.string.gameing);
+        _gamelist = SharePreUtils.getInstance().getGamelist();
     }
 
     @Override
@@ -220,6 +223,18 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     gamestatus.setText(statusText[status]);
                     gamestatus.setVisibility(status == 2 ? View.GONE : View.VISIBLE);
                     looklayout.setVisibility(status == 2 ? View.VISIBLE : View.GONE);
+
+                    if(_gamelist != null) {
+                        ResultsModel gameinfo = _gamelist.get(_data.getGame_id());
+                        if(gameinfo != null) {
+                            HttpTool.getBitmapUrl(gameinfo.getLogo(), new HttpTool.bmpListener() {
+                                @Override
+                                public void onFinish(Bitmap bitmap) {
+                                    if (bitmap != null) gameicon.setImageBitmap(bitmap);
+                                }
+                            });
+                        }
+                    }
 
 
                     HttpTool.getBitmapUrl(team0.getTeam_logo(), new HttpTool.bmpListener() {

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
@@ -41,7 +42,6 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
     private int[] winBmp;
     private ResultsModel tData;
     private List<ObData> groups = null;
-
 
     private Map<String, List<Odds>> mlist = new HashMap<>();
 

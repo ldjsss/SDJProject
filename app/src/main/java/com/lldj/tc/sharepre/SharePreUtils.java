@@ -7,6 +7,7 @@ import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 
 public class SharePreUtils {
@@ -16,7 +17,7 @@ public class SharePreUtils {
     private String birthday;
     private String recharge_url;
 
-    private List<ResultsModel> Gamelist;
+    private Map<Integer,ResultsModel > Gamelist;
 
     public static synchronized SharePreUtils getInstance() {
         if (null == instance) {
@@ -148,11 +149,11 @@ public class SharePreUtils {
         this.recharge_url = recharge_url;
     }
 
-    public List<ResultsModel> getGamelist() {
+    public Map<Integer,ResultsModel > getGamelist() {
         return Gamelist;
     }
 
-    public void setGamelist(List<ResultsModel> gamelist) {
+    public void setGamelist(Map<Integer,ResultsModel > gamelist) {
         Gamelist = gamelist;
     }
 

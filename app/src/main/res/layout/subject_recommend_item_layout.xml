@@ -23,7 +23,7 @@
             android:layout_height="35dp"
             android:paddingStart="10dp"
             android:layout_centerVertical="true"
-            android:src="@mipmap/game_csgo" />
+            android:src="@mipmap/game_arena" />
 
         <TextView
             android:layout_width="wrap_content"

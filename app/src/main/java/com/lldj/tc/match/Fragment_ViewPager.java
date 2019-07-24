@@ -29,7 +29,9 @@ import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -120,7 +122,11 @@ public class Fragment_ViewPager extends BaseFragment {
                     updateTitle(1, cur+"");
                     updateTitle(2, front+"");
 
-                    SharePreUtils.getInstance().setGamelist(list);
+                    Map<Integer,ResultsModel > _map = new HashMap<>();
+                    for (int i = 0; i < list.size(); i++) {
+                        _map.put(list.get(i).getId(), list.get(i));
+                    }
+                    SharePreUtils.getInstance().setGamelist(_map);
                 }
             }
         });

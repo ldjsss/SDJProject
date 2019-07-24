@@ -25,7 +25,11 @@ import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -71,7 +75,11 @@ public class DialogGameSelect extends BaseDialog {
                     gamerecycleview.setAdapter(adapter);
                     gamerecycleview.setItemAnimator(new DefaultItemAnimator());
 
-                    SharePreUtils.getInstance().setGamelist(list);
+                    Map<Integer,ResultsModel > _map = new HashMap<>();
+                    for (int i = 0; i < list.size(); i++) {
+                        _map.put(list.get(i).getId(), list.get(i));
+                    }
+                    SharePreUtils.getInstance().setGamelist(_map);
                 }
             }
         });

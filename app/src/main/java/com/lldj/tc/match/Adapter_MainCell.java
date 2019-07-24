@@ -20,6 +20,7 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Team;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
@@ -57,6 +58,8 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
     private int[] winBmp;
     private List<ObData> groups = null;
 
+    private Map<Integer,ResultsModel > _gamelist;
+
     public Adapter_MainCell(Context mContext, int _viewType) {
         this.mContext = mContext;
         this.ViewType = _viewType;
@@ -66,6 +69,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
     public void changeData(List<ResultsModel> plist) {
         mlist = plist;
+        _gamelist = SharePreUtils.getInstance().getGamelist();
 
         AppUtils.dispatchEvent(new ObData(EventType.UPDATEMATCHLIST, mlist));
         notifyDataSetChanged();
@@ -212,6 +216,19 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             gamenamecount.setText("/ " + _data.getRound());
             gameplaycount.setText("+" + _data.getPlay_count());
             gametime.setText(AppUtils.getFormatTime5(_data.getStart_time_ms()));
+
+            if(_gamelist != null) {
+                ResultsModel gameinfo = _gamelist.get(_data.getGame_id());
+                if(gameinfo != null) {
+                    HttpTool.getBitmapUrl(gameinfo.getLogo(), new HttpTool.bmpListener() {
+                        @Override
+                        public void onFinish(Bitmap bitmap) {
+                            if (bitmap != null) gameicon.setImageBitmap(bitmap);
+                        }
+                    });
+                }
+            }
+
 
 
             if(_data.getTeam() == null || _data.getTeam().size() < 2) {
