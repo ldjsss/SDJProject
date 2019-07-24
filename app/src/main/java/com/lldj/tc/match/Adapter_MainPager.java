@@ -20,14 +20,13 @@ import java.util.Map;
 
 
 public class Adapter_MainPager extends FragmentStatePagerAdapterCompat {
-    private Resources mResources;
     private String[] mTitle;
     private Map<Integer,Fragment> fragmentList = new HashMap<>();
 
 
     public Adapter_MainPager(Context context, FragmentManager fm) {
         super(fm);
-        mResources = context.getResources();
+        Resources mResources = context.getResources();
         mTitle = new String[]{mResources.getString(R.string.matchTodayTitle), mResources.getString(R.string.matchCurrentTitle), mResources.getString(R.string.matchFrontTitle), mResources.getString(R.string.matchOverTitle)};
     }
 
@@ -40,7 +39,7 @@ public class Adapter_MainPager extends FragmentStatePagerAdapterCompat {
             fragment.setArguments(bundle);
             fragmentList.put(position, fragment);
         }
-        return fragmentList.get(position);
+        return fragment;
     }
 
     @Override

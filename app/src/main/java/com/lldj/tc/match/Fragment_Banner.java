@@ -7,7 +7,12 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.lldj.tc.R;
+import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.event.Observable;
+import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
+import com.lldj.tc.utils.EventType;
 import com.superluo.textbannerlibrary.ITextBannerItemClickListener;
 import com.superluo.textbannerlibrary.TextBannerView;
 
@@ -24,12 +29,12 @@ public class Fragment_Banner extends BaseFragment {
     @BindView(R.id.tv_banner2)
     TextBannerView tvBanner2;
     private List<String> msgList;
+    private int ViewType = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        ViewType = getArguments().getInt( "ARG");
-//        Clog.e("sssssss", " -----------xcl onCreate = " + ViewType);
+        ViewType = getArguments().getInt( "ARG");
     }
 
     @Override
@@ -42,8 +47,10 @@ public class Fragment_Banner extends BaseFragment {
         unbinder = ButterKnife.bind(this, rootView);
 
         initData();
+
         setListener();
 
+        if(ViewType <= 0) tvBanner2.startViewAnimator();
     }
 
     private void initData() {
@@ -87,6 +94,16 @@ public class Fragment_Banner extends BaseFragment {
         super.hide(fragment);
         /**调用stopViewAnimator()暂停文字轮播，避免文字重影*/
         tvBanner2.stopViewAnimator();
+    }
+
+    public void stopViewAnimator() {
+        if(tvBanner2 != null)tvBanner2.stopViewAnimator();
+    }
+
+    public void startViewAnimator() {
+        if(tvBanner2 != null){
+            tvBanner2.startViewAnimator();
+        }
     }
 
     @Override

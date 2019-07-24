@@ -53,8 +53,6 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     TextView tvNoMatch;
     @BindView(R.id.subject_lrecycleview)
     LRecyclerView subjectLrecycleview;
-    @BindView(R.id.layout_board)
-    FrameLayout layoutBoard;
 
     private Adapter_MainCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
@@ -64,18 +62,19 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     public int pages = 0;
     public int total = 0;
     private int ViewType;
-    private BaseFragment middleFragment;
+    private Fragment_Banner fragment_Banner;
+    private Fragment_Calendar fragment_Calendar;
     private Disposable disposable;
     private int disTime = 10000;
-    private Observer<ObData> observer;
     private String selects = "";
+    private boolean _visible = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.ViewType = getArguments().getInt("ARG");
 
-        observer = new Observer<ObData>() {
+        registEvent(new Observer<ObData>() {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 String _key = data.getKey();
@@ -96,8 +95,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     stopUpdate();
                 }
             }
-        };
-        AppUtils.registEvent(observer);
+        });
 
         selects = SharePreUtils.getInstance().getSelectGame(getContext());
 
@@ -113,7 +111,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     public void initView(View rootView) {
         ButterKnife.bind(this, rootView);
 
-        layoutBoard.setId(1000 + ViewType); //In order to solve id duplication after reuse, add deviation when adding control dynamically
+        rootView.findViewById(R.id.layout_board).setId(1000 + ViewType); //In order to solve id duplication after reuse, add deviation when adding control dynamically
 
         if (lAdapter == null) {
             subjectLrecycleview.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
@@ -123,16 +121,19 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
             subjectLrecycleview.setLScrollListener(this);
 
             if (ViewType > 1) {
-                middleFragment = new Fragment_Calendar();
+                fragment_Calendar = new Fragment_Calendar();
             } else {
-                middleFragment = new Fragment_Banner();
+                fragment_Banner = new Fragment_Banner();
+                Bundle bundle = new Bundle();
+                bundle.putInt("ARG", ViewType);
+                fragment_Banner.setArguments(bundle);
             }
 
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(1000 + ViewType, middleFragment);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.add(1000 + ViewType, fragment_Calendar != null ? fragment_Calendar : fragment_Banner);
             transaction.commit();
         }
+
     }
 
     @Override
@@ -141,17 +142,22 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
         getMatchData();
 
-        if (ViewType <= 1) startUpdate();
+        startUpdate();
     }
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
+        this._visible = isVisible;
+       if(fragment_Banner != null){
+           if(isVisible )fragment_Banner.startViewAnimator();
+           else fragment_Banner.stopViewAnimator();
+       }
         if (isVisible) {
-//            Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
+            Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
             onRefresh();
         } else {
-//            Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
+            Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
             stopUpdate();
         }
     }
@@ -232,7 +238,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     }
 
     private void startUpdate() {
-        if (disposable != null) return;
+        if (disposable != null || ViewType > 1) return;
 
         disposable = RxTimerUtilPro.interval(disTime, new RxTimerUtilPro.IRxNext() {
             @Override
@@ -254,15 +260,30 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     @Override
     public void onDestroy() {
         super.onDestroy();
-        AppUtils.unregisterEvent(observer);
-        observer = null;
         stopUpdate();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        Clog.e("onPause", "onPause = " + ViewType);
         stopUpdate();
+
+        if(fragment_Banner != null){
+          fragment_Banner.stopViewAnimator();
+        }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Clog.e("onResume", "onResume = " + ViewType);
+        if(_visible)startUpdate();
+
+        if(fragment_Banner != null && _visible){
+            fragment_Banner.startViewAnimator();
+        }
+    }
+
 
 }

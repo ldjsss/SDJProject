@@ -155,7 +155,7 @@ public class TextBannerView extends RelativeLayout {
         mViewFlipper = new ViewFlipper(getContext());//new 一个ViewAnimator
         mViewFlipper.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         addView(mViewFlipper);
-        startViewAnimator();
+//        startViewAnimator();
         //设置点击事件
         mViewFlipper.setOnClickListener(new OnClickListener() {
             @Override
@@ -313,7 +313,7 @@ public class TextBannerView extends RelativeLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         isDetachedFromWindow=false;
-        startViewAnimator();
+//        startViewAnimator();
 
     }
 }

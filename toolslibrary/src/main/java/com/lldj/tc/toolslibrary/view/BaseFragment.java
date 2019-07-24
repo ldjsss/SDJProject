@@ -142,7 +142,7 @@ public abstract class BaseFragment extends Fragment {
      *                  false 可见  -> 不可见
      */
     protected void onFragmentVisibleChange(boolean isVisible) {
-        Log.w("dd", "onFragmentVisibleChange -> isVisible: " + isVisible);
+//        Log.w("dd", "onFragmentVisibleChange -> isVisible: " + isVisible);
     }
 
     public abstract int getContentView();
