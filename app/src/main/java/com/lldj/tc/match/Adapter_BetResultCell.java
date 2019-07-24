@@ -86,6 +86,7 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
             holder.tv_betnum.setText(record.getOrder_num());
             holder.tv_bettime.setText(AppUtils.getFormatTime6(record.getBet_created_time()));
             holder.tv_betsureing.setVisibility(View.GONE);
+            holder.tv_bettime.setVisibility(View.GONE);
 
             holder.betvictoryicon.setImageResource(record.getWin() == 0 ? R.mipmap.main_failure : R.mipmap.main_victory);
             holder.betvictoryicon.setVisibility(record.getWin() < 2 ? View.VISIBLE : View.GONE);

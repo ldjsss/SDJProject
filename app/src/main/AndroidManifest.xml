@@ -32,6 +32,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         android:networkSecurityConfig="@xml/network_security_config"
+        android:hardwareAccelerated="false"
         tools:replace="android:appComponentFactory">
         <meta-data
             android:name="CP_CHANNEL"

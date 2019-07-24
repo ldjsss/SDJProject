@@ -176,8 +176,10 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                             });
                         } else if (_statue == 2) { //lock
                             tv_odds.setVisibility(View.GONE);
+                            im_lock.setVisibility(View.VISIBLE);
                         } else {
                             tv_odds.setVisibility(View.GONE);
+                            im_lock.setVisibility(View.GONE);
                         }
 
                         //set player 1 win icon
