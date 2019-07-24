@@ -70,6 +70,8 @@ public class DialogGameSelect extends BaseDialog {
                     gamerecycleview.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
                     gamerecycleview.setAdapter(adapter);
                     gamerecycleview.setItemAnimator(new DefaultItemAnimator());
+
+                    SharePreUtils.getInstance().setGamelist(list);
                 }
             }
         });

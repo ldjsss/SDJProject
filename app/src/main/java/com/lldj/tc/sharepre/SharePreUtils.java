@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 
 import java.util.Calendar;
+import java.util.List;
 
 
 public class SharePreUtils {
@@ -14,6 +15,8 @@ public class SharePreUtils {
     private boolean agent;
     private String birthday;
     private String recharge_url;
+
+    private List<ResultsModel> Gamelist;
 
     public static synchronized SharePreUtils getInstance() {
         if (null == instance) {
@@ -143,6 +146,14 @@ public class SharePreUtils {
 
     public void setRecharge_url(String recharge_url) {
         this.recharge_url = recharge_url;
+    }
+
+    public List<ResultsModel> getGamelist() {
+        return Gamelist;
+    }
+
+    public void setGamelist(List<ResultsModel> gamelist) {
+        Gamelist = gamelist;
     }
 
     public static void setRegistInfo(Context context, final String username, final String password, String name, String mobile, String channel, String devices) {

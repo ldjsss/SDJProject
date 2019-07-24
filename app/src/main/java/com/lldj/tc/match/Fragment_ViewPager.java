@@ -18,6 +18,7 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.MatchBean;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
@@ -118,6 +119,8 @@ public class Fragment_ViewPager extends BaseFragment {
                     updateTitle(0, today+"");
                     updateTitle(1, cur+"");
                     updateTitle(2, front+"");
+
+                    SharePreUtils.getInstance().setGamelist(list);
                 }
             }
         });

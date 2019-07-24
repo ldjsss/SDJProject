@@ -43,7 +43,7 @@ public class HttpMsg<T>{
         return new HttpTool.msgListener(){
             @Override
             public void onFinish(int code, String msg) {
-                System.out.println("ret:" + code + " msg:" + msg);
+//                System.out.println("ret:" + code + " msg:" + msg);
                 if(code == HttpURLConnection.HTTP_OK) {
                     Object data = new Gson().fromJson(msg, service);
                     listener.onFinish(data);

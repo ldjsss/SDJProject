@@ -86,6 +86,18 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(videoView != null) videoView.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(videoView != null) videoView.start();
+    }
+
     @OnClick({R.id.forget_psw_tv, R.id.login_tv, R.id.register_tv, R.id.just_look_tv, R.id.psw_show_or_hid_iv})
     public void onClick(View view) {
         switch (view.getId()) {
