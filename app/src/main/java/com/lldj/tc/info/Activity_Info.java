@@ -53,7 +53,7 @@ public class Activity_Info extends BaseActivity {
         tvname.setText(SharePreUtils.getName(this));
         tvphone.setText(SharePreUtils.getPhone(this));
 
-        if(AppUtils.isNumer(SharePreUtils.getInstance().birthday))tvbrithday.setText(AppUtils.getFormatTime2(Long.parseLong(SharePreUtils.getInstance().birthday)));
+        if(AppUtils.isNumer(SharePreUtils.getInstance().getBirthday()))tvbrithday.setText(AppUtils.getFormatTime2(Long.parseLong(SharePreUtils.getInstance().getBirthday())));
     }
 
     @OnClick({R.id.back_main_iv, R.id.brithlayout, R.id.phonelayout, R.id.keylayout, R.id.exitlayout})
@@ -65,12 +65,12 @@ public class Activity_Info extends BaseActivity {
                 break;
             case R.id.brithlayout:
                 Calendar calendar = Calendar.getInstance();
-                if(AppUtils.isNumer(SharePreUtils.getInstance().birthday))calendar.setTimeInMillis(Long.parseLong(SharePreUtils.getInstance().birthday));
+                if(AppUtils.isNumer(SharePreUtils.getInstance().getBirthday()))calendar.setTimeInMillis(Long.parseLong(SharePreUtils.getInstance().getBirthday()));
                 TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {
-                        SharePreUtils.getInstance().birthday = date.getTime() + "";
-                        tvbrithday.setText(AppUtils.getFormatTime2(Long.parseLong(SharePreUtils.getInstance().birthday)));
+                        SharePreUtils.getInstance().setBirthday(date.getTime() + "");
+                        tvbrithday.setText(AppUtils.getFormatTime2(Long.parseLong(SharePreUtils.getInstance().getBirthday())));
 
                         Toast.makeText(Activity_Info.this, "---------------服务器接口不支持 ", Toast.LENGTH_SHORT).show();
                     }

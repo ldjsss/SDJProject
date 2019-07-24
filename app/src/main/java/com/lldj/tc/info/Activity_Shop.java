@@ -71,7 +71,7 @@ public class Activity_Shop extends BaseActivity {
 
         shopwebview.setBackgroundColor(getResources().getColor(R.color.color_bg));
         shopwebview.setVisibility(View.VISIBLE);
-        shopwebview.loadUrl(SharePreUtils.getRecharge_url(mContext));
+        shopwebview.loadUrl(SharePreUtils.getInstance().getRecharge_url());
         WebSettings settings = shopwebview.getSettings();
         settings.setDefaultTextEncodingName("utf-8");
         settings.setJavaScriptEnabled(true);

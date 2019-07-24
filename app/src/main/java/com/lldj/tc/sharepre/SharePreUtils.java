@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
-import com.lldj.tc.toolslibrary.util.AppUtils;
 
 import java.util.Calendar;
 
@@ -12,8 +11,9 @@ import java.util.Calendar;
 public class SharePreUtils {
     public static SharePreUtils instance;
 
-    public boolean agent;
-    public String birthday;
+    private boolean agent;
+    private String birthday;
+    private String recharge_url;
 
     public static synchronized SharePreUtils getInstance() {
         if (null == instance) {
@@ -113,14 +113,6 @@ public class SharePreUtils {
         return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.SELECTGAME, "");
     }
 
-    public static void setRecharge_url(Context context, String url) {
-        SharedPreferencesUtil.setValue(context, SharedKeys.RECHARURL, url);
-    }
-
-    public static String getRecharge_url(Context context) {
-        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.RECHARURL, "");
-    }
-
     public static void setSelectBank(Context context, int bankid) {
         SharedPreferencesUtil.setValue(context, SharedKeys.BANKID, bankid);
     }
@@ -129,6 +121,29 @@ public class SharePreUtils {
         return SharedPreferencesUtil.getSharedPreferences(context).getInt(SharedKeys.BANKID, -1);
     }
 
+    public boolean isAgent() {
+        return agent;
+    }
+
+    public void setAgent(boolean agent) {
+        this.agent = agent;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getRecharge_url() {
+        return recharge_url;
+    }
+
+    public void setRecharge_url(String recharge_url) {
+        this.recharge_url = recharge_url;
+    }
 
     public static void setRegistInfo(Context context, final String username, final String password, String name, String mobile, String channel, String devices) {
         setUserName(context, username);
@@ -154,10 +169,10 @@ public class SharePreUtils {
         setUserName(context, ret.getUsername());
         setMoney(context, ret.getMoney());
         setName(context, ret.getReal_name());
-        setRecharge_url(context, ret.getRecharge_url());
 
         getInstance().agent = ret.isAgent();
         getInstance().birthday = ret.getBirthday();
+        getInstance().recharge_url = ret.getRecharge_url();
 
         if(TextUtils.isEmpty(getInstance().birthday)) getInstance().birthday = Calendar.getInstance().getTimeInMillis() + "";
     }
