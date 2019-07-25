@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.RecordModel;
+import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.http.beans.RecordBean;
 import com.lldj.tc.match.Adapter_BetResultCell;
@@ -27,6 +28,7 @@ import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -143,12 +145,30 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
                     curPage = _ret.getPage_num();
                     totalPage = _ret.getPages();
 
-                    alist.addAll(_list);
+                    if(curPage <= 1) {
+                        alist.clear();
+                    }
+                    else{
+                        for (int i = alist.size() - 1; i > 0; i--) {
+                            if (alist.get(i).getPage_num() == curPage) alist.remove(i);
+                        }
+                    }
+
+                    if(_list != null){
+                        for (int i = 0; i < _list.size(); i++) {
+                            _list.get(i).setPage_num(curPage);
+                            alist.add(_list.get(i));
+                        }
+                    }
+
+                    Collections.sort(alist, (o1, o2) -> {
+                        return (int)(o1.getBet_created_time() - o2.getBet_created_time());
+                    });
 
                     mAdapter.changeData(alist);
                 }
 
-                RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, 10, LoadingFooter.State.Normal, null);
+                RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, pageSize, LoadingFooter.State.Normal, null);
                 subjectLrecycleview.refreshComplete();
             }
         });

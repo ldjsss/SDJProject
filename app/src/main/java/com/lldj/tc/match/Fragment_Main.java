@@ -218,7 +218,13 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                         }
                     }
 
-                    if(_result != null && _result.getDatas() != null)alist.addAll(_result.getDatas());
+                    if(_result != null && _result.getDatas() != null){
+                        List<ResultsModel> _datas = _result.getDatas();
+                        for (int i = 0; i < _datas.size(); i++) {
+                            _datas.get(i).setPage_num(page_num);
+                            alist.add(_datas.get(i));
+                        }
+                    }
 
                     Collections.sort(alist, (o1, o2) -> {
                         return (int)(o1.getStart_time_ms() - o2.getStart_time_ms());

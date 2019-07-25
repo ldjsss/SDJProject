@@ -93,7 +93,7 @@ public class BetModel {
 
     //////////////////////
     ///////////////////////
-
+    private int page_num;
     private int status;
     private int game_id;
     private int group_id;
@@ -310,5 +310,13 @@ public class BetModel {
 
     public void setBet_created_time(long bet_created_time) {
         this.bet_created_time = bet_created_time;
+    }
+
+    public int getPage_num() {
+        return page_num;
+    }
+
+    public void setPage_num(int page_num) {
+        this.page_num = page_num;
     }
 }
