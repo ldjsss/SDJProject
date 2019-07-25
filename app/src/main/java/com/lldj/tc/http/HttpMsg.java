@@ -28,6 +28,7 @@ public class HttpMsg<T>{
     }
 
     public static String baseUrl = "http://192.168.1.118/";
+//    public static String baseUrl = "http://server.yjwl.ltd/";
 
     private static void toastMess(String msg){
         if(msg == null) msg = "";
@@ -43,7 +44,7 @@ public class HttpMsg<T>{
         return new HttpTool.msgListener(){
             @Override
             public void onFinish(int code, String msg) {
-//                System.out.println("ret:" + code + " msg:" + msg);
+                System.out.println("ret:" + code + " msg:" + msg);
                 if(code == HttpURLConnection.HTTP_OK) {
                     Object data = new Gson().fromJson(msg, service);
                     listener.onFinish(data);

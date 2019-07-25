@@ -1,6 +1,7 @@
 package com.lldj.tc.http.beans.FormatModel.matchModel;
 
 public class Odds{
+
     private int group_id;
     private int id;
     private int team_id;
@@ -9,6 +10,7 @@ public class Odds{
     private long bet_max;
     private long last_update;
     private int match_id;
+    private int sort_index;
 
     private String value;
     private String win;
@@ -139,6 +141,14 @@ public class Odds{
         this.match_stage = match_stage;
     }
 
+    public int getSort_index() {
+        return sort_index;
+    }
+
+    public void setSort_index(int sort_index) {
+        this.sort_index = sort_index;
+    }
+
     @Override
     public String toString() {
         return "Odds{" +
@@ -150,6 +160,7 @@ public class Odds{
                 ", bet_max=" + bet_max +
                 ", last_update=" + last_update +
                 ", match_id=" + match_id +
+                ", sort_index=" + sort_index +
                 ", value='" + value + '\'' +
                 ", win='" + win + '\'' +
                 ", name='" + name + '\'' +

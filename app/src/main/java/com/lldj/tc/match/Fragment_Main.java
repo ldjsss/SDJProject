@@ -83,7 +83,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                         mAdapter.updateSelect((List<ObData>) data.getValue());
                     }
                 } else if ( _key.equalsIgnoreCase(EventType.DETIALHIDE)) {
-                    onRefresh();
+                    startUpdate();
                 }
                 else if (_key.equalsIgnoreCase(EventType.SELECTGAMEID)) {
                     alist.clear();
@@ -238,7 +238,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     }
 
     private void startUpdate() {
-        if (disposable != null || ViewType > 1) return;
+        if (disposable != null || ViewType > 1 || !_visible) return;
 
         disposable = RxTimerUtilPro.interval(disTime, new RxTimerUtilPro.IRxNext() {
             @Override
@@ -278,7 +278,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     public void onResume() {
         super.onResume();
         Clog.e("onResume", "onResume = " + ViewType);
-        if(_visible)startUpdate();
+        startUpdate();
 
         if(fragment_Banner != null && _visible){
             fragment_Banner.startViewAnimator();

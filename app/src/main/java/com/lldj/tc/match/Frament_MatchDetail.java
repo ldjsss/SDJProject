@@ -253,22 +253,27 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
 //                    Log.w("-----detail data = ", _data.toString());
 
-                    Map<String, List<Odds>> oddMap = new HashMap<>();
+                    Map<String, Map<String, List<Odds>>> oddMap = new HashMap<>();
+                    List<String> keys = new ArrayList<>();
                     if (odds != null) {
-                        ArrayList<String> keys = new ArrayList<>();
                         mTotal = 0;
-
-                        for (int i = 0; i < odds.size(); i++) {
+                        for (int i = odds.size() - 1; i > 0 ; i--) {
                             Odds _odd = odds.get(i);
                             String _key = _odd.getMatch_stage();
-                            List<Odds> itemList = oddMap.get(_key);
+                            Map<String, List<Odds>> itemList = oddMap.get(_key);
+
                             if (itemList == null) {
-                                itemList = new ArrayList<>();
+                                itemList = new HashMap<>();
+                                oddMap.put(_key, itemList);
                                 keys.add(_key);
                             }
-                            itemList.add(_odd);
-
-                            oddMap.put(_key, itemList);
+                            String _nextKey = _odd.getGroup_name();
+                            List<Odds> ceilList = itemList.get(_nextKey);
+                            if(ceilList == null) {
+                                ceilList = new ArrayList<>();
+                                itemList.put(_nextKey, ceilList);
+                            }
+                            ceilList.add(_odd);
                         }
 
                         mTotal = keys.size();
@@ -282,7 +287,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     }
 
                     if (mAdapter != null) {
-                        mAdapter.changeData(oddMap, _data);
+                        mAdapter.changeData(oddMap, _data, keys);
 
                     }
                 }

@@ -16,16 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
-import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
-import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -42,16 +41,18 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
     private int[] winBmp;
     private ResultsModel tData;
     private List<ObData> groups = null;
+    private List<String> keys = new ArrayList<>();
 
-    private Map<String, List<Odds>> mlist = new HashMap<>();
+    private Map<String, Map<String, List<Odds>>>  mlist = new HashMap<>();
 
     public Adapter_MatchCell(Context mContext) {
         this.mContext = mContext;
     }
 
-    public void changeData(Map<String, List<Odds>> plist, ResultsModel _data) {
+    public void changeData(Map<String, Map<String, List<Odds>>>  plist, ResultsModel _data, List<String> keys) {
         this.mlist = plist;
         this.tData = _data;
+        this.keys = keys;
         if (winBmp == null) winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
 
         notifyDataSetChanged();
@@ -79,7 +80,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return null != mlist ? mlist.size() : 0;
+        return keys.size();
     }
 
 
@@ -101,41 +102,25 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
         public void bottomCommon() {
 
-            Map.Entry<String, List<Odds>> entry;
             int pos = getAdapterPosition() - 1;
-            if (pos == 0) {
-                entry = getEntry("final");
-            } else entry = getEntry(pos + "");
+            String key = keys.get(pos);
+            Map<String, List<Odds>> curOdds = mlist.get(key);
 
-            if (entry != null) {
-                String key = entry.getKey();
-                List<Odds> odds = entry.getValue();
+            addlayout.removeAllViews();
+            if (curOdds != null && curOdds.size() > 0) {
+                myposition.setText(key);
 
-//                Log.w("-----detail odds = ", odds.toString());
-
-                Map<String, List<Odds>> oddMap = new HashMap<>();
-                for (int i = 0; i < odds.size(); i++) {
-                    Odds _odd = odds.get(i);
-                    String _key = _odd.getGroup_name();
-                    List<Odds> itemList = oddMap.get(_key);
-                    if (itemList == null) {
-                        itemList = new ArrayList<>();
-                    }
-                    itemList.add(_odd);
-
-                    oddMap.put(_key, itemList);
-                }
-
-                Iterator<Map.Entry<String, List<Odds>>> entries = oddMap.entrySet().iterator();
+                Iterator<Map.Entry<String, List<Odds>>> entries = curOdds.entrySet().iterator();
                 while (entries.hasNext()) {
                     Map.Entry<String, List<Odds>> _nentry = entries.next();
                     String _key = _nentry.getKey();
                     List<Odds> _odds = _nentry.getValue();
 
-                    myposition.setText(key);
                     matchplayname.setText(_key);
 
-                    addlayout.removeAllViews();
+                    Collections.sort(_odds, (o1, o2) -> {
+                        return (int)(o1.getSort_index() - o2.getSort_index());
+                    });
 
                     View view;
                     LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -290,14 +275,15 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
             AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, data, tag));
         }
 
-        private Map.Entry<String, List<Odds>> getEntry(String key) {
-            Iterator<Map.Entry<String, List<Odds>>> entries = mlist.entrySet().iterator();
-            while (entries.hasNext()) {
-                Map.Entry<String, List<Odds>> entry = entries.next();
-                if (entry.getKey().indexOf(key) != -1) return entry;
-            }
-            return null;
-        }
+//        private Map.Entry<String, List<Odds>> getEntry(String key) {
+//            Iterator<Map.Entry<String, List<Odds>>> entries = mlist.entrySet().iterator();
+//            while (entries.hasNext()) {
+//                Map.Entry<String, List<Odds>> entry = entries.next();
+//                if (entry.getKey().indexOf(key) != -1) return entry;
+//            }
+//
+//            return null;
+//        }
 
 
     }
