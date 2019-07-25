@@ -257,7 +257,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     List<String> keys = new ArrayList<>();
                     if (odds != null) {
                         mTotal = 0;
-                        for (int i = odds.size() - 1; i > 0 ; i--) {
+                        for (int i = odds.size() - 1; i >= 0 ; i--) {
                             Odds _odd = odds.get(i);
                             String _key = _odd.getMatch_stage();
                             Map<String, List<Odds>> itemList = oddMap.get(_key);
