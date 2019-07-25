@@ -68,6 +68,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     private int disTime = 10000;
     private String selects = "";
     private boolean _visible = false;
+    private LinearLayoutManager layoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,7 +115,8 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         rootView.findViewById(R.id.layout_board).setId(1000 + ViewType); //In order to solve id duplication after reuse, add deviation when adding control dynamically
 
         if (lAdapter == null) {
-            subjectLrecycleview.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+            layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+            subjectLrecycleview.setLayoutManager(layoutManager);
             mAdapter = new Adapter_MainCell(mContext, ViewType);
             lAdapter = new LRecyclerViewAdapter(getActivity(), mAdapter);
             subjectLrecycleview.setAdapter(lAdapter);
@@ -171,6 +173,15 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     }
 
     @Override
+    public void onScrolled(int distanceX, int distanceY) {
+        int pos = layoutManager.findFirstVisibleItemPosition();
+        page_num = (int)Math.ceil(pos/(page_size*1.0));
+        if(page_num <= 0) page_num = 1;
+        Log.e("page_num", page_num + "  page_num = " + page_num) ;
+
+    }
+
+    @Override
     public void onBottom() {
         LoadingFooter.State state = RecyclerViewStateUtils.getFooterViewState(subjectLrecycleview);
         if (state == LoadingFooter.State.Loading) {
@@ -183,10 +194,6 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         } else {
             RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, page_size, LoadingFooter.State.TheEnd, null);
         }
-    }
-
-    @Override
-    public void onScrolled(int distanceX, int distanceY) {
     }
 
     private void getMatchData() {//"&game_ids=" + selectID

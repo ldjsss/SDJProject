@@ -13,6 +13,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
@@ -249,13 +250,16 @@ public class DialogBet extends BaseDialog {
             Odds odd = getTeamOddsByID(_data, ID);
             BetModel betinfo = betList.get(ID);
 
-            if (odd == null) return convertView;
-
 //            Clog.e("---- " + groupPosition, data.toString());
 
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.item_group, null);
             }
+            if (odd == null) {
+                Toast.makeText(getContext(), "-------data error getGroupView", Toast.LENGTH_SHORT).show();
+                return convertView;
+            }
+
             TextView tv_group = (TextView) convertView.findViewById(R.id.betinput_et);
             tv_group.setText(betinfo==null?"":betinfo.getAmount()+"");
 
@@ -336,6 +340,10 @@ public class DialogBet extends BaseDialog {
             String ID = data.getTag();
             BetModel betinfo = betList.get(ID);
             Odds odd = getTeamOddsByID(_data, ID);
+            if(odd == null) {
+                Clog.e("data error", "btnClick");
+                return;
+            }
 
             String _tag = tag.substring(2, tag.length());
             String text = betinfo != null ? betinfo.getAmount()+"" : "";

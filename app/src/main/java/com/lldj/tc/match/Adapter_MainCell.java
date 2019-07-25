@@ -175,24 +175,17 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             ResultsModel _data = mlist.get(getAdapterPosition() - 1);
             switch (view.getId()) {
                 case R.id.gamebg:
-                    Map<String, Integer> _map = new HashMap();
-                    _map.put("ViewType", ViewType);
-                    _map.put("id", _data.getId());
-                    AppUtils.dispatchEvent(new ObData(EventType.BETDETAILUI, _map));
+                    goDetial(_data.getId());
                     break;
                 case R.id.playname0:
-                    if(_data == null || _data.getOdds() == null || _data.getOdds().size() < 1 || _data.getOdds().get(0).getStatus() != 1){
-                        Toast.makeText(mContext, mContext.getResources().getString(R.string.unbet), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, _data, _data.getOdds().get(0).getId() + ""));
+                    Object _tag = playname0.getTag();
+                    if(_tag == null) return;
+                    betAdd(_data, (int)_tag);
                     break;
                 case R.id.playname1:
-                    if(_data == null || _data.getOdds() == null || _data.getOdds().size() < 2 || _data.getOdds().get(1).getStatus() != 1){
-                        Toast.makeText(mContext, mContext.getResources().getString(R.string.unbet), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, _data, _data.getOdds().get(1).getId() + ""));
+                    Object _tag1 = playname1.getTag();
+                    if(_tag1 == null) return;
+                    betAdd(_data, (int)_tag1);
                     break;
                 case R.id.playcelllayout0:
                     Toast.makeText(mContext, "ffffff", Toast.LENGTH_SHORT).show();
@@ -202,6 +195,25 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                     break;
 
             }
+        }
+
+        private void betAdd(ResultsModel _data, int _tag){
+            if(_data == null) return;
+            Odds odds = getOddData(_data.getOdds(), "final", _tag);
+            if( _data.getOdds() == null || _data.getOdds().size() < 1 || odds == null || odds.getStatus() != 1){
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.unbet), Toast.LENGTH_SHORT).show();
+                goDetial(_data.getId());
+                return;
+            }
+
+            AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, _data, odds.getId()+""));
+        }
+
+        private void goDetial(int id){
+            Map<String, Integer> _map = new HashMap();
+            _map.put("ViewType", ViewType);
+            _map.put("id", id);
+            AppUtils.dispatchEvent(new ObData(EventType.BETDETAILUI, _map));
         }
 
         public void bottomCommon(int _type) {
@@ -248,26 +260,45 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             playname0.setText(team0.getTeam_name());
             playname1.setText(team1.getTeam_name());
 
-            setSelect(odds);
+            playname0.setTag(team0.getTeam_id());
+            playname1.setTag(team1.getTeam_id());
+
+            setSelect();
 
             gamestatus.setText(statusText[matchStatus]);
             gamestatusicon.setImageResource(matchStatus == 2 ? R.mipmap.match_status_1 : R.mipmap.match_status_0);
             gameresult.setVisibility((matchStatus == 2 || matchStatus == 3) ? View.VISIBLE : View.GONE);
             gametime.setVisibility((matchStatus == 2 || matchStatus == 3) ? View.GONE : View.VISIBLE);
 
-            HttpTool.getBitmapUrl(team0.getTeam_logo(), new bmpListener() {
-                @Override
-                public void onFinish(Bitmap bitmap) {
-                    if (bitmap != null) imgplayicon0.setImageBitmap(bitmap);
-                }
-            });
+            Object _tag = imgplayicon0.getTag();
+            final String _logo = team0.getTeam_logo();
+            if(_tag == null || (_tag != null && !_logo.equalsIgnoreCase((String)_tag)))
+            {
+                HttpTool.getBitmapUrl(_logo, new bmpListener() {
+                    @Override
+                    public void onFinish(Bitmap bitmap) {
+                        if (bitmap != null) {
+                            imgplayicon0.setImageBitmap(bitmap);
+                            imgplayicon0.setTag(_logo);
+                        }
+                    }
+                });
+            }
 
-            HttpTool.getBitmapUrl(team1.getTeam_logo(), new bmpListener() {
-                @Override
-                public void onFinish(Bitmap bitmap) {
-                    if (bitmap != null) imgplayicon1.setImageBitmap(bitmap);
-                }
-            });
+            _tag = imgplayicon1.getTag();
+            final String _logo1 = team1.getTeam_logo();
+            if(_tag == null || (_tag != null && !_logo1.equalsIgnoreCase((String)_tag)))
+            {
+                HttpTool.getBitmapUrl(_logo1, new bmpListener() {
+                    @Override
+                    public void onFinish(Bitmap bitmap) {
+                        if (bitmap != null) {
+                            imgplayicon1.setImageBitmap(bitmap);
+                            imgplayicon1.setTag(_logo1);
+                        }
+                    }
+                });
+            }
 
             gameresult.setText(team0.getScore().getTotal() + " - " + team1.getScore().getTotal());
 
@@ -279,6 +310,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             if(odd0!=null){
                 int _status = odd0.getStatus();
                 gamebet0.setText(odd0.getOdds());
+                playname0.setTag(R.id.tag_first, odd0.getId());
                 if(_status <= 2){
 
                     imggamelock0.setVisibility(_status == 2 ? View.VISIBLE: View.GONE);
@@ -302,7 +334,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             if(odd1!=null){
                 int _status = odd1.getStatus();
                 gamebet1.setText(odd1.getOdds());
-
+                playname1.setTag(R.id.tag_first, odd1.getId());
                 if(_status <= 2){
                     imggamelock1.setVisibility(_status == 2 ? View.VISIBLE: View.GONE);
                     gamebet1.setVisibility(_status == 2 ? View.GONE: View.VISIBLE);
@@ -368,29 +400,21 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             }
         }
 
-        private void setSelect(List<Odds> odds){
-            if (odds == null) return;
-
+        private void setSelect(){
             boolean _select = false;
             boolean _select1 = false;
             if(groups != null) {
+                Object _tag = playname0.getTag(R.id.tag_first);
+                Object _tag1 = playname1.getTag(R.id.tag_first);
                 for (int i = 0; i < groups.size(); i++) {
-                    if (odds.get(0)!=null && (odds.get(0).getId() + "").equals(groups.get(i).getTag())) _select = true;
-                    if (odds.get(1)!=null && (odds.get(1).getId() + "").equals(groups.get(i).getTag())) _select1 = true;
+                    int setID = Integer.parseInt(groups.get(i).getTag());
+                    if (_tag != null && ((int)_tag)== setID) _select = true;
+                    if (_tag1 != null && ((int)_tag1)== setID) _select1 = true;
                 }
             }
-            if(_select){
-                playname0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
-            }
-            else{
-                playname0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
-            }
-            if(_select1){
-                playname1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
-            }
-            else{
-                playname1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
-            }
+            playname0.setBackground(mContext.getResources().getDrawable(_select ? R.drawable.mathbetselectbg: R.drawable.mathbetbg));
+            playname1.setBackground(mContext.getResources().getDrawable(_select1 ? R.drawable.mathbetselectbg: R.drawable.mathbetbg));
+
         }
 
         private void updateArrow(Odds odd, TextView betText, ImageView imggamearrow){
@@ -420,7 +444,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             if (odds == null) return null;
             for (int i = 0; i < odds.size(); i++) {
                 String _match_stage = odds.get(i).getMatch_stage();
-                if (_match_stage.equalsIgnoreCase("final") && team_id == odds.get(i).getTeam_id()) {
+                if (_match_stage.equalsIgnoreCase(key) && team_id == odds.get(i).getTeam_id()) {
                     return odds.get(i);
                 }
             }
