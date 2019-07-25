@@ -38,7 +38,8 @@
             android:textColorHint="@color/color_cdc3b3"
             android:textCursorDrawable="@drawable/my_cursor"
             android:singleLine="true"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:paddingBottom="1dip"/>
 
         <Button
             android:id="@+id/resget_verify_codebtn"

@@ -109,6 +109,7 @@ public class Activity_Info extends BaseActivity {
             case R.id.exitlayout:
                 finish();
                 SharePreUtils.setToken(this, "");
+                SharePreUtils.getInstance().setUserId("");
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEAVEGAME);
                 break;
         }

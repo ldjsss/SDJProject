@@ -97,7 +97,7 @@
     <string name="title">title</string>
     <string name="register_ok">注册完成</string>
     <string name="myinformation">个人资料</string>
-    <string name="cannotbet">您目前是游客身份不能进行投注</string>
+    <string name="cannotbet">您目前是游客身份不能进行此操作,去注册？</string>
     <string name="setTitle">设置</string>
     <string name="realname">真实姓名</string>
     <string name="birth">出生日期</string>

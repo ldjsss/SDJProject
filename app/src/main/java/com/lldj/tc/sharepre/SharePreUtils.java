@@ -16,6 +16,7 @@ public class SharePreUtils {
     private boolean agent;
     private String birthday;
     private String recharge_url;
+    private String userId;
 
     private Map<Integer,ResultsModel > Gamelist;
 
@@ -27,14 +28,12 @@ public class SharePreUtils {
     }
 
 
-    //获取用户id
-    public static String getUserId(Context context) {
-        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.UID, "");
+    public String getUserId() {
+        return userId;
     }
 
-    public static void setUserId(Context context, String id) {
-        SharedPreferencesUtil.setValue(context, SharedKeys.UID, id);
-
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public static void setUserName(Context context, String name) {
@@ -85,8 +84,8 @@ public class SharePreUtils {
         return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.CHANNEL, "");
     }
 
-    public static void setToken(Context context, String phone) {
-        SharedPreferencesUtil.setValue(context, SharedKeys.TOKEN, phone);
+    public static void setToken(Context context, String token) {
+        SharedPreferencesUtil.setValue(context, SharedKeys.TOKEN, token);
     }
 
     public static String getToken(Context context) {
@@ -167,7 +166,7 @@ public class SharePreUtils {
     }
 
     public static void setLoginInfo(Context context, final String token, final String expires_in, final String openid) {
-        setUserId(context, openid);
+        getInstance().userId = openid;
         setToken(context, token);
 
         System.out.println("--------token:" + token);
@@ -176,12 +175,12 @@ public class SharePreUtils {
 
     public static void setUserInfo(Context context, ResultsModel ret) {
 
-        setUserId(context, ret.getOpenid());
         setPhone(context, ret.getMobile());
         setUserName(context, ret.getUsername());
         setMoney(context, ret.getMoney());
         setName(context, ret.getReal_name());
 
+        getInstance().userId = ret.getOpenid();
         getInstance().agent = ret.isAgent();
         getInstance().birthday = ret.getBirthday();
         getInstance().recharge_url = ret.getRecharge_url();

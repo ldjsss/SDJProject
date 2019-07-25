@@ -118,10 +118,6 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
                     matchplayname.setText(_key);
 
-                    Collections.sort(_odds, (o1, o2) -> {
-                        return (int)(o1.getSort_index() - o2.getSort_index());
-                    });
-
                     View view;
                     LayoutInflater inflater = LayoutInflater.from(mContext);
                     int len = (int) Math.ceil(_odds.size() / 2.0);
@@ -274,17 +270,6 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
         private void betClick(ResultsModel data, String tag) {
             AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, data, tag));
         }
-
-//        private Map.Entry<String, List<Odds>> getEntry(String key) {
-//            Iterator<Map.Entry<String, List<Odds>>> entries = mlist.entrySet().iterator();
-//            while (entries.hasNext()) {
-//                Map.Entry<String, List<Odds>> entry = entries.next();
-//                if (entry.getKey().indexOf(key) != -1) return entry;
-//            }
-//
-//            return null;
-//        }
-
 
     }
 }

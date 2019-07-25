@@ -1,12 +1,20 @@
 package com.lldj.tc.match;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -29,6 +37,7 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -83,8 +92,8 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                     detailDialog = null;
                 }
                 else if (data.getKey().equalsIgnoreCase(EventType.BETLISTADD)) {
-                    if(TextUtils.isEmpty(SharePreUtils.getUserId(mContext))){
-                        ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, getResources().getString(R.string.cannotbet), ToastUtils.LENGTH_SHORT);
+                    if(TextUtils.isEmpty(SharePreUtils.getInstance().getUserId())){
+                        guestWarm();
                         return;
                     }
 
@@ -110,8 +119,8 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
     public void handleMsg(Message msg) {
         switch (msg.what) {
             case HandlerType.LEFTMENU:
-                if(TextUtils.isEmpty(SharePreUtils.getUserId(mContext))){
-                    HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEAVEGAME);
+                if(TextUtils.isEmpty(SharePreUtils.getInstance().getUserId())){
+                    guestWarm();
                     return;
                 }
                 DialogManager.getInstance().show(new Dialog_Set(this, R.style.DialogTheme));
@@ -139,6 +148,44 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
         super.onDestroy();
         mHandler.removeCallbacks(null);
         DialogManager.getInstance().removeAll();
+    }
+
+    private void guestWarm(){
+
+        AlertDialog dialog = new AlertDialog.Builder(this, R.style.MyDialogStyle)
+//                .setTitle("我是Title")
+                .setMessage(getResourcesString(R.string.cannotbet))
+                .setPositiveButton(getResourcesString(R.string.sure), null)
+                .setNegativeButton(getResourcesString(R.string.btncancle), null)
+                .create();
+        dialog.show();
+        try {
+            Field mAlert = AlertDialog.class.getDeclaredField("mAlert");
+            mAlert.setAccessible(true);
+            Object mController = mAlert.get(dialog);
+            Field mMessage = mController.getClass().getDeclaredField("mMessageView");
+            mMessage.setAccessible(true);
+            TextView mMessageView = (TextView) mMessage.get(mController);
+            mMessageView.setTextColor(Color.WHITE);//message样式修改成红色
+            Field mTitle = mController.getClass().getDeclaredField("mTitle");
+            mMessage.setAccessible(true);
+            TextView mTitleView = (TextView) mMessage.get(mController);
+            mMessageView.setTextColor(Color.WHITE);//title样式修改成``色
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        final Button pButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);//确认按键
+        pButton.setTextColor(Color.WHITE);
+        pButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEAVEGAME);
+            }
+        });
+        Button nButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);//取消
+        nButton.setTextColor(Color.WHITE);
     }
 
 }

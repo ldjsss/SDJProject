@@ -43,6 +43,7 @@ import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -256,6 +257,9 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     Map<String, Map<String, List<Odds>>> oddMap = new HashMap<>();
                     List<String> keys = new ArrayList<>();
                     if (odds != null) {
+                        Collections.sort(odds, (o1, o2) -> {
+                            return (int)(o1.getSort_index() - o2.getSort_index());
+                        });
                         mTotal = 0;
                         for (int i = odds.size() - 1; i >= 0 ; i--) {
                             Odds _odd = odds.get(i);

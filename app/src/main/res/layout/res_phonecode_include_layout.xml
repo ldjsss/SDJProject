@@ -38,7 +38,8 @@
             android:textCursorDrawable="@drawable/my_cursor"
             android:singleLine="true"
             android:inputType="number"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:paddingBottom="1dip"/>
 
         <View
             android:layout_width="match_parent"
