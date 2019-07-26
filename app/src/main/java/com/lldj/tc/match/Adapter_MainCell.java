@@ -319,16 +319,19 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                     gamebetlayout0.setVisibility(View.VISIBLE);
                     playnamecommon0.setVisibility(View.VISIBLE);
                     playname0.setText("");
+                    playname0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
                 }
                 else if(_status == 4){
                     gamebetlayout0.setVisibility(View.GONE);
                     playnamecommon0.setVisibility(View.GONE);
                     playname0.setVisibility(View.VISIBLE);
+                    playname0.setBackground(mContext.getResources().getDrawable(R.drawable.mathtitle_bg));
                 }
             }
             else {
                 gamebetlayout0.setVisibility(View.GONE);
                 playnamecommon0.setVisibility(View.GONE);
+                playname0.setBackground(mContext.getResources().getDrawable(R.drawable.mathtitle_bg));
             }
 
             if(odd1!=null){
@@ -342,16 +345,19 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                     gamebetlayout1.setVisibility(View.VISIBLE);
                     playnamecommon1.setVisibility(View.VISIBLE);
                     playname1.setText("");
+                    playname1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
                 }
                 else if(_status == 4){
                     gamebetlayout1.setVisibility(View.GONE);
                     playnamecommon1.setVisibility(View.GONE);
                     playname1.setVisibility(View.VISIBLE);
+                    playname1.setBackground(mContext.getResources().getDrawable(R.drawable.mathtitle_bg));
                 }
             }
             else {
                 gamebetlayout1.setVisibility(View.GONE);
                 playnamecommon1.setVisibility(View.GONE);
+                playname1.setBackground(mContext.getResources().getDrawable(R.drawable.mathtitle_bg));
             }
 
 

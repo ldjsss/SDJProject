@@ -138,9 +138,11 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                         TextView tv_odds = (TextView) view.findViewById(R.id.playbetnum0);
                         ImageView im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon0);
                         ImageView im_lock = (ImageView) view.findViewById(R.id.playlockicon0);
+                        TextView playcellselect0 = (TextView) view.findViewById(R.id.playcellselect0);
                         updateArrow(odd1, tv_odds, im_arrows);
                         if (_statue == 1) { //normal
                             im_lock.setVisibility(View.GONE);
+                            playcellselect0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
                             if (_oddstring.equals("")) {
                                 tv_odds.setVisibility(View.GONE);
                             } else {
@@ -158,9 +160,11 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                         } else if (_statue == 2) { //lock
                             tv_odds.setVisibility(View.GONE);
                             im_lock.setVisibility(View.VISIBLE);
+                            playcellselect0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
                         } else {
                             tv_odds.setVisibility(View.GONE);
                             im_lock.setVisibility(View.GONE);
+                            playcellselect0.setBackground(mContext.getResources().getDrawable(R.drawable.mathtitle_bg));
                         }
 
                         //set player 1 win icon
@@ -184,9 +188,11 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                             tv_odds = (TextView) view.findViewById(R.id.playbetnum1);
                             im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon1);
                             im_lock = (ImageView) view.findViewById(R.id.playlockicon1);
+                            TextView playcellselect1 = (TextView) view.findViewById(R.id.playcellselect1);
                             updateArrow(odd2, tv_odds, im_arrows);
                             if (_statue == 1) { //normal
                                 im_lock.setVisibility(View.GONE);
+                                playcellselect1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
                                 if (_oddstring.equals("")) {
                                     tv_odds.setVisibility(View.GONE);
                                 } else {
@@ -204,9 +210,11 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                             } else if (_statue == 2) { //lock
                                 tv_odds.setVisibility(View.GONE);
                                 im_lock.setVisibility(View.VISIBLE);
+                                playcellselect1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
                             } else {
                                 im_lock.setVisibility(View.GONE);
                                 tv_odds.setVisibility(View.GONE);
+                                playcellselect1.setBackground(mContext.getResources().getDrawable(R.drawable.mathtitle_bg));
                             }
 
                             //set player 2 win icon
