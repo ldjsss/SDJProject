@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ public class SharePreUtils {
     private String birthday;
     private String recharge_url;
     private String userId;
+    private Map<String, String> mapNames = new HashMap<>();
 
     private Map<Integer,ResultsModel > Gamelist;
 
@@ -34,6 +36,14 @@ public class SharePreUtils {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public Map<String, String> getMapNames() {
+        return mapNames;
+    }
+
+    public void setMapNames(Map<String, String> mapNames) {
+        this.mapNames = mapNames;
     }
 
     public static void setUserName(Context context, String name) {

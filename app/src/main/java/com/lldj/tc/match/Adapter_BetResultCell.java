@@ -16,17 +16,20 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.beans.BetMatchBean;
 import com.lldj.tc.http.beans.FormatModel.RecordModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResultCell.MyViewHolder> {
     private Context context;
     private List<BetModel> datas = new ArrayList<>();
     private List<BetMatchBean.betResult> datas2 = new ArrayList<>();
     private boolean result = false;
+    Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
 
     public Adapter_BetResultCell(Context context, List<BetModel> datas){
         this.context = context;
@@ -72,7 +75,7 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
         holder.tv_matchvsname.setText(record == null ? "unknow" : record.getMatch_short_name());
         holder.tv_starttime.setText(context.getString(R.string.starttime) + (record == null ? "unknow" : AppUtils.getFormatTime6(record.getStart_time())));
         holder.tv_matchvsname.setText((record == null ? "unknow" : record.getMatch_short_name()));
-        holder.tv_matchtround.setText(record == null ? "unknow" : record.getMatch_stage());
+        holder.tv_matchtround.setText(record == null ? "unknow" : mapNames.get(record.getMatch_stage()));
         holder.tv_matchtstatus.setText(record == null ? "unknow" : (record.getBet_site() == 0 ? context.getString(R.string.matchFrontTitle) : context.getString(R.string.matchCurrentTitle)));
 
         if(datas2.size() > 0){

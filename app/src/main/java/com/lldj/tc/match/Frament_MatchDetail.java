@@ -283,8 +283,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                         mTotal = keys.size();
                         if(tabLayout != null && tabLayout.getTabCount() != keys.size()){
                             tabLayout.removeAllTabs();
+                            Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
+                            String str, _title;
                             for (int i = 0; i < keys.size(); i++) {
-                                tabLayout.addTab(tabLayout.newTab().setText(keys.get(i)));
+                                str = keys.get(i);
+                                _title = mapNames.get(str);
+                                tabLayout.addTab(tabLayout.newTab().setText(TextUtils.isEmpty(_title) ? str : _title));
                             }
                             AppUtils.reduceMarginsInTabs(tabLayout, 10);
                         }

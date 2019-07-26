@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.lldj.tc.http.beans.MapBean;
 import com.lldj.tc.match.Activity_MainUI;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
@@ -35,6 +36,7 @@ import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,6 +85,8 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
 
         pswStatus(pswEt, pswShowOrHidIv);
         tokenLogin();
+
+        HttpMsg.getInstance().sendGetName();
 
     }
 

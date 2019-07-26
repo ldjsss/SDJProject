@@ -10,7 +10,10 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.beans.BaseBean;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.JsonBean;
+import com.lldj.tc.http.beans.MapBean;
+import com.lldj.tc.match.Activity_MainUI;
 import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
@@ -185,6 +188,19 @@ public class HttpMsg<T>{
         URLParams.put("type", type);
 
         HttpTool.httpPost(baseUrl + "user/traderecord", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
+    }
+
+    public void sendGetName() {
+        HttpTool.sendGet(baseUrl + "match/stage", new HttpMsg().getListener(MapBean.class, new HttpMsg.Listener(){
+            @Override
+            public void onFinish(Object _res) {
+                MapBean res = (MapBean) _res;
+                if(res.getCode() == GlobalVariable.succ){
+                    Map<String, String> result = res.getResult();
+                    if(result!= null)SharePreUtils.getInstance().setMapNames(result);
+                }
+            }
+        }));
     }
 
     public interface Listener<T> {

@@ -20,10 +20,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
+import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.BetMatchBean;
+import com.lldj.tc.http.beans.MapBean;
 import com.lldj.tc.info.Dialog_Set;
 import com.lldj.tc.login.Activity_Login;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.match.DialogBet;
 import com.lldj.tc.match.DialogGameSelect;
