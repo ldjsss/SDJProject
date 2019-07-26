@@ -105,7 +105,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     @BindView(R.id.lookmatch)
     TextView lookmatch;
     @BindView(R.id.arrowplay)
-    TextView arrowplay;
+    ImageView arrowplay;
     @BindView(R.id.videoplayer)
     JZVideoPlayerStandard videoplayer;
 
@@ -174,6 +174,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
         matchtime.setText("");
         gamestatus1.setText("");
+        gamestatus.setVisibility(View.GONE);
+        looklayout.setVisibility(View.GONE);
         matchwin0.setVisibility(View.GONE);
         matchwin1.setVisibility(View.GONE);
 

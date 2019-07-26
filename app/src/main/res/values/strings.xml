@@ -150,5 +150,6 @@
     <string name="toast_camera">无法启用相机</string>
     <string name="only">您还可以免费使用</string>
     <string name="changePhone">修改手机号</string>
+    <string name="lookmatch">观看直播</string>
 </resources>
 

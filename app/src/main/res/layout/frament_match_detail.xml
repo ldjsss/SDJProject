@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp">
+        android:layout_height="170dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -119,12 +119,13 @@
 
                     <TextView
                         android:id="@+id/playnamecommon0"
-                        android:layout_width="wrap_content"
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="12dp"
                         android:singleLine="true"
+                        android:gravity="center_horizontal"
                         android:text="中国足球"
                         android:textColor="@color/color_cdc3b3"
                         android:textSize="14sp" />
@@ -145,10 +146,11 @@
                         android:src="@mipmap/game_arena"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/playnamecommon1"
                         android:singleLine="true"
+                        android:gravity="center_horizontal"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="12dp"
@@ -197,15 +199,15 @@
                         android:textSize="14sp"
                         android:text="@string/matchStatusFront"
                         android:layout_centerHorizontal="true"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/color_8e6c37" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="60dp"
-                    android:layout_height="28dp"
+                    android:layout_width="80dp"
+                    android:layout_height="23dp"
                     android:id="@+id/looklayout"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="18dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_centerHorizontal="true">
                     <TextView
                         android:layout_width="match_parent"
@@ -213,24 +215,22 @@
                         android:id="@+id/lookmatch"
                         android:layout_centerInParent="true"
                         android:background="@drawable/look_match_bt"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:id="@+id/arrowplay"
-                        android:textSize="20sp"
-                        android:text="▶"
-                        android:textColor="#78CFFD"
                         android:gravity="center"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="8dp" />
+                        android:layout_marginStart="8dp"
+                        android:src="@mipmap/cpsy_gkzb"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:singleLine="true"
-                        android:text="直播"
+                        android:text="@string/lookmatch"
                         android:gravity="center"
-                        android:textColor="#78CFFD"
+                        android:textColor="@color/black"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="8dp"
                         android:layout_alignParentEnd="true"/>
