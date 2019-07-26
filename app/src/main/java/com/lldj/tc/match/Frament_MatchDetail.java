@@ -220,6 +220,10 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     else stopUpdate();
 
                     gamestatus1.setText((status == 2 || status == 3) ? "":AppUtils.getFormatTime4(_data.getStart_time_ms()));
+
+                    matchwin0.setText(team0.getScore().getTotal() + "");
+                    matchwin1.setText(team1.getScore().getTotal() + "");
+
                     matchwin0.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
                     matchwin1.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
 

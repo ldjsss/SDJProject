@@ -34,7 +34,7 @@
         android:text="@string/title"
         android:textSize="20sp"
         app:outerColor="#000000"
-        app:innnerColor="#ffffff"
+        app:innnerColor="@color/color_8e6c37"
         android:layout_centerHorizontal="true"
         android:gravity="center_vertical"
         android:singleLine="true"
