@@ -33,7 +33,7 @@ public class TextBannerView extends RelativeLayout {
     private int mInterval = 3000;/**文字切换时间间隔,默认3s*/
     private boolean isSingleLine = false;/**文字是否为单行,默认false*/
     private int mTextColor = 0xff000000;/**设置文字颜色,默认黑色*/
-    private int mTextSize = 16; /**设置文字尺寸,默认16px*/
+    private int mTextSize = 12; /**设置文字尺寸,默认16px*/
     private int mGravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;/**文字显示位置,默认左边居中*/
     private static final int GRAVITY_LEFT = 0;
     private static final int GRAVITY_CENTER = 1;

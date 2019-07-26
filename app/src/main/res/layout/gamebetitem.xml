@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="35dp"
     android:orientation="horizontal"
     android:id="@+id/bottomgamelayout">
 
@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:id="@+id/playname0"
             android:text="密尔瓦基雄鹿"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="@color/color_cdc3b3"
             android:gravity="center"
             android:background="@drawable/mathbetbg" />
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/playnamecommon0"
             android:singleLine="true"
-            android:textSize="13sp"
+            android:textSize="11sp"
             android:text="中国足球"
             android:paddingBottom="1dp"
             android:layout_alignParentBottom="true"
@@ -51,7 +51,7 @@
                 android:singleLine="true"
                 android:text=""
                 android:textColor="@color/color_cdc3b3"
-                android:textSize="17sp" />
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/imggamearrow0"
@@ -93,7 +93,7 @@
             android:id="@+id/gamestatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:textColor="@color/color_8e6c37"
             android:text="@string/matchStatusFront"
             android:layout_below="@+id/gamestatusicon"
@@ -115,7 +115,7 @@
             android:layout_height="match_parent"
             android:id="@+id/playname1"
             android:text="多伦多猛龙"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="@color/color_cdc3b3"
             android:gravity="center"
             android:background="@drawable/mathbetbg" />
@@ -125,7 +125,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/playnamecommon1"
             android:singleLine="true"
-            android:textSize="13sp"
+            android:textSize="11sp"
             android:text="中国足球"
             android:paddingBottom="1dp"
             android:layout_alignParentBottom="true"
@@ -143,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/gamebet1"
                 android:singleLine="true"
-                android:textSize="17sp"
+                android:textSize="14sp"
                 android:text=""
                 android:layout_centerInParent="true"
                 android:textColor="@color/color_cdc3b3" />

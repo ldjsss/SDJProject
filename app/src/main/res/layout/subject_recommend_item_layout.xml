@@ -29,7 +29,7 @@
             android:gravity="center_vertical"
             android:id="@+id/gamename"
             android:singleLine="true"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:text="ESL 职业联赛—美洲"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/gameicon"
@@ -40,7 +40,7 @@
             android:gravity="center_vertical"
             android:id="@+id/gamenamecount"
             android:singleLine="true"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:text="/ BO3"
             android:layout_marginLeft="5dp"
             android:layout_centerVertical="true"
@@ -48,16 +48,14 @@
             android:textColor="@color/color_8e6c37" />
 
         <TextView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
             android:id="@+id/gameplaycount"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
             android:layout_marginEnd="10dp"
             android:text="+3"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="@color/color_cdc3b3"
             android:gravity="center"
             android:background="@drawable/rec_stroke_round4_969696" />
@@ -68,7 +66,7 @@
         android:id="@+id/img_layout"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:gravity="center_vertical">
@@ -99,8 +97,8 @@
             android:id="@+id/imglayout0">
             <ImageView
                 android:id="@+id/imgplayicon0"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:src="@mipmap/game_arena"/>
@@ -113,8 +111,8 @@
             android:layout_alignParentEnd="true">
             <ImageView
                 android:id="@+id/imgplayicon1"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:src="@mipmap/game_arena"/>
@@ -136,7 +134,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:text="@string/allwinner"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:textColor="@color/color_cdc3b3" />
     </LinearLayout>
 

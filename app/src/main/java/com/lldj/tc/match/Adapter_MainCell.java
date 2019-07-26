@@ -441,7 +441,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                 Utils.setFlickerAnimation(imggamearrow, 8);
                 betText.setTag(odd.getMatch_id());
             }
-            else imggamearrow.setVisibility(View.GONE);
+            else imggamearrow.setAlpha(0.0f);
         }
 
         private Odds getOddData(List<Odds> odds, String key, int team_id) {

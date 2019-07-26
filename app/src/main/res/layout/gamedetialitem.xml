@@ -25,7 +25,7 @@
                 android:id="@+id/playcellselect0"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 android:textColor="@color/color_cdc3b3"
                 android:gravity="center"
                 android:background="@drawable/mathbetbg" />
@@ -82,7 +82,7 @@
                         android:id="@+id/playbetnum0"
                         android:text="0.00"
                         android:singleLine="true"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:textColor="@color/color_cdc3b3"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/playdetailarrowicon0" />
@@ -110,7 +110,7 @@
                     android:id="@+id/playcellselect1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     android:textColor="@color/color_cdc3b3"
                     android:gravity="center"
                     android:background="@drawable/mathbetbg" />
@@ -152,7 +152,7 @@
                             android:id="@+id/playbetnum1"
                             android:text="0.00"
                             android:singleLine="true"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textColor="@color/color_cdc3b3" />
                     </LinearLayout>
 

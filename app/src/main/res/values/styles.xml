@@ -62,7 +62,7 @@
     </style>
 
     <style name="FristpageFragment_TabText" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="textAllCaps">false</item>
     </style>
 

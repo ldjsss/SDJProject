@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:textColor="@color/color_cdc3b3"
             android:layout_marginStart="5dp"
-            android:text="全局"/>
+            android:text="全局"
+            android:textSize="12sp"/>
     </LinearLayout>
 
 </LinearLayout>
