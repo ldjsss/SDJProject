@@ -108,6 +108,11 @@ public class DialogBetBottom extends BaseDialog {
                     betbottomlayout1.setVisibility(View.GONE);
                     betbottomlayout2.setVisibility(View.VISIBLE);
                 }
+                else if(data.getKey().equalsIgnoreCase(EventType.BETSINNGLE)){
+                    Map<String, BetModel> singleBetList = (Map<String, BetModel>) data.getValue();
+                    sendBet(betList);
+                }
+
 
             }
         });
@@ -128,43 +133,7 @@ public class DialogBetBottom extends BaseDialog {
                     ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getContext().getResources().getString(R.string.inputBetNum), ToastUtils.LENGTH_SHORT);
                     return;
                 }
-                JSONArray arrayList=new JSONArray();
-                Iterator<Map.Entry<String, BetModel>> entries = betList.entrySet().iterator();
-                while (entries.hasNext()) {
-                    Map.Entry<String, BetModel> entry = entries.next();
-
-                    BetModel value = entry.getValue();
-                    if (value != null) {
-                        if(value.getAmount() < value.getBet_min()) {
-                            ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, value.getName() + getContext().getResources().getString(R.string.betminnum) + value.getBet_min(), ToastUtils.LENGTH_SHORT);
-                            return;
-                        }
-                        else if(value.getAmount() > value.getBet_max()){
-                            ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, value.getName() + getContext().getResources().getString(R.string.betmaxnum) + value.getBet_max(), ToastUtils.LENGTH_SHORT);
-                            return;
-                        }
-
-                        arrayList.put(value.getJSONObject());
-                    }
-                }
-                JSONObject jsonObj = new JSONObject();
-                try {
-                    jsonObj.put("datas", arrayList);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            //"{\"datas\": [{\"amount\": 0,\"oddsid\": 85759}]}"
-//                AppUtils.showLoading(bActivity);
-                HttpMsg.getInstance().sendBetList(SharePreUtils.getToken(getContext()), jsonObj.toString(), BetMatchBean.class, new HttpMsg.Listener(){
-                    @Override
-                    public void onFinish(Object _res) {
-                        BetMatchBean res = (BetMatchBean) _res;
-                        if(res.getCode() == GlobalVariable.succ){
-                            new DialogBetResult(getContext(), R.style.DialogTheme).showView(res.getResult());
-                            removeHaveBet(res.getResult());
-                        }
-                    }
-                });
+                sendBet(betList);
                 break;
             case R.id.betbottomlayout2:
 //                Log.d("betbottomlayout2", "-->");
@@ -174,6 +143,48 @@ public class DialogBetBottom extends BaseDialog {
 
                 break;
         }
+    }
+
+    private void sendBet(Map<String, BetModel> _betList){
+        if(_betList == null || _betList.size() <= 0) return;
+
+        JSONArray arrayList=new JSONArray();
+        Iterator<Map.Entry<String, BetModel>> entries = _betList.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry<String, BetModel> entry = entries.next();
+
+            BetModel value = entry.getValue();
+            if (value != null) {
+                if(value.getAmount() < value.getBet_min()) {
+                    ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, value.getName() + getContext().getResources().getString(R.string.betminnum) + value.getBet_min(), ToastUtils.LENGTH_SHORT);
+                    return;
+                }
+                else if(value.getAmount() > value.getBet_max()){
+                    ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, value.getName() + getContext().getResources().getString(R.string.betmaxnum) + value.getBet_max(), ToastUtils.LENGTH_SHORT);
+                    return;
+                }
+
+                arrayList.put(value.getJSONObject());
+            }
+        }
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put("datas", arrayList);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //"{\"datas\": [{\"amount\": 0,\"oddsid\": 85759}]}"
+//                AppUtils.showLoading(bActivity);
+        HttpMsg.getInstance().sendBetList(SharePreUtils.getToken(getContext()), jsonObj.toString(), BetMatchBean.class, new HttpMsg.Listener(){
+            @Override
+            public void onFinish(Object _res) {
+                BetMatchBean res = (BetMatchBean) _res;
+                if(res.getCode() == GlobalVariable.succ){
+                    new DialogBetResult(getContext(), R.style.DialogTheme).showView(res.getResult());
+                    removeHaveBet(res.getResult());
+                }
+            }
+        });
     }
 
     private void removeHaveBet(List<BetMatchBean.betResult> list){

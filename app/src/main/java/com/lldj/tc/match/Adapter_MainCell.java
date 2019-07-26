@@ -201,7 +201,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             if(_data == null) return;
             Odds odds = getOddData(_data.getOdds(), "final", _tag);
             if( _data.getOdds() == null || _data.getOdds().size() < 1 || odds == null || odds.getStatus() != 1){
-                Toast.makeText(mContext, mContext.getResources().getString(R.string.unbet), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, mContext.getResources().getString(R.string.unbet), Toast.LENGTH_SHORT).show();
                 goDetial(_data.getId());
                 return;
             }

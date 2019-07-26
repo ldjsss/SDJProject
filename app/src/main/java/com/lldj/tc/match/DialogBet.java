@@ -256,7 +256,7 @@ public class DialogBet extends BaseDialog {
                 convertView = getLayoutInflater().inflate(R.layout.item_group, null);
             }
             if (odd == null) {
-                Toast.makeText(getContext(), "-------data error getGroupView", Toast.LENGTH_SHORT).show();
+                ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, "-------data error getGroupView", ToastUtils.LENGTH_SHORT);
                 return convertView;
             }
 
@@ -317,7 +317,7 @@ public class DialogBet extends BaseDialog {
                 tv_child.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Clog.e("test", "groupPosition" + groupPosition + "ddd" + childPosition + " i = " + tv_child.getTag());
+//                        Clog.e("test", "groupPosition" + groupPosition + "ddd" + childPosition + " i = " + tv_child.getTag());
                         btnClick(groupPosition, (String) tv_child.getTag());
                     }
                 });
@@ -351,14 +351,21 @@ public class DialogBet extends BaseDialog {
 
             switch (_tag) {
                 case "10":
-
+                    text = odd.getBet_max() + "";
                     break;
                 case "11":
                     if (TextUtils.isEmpty(text)) return;
                     text = text.substring(0, text.length() - 1);
                     break;
                 case "12":
+                    if(TextUtils.isEmpty(text)) {
+                        ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getContext().getString(R.string.inputmoneywarm), ToastUtils.LENGTH_SHORT);
+                        return;
+                    }
 
+                    Map<String, BetModel> newBetList = new HashMap();
+                    newBetList.put(ID, new BetModel((int)Float.parseFloat(text), Integer.parseInt(ID)));
+                    AppUtils.dispatchEvent(new ObData(EventType.BETSINNGLE, newBetList));
                     break;
                 default:
                     if (TextUtils.isEmpty(text) && _tag.equalsIgnoreCase("0")) return;

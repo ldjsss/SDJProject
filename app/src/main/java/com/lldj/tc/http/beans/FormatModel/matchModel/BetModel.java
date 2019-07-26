@@ -73,6 +73,11 @@ public class BetModel {
        this.name = name;
     }
 
+    public BetModel(int amount, int odds_id) {
+        this.amount = amount;
+        this.odds_id = odds_id;
+    }
+
     public JSONObject getJSONObject() {
         JSONObject jsonObj = new JSONObject();
         try {

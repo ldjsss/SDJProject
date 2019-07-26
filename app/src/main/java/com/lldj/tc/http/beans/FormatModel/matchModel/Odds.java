@@ -7,7 +7,7 @@ public class Odds{
     private int team_id;
     private int status;
     private long bet_min;
-    private long bet_max;
+    private long bet_max = 0;
     private long last_update;
     private int match_id;
     private int sort_index;
