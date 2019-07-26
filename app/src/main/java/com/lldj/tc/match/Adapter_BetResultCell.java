@@ -39,7 +39,7 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
     public Adapter_BetResultCell(Context context, boolean result, List<BetMatchBean.betResult> datas2 ){
         this.context = context;
         this.datas2 = datas2;
-        result = result;
+        this.result = result;
     }
 
     public void changeData(List<BetModel> datas){

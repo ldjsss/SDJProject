@@ -9,44 +9,81 @@
 
     <include layout="@layout/main_titlebar" />
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp">-->
-
-        <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="2dp"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_marginBottom="2dp"-->
-            <!--android:background="@color/color_1a1c26" />-->
-
-        <!--<com.google.android.material.tabs.TabLayout-->
-            <!--android:id="@+id/tab_layout"-->
-            <!--style="@style/FirstpageFragment_TabLayout"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:tabPaddingStart="1dp"-->
-            <!--app:tabPaddingEnd="1dp"-->
-            <!--app:tabBackground="@color/transparent"-->
-            <!--app:tabIndicatorFullWidth="false"/>-->
-    <!--</RelativeLayout>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/rec_stroke_round4_969696"
-        android:layout_margin="@dimen/dp_10"
         android:orientation="vertical">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            style="@style/FirstpageFragment_TabLayout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabBackground="@color/transparent"
-            app:tabIndicatorFullWidth="false"/>
+            android:layout_height="35dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#21212A"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="-1dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="20dp"
+                        android:background="#21212A"
+                        android:layout_alignParentEnd="true"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="20dp"
+                        android:background="#21212A"
+                        android:layout_alignParentEnd="true"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="20dp"
+                        android:background="#21212A"
+                        android:layout_alignParentEnd="true"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:id="@+id/tab_layout"
+                style="@style/FirstpageFragment_TabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:tabBackground="@color/transparent" />
+
+        </RelativeLayout>
 
         <androidx.viewpager.widget.ViewPager
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:id="@+id/firstpage_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

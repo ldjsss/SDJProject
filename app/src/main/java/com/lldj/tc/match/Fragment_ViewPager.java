@@ -74,7 +74,7 @@ public class Fragment_ViewPager extends BaseFragment {
         firstpageViewpager.setAdapter(mPagerAdapter);
         tabLayout.setupWithViewPager(firstpageViewpager);
         tabLayout.setTabRippleColor(null);
-        tabLayout.setTabIndicatorFullWidth(false);
+//        tabLayout.setTabIndicatorFullWidth(false);
         GradientDrawable gradientDrawable = new GradientDrawable();
         gradientDrawable.setCornerRadius(2);
         tabLayout.setSelectedTabIndicator(gradientDrawable);
@@ -85,7 +85,7 @@ public class Fragment_ViewPager extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-                Log.e("currentPosition", "currentPosition===" + position);
+//                Log.e("currentPosition", "currentPosition===" + position);
             }
 
             @Override
