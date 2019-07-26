@@ -7,32 +7,41 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:id="@+id/bettitlelayout"
         android:background="@drawable/rec_bettitle">
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="25dp"
-            android:id="@+id/gamebettotalcount"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:text="1"
-            android:textSize="18sp"
-            android:textColor="@color/color_cdc3b3"
-            android:gravity="center"
-            android:background="@drawable/rec_stroke_round4_969696" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/deleteAll"
-            android:textSize="18sp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/gamebettotalcount"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:id="@+id/deleteall"
-            android:textColor="@color/color_1a1c26"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="25dp"
+                android:id="@+id/gamebettotalcount"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:text="1"
+                android:textSize="18sp"
+                android:textColor="@color/color_cdc3b3"
+                android:gravity="center"
+                android:background="@drawable/rec_stroke_round4_969696" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/deleteAll"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical"
+                android:layout_toRightOf="@id/gamebettotalcount"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:id="@+id/deleteall"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_1a1c26"/>
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -43,9 +52,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:layout_height="match_parent"
+                android:textSize="16sp"
                 android:layout_centerVertical="true"
+                android:gravity="center_vertical"
                 android:text="@string/moneyHave"
                 android:textColor="@color/color_1a1c26"
                 android:id="@+id/moneyhave"/>
@@ -79,7 +89,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="55dp"
         android:id="@+id/viewlayout"
         android:layout_below="@+id/expandableListView"/>
 

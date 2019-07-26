@@ -142,7 +142,6 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                         updateArrow(odd1, tv_odds, im_arrows);
                         if (_statue == 1) { //normal
                             im_lock.setVisibility(View.GONE);
-                            playcellselect0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
                             if (_oddstring.equals("")) {
                                 tv_odds.setVisibility(View.GONE);
                             } else {
@@ -192,7 +191,6 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                             updateArrow(odd2, tv_odds, im_arrows);
                             if (_statue == 1) { //normal
                                 im_lock.setVisibility(View.GONE);
-                                playcellselect1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
                                 if (_oddstring.equals("")) {
                                     tv_odds.setVisibility(View.GONE);
                                 } else {

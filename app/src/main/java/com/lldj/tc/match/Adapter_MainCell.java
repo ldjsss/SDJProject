@@ -319,7 +319,6 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                     gamebetlayout0.setVisibility(View.VISIBLE);
                     playnamecommon0.setVisibility(View.VISIBLE);
                     playname0.setText("");
-                    playname0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
                 }
                 else if(_status == 4){
                     gamebetlayout0.setVisibility(View.GONE);
@@ -345,7 +344,6 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                     gamebetlayout1.setVisibility(View.VISIBLE);
                     playnamecommon1.setVisibility(View.VISIBLE);
                     playname1.setText("");
-                    playname1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
                 }
                 else if(_status == 4){
                     gamebetlayout1.setVisibility(View.GONE);
