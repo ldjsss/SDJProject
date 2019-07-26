@@ -136,10 +136,9 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                         setSelect((TextView) view.findViewById(R.id.playcellselect0), odd1.getId() + "");
 
                         TextView tv_odds = (TextView) view.findViewById(R.id.playbetnum0);
-                        ImageView im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon0);
                         ImageView im_lock = (ImageView) view.findViewById(R.id.playlockicon0);
                         TextView playcellselect0 = (TextView) view.findViewById(R.id.playcellselect0);
-                        updateArrow(odd1, tv_odds, im_arrows);
+                        updateArrow(odd1, tv_odds, view.findViewById(R.id.playdetailarrowicon0));
                         if (_statue == 1) { //normal
                             im_lock.setVisibility(View.GONE);
                             if (_oddstring.equals("")) {
@@ -185,10 +184,9 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                             setSelect((TextView) view.findViewById(R.id.playcellselect1), odd2.getId() + "");
 
                             tv_odds = (TextView) view.findViewById(R.id.playbetnum1);
-                            im_arrows = (ImageView) view.findViewById(R.id.playdetailarrowicon1);
                             im_lock = (ImageView) view.findViewById(R.id.playlockicon1);
                             TextView playcellselect1 = (TextView) view.findViewById(R.id.playcellselect1);
-                            updateArrow(odd2, tv_odds, im_arrows);
+                            updateArrow(odd2, tv_odds, view.findViewById(R.id.playdetailarrowicon1));
                             if (_statue == 1) { //normal
                                 im_lock.setVisibility(View.GONE);
                                 if (_oddstring.equals("")) {
@@ -240,11 +238,11 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
             if(odd == null || betText == null) return;
             int _status     = odd.getStatus();
             String _last    = (String)betText.getText();
-            int _tag        = betText.getTag() == null ? -1 : Integer.parseInt((String)betText.getTag());
+//            int _tag        = betText.getTag() == null ? -1 : (int)betText.getTag();
             String _current = odd.getOdds();
 
             if( _status == 1
-                    && _tag == odd.getMatch_id()
+//                    && _tag == odd.getMatch_id()
                     && !TextUtils.isEmpty(_last)
                     && !TextUtils.isEmpty(_current)
                     && !_last.equalsIgnoreCase(_current)){

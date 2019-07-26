@@ -34,8 +34,8 @@
         <item name="tabIndicatorColor">@color/color_8e6c37</item>
         <item name="rippleColor">@android:color/white</item>
         <item name="android:layout_height">50dp</item>
-        <item name="android:paddingStart">10dp</item>
-        <item name="android:paddingEnd">10dp</item>
+        <!--<item name="android:paddingStart">10dp</item>-->
+        <!--<item name="android:paddingEnd">10dp</item>-->
         <!--<item name="android:background">@drawable/white_round10_top</item>-->
         <item name="android:theme">@style/AppTheme</item>
         <item name="tabMode">fixed</item>

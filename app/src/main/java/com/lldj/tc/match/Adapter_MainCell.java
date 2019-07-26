@@ -425,11 +425,11 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             if(odd == null || betText == null) return;
             int _status     = odd.getStatus();
             String _last    = (String)betText.getText();
-            int _tag        = betText.getTag() == null ? -1 : Integer.parseInt((String)betText.getTag());
+//            int _tag        = betText.getTag() == null ? -1 : (int)betText.getTag();
             String _current = odd.getOdds();
 
-            if( _status == 1
-                && _tag == odd.getMatch_id()
+            if( _status <= 1
+//                && _tag == odd.getMatch_id()
                 && !TextUtils.isEmpty(_last)
                 && !TextUtils.isEmpty(_current)
                 && !_last.equalsIgnoreCase(_current)){
@@ -438,7 +438,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                 float curOdds  = Float.parseFloat(_current);
                 if(curOdds > lastOdds)imggamearrow.setImageResource(R.mipmap.main_courage);
                 else imggamearrow.setImageResource(R.mipmap.main_warning);
-                Utils.setFlickerAnimation(imggamearrow, 5);
+                Utils.setFlickerAnimation(imggamearrow, 8);
                 betText.setTag(odd.getMatch_id());
             }
             else imggamearrow.setVisibility(View.GONE);

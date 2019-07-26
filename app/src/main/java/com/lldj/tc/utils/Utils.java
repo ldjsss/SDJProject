@@ -10,7 +10,7 @@ import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 public class Utils {
 
     public static void setFlickerAnimation(View view, int repeatCount) {
-        view.setVisibility(View.VISIBLE);
+//        view.setVisibility(View.VISIBLE);
         final Animation animation = new AlphaAnimation(0, 1); // Change alpha from fully visible to invisible
         animation.setDuration(200); // duration - half a second
         animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
@@ -18,7 +18,7 @@ public class Utils {
         animation.setRepeatMode(Animation.REVERSE); //
         view.setAnimation(animation);
 
-        RxTimerUtil.timer(500*repeatCount, new RxTimerUtil.IRxNext() {
+        RxTimerUtil.timer(200*repeatCount, new RxTimerUtil.IRxNext() {
             @Override
             public void doNext(long number) {
                 view.setVisibility(View.GONE);
