@@ -2,6 +2,7 @@ package com.lldj.tc.match;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -436,9 +437,23 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
                 float lastOdds = Float.parseFloat(_last);
                 float curOdds  = Float.parseFloat(_current);
-                if(curOdds > lastOdds)imggamearrow.setImageResource(R.mipmap.main_courage);
-                else imggamearrow.setImageResource(R.mipmap.main_warning);
-                Utils.setFlickerAnimation(imggamearrow, 8);
+                if(curOdds > lastOdds){
+                    imggamearrow.setImageResource(R.mipmap.main_courage);
+                    betText.setTextColor(Color.GREEN);
+                }
+                else if(curOdds < lastOdds) {
+                    imggamearrow.setImageResource(R.mipmap.main_warning);
+                    betText.setTextColor(Color.RED);
+                }
+                else {
+                    betText.setTextColor(mContext.getResources().getColor(R.color.color_cdc3b3));
+                }
+                Utils.setFlickerAnimation(imggamearrow, 8, new Utils.Listener() {
+                    @Override
+                    public void onFinish() {
+                        betText.setTextColor(mContext.getResources().getColor(R.color.color_cdc3b3));
+                    }
+                });
                 betText.setTag(odd.getMatch_id());
             }
             else imggamearrow.setAlpha(0.0f);

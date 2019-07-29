@@ -10,7 +10,7 @@ import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 
 public class Utils {
 
-    public static void setFlickerAnimation(View view, int repeatCount) {
+    public static void setFlickerAnimation(View view, int repeatCount, Listener listener) {
         view.setVisibility(View.VISIBLE);
         Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
         animation.setDuration(200); // duration - half a second
@@ -23,10 +23,15 @@ public class Utils {
             @Override
             public void doNext(long number) {
                 view.setAlpha(0.0f);
+                if(listener != null) listener.onFinish();
             }
             @Override
             public void onComplete() { }
         });
 
+    }
+
+    public interface Listener{
+        void onFinish();
     }
 }
