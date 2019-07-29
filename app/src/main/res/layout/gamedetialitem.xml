@@ -5,10 +5,6 @@
     android:orientation="vertical"
     android:id="@+id/bottomoverlayout">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_20"></View>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,9 +12,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_marginStart="10dp"
-            android:layout_height="match_parent"
             android:id="@+id/playcelllayout0"
             android:orientation="horizontal"
+            android:layout_height="@dimen/dp_40"
             android:layout_weight = "1">
 
             <TextView
@@ -178,5 +174,9 @@
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_20"></View>
 
 </LinearLayout>

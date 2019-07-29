@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
+import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
@@ -44,6 +45,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
     private List<String> keys = new ArrayList<>();
 
     private Map<String, Map<String, List<Odds>>>  mlist = new HashMap<>();
+    private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
 
     public Adapter_MatchCell(Context mContext) {
         this.mContext = mContext;
@@ -87,39 +89,56 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
     class viewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.detailitembg)
         LinearLayout detailitembg;
-        @BindView(R.id.myposition)
-        TextView myposition;
-        @BindView(R.id.matchplayname)
-        TextView matchplayname;
+//        @BindView(R.id.myposition)
+//        TextView myposition;
+//        @BindView(R.id.matchplayname)
+//        TextView matchplayname;
         @BindView(R.id.addlayout)
         LinearLayout addlayout;
+
+        private LayoutInflater inflater;
 
         public viewHolder(View itemView) {
             super(itemView);
 //            AppUtils.screenAdapterLoadView((ViewGroup)itemView);
             ButterKnife.bind(this, itemView);
+            inflater = LayoutInflater.from(mContext);
         }
 
         public void bottomCommon() {
 
             int pos = getAdapterPosition() - 1;
             String key = keys.get(pos);
-            Map<String, List<Odds>> curOdds = mlist.get(key);
-
             addlayout.removeAllViews();
-            if (curOdds != null && curOdds.size() > 0) {
-                myposition.setText(key);
 
+            if(keys.get(pos).equalsIgnoreCase("-1")){
+                View view = inflater.inflate(R.layout.matchdetialonetitle, null);
+                view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                addlayout.addView(view);
+
+                key = keys.get(pos + 1);
+                String _name = mapNames.get(key);
+                ((TextView)view.findViewById(R.id.myposition)).setText(TextUtils.isEmpty(_name) ? key : _name);
+                return;
+            }
+            Map<String, List<Odds>> curOdds = mlist.get(key);
+            if (curOdds != null && curOdds.size() > 0) {
+                String _lastKey = "";
                 Iterator<Map.Entry<String, List<Odds>>> entries = curOdds.entrySet().iterator();
                 while (entries.hasNext()) {
                     Map.Entry<String, List<Odds>> _nentry = entries.next();
                     String _key = _nentry.getKey();
                     List<Odds> _odds = _nentry.getValue();
 
-                    matchplayname.setText(_key);
+                    if(_lastKey != _key){
+                        View view = inflater.inflate(R.layout.matchdetailonebet, null);
+                        view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        addlayout.addView(view);
+                        ((TextView)view.findViewById(R.id.matchplayname)).setText(_key);
+                        _lastKey = _key;
+                    }
 
                     View view;
-                    LayoutInflater inflater = LayoutInflater.from(mContext);
                     int len = (int) Math.ceil(_odds.size() / 2.0);
                     for (int i = 0; i < len; i++) {
                         view = inflater.inflate(R.layout.gamedetialitem, null);

@@ -8,9 +8,9 @@
     android:id="@+id/detailitembg"
     android:background="@drawable/rec_stroke_round4_969696">
 
-    <include layout="@layout/matchdetialonetitle"/>
+    <!--<include layout="@layout/matchdetialonetitle"/>-->
 
-    <include layout="@layout/matchdetailonebet"/>
+    <!--<include layout="@layout/matchdetailonebet"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
