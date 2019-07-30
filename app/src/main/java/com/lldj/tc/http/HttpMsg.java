@@ -216,6 +216,25 @@ public class HttpMsg<T>{
         HttpTool.httpPost(baseUrl + "user/modifypassword", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
+    public void sendChangePhone(final String access_token, final String code, final String newphone, final String password, Class<T>service, Listener callbackListener) {
+        Map<String,String> URLParams = new HashMap();
+        URLParams.put("code", code);
+        URLParams.put("newphone", newphone);
+        URLParams.put("password", password);
+
+        HttpTool.httpPost(baseUrl + "user/modifyphone", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
+    }
+
+    public void sendGetUseCode(final String access_token, final String phone, Class<T>service, final Listener callbackListener) {
+        Map<String,String> URLParams = new HashMap();
+        URLParams.put("mobile", phone);
+
+        HttpTool.httpPost(baseUrl + "user/code", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
+
+//        HttpTool.sendGet(baseUrl + "register/sms?mobile=" + phone, callbackListener);
+
+    }
+
     public interface Listener<T> {
         void onFinish(T msg);
     }

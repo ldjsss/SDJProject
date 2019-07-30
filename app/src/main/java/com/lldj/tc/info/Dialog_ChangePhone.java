@@ -20,6 +20,7 @@ import androidx.annotation.StyleRes;
 import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.BaseBean;
 import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
@@ -125,7 +126,7 @@ public class Dialog_ChangePhone extends BaseDialog {
                     }
                 });
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                HttpMsg.getInstance().sendGetCode(phoneNum, JsonBean.class, new HttpMsg.Listener() {
+                HttpMsg.getInstance().sendGetUseCode(SharePreUtils.getInstance().getToken(getContext()), phoneNum, JsonBean.class, new HttpMsg.Listener() {
                     @Override
                     public void onFinish(Object _res) {
                         JsonBean res = (JsonBean) _res;
@@ -137,17 +138,16 @@ public class Dialog_ChangePhone extends BaseDialog {
                 break;
             case R.id.register_tv:
                 if (!checkAll()) return;
-//                HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-//                HttpMsg.getInstance().sendForgetKey(phoneNum, password, phoneCode, JsonBean.class, new HttpMsg.Listener() {
-//                    @Override
-//                    public void onFinish(Object _res) {
-//                        JsonBean res = (JsonBean) _res;
-//                        if(res.getCode() == GlobalVariable.succ) {
-//                            Toast.makeText(getContext(), getContext().getResources().getString(R.string.passwordHaveChange), Toast.LENGTH_SHORT).show();
-//                            dismiss();
-//                        }
-//                    }
-//                });
+                HttpMsg.getInstance().sendChangePhone(SharePreUtils.getInstance().getToken(getContext()), phoneCode, phoneNum, password, BaseBean.class, new HttpMsg.Listener() {
+                    @Override
+                    public void onFinish(Object _res) {
+                        BaseBean res = (BaseBean) _res;
+                        if (res.getCode() == GlobalVariable.succ) {
+                            showToast(R.string.passwordHaveChangesucc);
+                            HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEAVEGAME);
+                        }
+                    }
+                });
                 break;
         }
     }
