@@ -442,18 +442,23 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                 playMatch();
                 break;
             case R.id.toolbar_back_iv:
+                close();
                 AppUtils.dispatchEvent(new ObData(EventType.DETIALHIDE, null));
                 break;
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    private void close(){
         stopUpdate();
         AppUtils.unregisterEvent(observer);
         observer = null;
         videoplayer.releaseAllVideos();
         vidiolayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        close();
     }
 }

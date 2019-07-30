@@ -85,6 +85,7 @@ public class AppUtils {
     }
 
     public static void unregisterEvent(Observer<ObData> observer){
+        if(observer == null) return;
         if (observable == null) observable = new Observable<ObData>();
         observable.unregister(observer);
         for (int i = 0; i < eventList.size(); i++) {

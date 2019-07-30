@@ -12,6 +12,7 @@ public class Utils {
 
     public static void setFlickerAnimation(View view, int repeatCount, Listener listener) {
         view.setVisibility(View.VISIBLE);
+        view.setAlpha(1.0f);
         Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
         animation.setDuration(200); // duration - half a second
         animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate

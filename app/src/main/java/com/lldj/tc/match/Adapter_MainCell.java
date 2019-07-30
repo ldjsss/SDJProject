@@ -60,6 +60,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
     private List<ObData> groups = null;
 
     private Map<Integer,ResultsModel > _gamelist;
+    private Map<Integer, String> oMap = new HashMap<>();
 
     public Adapter_MainCell(Context mContext, int _viewType) {
         this.mContext = mContext;
@@ -305,15 +306,18 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
             Odds odd0 = getOddData(odds, "final", team0.getTeam_id());
             Odds odd1 = getOddData(odds, "final", team1.getTeam_id());
-            updateArrow(odd0, gamebet0, imggamearrow0);
-            updateArrow(odd1, gamebet1, imggamearrow1);
 
             if(odd0!=null){
                 int _status = odd0.getStatus();
-                gamebet0.setText(odd0.getOdds());
-                playname0.setTag(R.id.tag_first, odd0.getId());
-                if(_status <= 2){
+                int _id = odd0.getId();
+                String _oddstring = odd0.getOdds();
 
+                updateArrow(odd0, oMap.get(_id), gamebet0, imggamearrow0);
+                oMap.put(_id, _oddstring);
+
+                gamebet0.setText(_oddstring);
+                playname0.setTag(R.id.tag_first, _id);
+                if(_status <= 2){
                     imggamelock0.setVisibility(_status == 2 ? View.VISIBLE: View.GONE);
                     gamebet0.setVisibility(_status == 2 ? View.GONE: View.VISIBLE);
 
@@ -336,8 +340,14 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
             if(odd1!=null){
                 int _status = odd1.getStatus();
-                gamebet1.setText(odd1.getOdds());
-                playname1.setTag(R.id.tag_first, odd1.getId());
+                int _id = odd1.getId();
+                String _oddstring = odd1.getOdds();
+
+                updateArrow(odd1, oMap.get(_id), gamebet1, imggamearrow1);
+                oMap.put(_id, _oddstring);
+
+                gamebet1.setText(_oddstring);
+                playname1.setTag(R.id.tag_first, _id);
                 if(_status <= 2){
                     imggamelock1.setVisibility(_status == 2 ? View.VISIBLE: View.GONE);
                     gamebet1.setVisibility(_status == 2 ? View.GONE: View.VISIBLE);
@@ -422,10 +432,10 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
         }
 
-        private void updateArrow(Odds odd, TextView betText, ImageView imggamearrow){
+        private void updateArrow(Odds odd, String _last, TextView betText, ImageView imggamearrow){
             if(odd == null || betText == null) return;
             int _status     = odd.getStatus();
-            String _last    = (String)betText.getText();
+//            String _last    = (String)betText.getText();
 //            int _tag        = betText.getTag() == null ? -1 : (int)betText.getTag();
             String _current = odd.getOdds();
 

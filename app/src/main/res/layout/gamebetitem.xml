@@ -60,8 +60,7 @@
                 android:src="@mipmap/main_courage"
                 android:layout_toRightOf="@id/gamebet0"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:visibility="gone"/>
+                android:layout_marginLeft="5dp" />
 
             <ImageView
                 android:id="@+id/imggamelock0"
@@ -155,8 +154,7 @@
                 android:src="@mipmap/main_courage"
                 android:layout_toLeftOf="@id/gamebet1"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:visibility="gone"/>
+                android:layout_marginRight="5dp" />
 
             <ImageView
                 android:id="@+id/imggamelock1"
