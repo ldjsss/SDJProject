@@ -5,7 +5,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 
-import com.lldj.tc.toolslibrary.util.RxTimerUtil;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 
 public class Utils {
@@ -31,6 +30,7 @@ public class Utils {
         });
 
     }
+
 
     public interface Listener{
         void onFinish();
