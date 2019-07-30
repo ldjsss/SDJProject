@@ -79,9 +79,6 @@ public class Dialog_Set extends BaseDialog {
         tvname.setText(SharePreUtils.getUserName(context));
         hellow.setText(getGreetings());
 
-        imservice.setImageResource(R.mipmap.main_settings);
-        tvservices.setVisibility(View.GONE);
-        connectservice.setVisibility(View.VISIBLE);
         ImmersionBar.with(bActivity).titleBar(toolbarRootLayout).init();
         toolbarTitleTv.setText(bActivity.getResources().getString(R.string.myinformation));
 
@@ -122,14 +119,14 @@ public class Dialog_Set extends BaseDialog {
         return ret;
     }
 
-    @OnClick({R.id.packed_iv, R.id.packlayout, R.id.recordlayout, R.id.imservice, R.id.toolbar_back_iv,
-            R.id.messlayout, R.id.activitylayout, R.id.rulelayout, R.id.aboutlayout, R.id.agency, R.id.contatus})
+    @OnClick({R.id.packed_iv, R.id.packlayout, R.id.recordlayout, R.id.setiv, R.id.toolbar_back_iv,
+            R.id.messlayout, R.id.activitylayout, R.id.rulelayout, R.id.aboutlayout, R.id.agency, R.id.share})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back_iv:
                 dismiss();
                 break;
-            case R.id.imservice:
+            case R.id.setiv:
                 getContext().startActivity(new Intent(getContext(), Activity_Info.class));
                 break;
             case R.id.packlayout:
@@ -159,7 +156,7 @@ public class Dialog_Set extends BaseDialog {
             case R.id.agency:
                 Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.contatus:
+            case R.id.share:
                 Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
                 break;
         }
