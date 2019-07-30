@@ -47,6 +47,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
     private Map<String, Map<String, List<Odds>>>  mlist = new HashMap<>();
     private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
+    private Map<Integer, String> oMap = new HashMap<>();
 
     public Adapter_MatchCell(Context mContext) {
         this.mContext = mContext;
@@ -90,12 +91,10 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
     class viewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.detailitembg)
         LinearLayout detailitembg;
-//        @BindView(R.id.myposition)
-//        TextView myposition;
-//        @BindView(R.id.matchplayname)
-//        TextView matchplayname;
         @BindView(R.id.addlayout)
         LinearLayout addlayout;
+        @BindView(R.id.addonelayout)
+        LinearLayout addonelayout;
 
         private LayoutInflater inflater;
 
@@ -113,19 +112,23 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
             addlayout.removeAllViews();
 
             if(keys.get(pos).equalsIgnoreCase("-1")){
-                View view = inflater.inflate(R.layout.matchdetialonetitle, null);
-                view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                addlayout.addView(view);
+                View view = addonelayout.findViewById(R.id.dtitlelayout);
+                if(view == null) {
+                    view = inflater.inflate(R.layout.matchdetialonetitle, null);
+                    view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    addonelayout.addView(view);
+                }
 
                 key = keys.get(pos + 1);
                 String _name = mapNames.get(key);
                 ((TextView)view.findViewById(R.id.myposition)).setText(TextUtils.isEmpty(_name) ? key : _name);
                 return;
             }
-            Map<String, List<Odds>> curOdds = mlist.get(key);
-            if (curOdds != null && curOdds.size() > 0) {
+            addonelayout.setVisibility(View.VISIBLE);
+            Map<String, List<Odds>> newOdds = mlist.get(key);
+            if (newOdds != null && newOdds.size() > 0) {
                 String _lastKey = "";
-                Iterator<Map.Entry<String, List<Odds>>> entries = curOdds.entrySet().iterator();
+                Iterator<Map.Entry<String, List<Odds>>> entries = newOdds.entrySet().iterator();
                 while (entries.hasNext()) {
                     Map.Entry<String, List<Odds>> _nentry = entries.next();
                     String _key = _nentry.getKey();
@@ -149,16 +152,18 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
                         Odds odd1 = _odds.get(i * 2);
                         int _statue = odd1.getStatus();
+                        int _id = odd1.getId();
 
                         ((TextView) view.findViewById(R.id.playovername0)).setText(TextUtils.isEmpty(odd1.getName()) ? "unknown" : odd1.getName());
                         String _oddstring = odd1.getOdds();
 
-                        setSelect((TextView) view.findViewById(R.id.playcellselect0), odd1.getId() + "");
+                        setSelect((TextView) view.findViewById(R.id.playcellselect0), _id + "");
 
                         TextView tv_odds = (TextView) view.findViewById(R.id.playbetnum0);
                         ImageView im_lock = (ImageView) view.findViewById(R.id.playlockicon0);
                         TextView playcellselect0 = (TextView) view.findViewById(R.id.playcellselect0);
-                        updateArrow(odd1, tv_odds, view.findViewById(R.id.playdetailarrowicon0));
+                        updateArrow(odd1, oMap.get(_id), tv_odds, view.findViewById(R.id.playdetailarrowicon0));
+                        oMap.put(_id, _oddstring);
                         if (_statue == 1) { //normal
                             im_lock.setVisibility(View.GONE);
                             if (_oddstring.equals("")) {
@@ -199,14 +204,16 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                             Odds odd2 = _odds.get(i * 2 + 1);
                             _oddstring = odd2.getOdds();
                             _statue = odd2.getStatus();
+                            int _id2 = odd2.getId();
 
                             ((TextView) view.findViewById(R.id.playovername1)).setText(TextUtils.isEmpty(odd2.getName()) ? "unknown" : odd2.getName());
-                            setSelect((TextView) view.findViewById(R.id.playcellselect1), odd2.getId() + "");
+                            setSelect((TextView) view.findViewById(R.id.playcellselect1), _id2 + "");
 
                             tv_odds = (TextView) view.findViewById(R.id.playbetnum1);
                             im_lock = (ImageView) view.findViewById(R.id.playlockicon1);
                             TextView playcellselect1 = (TextView) view.findViewById(R.id.playcellselect1);
-                            updateArrow(odd2, tv_odds, view.findViewById(R.id.playdetailarrowicon1));
+                            updateArrow(odd2, oMap.get(_id2), tv_odds, view.findViewById(R.id.playdetailarrowicon1));
+                            oMap.put(_id2, _oddstring);
                             if (_statue == 1) { //normal
                                 im_lock.setVisibility(View.GONE);
                                 if (_oddstring.equals("")) {
@@ -254,10 +261,10 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
         }
 
-        private void updateArrow(Odds odd, TextView betText, ImageView imggamearrow){
+        private void updateArrow(Odds odd, String _last, TextView betText, ImageView imggamearrow){
             if(odd == null || betText == null) return;
             int _status     = odd.getStatus();
-            String _last    = (String)betText.getText();
+//            String _last    = (String)betText.getText();
 //            int _tag        = betText.getTag() == null ? -1 : (int)betText.getTag();
             String _current = odd.getOdds();
 

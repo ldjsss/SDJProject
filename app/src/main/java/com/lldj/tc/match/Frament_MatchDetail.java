@@ -217,7 +217,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     playnamecommon0.setText(team0.getTeam_short_name());
                     playnamecommon1.setText(team1.getTeam_short_name());
                     matchtime.setText(status == 2 ? gaming:AppUtils.getFormatTime2(_data.getStart_time_ms()));
-                    if (status == 2) startUpdate();
+                    if (status <= 2) startUpdate();
                     else stopUpdate();
 
                     gamestatus1.setText((status == 2 || status == 3) ? "":AppUtils.getFormatTime4(_data.getStart_time_ms()));
