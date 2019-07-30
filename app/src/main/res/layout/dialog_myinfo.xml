@@ -99,8 +99,8 @@
                     android:textSize="18sp"
                     android:layout_marginStart="@dimen/dp_20"/>
                 <ImageView
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:src="@mipmap/main_next"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
@@ -140,8 +140,8 @@
                     android:textSize="18sp"
                     android:layout_marginStart="@dimen/dp_20"/>
                 <ImageView
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:src="@mipmap/main_next"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
@@ -181,8 +181,8 @@
                     android:textSize="18sp"
                     android:layout_marginStart="@dimen/dp_20"/>
                 <ImageView
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:src="@mipmap/main_next"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"

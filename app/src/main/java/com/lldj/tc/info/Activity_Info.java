@@ -12,10 +12,14 @@ import android.widget.Toast;
 import com.bigkoo.pickerview.TimePickerView;
 import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
+import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.BaseBean;
+import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
+import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
 
 import java.util.Calendar;
@@ -69,10 +73,19 @@ public class Activity_Info extends BaseActivity {
                 TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {
-                        SharePreUtils.getInstance().setBirthday(date.getTime() + "");
-                        tvbrithday.setText(AppUtils.getFormatTime2(Long.parseLong(SharePreUtils.getInstance().getBirthday())));
+                        String bir = date.getTime() + "";
 
-                        Toast.makeText(Activity_Info.this, "---------------服务器接口不支持 ", Toast.LENGTH_SHORT).show();
+                        HttpMsg.getInstance().sendChangeBir(SharePreUtils.getInstance().getToken(mContext), bir, BaseBean.class, new HttpMsg.Listener() {
+                            @Override
+                            public void onFinish(Object _res) {
+                                BaseBean res = (BaseBean) _res;
+                                if (res.getCode() == GlobalVariable.succ) {
+                                    Toast.makeText(Activity_Info.this, "--------------succ ", Toast.LENGTH_SHORT).show();
+                                    SharePreUtils.getInstance().setBirthday(bir);
+                                    tvbrithday.setText(AppUtils.getFormatTime2(Long.parseLong(bir)));
+                                }
+                            }
+                        });
                     }
                 })
 
@@ -108,8 +121,6 @@ public class Activity_Info extends BaseActivity {
                 break;
             case R.id.exitlayout:
                 finish();
-                SharePreUtils.setToken(this, "");
-                SharePreUtils.getInstance().setUserId("");
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEAVEGAME);
                 break;
         }

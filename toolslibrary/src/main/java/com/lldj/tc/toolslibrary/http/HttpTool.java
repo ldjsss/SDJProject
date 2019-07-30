@@ -43,7 +43,7 @@ public class HttpTool {
     private static SSLSocketFactory socketFactory   = null;
 
 
-    public static void sendGet(final String url, final msgListener listener) {
+    public static void sendGet(final String url, final msgListener listener, final String token) {
         Clog.e("url", url);
         new Thread(new Runnable() {
             @Override
@@ -59,6 +59,8 @@ public class HttpTool {
                     } else {
                         con = (HttpURLConnection) u.openConnection();
                     }
+
+                    if(token != null)con.setRequestProperty("Authorization", token);
 
                     con.setRequestMethod("GET");
                     con.setConnectTimeout(timeout);

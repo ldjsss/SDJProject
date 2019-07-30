@@ -41,6 +41,7 @@
     <string name="oldPassword">旧密码</string>
     <string name="forget_pswTitle">忘记密码</string>
     <string name="passwordHaveChange">修改成功</string>
+    <string name="passwordHaveChangesucc">密码修改成功，请重新登陆！</string>
     <string name="loginsucc">登陆成功</string>
     <string name="loginfail">登陆失败</string>
     <string name="deleteAll">删除全部</string>

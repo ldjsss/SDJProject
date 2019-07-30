@@ -141,6 +141,8 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                 DialogManager.getInstance().show(new DialogGameSelect(mContext, R.style.DialogTheme));
                 break;
             case HandlerType.LEAVEGAME:
+                SharePreUtils.setToken(this, "");
+                SharePreUtils.getInstance().setUserId("");
                 startActivity(new Intent(mContext, Activity_Login.class));
                 finish();
                 break;

@@ -1,13 +1,17 @@
 package com.lldj.tc.info;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -19,10 +23,19 @@ import androidx.annotation.StyleRes;
 
 import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
+import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.BaseBean;
+import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
+import com.lldj.tc.utils.GlobalVariable;
+import com.lldj.tc.utils.HandlerType;
+
+import java.lang.reflect.Field;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,20 +103,17 @@ public class Dialog_Change extends BaseDialog {
                 break;
             case R.id.register_tv:
                 if (!checkAll()) return;
-                Toast.makeText(getContext(), "---------------服务器接口不匹配 ", Toast.LENGTH_SHORT).show();
-//                HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-//                HttpMsg.getInstance().sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(getContext()), "", JsonBean.class, new HttpMsg.Listener(){
-//                    @Override
-//                    public void onFinish(Object _res) {
-//                        JsonBean res = (JsonBean) _res;
-//                        if(res.getCode() == GlobalVariable.succ){
-//                            SharePreUtils.getInstance().setRegistInfo(getContext(), userCount, password, userName, phoneNum, AppUtils.getChannel(getContext()), "");
-//                            Toast.makeText(getContext(), getContext().getResources().getString(R.string.registSucc),Toast.LENGTH_SHORT).show();
-//                            HandlerInter.getInstance().sendEmptyMessage(HandlerType.REGISTSUCC);
-//                            dismiss();
-//                        }
-//                    }
-//                });
+                HttpMsg.getInstance().sendChangeKey(SharePreUtils.getInstance().getToken(getContext()), password, oldPassword, BaseBean.class, new HttpMsg.Listener() {
+                    @Override
+                    public void onFinish(Object _res) {
+                        BaseBean res = (BaseBean) _res;
+                        if (res.getCode() == GlobalVariable.succ) {
+                            showToast(R.string.passwordHaveChangesucc);
+                            HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEAVEGAME);
+                        }
+                    }
+                });
+
                 break;
         }
     }
@@ -135,6 +145,5 @@ public class Dialog_Change extends BaseDialog {
         }
         return true;
     }
-
 }
 

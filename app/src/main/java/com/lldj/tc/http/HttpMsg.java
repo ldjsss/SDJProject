@@ -135,15 +135,15 @@ public class HttpMsg<T>{
     /////////////////////////
 
     public void sendGetGameList(Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(baseUrl + "game", new HttpMsg().getListener(service, callbackListener));
+        HttpTool.sendGet(baseUrl + "game", new HttpMsg().getListener(service, callbackListener), null);
     }
 
     public void sendGetMatchList(int type, int page_num, String game_ids, Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(baseUrl + "match/type/" + type + "?page_num=" + page_num + game_ids, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.sendGet(baseUrl + "match/type/" + type + "?page_num=" + page_num + game_ids, new HttpMsg().getListener(service, callbackListener), null);
     }
 
     public void sendGetMatchDetial(int matchID, Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(baseUrl + "match/detail/" + matchID, new HttpMsg().getListener(service, callbackListener));
+        HttpTool.sendGet(baseUrl + "match/detail/" + matchID, new HttpMsg().getListener(service, callbackListener), null);
     }
 
     public void sendBetList(final String access_token, final String json, Class<T>service, Listener callbackListener){
@@ -200,7 +200,20 @@ public class HttpMsg<T>{
                     if(result!= null)SharePreUtils.getInstance().setMapNames(result);
                 }
             }
-        }));
+        }), null);
+    }
+
+    public void sendChangeBir(final String access_token, final String birthday, Class<T>service, Listener callbackListener) {
+
+        HttpTool.sendGet(baseUrl + "user/modifybirthday?birthday=" + birthday, new HttpMsg().getListener(service, callbackListener), access_token);
+    }
+
+    public void sendChangeKey(final String access_token, final String new_password, final String old_password, Class<T>service, Listener callbackListener) {
+        Map<String,String> URLParams = new HashMap();
+        URLParams.put("new_password", new_password);
+        URLParams.put("old_password", old_password);
+
+        HttpTool.httpPost(baseUrl + "user/modifypassword", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
     public interface Listener<T> {
