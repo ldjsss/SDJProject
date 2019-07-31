@@ -192,7 +192,7 @@ public class DialogBetBottom extends BaseDialog {
         BetMatchBean.betResult betInfo;
         for (int i = 0; i < list.size(); i++) {
             betInfo = list.get(i);
-            if(betInfo.getCode() == GlobalVariable.succ) AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, betInfo, betInfo.getOdds_id() + ""));
+            if(betInfo.getCode() == GlobalVariable.succ) AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, betInfo, betInfo.getOdds_id() + "", "-1"));
         }
 
     }

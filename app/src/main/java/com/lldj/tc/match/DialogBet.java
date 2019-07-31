@@ -151,7 +151,7 @@ public class DialogBet extends BaseDialog {
             }
         }
 
-        groups.add(0, data);
+        if(TextUtils.isEmpty(data.getTag1())) groups.add(0, data);
         return true;
     }
 

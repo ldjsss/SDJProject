@@ -4,6 +4,7 @@ public class ObData implements Cloneable {
     private String key;
     private Object value;
     private String tag;
+    private String tag1;
 
     public ObData(String key, Object value){
         this.key = key;
@@ -14,6 +15,13 @@ public class ObData implements Cloneable {
         this.key = key;
         this.value = value;
         this.tag = tag;
+    }
+
+    public ObData(String key, Object value, String tag, String tag1){
+        this.key = key;
+        this.value = value;
+        this.tag = tag;
+        this.tag1 = tag1;
     }
 
     public String getKey() { return key; }
@@ -36,6 +44,14 @@ public class ObData implements Cloneable {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getTag1() {
+        return tag1;
+    }
+
+    public void setTag1(String tag1) {
+        this.tag1 = tag1;
     }
 
     public ObData clone() throws CloneNotSupportedException {
