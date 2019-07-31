@@ -8,10 +8,11 @@ import java.util.List;
 
 public class ResultsModel{
 
-    public ResultsModel(int id, String name, String logo) {
+    public ResultsModel(int id, String name, String logo, int page_num) {
         this.id = id;
         this.name = name;
         this.logo = logo;
+        this.page_num = page_num;
     }
 
     private String access_token;

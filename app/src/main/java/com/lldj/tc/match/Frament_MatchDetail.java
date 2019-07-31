@@ -310,7 +310,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
                     if (mAdapter != null) {
                         mAdapter.changeData(oddMap, _data, keys);
-
                     }
                 }
                 RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);

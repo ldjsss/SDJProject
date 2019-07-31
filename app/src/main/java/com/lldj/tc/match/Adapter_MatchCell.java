@@ -119,7 +119,8 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
             String key = keys.get(pos);
             addlayout.removeAllViews();
 
-            if(keys.get(pos).equalsIgnoreCase("-1")){
+            String _keyStr = keys.get(pos);
+            if(_keyStr.equalsIgnoreCase("-1")){
                 View view = addonelayout.findViewById(R.id.dtitlelayout);
                 if(view == null) {
                     view = inflater.inflate(R.layout.matchdetialonetitle, null);
@@ -127,12 +128,13 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                     addonelayout.addView(view);
                 }
 
-                key = keys.get(pos + 1);
+                if(keys.size() > pos + 1)key = keys.get(pos + 1);
                 String _name = mapNames.get(key);
                 ((TextView)view.findViewById(R.id.myposition)).setText(TextUtils.isEmpty(_name) ? key : _name);
                 addonelayout.setVisibility(View.VISIBLE);
                 return;
             }
+
             addonelayout.setVisibility(View.GONE);
             Map<String, List<Odds>> newOdds = mlist.get(key);
             if (newOdds != null && newOdds.size() > 0) {
@@ -262,7 +264,11 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                         }
 
                     }
-
+                }
+                if(pos + 1 >= keys.size()){
+                    View _view = inflater.inflate(R.layout.nulllayout, null);
+                    _view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    addlayout.addView(_view);
                 }
 
             }

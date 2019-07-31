@@ -229,24 +229,13 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
         public void bottomCommon(int _type) {
             int _dataPos = getAdapterPosition() - 1;
 //            Log.e("--------- _dataPos = " + _dataPos, "");
-            View nulllayout = gamebg.findViewById(R.id.nulllayout);
-            if(_dataPos+1 >= mlist.size() && _dataPos+1 >= total){
-                if(nulllayout == null){
-                    View view = inflater.inflate(R.layout.nulllayout, null);
-                    view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    gamebg.addView(view);
-                    nulllayout = gamebg.findViewById(R.id.nulllayout);
-                }
-                nulllayout.setVisibility(View.VISIBLE);
-            }else{
-                if(nulllayout != null) nulllayout.setVisibility(View.GONE);
-            }
 
             ResultsModel _data = mlist.get(_dataPos);
-            if(_data == null) {
-                Toast.makeText(mContext, "--------service data error ", Toast.LENGTH_SHORT).show();
+            if(_data == null || _data.getId() <= 0) {
+                gamebg.setAlpha(0.0f);
                 return;
             }
+            gamebg.setAlpha(1.0f);
 
             gamename.setText(_data.getTournament_name());
             gamenamecount.setText("/ " + _data.getRound());
