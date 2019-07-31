@@ -227,7 +227,7 @@ public class HttpMsg<T>{
 
     public void sendGetUseCode(final String access_token, final String phone, Class<T>service, final Listener callbackListener) {
         Map<String,String> URLParams = new HashMap();
-        URLParams.put("mobile", phone);
+        URLParams.put("phone", phone);
 
         HttpTool.httpPost(baseUrl + "user/code", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
 

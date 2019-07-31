@@ -3,6 +3,7 @@ package com.lldj.tc.info;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -73,16 +74,15 @@ public class Activity_Info extends BaseActivity {
                 TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {
-                        String bir = date.getTime() + "";
-
-                        HttpMsg.getInstance().sendChangeBir(SharePreUtils.getInstance().getToken(mContext), bir, BaseBean.class, new HttpMsg.Listener() {
+                        long bir =  date.getTime();
+                        HttpMsg.getInstance().sendChangeBir(SharePreUtils.getInstance().getToken(mContext), bir + "", BaseBean.class, new HttpMsg.Listener() {
                             @Override
                             public void onFinish(Object _res) {
                                 BaseBean res = (BaseBean) _res;
                                 if (res.getCode() == GlobalVariable.succ) {
                                     Toast.makeText(Activity_Info.this, "--------------succ ", Toast.LENGTH_SHORT).show();
-                                    SharePreUtils.getInstance().setBirthday(bir);
-                                    tvbrithday.setText(AppUtils.getFormatTime2(Long.parseLong(bir)));
+                                    SharePreUtils.getInstance().setBirthday(bir + "");
+                                    tvbrithday.setText(AppUtils.getFormatTime2(bir));
                                 }
                             }
                         });

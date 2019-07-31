@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +26,6 @@ import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Team;
 import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
-import com.lldj.tc.utils.EventType;
-import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
@@ -41,9 +40,10 @@ import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.GlobalVariable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,6 +108,20 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     ImageView arrowplay;
     @BindView(R.id.videoplayer)
     JZVideoPlayerStandard videoplayer;
+    @BindView(R.id.tvlayout)
+    LinearLayout tvlayout;
+    @BindView(R.id.imgvidoicon1)
+    ImageView imgvidoicon1;
+    @BindView(R.id.playvidoname0)
+    TextView playvidoname0;
+    @BindView(R.id.vidowin0)
+    TextView vidowin0;
+    @BindView(R.id.vidowin1)
+    TextView vidowin1;
+    @BindView(R.id.imgvidoicon2)
+    ImageView imgvidoicon2;
+    @BindView(R.id.playvidoname2)
+    TextView playvidoname2;
 
     private ResultsModel _matchData;
     private int ViewType;
@@ -124,7 +138,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private Observer<ObData> observer;
     private String gaming = "";
     private boolean select = false;
-    private Map<Integer,ResultsModel > _gamelist;
+    private Map<Integer, ResultsModel> _gamelist;
     private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
 
     @Override
@@ -216,14 +230,20 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     gameplaycount.setText("+" + _data.getPlay_count());
                     playnamecommon0.setText(team0.getTeam_short_name());
                     playnamecommon1.setText(team1.getTeam_short_name());
-                    matchtime.setText(status == 2 ? gaming:AppUtils.getFormatTime2(_data.getStart_time_ms()));
+                    playvidoname0.setText(team0.getTeam_short_name());
+                    playvidoname2.setText(team1.getTeam_short_name());
+                    matchtime.setText(status == 2 ? gaming : AppUtils.getFormatTime2(_data.getStart_time_ms()));
                     if (status <= 2) startUpdate();
                     else stopUpdate();
 
-                    gamestatus1.setText((status == 2 || status == 3) ? "":AppUtils.getFormatTime4(_data.getStart_time_ms()));
+                    gamestatus1.setText((status == 2 || status == 3) ? "" : AppUtils.getFormatTime4(_data.getStart_time_ms()));
 
-                    matchwin0.setText(team0.getScore().getTotal() + "");
-                    matchwin1.setText(team1.getScore().getTotal() + "");
+                    String oneWin = team0.getScore().getTotal() + "";
+                    String twoWin = team1.getScore().getTotal() + "";
+                    matchwin0.setText(oneWin);
+                    matchwin1.setText(twoWin);
+                    vidowin0.setText(oneWin);
+                    vidowin1.setText(twoWin);
 
                     matchwin0.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
                     matchwin1.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
@@ -232,9 +252,9 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     gamestatus.setVisibility(status == 2 ? View.GONE : View.VISIBLE);
                     looklayout.setVisibility(status == 2 ? View.VISIBLE : View.GONE);
 
-                    if(_gamelist != null) {
+                    if (_gamelist != null) {
                         ResultsModel gameinfo = _gamelist.get(_data.getGame_id());
-                        if(gameinfo != null) {
+                        if (gameinfo != null) {
                             HttpTool.getBitmapUrl(gameinfo.getLogo(), new HttpTool.bmpListener() {
                                 @Override
                                 public void onFinish(Bitmap bitmap) {
@@ -248,14 +268,20 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     HttpTool.getBitmapUrl(team0.getTeam_logo(), new HttpTool.bmpListener() {
                         @Override
                         public void onFinish(Bitmap bitmap) {
-                            if (bitmap != null) imgplayicon0.setImageBitmap(bitmap);
+                            if (bitmap != null) {
+                                imgplayicon0.setImageBitmap(bitmap);
+                                imgvidoicon1.setImageBitmap(bitmap);
+                            }
                         }
                     });
 
                     HttpTool.getBitmapUrl(team1.getTeam_logo(), new HttpTool.bmpListener() {
                         @Override
                         public void onFinish(Bitmap bitmap) {
-                            if (bitmap != null) imgplayicon1.setImageBitmap(bitmap);
+                            if (bitmap != null) {
+                                imgplayicon1.setImageBitmap(bitmap);
+                                imgvidoicon2.setImageBitmap(bitmap);
+                            }
                         }
                     });
 
@@ -269,10 +295,10 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 //                        });
                         mTotal = 0;
                         String _match_stage = "";
-                        for (int i = 0; i < odds.size() ; i++) {
+                        for (int i = 0; i < odds.size(); i++) {
                             Odds _odd = odds.get(i);
                             String _key = _odd.getMatch_stage();
-                            if(!_key.equalsIgnoreCase(_match_stage)) {
+                            if (!_key.equalsIgnoreCase(_match_stage)) {
                                 keys.add("-1");
                                 _match_stage = _key;
                             }
@@ -285,7 +311,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                             }
                             String _nextKey = _odd.getGroup_name();
                             List<Odds> ceilList = itemList.get(_nextKey);
-                            if(ceilList == null) {
+                            if (ceilList == null) {
                                 ceilList = new ArrayList<>();
                                 itemList.put(_nextKey, ceilList);
                             }
@@ -293,13 +319,13 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                         }
 
                         mTotal = keys.size();
-                        if(tabLayout != null && tabLayout.getTabCount() != keys.size()/2){
+                        if (tabLayout != null && tabLayout.getTabCount() != keys.size() / 2) {
                             tabLayout.removeAllTabs();
 
                             String str, _title;
                             for (int i = 0; i < keys.size(); i++) {
                                 str = keys.get(i);
-                                if(!str.equalsIgnoreCase("-1")) {
+                                if (!str.equalsIgnoreCase("-1")) {
                                     _title = mapNames.get(str);
                                     tabLayout.addTab(tabLayout.newTab().setText(TextUtils.isEmpty(_title) ? str : _title));
                                 }
@@ -335,8 +361,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     int tabPosition = tab.getPosition();
                     Log.e("onTabSelected", tabPosition + "");
                     select = true;
-                    if(tabPosition == 0) layoutManager.scrollToPosition(0);
-                    else layoutManager.scrollToPosition(tabPosition*2 + 1);
+                    if (tabPosition == 0) layoutManager.scrollToPosition(0);
+                    else layoutManager.scrollToPosition(tabPosition * 2 + 1);
                 }
 
                 @Override
@@ -369,9 +395,10 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     @Override
     public void onScrolled(int distanceX, int distanceY) {
         int pos = layoutManager.findFirstVisibleItemPosition();
-        Log.e("pos", pos + "  distanceY = " + distanceY) ;
-        if(distanceY <= 0) pos = 0;
-        else if (tabLayout != null && select == false) tabLayout.setScrollPosition((pos)/2, 0, false);
+        Log.e("pos", pos + "  distanceY = " + distanceY);
+        if (distanceY <= 0) pos = 0;
+        else if (tabLayout != null && select == false)
+            tabLayout.setScrollPosition((pos) / 2, 0, false);
         select = false;
     }
 
@@ -420,7 +447,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         //        videocontroller1.ivThumb.setThumbInCustomProject("视频/MP3缩略图地址");
 
 
-        vidiolayout.setVisibility(View.VISIBLE);
+        tvlayout.setVisibility(View.VISIBLE);
     }
 
 
@@ -435,7 +462,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         switch (view.getId()) {
             case R.id.medioclose:
                 videoplayer.releaseAllVideos();
-                vidiolayout.setVisibility(View.GONE);
+                tvlayout.setVisibility(View.GONE);
                 break;
             case R.id.lookmatch:
                 playMatch();
@@ -447,12 +474,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         }
     }
 
-    private void close(){
+    private void close() {
         stopUpdate();
         AppUtils.unregisterEvent(observer);
         observer = null;
         videoplayer.releaseAllVideos();
-        vidiolayout.setVisibility(View.GONE);
+        tvlayout.setVisibility(View.GONE);
     }
 
     @Override
