@@ -44,10 +44,6 @@ import butterknife.OnClick;
 
 import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
-/**
- * description: <p>
- */
-
 
 public class Adapter_MainCell extends RecyclerView.Adapter {
 
@@ -57,28 +53,40 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
     private int ViewType;
     private String[] statusText;
     private int[] winBmp;
-    private List<ObData> groups = null;
+    private Map<String, ObData> groups;
+    private int total = 0;
 
     private Map<Integer,ResultsModel > _gamelist;
     private Map<Integer, String> oMap = new HashMap<>();
+    private LayoutInflater inflater;
 
     public Adapter_MainCell(Context mContext, int _viewType) {
         this.mContext = mContext;
         this.ViewType = _viewType;
         statusText = new String[]{"", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.matchCurrentTitle), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
         winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
+        inflater = LayoutInflater.from(mContext);
+        _gamelist = SharePreUtils.getInstance().getGamelist();
+        groups = Fragment_Main.selectGroups;
     }
 
-    public void changeData(List<ResultsModel> plist) {
-        mlist = plist;
-        _gamelist = SharePreUtils.getInstance().getGamelist();
+    public void changeData(List<ResultsModel> plist, int total) {
+        this.mlist = plist;
+        this.total = total;
 
         AppUtils.dispatchEvent(new ObData(EventType.UPDATEMATCHLIST, mlist));
         notifyDataSetChanged();
     }
 
     public void updateSelect(List<ObData> _groups){
-        this.groups = _groups;
+        groups.clear();
+        if(_groups == null) return;
+
+        ObData _ObData;
+        for (int i = 0; i < _groups.size(); i++) {
+            _ObData = _groups.get(i);
+            groups.put(_ObData.getTag(), _ObData);
+        }
         notifyDataSetChanged();
     }
 
@@ -219,8 +227,22 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
         }
 
         public void bottomCommon(int _type) {
+            int _dataPos = getAdapterPosition() - 1;
+//            Log.e("--------- _dataPos = " + _dataPos, "");
+            View nulllayout = gamebg.findViewById(R.id.nulllayout);
+            if(_dataPos+1 >= mlist.size() && _dataPos+1 >= total){
+                if(nulllayout == null){
+                    View view = inflater.inflate(R.layout.nulllayout, null);
+                    view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    gamebg.addView(view);
+                    nulllayout = gamebg.findViewById(R.id.nulllayout);
+                }
+                nulllayout.setVisibility(View.VISIBLE);
+            }else{
+                if(nulllayout != null) nulllayout.setVisibility(View.GONE);
+            }
 
-            ResultsModel _data = mlist.get(getAdapterPosition() - 1);
+            ResultsModel _data = mlist.get(_dataPos);
             if(_data == null) {
                 Toast.makeText(mContext, "--------service data error ", Toast.LENGTH_SHORT).show();
                 return;
@@ -243,8 +265,6 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                 }
             }
 
-
-
             if(_data.getTeam() == null || _data.getTeam().size() < 2) {
                 Toast.makeText(mContext, "--------service Team data error ", Toast.LENGTH_SHORT).show();
                 return;
@@ -264,8 +284,6 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
             playname0.setTag(team0.getTeam_id());
             playname1.setTag(team1.getTeam_id());
-
-            setSelect();
 
             gamestatus.setText(statusText[matchStatus]);
             gamestatusicon.setImageResource(matchStatus == 2 ? R.mipmap.match_status_1 : R.mipmap.match_status_0);
@@ -369,6 +387,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                 playname1.setBackground(mContext.getResources().getDrawable(R.drawable.mathtitle_bg));
             }
 
+            setSelect();
 
             switch (_type) {
                  case 0:
@@ -421,11 +440,8 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             if(groups != null) {
                 Object _tag = playname0.getTag(R.id.tag_first);
                 Object _tag1 = playname1.getTag(R.id.tag_first);
-                for (int i = 0; i < groups.size(); i++) {
-                    int setID = Integer.parseInt(groups.get(i).getTag());
-                    if (_tag != null && ((int)_tag)== setID) _select = true;
-                    if (_tag1 != null && ((int)_tag1)== setID) _select1 = true;
-                }
+                if(_tag != null && groups.get(_tag + "") != null) _select = true;
+                if(_tag1 != null && groups.get(_tag1 + "") != null) _select1 = true;
             }
             playname0.setBackground(mContext.getResources().getDrawable(_select ? R.drawable.mathbetselectbg: R.drawable.mathbetbg));
             playname1.setBackground(mContext.getResources().getDrawable(_select1 ? R.drawable.mathbetselectbg: R.drawable.mathbetbg));
@@ -435,12 +451,9 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
         private void updateArrow(Odds odd, String _last, TextView betText, ImageView imggamearrow){
             if(odd == null || betText == null) return;
             int _status     = odd.getStatus();
-//            String _last    = (String)betText.getText();
-//            int _tag        = betText.getTag() == null ? -1 : (int)betText.getTag();
             String _current = odd.getOdds();
 
             if( _status <= 1
-//                && _tag == odd.getMatch_id()
                 && !TextUtils.isEmpty(_last)
                 && !TextUtils.isEmpty(_current)
                 && !_last.equalsIgnoreCase(_current)){

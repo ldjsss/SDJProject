@@ -189,7 +189,8 @@ public class DialogBet extends BaseDialog {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.deleteall:
-                close();
+                groups.clear();
+                update();
                 break;
             case R.id.closelayout:
                 AppUtils.dispatchEvent(new ObData(EventType.HIDEBETLIST, null));

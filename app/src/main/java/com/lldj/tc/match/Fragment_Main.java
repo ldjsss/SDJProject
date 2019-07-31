@@ -38,7 +38,9 @@ import com.lldj.tc.toolslibrary.view.BaseFragment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,6 +71,8 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     private String selects = "";
     private boolean _visible = false;
     private LinearLayoutManager layoutManager;
+
+    public static Map<String, ObData> selectGroups = new HashMap<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -239,7 +243,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 
                     tvNoMatch.setVisibility(alist.size()>0?View.GONE:View.VISIBLE);
 
-                    mAdapter.changeData(alist);
+                    mAdapter.changeData(alist, total);
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, page_size, LoadingFooter.State.Normal, null);
                 }
 

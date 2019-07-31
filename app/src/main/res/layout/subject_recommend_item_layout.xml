@@ -5,154 +5,159 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/gamebg"
-    android:layout_marginBottom="@dimen/dp_10"
-    android:background="@drawable/rec_stroke_round4_969696">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:layout_margin="@dimen/dp_10"
-        android:background="@drawable/mathtitle_bg">
-
-        <ImageView
-            android:id="@+id/gameicon"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:paddingStart="10dp"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/game_arena" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:id="@+id/gamename"
-            android:singleLine="true"
-            android:textSize="12sp"
-            android:text="ESL 职业联赛—美洲"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/gameicon"
-            android:textColor="@color/color_cdc3b3" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:id="@+id/gamenamecount"
-            android:singleLine="true"
-            android:textSize="12sp"
-            android:text="/ BO3"
-            android:layout_marginLeft="5dp"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/gamename"
-            android:textColor="@color/color_8e6c37" />
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="25dp"
-            android:id="@+id/gameplaycount"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:text="+3"
-            android:textSize="12sp"
-            android:textColor="@color/color_cdc3b3"
-            android:gravity="center"
-            android:background="@drawable/rec_stroke_round4_969696" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/img_layout"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="60dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/gametime"
-            android:singleLine="true"
-            android:textSize="15sp"
-            android:text="13:00"
-            android:layout_centerInParent="true"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/gameresult"
-            android:singleLine="true"
-            android:textSize="30sp"
-            android:text="1 - 1"
-            android:layout_centerInParent="true"
-            android:textColor="@color/white" />
-
-        <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:id="@+id/imglayout0">
-            <ImageView
-                android:id="@+id/imgplayicon0"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:src="@mipmap/game_arena"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:id="@+id/imglayout1"
-            android:layout_alignParentEnd="true">
-            <ImageView
-                android:id="@+id/imgplayicon1"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:src="@mipmap/game_arena"/>
-
-        </RelativeLayout>
-    </RelativeLayout>
+    android:layout_marginBottom="@dimen/dp_10">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:background="@drawable/rec_stroke_round4_969696">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/mathtitle_bg">
 
-        <TextView
+            <ImageView
+                android:id="@+id/gameicon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:paddingStart="10dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/game_arena" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:id="@+id/gamename"
+                android:singleLine="true"
+                android:textSize="12sp"
+                android:text="ESL 职业联赛—美洲"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/gameicon"
+                android:textColor="@color/color_cdc3b3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:id="@+id/gamenamecount"
+                android:singleLine="true"
+                android:textSize="12sp"
+                android:text="/ BO3"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/gamename"
+                android:textColor="@color/color_8e6c37" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="25dp"
+                android:id="@+id/gameplaycount"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:text="+3"
+                android:textSize="12sp"
+                android:textColor="@color/color_cdc3b3"
+                android:gravity="center"
+                android:background="@drawable/rec_stroke_round4_969696" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/img_layout"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="60dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/gametime"
+                android:singleLine="true"
+                android:textSize="15sp"
+                android:text="13:00"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/gameresult"
+                android:singleLine="true"
+                android:textSize="30sp"
+                android:text="1 - 1"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white" />
+
+            <RelativeLayout
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:id="@+id/imglayout0">
+                <ImageView
+                    android:id="@+id/imgplayicon0"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:src="@mipmap/game_arena"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:id="@+id/imglayout1"
+                android:layout_alignParentEnd="true">
+                <ImageView
+                    android:id="@+id/imgplayicon1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:src="@mipmap/game_arena"/>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-             android:layout_weight="1"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="@string/allwinner"
-            android:textSize="10sp"
-            android:textColor="@color/color_cdc3b3" />
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/allwinner"
+                android:textSize="10sp"
+                android:textColor="@color/color_cdc3b3" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <include layout="@layout/gamebetitem"/>
+            <include layout="@layout/gameoveritem"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"/>
+
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"/>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        <include layout="@layout/gamebetitem"/>
-        <include layout="@layout/gameoveritem"/>
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"/>
-
 
 </LinearLayout>

@@ -42,12 +42,12 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
     private viewHolder mHolder = null;
     private int[] winBmp;
     private ResultsModel tData;
-    private List<ObData> groups = null;
     private List<String> keys = new ArrayList<>();
 
     private Map<String, Map<String, List<Odds>>>  mlist = new HashMap<>();
     private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
     private Map<Integer, String> oMap = new HashMap<>();
+    private Map<String, ObData> groups;
 
     public Adapter_MatchCell(Context mContext) {
         this.mContext = mContext;
@@ -58,12 +58,20 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
         this.tData = _data;
         this.keys = keys;
         if (winBmp == null) winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
+        groups = Fragment_Main.selectGroups;
 
         notifyDataSetChanged();
     }
 
     public void updateSelect(List<ObData> _groups) {
-        this.groups = _groups;
+        groups.clear();
+        if(_groups == null) return;
+
+        ObData _ObData;
+        for (int i = 0; i < _groups.size(); i++) {
+            _ObData = _groups.get(i);
+            groups.put(_ObData.getTag(), _ObData);
+        }
         notifyDataSetChanged();
     }
 
@@ -122,9 +130,10 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                 key = keys.get(pos + 1);
                 String _name = mapNames.get(key);
                 ((TextView)view.findViewById(R.id.myposition)).setText(TextUtils.isEmpty(_name) ? key : _name);
+                addonelayout.setVisibility(View.VISIBLE);
                 return;
             }
-            addonelayout.setVisibility(View.VISIBLE);
+            addonelayout.setVisibility(View.GONE);
             Map<String, List<Odds>> newOdds = mlist.get(key);
             if (newOdds != null && newOdds.size() > 0) {
                 String _lastKey = "";
@@ -157,13 +166,12 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                         ((TextView) view.findViewById(R.id.playovername0)).setText(TextUtils.isEmpty(odd1.getName()) ? "unknown" : odd1.getName());
                         String _oddstring = odd1.getOdds();
 
-                        setSelect((TextView) view.findViewById(R.id.playcellselect0), _id + "");
-
                         TextView tv_odds = (TextView) view.findViewById(R.id.playbetnum0);
                         ImageView im_lock = (ImageView) view.findViewById(R.id.playlockicon0);
                         TextView playcellselect0 = (TextView) view.findViewById(R.id.playcellselect0);
                         updateArrow(odd1, oMap.get(_id), tv_odds, view.findViewById(R.id.playdetailarrowicon0));
                         oMap.put(_id, _oddstring);
+                        setSelect(playcellselect0, _id + "");
                         if (_statue == 1) { //normal
                             im_lock.setVisibility(View.GONE);
                             if (_oddstring.equals("")) {
@@ -207,13 +215,13 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                             int _id2 = odd2.getId();
 
                             ((TextView) view.findViewById(R.id.playovername1)).setText(TextUtils.isEmpty(odd2.getName()) ? "unknown" : odd2.getName());
-                            setSelect((TextView) view.findViewById(R.id.playcellselect1), _id2 + "");
 
                             tv_odds = (TextView) view.findViewById(R.id.playbetnum1);
                             im_lock = (ImageView) view.findViewById(R.id.playlockicon1);
                             TextView playcellselect1 = (TextView) view.findViewById(R.id.playcellselect1);
                             updateArrow(odd2, oMap.get(_id2), tv_odds, view.findViewById(R.id.playdetailarrowicon1));
                             oMap.put(_id2, _oddstring);
+                            setSelect(playcellselect1, _id2 + "");
                             if (_statue == 1) { //normal
                                 im_lock.setVisibility(View.GONE);
                                 if (_oddstring.equals("")) {
@@ -300,11 +308,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
         private void setSelect(TextView _text, String matchID) {
             boolean _select = false;
-            if (groups != null) {
-                for (int i = 0; i < groups.size(); i++) {
-                    if (groups.get(i).getTag().equals(matchID)) _select = true;
-                }
-            }
+            if(groups.get(matchID) != null)_select = true;
             if (_select) {
                 _text.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetselectbg));
             } else {
