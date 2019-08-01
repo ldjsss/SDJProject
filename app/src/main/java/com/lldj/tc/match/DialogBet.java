@@ -58,10 +58,11 @@ public class DialogBet extends BaseDialog {
     private String[][] childs = {{"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}, {"A1"}};
     private List<ObData> groups = new ArrayList<>();
     private MyExpandableListView _myExpandableListView;
+    private DialogBetBottom dialogBetBottom;
 
-    int screenHeight;
-    int maxHeight = 0;
-    int _oneHeight = 0;
+    private int screenHeight;
+    private int maxHeight = 0;
+    private int _oneHeight = 0;
 
     public DialogBet(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
@@ -135,7 +136,8 @@ public class DialogBet extends BaseDialog {
             Log.d("addDataToGroups", "remove have add cell");
         }
         if(groups.size() > 0) {
-            DialogManager.getInstance().show(new DialogBetBottom(getContext(), R.style.DialogTheme));
+            if(dialogBetBottom == null) dialogBetBottom = new DialogBetBottom(getContext(), R.style.DialogTheme);
+            DialogManager.getInstance().show(dialogBetBottom, "DialogBetBottom");
         }
 
         update();
@@ -147,6 +149,7 @@ public class DialogBet extends BaseDialog {
         for (int i = 0; i < groups.size(); i++) {
             if(groups.get(i).getTag().equalsIgnoreCase(data.getTag())){
                 groups.remove(i);
+                betList.remove(data.getTag());
                 return false;
             }
         }

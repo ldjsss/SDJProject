@@ -235,6 +235,10 @@ public class HttpMsg<T>{
 
     }
 
+    public void sendGetOdds(String game_ids, Class<T>service, Listener callbackListener) {
+        HttpTool.sendGet(baseUrl + "match/oddssimple?" + game_ids, new HttpMsg().getListener(service, callbackListener), null);
+    }
+
     public interface Listener<T> {
         void onFinish(T msg);
     }
