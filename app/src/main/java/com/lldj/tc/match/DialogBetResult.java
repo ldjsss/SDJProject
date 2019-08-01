@@ -54,8 +54,8 @@ public class DialogBetResult extends BaseDialog {
     }
 
     public void showView(List<BetMatchBean.betResult> list) {
-        int len = list.size() >= 2 ? 2 : 1;
-        betlrecycleview.getLayoutParams().height = betlrecycleview.getLayoutParams().height * len;
+        double len = list.size() >= 2 ? 1.95 : 0.98;
+        betlrecycleview.getLayoutParams().height = (int)(betlrecycleview.getLayoutParams().height * len);
         betlrecycleview.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         betlrecycleview.setAdapter(new Adapter_BetResultCell(getContext(), true, list));
         betlrecycleview.setItemAnimator(new DefaultItemAnimator());
