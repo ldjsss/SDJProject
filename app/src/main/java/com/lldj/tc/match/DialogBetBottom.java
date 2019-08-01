@@ -87,20 +87,7 @@ public class DialogBetBottom extends BaseDialog {
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 if (data.getKey().equalsIgnoreCase(EventType.BETCHANGE)) {
                     betList = (Map<String, BetModel>) data.getValue();
-
-                    totalBet = 0;
-                    totalGet = 0;
                     selectCount = data.getTag();
-
-                    Iterator<Map.Entry<String, BetModel>> entries = betList.entrySet().iterator();
-                    while (entries.hasNext()) {
-                        Map.Entry<String, BetModel> entry = entries.next();
-//                        Clog.e("--key " + entry.getKey(), " ---value " + (entry.getValue() == null ? "null" : entry.getValue().toString()));
-                        if (entry.getValue() != null) {
-                            totalBet += entry.getValue().getAmount();
-                            totalGet += entry.getValue().getWillget();
-                        }
-                    }
 
                     update();
                 }
@@ -113,7 +100,9 @@ public class DialogBetBottom extends BaseDialog {
                     sendBet(betList);
                 }
                 else if(data.getKey().equalsIgnoreCase(EventType.BTNCHANGE)){
+                    betList.get(data.getTag()).setOdds(data.getTag1());
                     betsurebtn.setText(getContext().getString(R.string.acceptStr));
+                    update();
                 }
 
             }
@@ -121,8 +110,20 @@ public class DialogBetBottom extends BaseDialog {
     }
 
     private void update() {
+
+        totalBet = 0;
+        totalGet = 0;
+        Iterator<Map.Entry<String, BetModel>> entries = betList.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry<String, BetModel> entry = entries.next();
+            if (entry.getValue() != null) {
+                totalBet += entry.getValue().getAmount();
+                totalGet += (entry.getValue().getAmount()*Float.parseFloat(entry.getValue().getOdds()));
+            }
+        }
+
         betcouttv.setText(totalBet + "");
-        betgetcouttv.setText(totalGet + "");
+        betgetcouttv.setText(String.format("%.2f", totalGet));
         betselectcount.setText(selectCount);
     }
 

@@ -292,7 +292,7 @@ public class DialogBet extends BaseDialog {
             String _ltext = betpercent.getText().toString();
             if(!TextUtils.isEmpty(_ltext) && !betpercent.getText().equals(_str)){
                 betwarmlayout.setVisibility(View.VISIBLE);
-                AppUtils.dispatchEvent(new ObData(EventType.BTNCHANGE, null));
+                AppUtils.dispatchEvent(new ObData(EventType.BTNCHANGE, null, ID, odd.getOdds()));
                 betpercent.setTextColor(Color.RED);
                 Utils.setFlickerAnimation(betpercent, 8, new Utils.Listener() {
                     @Override
@@ -403,10 +403,8 @@ public class DialogBet extends BaseDialog {
             }
 
             if (!_tag.equals("12")) {
-                int willGet = 0;
                 if (!TextUtils.isEmpty(text) && Float.parseFloat(text) > 0) {
-                    willGet = (int) (Float.parseFloat(text) * Float.parseFloat(odd.getOdds()));
-                    betList.put(ID, new BetModel((int) Float.parseFloat(text), Integer.parseInt(ID), willGet, odd.getBet_max(), odd.getBet_min(), odd.getName()));
+                    betList.put(ID, new BetModel((int) Float.parseFloat(text), Integer.parseInt(ID), odd.getOdds(), odd.getBet_max(), odd.getBet_min(), odd.getName()));
                 } else {
                     betList.put(ID, null);
                 }

@@ -10,6 +10,7 @@ public class BetModel {
     private long bet_min;
     private long bet_max;
     private String name;
+    private String odds;
 
     private int code = -1;
     private String odds_value = "";
@@ -64,10 +65,18 @@ public class BetModel {
         this.name = name;
     }
 
-    public BetModel(int amount, int odds_id, float willget, long bet_max, long bet_min, String name) {
+    public String getOdds() {
+        return odds;
+    }
+
+    public void setOdds(String odds) {
+        this.odds = odds;
+    }
+
+    public BetModel(int amount, int odds_id, String odds, long bet_max, long bet_min, String name) {
        this.amount = amount;
        this.odds_id = odds_id;
-       this.willget = willget;
+       this.odds = odds;
        this.bet_max = bet_max;
        this.bet_min = bet_min;
        this.name = name;
