@@ -114,4 +114,5 @@ public class DialogManager {
         }
         dialogList.clear();
     }
+
 }

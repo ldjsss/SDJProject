@@ -12,5 +12,5 @@ public class EventType {
     public static final String DETIALHIDE = "DETIALHIDE";
     public static final String MATCHCOUNT = "MATCHCOUNT";
     public static final String SELECTBANK = "SELECTBANK";
-    public static final String VISIBLEBANNER = "VISIBLEBANNER";
+    public static final String BTNCHANGE = "BTNCHANGE";
 }

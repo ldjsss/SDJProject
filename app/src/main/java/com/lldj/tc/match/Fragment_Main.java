@@ -181,7 +181,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         int pos = layoutManager.findFirstVisibleItemPosition();
         page_num = (int)Math.ceil(pos/(page_size*1.0));
         if(page_num <= 0) page_num = 1;
-        Log.e("page_num", page_num + "  page_num = " + page_num) ;
+//        Log.e("page_num", page_num + "  page_num = " + page_num) ;
 
     }
 

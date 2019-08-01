@@ -112,7 +112,9 @@ public class DialogBetBottom extends BaseDialog {
                     Map<String, BetModel> singleBetList = (Map<String, BetModel>) data.getValue();
                     sendBet(betList);
                 }
-
+                else if(data.getKey().equalsIgnoreCase(EventType.BTNCHANGE)){
+                    betsurebtn.setText(getContext().getString(R.string.acceptStr));
+                }
 
             }
         });

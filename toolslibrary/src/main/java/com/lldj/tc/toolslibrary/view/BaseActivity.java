@@ -23,7 +23,7 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import java.util.ArrayList;
 
 
-public abstract class BaseActivity extends FragmentActivity{
+public abstract class BaseActivity<onPause> extends FragmentActivity{
     protected boolean isPause;
     protected HandlerInter mHandler;
 
@@ -32,7 +32,7 @@ public abstract class BaseActivity extends FragmentActivity{
     protected Resources mResources;
     public    BaseActivity mContext;
     private   ArrayList<Observer<ObData>> eventList = new ArrayList<>();
-    public static FragmentActivity bActivity;
+    public static BaseActivity bActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,13 +98,16 @@ public abstract class BaseActivity extends FragmentActivity{
     @Override
     protected void onPause() {
         super.onPause();
-        isPause = true;
+        setPause(true);
+
+        AppUtils.dispatchEvent(new ObData("onPause", null));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        isPause = false;
+        setPause(false);
+        AppUtils.dispatchEvent(new ObData("onResume", null));
     }
 
     @Override
@@ -219,4 +222,11 @@ public abstract class BaseActivity extends FragmentActivity{
         return super.onKeyDown(keyCode, event);
     }
 
+    public boolean isPause() {
+        return isPause;
+    }
+
+    public void setPause(boolean pause) {
+        isPause = pause;
+    }
 }

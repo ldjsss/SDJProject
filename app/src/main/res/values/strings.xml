@@ -64,6 +64,8 @@
     <string name="betlistlook">查看</string>
     <string name="betminnum">最低押注</string>
     <string name="betmaxnum">最高押注</string>
+    <string name="betchangewarm">您所选投注项的盘口、或有效性已经产生变化</string>
+    <string name="acceptStr">接收赔率变化</string>
     <string name="onebet">单注</string>
     <string name="betsureing">订单确认中</string>
     <string name="betmoney">投注金额:</string>

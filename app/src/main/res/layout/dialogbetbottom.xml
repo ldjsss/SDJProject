@@ -84,8 +84,8 @@
 
         <TextView
             android:id="@+id/betsurebtn"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:background="@drawable/rec_00be0a_round100"
@@ -137,8 +137,8 @@
 
         <TextView
             android:id="@+id/lookbtn"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:background="@drawable/rec_00be0a_round100"
