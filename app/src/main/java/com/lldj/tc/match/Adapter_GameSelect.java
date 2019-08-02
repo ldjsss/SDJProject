@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,15 +32,15 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
     private Adapter_GameSelect.MyViewHolder mHolder  = null;
     private List<ResultsModel> datas = new ArrayList<>();
     public List<Integer> selects = new ArrayList();
-    private boolean frashLine = false;
 
     private ResultsModel firstData;
 
-    public Adapter_GameSelect(Context context, List<ResultsModel> datas){
+    public Adapter_GameSelect(Context context, List<ResultsModel>_datas){
         this.context = context;
         if(firstData == null)firstData = new ResultsModel(0, bActivity.getResources().getString(R.string.allgames), "BankCardAPI", 0);
-        datas.add(0, firstData);
-        this.datas.addAll(datas);
+        _datas.add(0, firstData);
+        this.datas.clear();
+        this.datas.addAll(_datas);
 
         String _selectsStr = SharePreUtils.getInstance().getSelectGame(context);
         if(TextUtils.isEmpty(_selectsStr)) {
@@ -78,7 +79,7 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
 
         this.mHolder = (Adapter_GameSelect.MyViewHolder) holder;
 
-        this.mHolder.bottomCommon(position);
+        this.mHolder.bottomCommon();
 
     }
 
@@ -101,63 +102,57 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
             }
         }
 
-        public void bottomCommon(int pos) {
-            ResultsModel _data = null;
+        public void bottomCommon() {
+            int pos = getAdapterPosition();
             for (int i = 0; i < 3; i++) {
                 int _len = pos*3+i;
+                ResultsModel _data = null;
 
                 if(datas.size() > _len){
                     _data = datas.get(_len);
-                    layout[i].setVisibility(_data == null?View.GONE:View.VISIBLE);
-                }
-                else{
-                    layout[i].setVisibility(View.GONE);
-                    layout[i].setTag("-1");
-                    _data = null;
                 }
 
-                int _id = _data == null ? -1:_data.getId();
-                View view = layout[i].findViewById(R.id.game_view);
+                View view = layout[i];
 
-                if(view == null) {
-                    LayoutInflater inflater = LayoutInflater.from(context);
-                    view = inflater.inflate(R.layout.onegamecell, null);
-                    view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    view.getLayoutParams().width = oneWidth;
-                    view.getLayoutParams().height = oneWidth;
-                    layout[i].addView(view);
-                    view.setId(R.id.game_view);
+                if(_data == null ) {
+                    view.setVisibility(View.GONE);
+                }
+                else {
+
+                    view.setVisibility(View.VISIBLE);
+                    int _id = _data.getId();
+                    Object _tag = view.getTag();
+
+                    if ((_tag == null || (int) view.getTag() != _id) && _data != null) {
+                        ImageView img = view.findViewById(R.id.imggameicon);
+                        if (_id == 0) {
+                            img.setImageResource(R.mipmap.game_arena);
+                        } else {
+                            HttpTool.getBitmapUrl(_data.getLogo(), new HttpTool.bmpListener() {
+                                @Override
+                                public void onFinish(Bitmap bitmap) {
+                                    if (bitmap != null) img.setImageBitmap(bitmap);
+                                }
+                            });
+                        }
+
+                        ((TextView) view.findViewById(R.id.gamename)).setText(_data.getName());
+                    }
+
+                    setViewColor(view, containID(_id) >= 0 ? true : false);
+
+                    view.setTag(_id);
+
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            int _selectID = (int) v.getTag();
-                            addSelect(_selectID);
+                            Object _selectID = v.getTag();
+                            if (_selectID == null) return;
+                            addSelect((int) _selectID);
                             notifyDataSetChanged();
                         }
                     });
                 }
-
-                Object _tag = view.getTag();
-                if((_tag == null || (int)view.getTag() != _id) && _data != null && frashLine == false){
-                    ImageView img = (ImageView) view.findViewById(R.id.imggameicon);
-                    if(_id == 0 ){
-                        img.setImageResource(R.mipmap.game_arena);
-                    }
-                    else {
-                        HttpTool.getBitmapUrl(_data.getLogo(), new HttpTool.bmpListener() {
-                            @Override
-                            public void onFinish(Bitmap bitmap) {
-                                if (bitmap != null) img.setImageBitmap(bitmap);
-                            }
-                        });
-                    }
-
-                    ((TextView)view.findViewById(R.id.gamename)).setText(_data.getName());
-                }
-
-                setViewColor(view, containID(_id) >= 0 ? true : false);
-
-                view.setTag(_id);
             }
 
         }

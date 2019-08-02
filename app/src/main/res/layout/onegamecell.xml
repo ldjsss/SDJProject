@@ -10,31 +10,52 @@
         android:textColor="#D0D7F0"
         android:gravity="center"
         android:background="@drawable/gameiconbg" />
-    <ImageView
-        android:id="@+id/imggameicon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/game_arena"
-        android:layout_marginTop="@dimen/dimen_15"
-        android:layout_centerHorizontal="true"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/gamename"
-        android:text="FIFA"
-        android:textSize="20sp"
-        android:textColor="#D0D7F0"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/imggameicon"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/imggameicon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/game_arena"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gamename"
+            android:text="FIFA"
+            android:textSize="14sp"
+            android:textColor="#D0D7F0"
+            android:layout_weight="1"/>
 
-    <View
-        android:layout_width="50dp"
-        android:layout_height="2dp"
-        android:layout_marginBottom="@dimen/dp_15"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/selectline"
-        android:background="#383b4a"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+            <View
+                android:layout_width="50dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/selectline"
+                android:background="#383b4a"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
