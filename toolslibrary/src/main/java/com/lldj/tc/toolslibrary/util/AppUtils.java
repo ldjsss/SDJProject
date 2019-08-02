@@ -1,6 +1,7 @@
 package com.lldj.tc.toolslibrary.util;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -70,7 +71,7 @@ public class AppUtils {
     public static AppUtils getInstance() {
         return ourInstance;
     }
-    private static PopupWindow loading = null;
+    private static Dialog loading = null;
     private static Titanic titanic = null;
 
     private  static ArrayList<Observer<ObData>> eventList = new ArrayList<>();
@@ -767,28 +768,15 @@ public class AppUtils {
     /**
      * 弹出loading动画
      */
-    public static void showLoading(Activity activity) {
+    public static void showLoading(Context context) {
         if(AppUtils.loading != null) return;
-        View popView = activity.getLayoutInflater().inflate(R.layout.pop_loading_layout, null, false);
-        //运行动画
-        TitanicTextView tv = (TitanicTextView) popView.findViewById(R.id.my_text_view);
-        AppUtils.titanic = new Titanic();
-        titanic.start(tv);
-
-        AppUtils.loading = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        loading.setTouchable(true);
-        loading.setOutsideTouchable(false);
-        loading.setBackgroundDrawable(null);
-        loading.showAtLocation(activity.getWindow().getDecorView().findViewById(android.R.id.content),Gravity.START | Gravity.TOP, 0, 0);
-        loading.update();
+        AppUtils.loading = DialogUtils.createLoadingDialog(context, "loading", false);
+        AppUtils.loading.show();
     }
     public static void hideLoading() {
         if(AppUtils.loading == null) return;
 
-        if(AppUtils.titanic != null) AppUtils.titanic.cancel();
         AppUtils.loading.dismiss();
-
-        AppUtils.titanic = null;
         AppUtils.loading = null;
 
     }
