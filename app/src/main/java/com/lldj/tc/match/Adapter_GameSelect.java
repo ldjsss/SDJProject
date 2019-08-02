@@ -77,7 +77,7 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ResultsModel _data = datas.get(position);
 
-        this.mHolder = (Adapter_GameSelect.MyViewHolder) holder;
+        this.mHolder = holder;
 
         this.mHolder.bottomCommon();
 

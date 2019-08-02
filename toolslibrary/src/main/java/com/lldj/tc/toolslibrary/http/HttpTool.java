@@ -264,8 +264,10 @@ public class HttpTool {
                     }
                     sb.substring(0, sb.length() - 1);
                 }
-                System.out.println("send_url:" + url);
-                System.out.println("send_data:" + sb.toString());
+                if(DEBUG) {
+                    System.out.println("send_url:" + url);
+                    System.out.println("send_data:" + sb.toString());
+                }
 
                 HttpURLConnection con = null;
 

@@ -42,18 +42,18 @@ public class BankBean {
         private String create_time;
         private int id = -11111;
         private int uid;
-        private int logo;
+        private String logo;
         private int bank_id;
         private int status;
 
         public BankModel() { }
 
-        public BankModel(String card_name, int logo) {
+        public BankModel(String card_name, String logo) {
             this.bank_name = bank_name;
             this.logo = logo;
         }
 
-        public BankModel(String bank_name, int logo, String card) {
+        public BankModel(String bank_name, String logo, String card) {
             this.bank_name = bank_name;
             this.logo = logo;
             this.card = card;
@@ -99,11 +99,11 @@ public class BankBean {
             this.uid = uid;
         }
 
-        public int getLogo() {
+        public String getLogo() {
             return logo;
         }
 
-        public void setLogo(int logo) {
+        public void setLogo(String logo) {
             this.logo = logo;
         }
 

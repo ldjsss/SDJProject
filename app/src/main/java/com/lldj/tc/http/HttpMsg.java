@@ -137,7 +137,9 @@ public class HttpMsg<T>{
     /////////////////////////
 
     public void sendGetGameList(Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(baseUrl + "game", new HttpMsg().getListener(service, callbackListener), null);
+        StringBuffer buffer = new StringBuffer(baseUrl);
+        buffer.append("game");
+        HttpTool.sendGet(buffer.toString(), new HttpMsg().getListener(service, callbackListener), null);
     }
 
     public void sendGetMatchList(int type, int page_num, String game_ids, Class<T>service, Listener callbackListener) {
@@ -160,12 +162,11 @@ public class HttpMsg<T>{
         Map<String,String> URLParams = new HashMap();
         URLParams.put("page_num", page_num);
         URLParams.put("status", status);
-
-        HttpTool.httpPost(baseUrl + "user/betrecord", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
+        HttpTool.httpPost((new StringBuffer(baseUrl).append("user/betrecord")).toString(), URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
     public void sendBankList(final String access_token, Class<T>service, Listener callbackListener) {
-        HttpTool.httpPost(baseUrl + "user/banks", null, new HttpMsg().getListener(service, callbackListener), access_token);
+        HttpTool.httpPost((new StringBuffer(baseUrl).append("user/banks")).toString(), null, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
     public void sendGetCash(final String access_token, final String amount, final String bind_id, Class<T>service, Listener callbackListener) {
@@ -173,7 +174,7 @@ public class HttpMsg<T>{
         URLParams.put("amount", amount);
         URLParams.put("bind_id", bind_id);
 
-        HttpTool.httpPost(baseUrl + "user/cash", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
+        HttpTool.httpPost((new StringBuffer(baseUrl).append("user/cash")).toString(), URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
     public void sendBindCard(final String access_token, final String card, final String bank_id, Class<T>service, Listener callbackListener) {
@@ -181,11 +182,11 @@ public class HttpMsg<T>{
         URLParams.put("bank_id", bank_id);
         URLParams.put("card", card);
 
-        HttpTool.httpPost(baseUrl + "user/addbank", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
+        HttpTool.httpPost((new StringBuffer(baseUrl).append("user/addbank")).toString(), URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
     public void sendSuportBankList(final String access_token, Class<T>service, Listener callbackListener) {
-        HttpTool.httpPost(baseUrl + "user/sysbanks", null, new HttpMsg().getListener(service, callbackListener), access_token);
+        HttpTool.httpPost((new StringBuffer(baseUrl).append("user/sysbanks")).toString(), null, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
     public void sendTradings(final String access_token, final String type, final String page_num, Class<T>service, Listener callbackListener) {
@@ -193,11 +194,11 @@ public class HttpMsg<T>{
         URLParams.put("page_num", page_num);
         URLParams.put("type", type);
 
-        HttpTool.httpPost(baseUrl + "user/traderecord", URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
+        HttpTool.httpPost((new StringBuffer(baseUrl).append("user/traderecord")).toString(), URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
     public void sendGetName() {
-        HttpTool.sendGet(baseUrl + "match/stage", new HttpMsg().getListener(MapBean.class, new HttpMsg.Listener(){
+        HttpTool.sendGet((new StringBuffer(baseUrl).append("user/stage")).toString(), new HttpMsg().getListener(MapBean.class, new HttpMsg.Listener(){
             @Override
             public void onFinish(Object _res) {
                 MapBean res = (MapBean) _res;

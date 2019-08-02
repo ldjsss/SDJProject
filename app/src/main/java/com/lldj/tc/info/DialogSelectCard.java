@@ -2,6 +2,7 @@ package com.lldj.tc.info;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,6 +22,7 @@ import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
 import com.lldj.tc.http.beans.BankBean;
 import com.lldj.tc.toolslibrary.event.ObData;
+import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
 import com.lldj.tc.utils.EventType;
@@ -84,7 +86,12 @@ public class DialogSelectCard extends BaseDialog {
                 }
             });
 
-            if(bank.getLogo() > 0) ((ImageView)addView.findViewById(R.id.bankicon)).setImageResource(bank.getLogo());
+            HttpTool.getBitmapUrl(bank.getLogo(), new HttpTool.bmpListener() {
+                @Override
+                public void onFinish(Bitmap bitmap) {
+                    if (bitmap != null) ((ImageView)addView.findViewById(R.id.bankicon)).setImageBitmap(bitmap);
+                }
+            });
         }
 
         if(!add) return;
