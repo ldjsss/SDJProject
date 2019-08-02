@@ -180,10 +180,14 @@
         <item name="android:windowNoTitle">true</item>
         <!--dialog之外没有焦点的区域是否罩上黑色半透明-->
         <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:background">@color/color_bg</item>
+        <item name="android:windowFrame">@null</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColorPrimary">@color/white</item>
+
+        <!--<item name="android:background">#00000000</item>-->
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--<item name="android:colorBackgroundCacheHint">@null</item>-->
     </style>
 
 

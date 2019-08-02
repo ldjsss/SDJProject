@@ -68,7 +68,7 @@ public class DialogSelectCard extends BaseDialog {
             View addView = View.inflate(context, R.layout.bankcelllayout, null);
             addView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             addlayout.addView(addView);
-            Log.e("---addlayout.height = " + addlayout.getLayoutParams().height, "--addparlayout.height = " + addparlayout.getLayoutParams().height);
+//            Log.e("---addlayout.height = " + addlayout.getLayoutParams().height, "--addparlayout.height = " + addparlayout.getLayoutParams().height);
             if(addlayout.getLayoutParams().height > addparlayout.getLayoutParams().height) addlayout.getLayoutParams().height = addparlayout.getLayoutParams().height;
 
             BankBean.BankModel bank = _list.get(i);

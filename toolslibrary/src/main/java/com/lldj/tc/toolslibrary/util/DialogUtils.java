@@ -12,7 +12,6 @@ import com.lldj.tc.toolslibrary.R;
 
 /**
  * 对话框创建
- * Created by itbird on 2017/3/6
  */
 public final class DialogUtils {
 

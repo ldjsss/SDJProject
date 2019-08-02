@@ -22,7 +22,6 @@ import java.util.Locale;
 /**
  * 文件操作
  *
- * @author wlj
  */
 public class FileUtil {
     private static FileUtil instance;

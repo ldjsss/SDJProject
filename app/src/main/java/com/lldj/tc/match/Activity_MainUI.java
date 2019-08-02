@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -26,6 +27,8 @@ import com.lldj.tc.http.beans.MapBean;
 import com.lldj.tc.info.Dialog_Set;
 import com.lldj.tc.login.Activity_Login;
 import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.toolslibrary.util.DisplayUtil;
+import com.lldj.tc.toolslibrary.view.CustomDialog;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
@@ -156,42 +159,24 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
         DialogManager.getInstance().removeAll();
     }
 
-    private void guestWarm(){
+    private void guestWarm() {
 
-        AlertDialog dialog = new AlertDialog.Builder(this, R.style.MyDialogStyle)
-//                .setTitle("我是Title")
-                .setMessage(getResourcesString(R.string.cannotbet))
-                .setPositiveButton(getResourcesString(R.string.sure), null)
-                .setNegativeButton(getResourcesString(R.string.btncancle), null)
-                .create();
-        dialog.show();
-        try {
-            Field mAlert = AlertDialog.class.getDeclaredField("mAlert");
-            mAlert.setAccessible(true);
-            Object mController = mAlert.get(dialog);
-            Field mMessage = mController.getClass().getDeclaredField("mMessageView");
-            mMessage.setAccessible(true);
-            TextView mMessageView = (TextView) mMessage.get(mController);
-            mMessageView.setTextColor(Color.WHITE);//message样式修改成红色
-            Field mTitle = mController.getClass().getDeclaredField("mTitle");
-            mMessage.setAccessible(true);
-            TextView mTitleView = (TextView) mMessage.get(mController);
-            mMessageView.setTextColor(Color.WHITE);//title样式修改成``色
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-        final Button pButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);//确认按键
-        pButton.setTextColor(Color.WHITE);
-        pButton.setOnClickListener(new View.OnClickListener() {
+        CustomDialog customDialog = new CustomDialog(this);
+        customDialog.setTitle(getResourcesString(R.string.app_name));
+        customDialog.setMessage(getResourcesString(R.string.cannotbet));
+        customDialog.setCancel(getResourcesString(R.string.btncancle), new CustomDialog.IOnCancelListener() {
             @Override
-            public void onClick(View v) {
+            public void onCancel(CustomDialog dialog) {
+            }
+        });
+        customDialog.setConfirm(getResourcesString(R.string.sure), new CustomDialog.IOnConfirmListener(){
+            @Override
+            public void onConfirm(CustomDialog dialog) {
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEAVEGAME);
             }
         });
-        Button nButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);//取消
-        nButton.setTextColor(Color.WHITE);
+        customDialog.show();
+
     }
 
 }

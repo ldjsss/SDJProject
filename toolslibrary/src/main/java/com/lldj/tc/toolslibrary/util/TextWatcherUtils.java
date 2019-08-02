@@ -11,8 +11,6 @@ import com.lldj.tc.toolslibrary.view.ToastUtils;
 
 /**
  * Description: 文字监听
- * Author: wang
- * Time: 2017/7/10 11:08
  */
 public class TextWatcherUtils implements TextWatcher {
     private EditText mEditText;
