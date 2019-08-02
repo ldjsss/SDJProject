@@ -30,6 +30,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
+
 /* 创建一个新的类 HttpTool，将公共的操作抽象出来
  * 为了避免调用sendRequest方法时需实例化，设置为静态方法
  * 传入msgListener对象为了方法回调
@@ -44,7 +46,7 @@ public class HttpTool {
 
 
     public static void sendGet(final String url, final msgListener listener, final String token) {
-        Clog.e("url", url);
+        if(DEBUG)Clog.e("url", url);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -78,7 +80,7 @@ public class HttpTool {
                             buffer.append(temp);
                             buffer.append("\n");
                         }
-//                        Log.w("HTTP", "buffer" + buffer.toString());
+                        if(DEBUG)Log.w("HTTP", "buffer" + buffer.toString());
 
                         in.close();
                     }
@@ -182,8 +184,10 @@ public class HttpTool {
             @Override
             public void run() {
                 HttpURLConnection httpURLConnection = null;
-                System.out.println("url:" + url);
-                System.out.println("params:" + params);
+                if(DEBUG) {
+                    System.out.println("url:" + url);
+                    System.out.println("params:" + params);
+                }
                 try {
                     URL _url = new URL(url);
                     httpURLConnection = (HttpURLConnection) _url.openConnection();

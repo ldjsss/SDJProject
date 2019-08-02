@@ -173,7 +173,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                         TextView playcellselect0 = (TextView) view.findViewById(R.id.playcellselect0);
                         updateArrow(odd1, oMap.get(_id), tv_odds, view.findViewById(R.id.playdetailarrowicon0));
                         oMap.put(_id, _oddstring);
-                        setSelect(playcellselect0, _id + "");
+                        setSelect(playcellselect0, String.valueOf(_id));
                         if (_statue == 1) { //normal
                             im_lock.setVisibility(View.GONE);
                             if (_oddstring.equals("")) {
@@ -187,7 +187,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                                 @Override
                                 public void onClick(View v) {
                                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
-                                    betClick(tData, odd1.getId() + "");
+                                    betClick(tData, String.valueOf(odd1.getId()));
                                 }
                             });
                         } else if (_statue == 2) { //lock
@@ -223,7 +223,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                             TextView playcellselect1 = (TextView) view.findViewById(R.id.playcellselect1);
                             updateArrow(odd2, oMap.get(_id2), tv_odds, view.findViewById(R.id.playdetailarrowicon1));
                             oMap.put(_id2, _oddstring);
-                            setSelect(playcellselect1, _id2 + "");
+                            setSelect(playcellselect1, String.valueOf(_id2));
                             if (_statue == 1) { //normal
                                 im_lock.setVisibility(View.GONE);
                                 if (_oddstring.equals("")) {
@@ -237,7 +237,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                                     @Override
                                     public void onClick(View v) {
                                         HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
-                                        betClick(tData, odd2.getId() + "");
+                                        betClick(tData, String.valueOf(odd2.getId()));
                                     }
                                 });
                             } else if (_statue == 2) { //lock

@@ -64,6 +64,7 @@ import java.util.regex.Pattern;
 import static android.content.Context.TELEPHONY_SERVICE;
 
 public class AppUtils {
+    public static boolean DEBUG = false;
     private static final AppUtils ourInstance = new AppUtils();
 
     public static AppUtils getInstance() {

@@ -19,6 +19,8 @@ import com.lldj.tc.toolslibrary.util.Clog;
 
 import java.util.ArrayList;
 
+import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
+
 
 public abstract class BaseFragment extends Fragment {
 
@@ -49,7 +51,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Log.d("dd", "setUserVisibleHint() -> isVisibleToUser: " + isVisibleToUser);
+        if(DEBUG)Log.d("dd", "setUserVisibleHint() -> isVisibleToUser: " + isVisibleToUser);
         if (rootView == null) {
             return;
         }
@@ -153,13 +155,13 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Clog.d(getClass().getSimpleName(), "onStop");
+        if(DEBUG)Clog.d(getClass().getSimpleName(), "onStop");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Clog.d(getClass().getSimpleName(), "onDestroy");
+        if(DEBUG)Clog.d(getClass().getSimpleName(), "onDestroy");
 
         for (int i = 0; i < eventList.size(); i++) {
             AppUtils.unregisterEvent(eventList.get(i));

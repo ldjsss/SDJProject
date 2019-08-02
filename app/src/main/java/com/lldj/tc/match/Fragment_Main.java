@@ -46,6 +46,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 
+import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
+import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
+
 /**
  * main ui
  */
@@ -135,7 +138,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                 fragment_Banner.setArguments(bundle);
             }
 
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            FragmentTransaction transaction = bActivity.getSupportFragmentManager().beginTransaction();  //It's a compatibility issue, avoid warnings so don't use getFragmentManager()
             transaction.add(1000 + ViewType, fragment_Calendar != null ? fragment_Calendar : fragment_Banner);
             transaction.commit();
         }
@@ -144,7 +147,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 
     @Override
     public void onRefresh() {
-        Clog.e("onRefresh", "onRefresh = " + ViewType);
+        if(DEBUG)Clog.e("onRefresh", "onRefresh = " + ViewType);
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
         getMatchData();
 
@@ -160,10 +163,10 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
            else fragment_Banner.stopViewAnimator();
        }
         if (isVisible) {
-            Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
+            if(DEBUG) Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
             onRefresh();
         } else {
-            Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
+            if(DEBUG)Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
             stopUpdate();
         }
     }
@@ -289,7 +292,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     @Override
     public void onPause() {
         super.onPause();
-        Clog.e("onPause", "onPause = " + ViewType);
+        if(DEBUG)Clog.e("onPause", "onPause = " + ViewType);
         stopUpdate();
 
         if(fragment_Banner != null){
@@ -300,7 +303,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     @Override
     public void onResume() {
         super.onResume();
-        Clog.e("onResume", "onResume = " + ViewType);
+        if(DEBUG)Clog.e("onResume", "onResume = " + ViewType);
         startUpdate();
 
         if(fragment_Banner != null && _visible){

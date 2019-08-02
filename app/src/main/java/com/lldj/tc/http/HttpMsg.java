@@ -24,6 +24,8 @@ import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
+
 public class HttpMsg<T>{
     private static final HttpMsg ourInstance = new HttpMsg();
     public static HttpMsg getInstance() {
@@ -47,7 +49,7 @@ public class HttpMsg<T>{
         return new HttpTool.msgListener(){
             @Override
             public void onFinish(int code, String msg) {
-//                System.out.println("ret:" + code + " msg:" + msg);
+                if(DEBUG)System.out.println("ret:" + code + " msg:" + msg);
                 if(code == HttpURLConnection.HTTP_OK) {
                     Object data = new Gson().fromJson(msg, service);
                     listener.onFinish(data);
@@ -139,11 +141,15 @@ public class HttpMsg<T>{
     }
 
     public void sendGetMatchList(int type, int page_num, String game_ids, Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(baseUrl + "match/type/" + type + "?page_num=" + page_num + game_ids, new HttpMsg().getListener(service, callbackListener), null);
+        StringBuffer buffer = new StringBuffer(baseUrl);
+        buffer.append(String.format("match/type/%s?page_num=%s%s", type, page_num, game_ids));
+        HttpTool.sendGet(buffer.toString(), new HttpMsg().getListener(service, callbackListener), null);
     }
 
     public void sendGetMatchDetial(int matchID, Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(baseUrl + "match/detail/" + matchID, new HttpMsg().getListener(service, callbackListener), null);
+        StringBuffer buffer = new StringBuffer(baseUrl);
+        buffer.append(String.format("match/detail/%s", matchID));
+        HttpTool.sendGet(buffer.toString(), new HttpMsg().getListener(service, callbackListener), null);
     }
 
     public void sendBetList(final String access_token, final String json, Class<T>service, Listener callbackListener){

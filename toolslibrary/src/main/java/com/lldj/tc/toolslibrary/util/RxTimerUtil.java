@@ -10,6 +10,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
+import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
+
 /**
  * Description: 计时器
  */
@@ -35,7 +37,7 @@ public class RxTimerUtil {
                     @Override
                     public void onNext(@NonNull Long number) {
                         if (next != null) {
-                            Log.e("====开始执行定时器======", "====开始执行定时器======");
+                            if(DEBUG)Log.e("====开始执行定时器======", "====开始执行定时器======");
                             next.doNext(number);
                         }
                     }
@@ -101,7 +103,7 @@ public class RxTimerUtil {
     public static void cancel() {
         if (mDisposable != null && !mDisposable.isDisposed()) {
             mDisposable.dispose();
-            Clog.e("====定时器取消======", "====定时器取消======");
+            if(DEBUG)Clog.e("====定时器取消======", "====定时器取消======");
         }
     }
 

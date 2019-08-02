@@ -55,6 +55,8 @@ import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 import io.reactivex.disposables.Disposable;
 
+import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
+
 public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.LScrollListener {
     @BindView(R.id.toolbar_back_iv)
     ImageView toolbarBackIv;
@@ -212,7 +214,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             public void onFinish(Object _res) {
                 JsonBean res = (JsonBean) _res;
                 if (res.getCode() == GlobalVariable.succ) {
-                    _matchData = (ResultsModel) res.getResult();
+                    _matchData = res.getResult();
 
                     ResultsModel _data = _matchData;
                     if (_data == null || _data.getTeam().size() < 2) {
@@ -222,12 +224,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
                     Team team0 = _data.getTeam() != null ? _data.getTeam().get(0) : null;
                     Team team1 = _data.getTeam() != null ? _data.getTeam().get(1) : null;
-                    List<Odds> odds = _data.getOdds() != null ? (List<Odds>) _data.getOdds() : null;
+                    List<Odds> odds = _data.getOdds() != null ? _data.getOdds() : null;
                     int status = _data.getStatus();
 
                     gamename.setText(_data.getTournament_name());
-                    gamenamecount.setText("/ " + _data.getRound());
-                    gameplaycount.setText("+" + _data.getPlay_count());
+                    gamenamecount.setText(String.format("/ %s", _data.getRound()));
+                    gameplaycount.setText(String.format("+%s", _data.getPlay_count()));
                     playnamecommon0.setText(team0.getTeam_short_name());
                     playnamecommon1.setText(team1.getTeam_short_name());
                     playvidoname0.setText(team0.getTeam_short_name());
@@ -238,8 +240,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
                     gamestatus1.setText((status == 2 || status == 3) ? "" : AppUtils.getFormatTime4(_data.getStart_time_ms()));
 
-                    String oneWin = team0.getScore().getTotal() + "";
-                    String twoWin = team1.getScore().getTotal() + "";
+                    String oneWin = String.valueOf(team0.getScore().getTotal());
+                    String twoWin = String.valueOf(team1.getScore().getTotal());
                     matchwin0.setText(oneWin);
                     matchwin1.setText(twoWin);
                     vidowin0.setText(oneWin);
@@ -359,7 +361,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     int tabPosition = tab.getPosition();
-                    Log.e("onTabSelected", tabPosition + "");
+                    if(DEBUG)Log.e("onTabSelected", tabPosition + "");
                     select = true;
                     if (tabPosition == 0) layoutManager.scrollToPosition(0);
                     else layoutManager.scrollToPosition(tabPosition * 2 + 1);
@@ -378,12 +380,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
     @Override
     public void onScrollUp() {
-        Log.e("onScrollUp", "onScrollUp");
+        if(DEBUG)Log.e("onScrollUp", "onScrollUp");
     }
 
     @Override
     public void onScrollDown() {
-        Log.e("onScrollDown", "onScrollDown");
+        if(DEBUG) Log.e("onScrollDown", "onScrollDown");
     }
 
     @Override
@@ -395,7 +397,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     @Override
     public void onScrolled(int distanceX, int distanceY) {
         int pos = layoutManager.findFirstVisibleItemPosition();
-        Log.e("pos", pos + "  distanceY = " + distanceY);
+        if(DEBUG)Log.e("pos", pos + "  distanceY = " + distanceY);
         if (distanceY <= 0) pos = 0;
         else if (tabLayout != null && select == false)
             tabLayout.setScrollPosition((pos) / 2, 0, false);
@@ -428,7 +430,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getResources().getString(R.string.nogamelooking), ToastUtils.LENGTH_SHORT);
             return;
         }
-        System.out.println("url:" + _matchData.getLive_url());
+        if(DEBUG)System.out.println("url:" + _matchData.getLive_url());
 //        String s3 = "http://v.yongjiujiexi.com/20180304/B0cYHQvY/index.m3u8";
 //        videoplayer.setUp(s3, JZVideoPlayerStandard.NORMAL_ORIENTATION, _matchData.getTournament_name() + "/" + _matchData.getMatch_short_name());
         videoplayer.setUp(_matchData.getLive_url(), JZVideoPlayerStandard.NORMAL_ORIENTATION, _matchData.getTournament_name() + "/" + _matchData.getMatch_short_name());
