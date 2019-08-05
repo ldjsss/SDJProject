@@ -244,8 +244,8 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                         return (int)(o1.getStart_time_ms() - o2.getStart_time_ms());
                     });
 
-                    if(page_num >= pages){
-                        for (int i = 0; i < 3; i++) {
+                    if(page_num >= pages){ //Add blank items
+                        for (int i = 0; i < 2; i++) {
                             alist.add(new ResultsModel( -1, "", "", page_num));
                         }
                     }

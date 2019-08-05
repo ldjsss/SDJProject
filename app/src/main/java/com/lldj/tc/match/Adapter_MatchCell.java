@@ -168,9 +168,9 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                         ((TextView) view.findViewById(R.id.playovername0)).setText(TextUtils.isEmpty(odd1.getName()) ? "unknown" : odd1.getName());
                         String _oddstring = odd1.getOdds();
 
-                        TextView tv_odds = (TextView) view.findViewById(R.id.playbetnum0);
-                        ImageView im_lock = (ImageView) view.findViewById(R.id.playlockicon0);
-                        TextView playcellselect0 = (TextView) view.findViewById(R.id.playcellselect0);
+                        TextView tv_odds = view.findViewById(R.id.playbetnum0);
+                        ImageView im_lock = view.findViewById(R.id.playlockicon0);
+                        TextView playcellselect0 = view.findViewById(R.id.playcellselect0);
                         updateArrow(odd1, oMap.get(_id), tv_odds, view.findViewById(R.id.playdetailarrowicon0));
                         oMap.put(_id, _oddstring);
                         setSelect(playcellselect0, String.valueOf(_id));
@@ -183,7 +183,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                                 tv_odds.setVisibility(View.VISIBLE);
                             }
 
-                            ((RelativeLayout) view.findViewById(R.id.playcelllayout0)).setOnClickListener(new View.OnClickListener() {
+                            view.findViewById(R.id.playcelllayout0).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
@@ -202,7 +202,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
                         //set player 1 win icon
                         String _win = odd1.getWin();
-                        ImageView iv_win = (ImageView) view.findViewById(R.id.playvictoryicon0);
+                        ImageView iv_win = view.findViewById(R.id.playvictoryicon0);
                         if (_win == null || _win.equals("") || Integer.parseInt(_win) < 0) {
                             iv_win.setVisibility(View.GONE);
                         } else {
@@ -218,9 +218,9 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
                             ((TextView) view.findViewById(R.id.playovername1)).setText(TextUtils.isEmpty(odd2.getName()) ? "unknown" : odd2.getName());
 
-                            tv_odds = (TextView) view.findViewById(R.id.playbetnum1);
-                            im_lock = (ImageView) view.findViewById(R.id.playlockicon1);
-                            TextView playcellselect1 = (TextView) view.findViewById(R.id.playcellselect1);
+                            tv_odds = view.findViewById(R.id.playbetnum1);
+                            im_lock = view.findViewById(R.id.playlockicon1);
+                            TextView playcellselect1 = view.findViewById(R.id.playcellselect1);
                             updateArrow(odd2, oMap.get(_id2), tv_odds, view.findViewById(R.id.playdetailarrowicon1));
                             oMap.put(_id2, _oddstring);
                             setSelect(playcellselect1, String.valueOf(_id2));
@@ -233,7 +233,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                                     tv_odds.setVisibility(View.VISIBLE);
                                 }
 
-                                ((RelativeLayout) view.findViewById(R.id.playcelllayout1)).setOnClickListener(new View.OnClickListener() {
+                                view.findViewById(R.id.playcelllayout1).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
@@ -278,12 +278,9 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
         private void updateArrow(Odds odd, String _last, TextView betText, ImageView imggamearrow){
             if(odd == null || betText == null) return;
             int _status     = odd.getStatus();
-//            String _last    = (String)betText.getText();
-//            int _tag        = betText.getTag() == null ? -1 : (int)betText.getTag();
             String _current = odd.getOdds();
 
             if( _status == 1
-//                    && _tag == odd.getMatch_id()
                     && !TextUtils.isEmpty(_last)
                     && !TextUtils.isEmpty(_current)
                     && !_last.equalsIgnoreCase(_current)){
