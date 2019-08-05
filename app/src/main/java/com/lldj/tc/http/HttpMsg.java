@@ -195,7 +195,7 @@ public class HttpMsg<T>{
     }
 
     public void sendGetName() {
-        HttpTool.sendGet((new StringBuffer(baseUrl).append("user/stage")).toString(), new HttpMsg().getListener(MapBean.class, new HttpMsg.Listener(){
+        HttpTool.sendGet((new StringBuffer(baseUrl).append("match/stage")).toString(), new HttpMsg().getListener(MapBean.class, new HttpMsg.Listener(){
             @Override
             public void onFinish(Object _res) {
                 MapBean res = (MapBean) _res;

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorService">#8e6c37</color>
+    <color name="colorService">#fffde3</color>
     <color name="color_ebe3d7">#ebe3d7</color>
     <color name="color_544a36">#544a36</color>
-    <color name="color_8e6c37">#8e6c37</color>
-    <color name="color_1a1c26">#1a1c26</color>
-    <color name="color_cdc3b3">#cdc3b3</color>
+    <color name="color_8e6c37">#717067</color>
+    <color name="color_1a1c26">#121212</color>
+    <color name="color_cdc3b3">#f1e5d7</color>
     <color name="color_34384a">#34384a</color>
-    <color name="color_bg">#34384a</color>
-    <color name="color_262935">#262935</color>
+    <color name="color_bg">#121212</color>
+    <color name="color_262935">#1f1f1f</color>
     <color name="color_a09584">#a09584</color>
     <color name="color_betbtnbg">#2D2928</color>
     <color name="color_21212a">#21212a</color>

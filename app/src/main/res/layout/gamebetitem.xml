@@ -74,10 +74,11 @@
     </RelativeLayout>
 
 
-    <RelativeLayout
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
+        android:orientation="vertical"
         android:layout_weight = "1">
 
         <ImageView
@@ -86,20 +87,24 @@
             android:background="@mipmap/match_status_0"
             android:id="@+id/gamestatusicon"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="3dp"/>
+            android:layout_gravity="center_horizontal"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
 
         <TextView
             android:id="@+id/gamestatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:textColor="@color/color_8e6c37"
             android:text="@string/matchStatusFront"
             android:layout_below="@+id/gamestatusicon"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="0dp"
-            />
-    </RelativeLayout>
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="140dp"
