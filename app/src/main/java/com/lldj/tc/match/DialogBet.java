@@ -133,7 +133,7 @@ public class DialogBet extends BaseDialog {
             }
         });
 
-        moneyhave.setText(context.getResources().getString(R.string.moneyHave) + SharePreUtils.getMoney(context));
+        moneyhave.setText(String.format(context.getResources().getString(R.string.moneyHave), SharePreUtils.getMoney(context)));
 
     }
 
@@ -172,7 +172,7 @@ public class DialogBet extends BaseDialog {
 
     private void update() {
         ObData _data = new ObData(EventType.BETCHANGE, betList);
-        _data.setTag(groups.size() + "");
+        _data.setTag(String.valueOf(groups.size()));
         AppUtils.dispatchEvent(_data);
 
         AppUtils.dispatchEvent(new ObData(EventType.SELECTGROUPS, groups));
@@ -182,7 +182,7 @@ public class DialogBet extends BaseDialog {
             return;
         }
 
-        gamebettotalcount.setText(groups.size() + "");
+        gamebettotalcount.setText(String.valueOf(groups.size()));
 
         if (_oneHeight <= 0) {
             View countview = LayoutInflater.from(getContext()).inflate(R.layout.item_group, null);
@@ -275,20 +275,20 @@ public class DialogBet extends BaseDialog {
                 return convertView;
             }
 
-            TextView tv_group = (TextView) convertView.findViewById(R.id.betinput_et);
-            tv_group.setText(betinfo == null ? "" : betinfo.getAmount() + "");
+            TextView tv_group = convertView.findViewById(R.id.betinput_et);
+            tv_group.setText(betinfo == null ? "" : String.valueOf(betinfo.getAmount()));
 
-            TextView tv_groupName = (TextView) convertView.findViewById(R.id.tv_groupgame);
+            TextView tv_groupName = convertView.findViewById(R.id.tv_groupgame);
             tv_groupName.setText(TextUtils.isEmpty(odd.getName()) ? "unkonw" : odd.getName());
 
-            TextView tv_groupplays = (TextView) convertView.findViewById(R.id.tv_groupplays);
+            TextView tv_groupplays =  convertView.findViewById(R.id.tv_groupplays);
             tv_groupplays.setText(odd.getGroup_name());
 
-            TextView tv_groupteams = (TextView) convertView.findViewById(R.id.tv_groupteams);
+            TextView tv_groupteams = convertView.findViewById(R.id.tv_groupteams);
             tv_groupteams.setText(_data.getMatch_name());
 
-            TextView betpercent = (TextView) convertView.findViewById(R.id.betpercent);
-            String _str = "@" + odd.getOdds();
+            TextView betpercent = convertView.findViewById(R.id.betpercent);
+            String _str = String.format("@%s", odd.getOdds());
             String _ltext = betpercent.getText().toString();
             if(!TextUtils.isEmpty(_ltext) && !betpercent.getText().equals(_str)){
                 betwarmlayout.setVisibility(View.VISIBLE);
@@ -324,9 +324,9 @@ public class DialogBet extends BaseDialog {
         }
 
         private Odds getTeamOddsByID(ResultsModel _data, String ID) {
-            for (int i = 0; i < ((List<Odds>) _data.getOdds()).size(); i++) {
-                if (((List<Odds>) _data.getOdds()).get(i).getId() == Integer.parseInt(ID))
-                    return ((List<Odds>) _data.getOdds()).get(i);
+            for (int i = 0; i < _data.getOdds().size(); i++) {
+                if (_data.getOdds().get(i).getId() == Integer.parseInt(ID))
+                    return _data.getOdds().get(i);
             }
 
             return null;
@@ -341,8 +341,7 @@ public class DialogBet extends BaseDialog {
             }
 
             for (int i = 0; i < 13; i++) {
-                TextView tv_child = (TextView) convertView.findViewWithTag("tv" + i);
-
+                TextView tv_child = convertView.findViewWithTag(String.format("tv%s", i));
                 tv_child.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -375,12 +374,12 @@ public class DialogBet extends BaseDialog {
             }
 
             String _tag = tag.substring(2, tag.length());
-            String text = betinfo != null ? betinfo.getAmount() + "" : "";
+            String text = betinfo != null ? String.valueOf(betinfo.getAmount()) : "";
 //            Clog.e("btnClick", "groupPosition" + groupPosition + "tag" + _tag);
 
             switch (_tag) {
                 case "10":
-                    text = odd.getBet_max() + "";
+                    text = String.valueOf(odd.getBet_max());
                     break;
                 case "11":
                     if (TextUtils.isEmpty(text)) return;
@@ -398,7 +397,7 @@ public class DialogBet extends BaseDialog {
                     break;
                 default:
                     if (TextUtils.isEmpty(text) && _tag.equalsIgnoreCase("0")) return;
-                    text = text + _tag;
+                    text = String.format("%s%s", text, _tag);
                     break;
             }
 
@@ -432,7 +431,7 @@ public class DialogBet extends BaseDialog {
                     if (result == null) return;
                     for (int i = 0; i < result.size(); i++) {
                         for (int j = 0; j < groups.size(); j++) {
-                            if (groups.get(j).getTag().equalsIgnoreCase(result.get(i).getId() + "")) {
+                            if (groups.get(j).getTag().equalsIgnoreCase(String.valueOf(result.get(i).getId()))) {
                                 ResultsModel _data = (ResultsModel) groups.get(j).getValue();
                                 for (int k = 0; k < _data.getOdds().size(); k++) {
                                     if (_data.getOdds().get(k).getId() == result.get(i).getId()) {

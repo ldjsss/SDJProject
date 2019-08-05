@@ -217,12 +217,11 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             if(_data == null) return;
             Odds odds = getOddData(_data.getOdds(), _tag);
             if( _data.getOdds() == null || _data.getOdds().size() < 1 || odds == null || odds.getStatus() != 1){
-//                Toast.makeText(mContext, mContext.getResources().getString(R.string.unbet), Toast.LENGTH_SHORT).show();
                 goDetial(_data.getId());
                 return;
             }
 
-            AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, _data, odds.getId()+""));
+            AppUtils.dispatchEvent(new ObData(EventType.BETLISTADD, _data, String.valueOf(odds.getId())));
         }
 
         private void goDetial(int id){
@@ -234,7 +233,6 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
         public void bottomCommon(int _type) {
             int _dataPos = getAdapterPosition() - 1;
-//            Log.e("--------- _dataPos = " + _dataPos, "");
 
             ResultsModel _data = mlist.get(_dataPos);
             if(_data == null || _data.getId() <= 0) {
@@ -244,8 +242,8 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             gamebg.setAlpha(1.0f);
 
             gamename.setText(_data.getTournament_name());
-            gamenamecount.setText("/ " + _data.getRound());
-            gameplaycount.setText("+" + _data.getPlay_count());
+            gamenamecount.setText(String.format("/ %s", _data.getRound()));
+            gameplaycount.setText(String.format("+%s", _data.getPlay_count()));
             gametime.setText(AppUtils.getFormatTime5(_data.getStart_time_ms()));
 
             if(_gamelist != null) {
@@ -315,7 +313,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                 });
             }
 
-            gameresult.setText(team0.getScore().getTotal() + " - " + team1.getScore().getTotal());
+            gameresult.setText(String.format("%s - %s", team0.getScore().getTotal(), team1.getScore().getTotal()));
 
             Odds odd0 = getOddData(odds, team0.getTeam_id());
             Odds odd1 = getOddData(odds, team1.getTeam_id());
@@ -328,7 +326,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
                 groupname.setText(odd0.getGroup_name());
                 String _name = mapNames.get(_stage);
-                matchstage.setText(TextUtils.isEmpty(_name) ? _stage : _name);
+                matchstage.setText(String.format("| %s", TextUtils.isEmpty(_name) ? _stage : _name));
 
                 updateArrow(odd0, oMap.get(_id), gamebet0, imggamearrow0);
                 oMap.put(_id, _oddstring);
@@ -343,7 +341,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                     playnamecommon0.setVisibility(View.VISIBLE);
                     playname0.setText("");
                 }
-                else if(_status == 4){
+                else if(_status >= 4){
                     gamebetlayout0.setVisibility(View.GONE);
                     playnamecommon0.setVisibility(View.GONE);
                     playname0.setVisibility(View.VISIBLE);
@@ -374,7 +372,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                     playnamecommon1.setVisibility(View.VISIBLE);
                     playname1.setText("");
                 }
-                else if(_status == 4){
+                else if(_status >= 4){
                     gamebetlayout1.setVisibility(View.GONE);
                     playnamecommon1.setVisibility(View.GONE);
                     playname1.setVisibility(View.VISIBLE);
@@ -440,8 +438,8 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             if(groups != null) {
                 Object _tag = playname0.getTag(R.id.tag_first);
                 Object _tag1 = playname1.getTag(R.id.tag_first);
-                if(_tag != null && groups.get(_tag + "") != null) _select = true;
-                if(_tag1 != null && groups.get(_tag1 + "") != null) _select1 = true;
+                if(_tag != null && groups.get(String.valueOf(_tag)) != null) _select = true;
+                if(_tag1 != null && groups.get(String.valueOf(_tag1)) != null) _select1 = true;
             }
             playname0.setBackground(mContext.getResources().getDrawable(_select ? R.drawable.mathbetselectbg: R.drawable.mathbetbg));
             playname1.setBackground(mContext.getResources().getDrawable(_select1 ? R.drawable.mathbetselectbg: R.drawable.mathbetbg));

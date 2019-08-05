@@ -1,13 +1,10 @@
 package com.lldj.tc.match;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,12 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
-import com.lldj.tc.http.beans.MatchBean;
 import com.lldj.tc.http.beans.PageMatchBean;
-import com.lldj.tc.toolslibrary.view.ToastUtils;
-import com.lldj.tc.utils.EventType;
-import com.lldj.tc.utils.GlobalVariable;
-import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
@@ -34,10 +26,12 @@ import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.GlobalVariable;
+import com.lldj.tc.utils.HandlerType;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -147,7 +141,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 
     @Override
     public void onRefresh() {
-        if(DEBUG)Clog.e("onRefresh", "onRefresh = " + ViewType);
+        if(DEBUG)Clog.e("onRefresh", String.format("onRefresh = %s", ViewType));
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
         getMatchData();
 
@@ -163,10 +157,10 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
            else fragment_Banner.stopViewAnimator();
        }
         if (isVisible) {
-            if(DEBUG) Clog.e("onFragmentVisibleChange", "isVisible = " + ViewType);
+            if(DEBUG)Clog.e("onFragmentVisibleChange", String.format("isVisible = %s", ViewType));
             onRefresh();
         } else {
-            if(DEBUG)Clog.e("onFragmentVisibleChange", "ishide = " + ViewType);
+            if(DEBUG)Clog.e("onFragmentVisibleChange", String.format("ishide = %s", ViewType));
             stopUpdate();
         }
     }
@@ -256,7 +250,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, page_size, LoadingFooter.State.Normal, null);
                 }
 
-                AppUtils.dispatchEvent(new ObData(EventType.MATCHCOUNT, total, ViewType + ""));
+                AppUtils.dispatchEvent(new ObData(EventType.MATCHCOUNT, total, String.valueOf(ViewType)));
 
                 subjectLrecycleview.refreshComplete();
             }
@@ -292,7 +286,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     @Override
     public void onPause() {
         super.onPause();
-        if(DEBUG)Clog.e("onPause", "onPause = " + ViewType);
+        if(DEBUG)Clog.e("onPause", String.format("onPause = %s", ViewType));
         stopUpdate();
 
         if(fragment_Banner != null){
@@ -303,7 +297,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     @Override
     public void onResume() {
         super.onResume();
-        if(DEBUG)Clog.e("onResume", "onResume = " + ViewType);
+        if(DEBUG)Clog.e("onResume", String.format("onResume = %s", ViewType));
         startUpdate();
 
         if(fragment_Banner != null && _visible){
