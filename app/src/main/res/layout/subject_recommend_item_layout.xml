@@ -132,14 +132,26 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="| sss"
+                android:textSize="10sp"
+                android:textColor="@color/color_cdc3b3"
+                android:id="@+id/matchstage"/>
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="@string/allwinner"
+                android:text="xxx"
                 android:textSize="10sp"
-                android:textColor="@color/color_cdc3b3" />
+                android:layout_marginStart="@dimen/dp_5"
+                android:textColor="@color/color_cdc3b3"
+                android:id="@+id/groupname"/>
         </LinearLayout>
 
         <View

@@ -162,7 +162,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
 
     private void guestWarm() {
 
-        CustomDialog customDialog = new CustomDialog(this);
+        CustomDialog customDialog = new CustomDialog(this, R.style.MyDialogStyle);
         customDialog.setTitle(getResourcesString(R.string.app_name));
         customDialog.setMessage(getResourcesString(R.string.cannotbet));
         customDialog.setCancel(getResourcesString(R.string.btncancle), new CustomDialog.IOnCancelListener() {

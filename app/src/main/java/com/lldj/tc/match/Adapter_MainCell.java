@@ -59,6 +59,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
     private Map<Integer,ResultsModel > _gamelist;
     private Map<Integer, String> oMap = new HashMap<>();
     private LayoutInflater inflater;
+    private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
 
     public Adapter_MainCell(Context mContext, int _viewType) {
         this.mContext = mContext;
@@ -172,6 +173,11 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
         @BindView(R.id.gamebet1)
         TextView gamebet1;
 
+        @BindView(R.id.matchstage)
+        TextView matchstage;
+        @BindView(R.id.groupname)
+        TextView groupname;
+
 
         public viewHolder(View itemView) {
             super(itemView);
@@ -209,7 +215,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
         private void betAdd(ResultsModel _data, int _tag){
             if(_data == null) return;
-            Odds odds = getOddData(_data.getOdds(), "final", _tag);
+            Odds odds = getOddData(_data.getOdds(), _tag);
             if( _data.getOdds() == null || _data.getOdds().size() < 1 || odds == null || odds.getStatus() != 1){
 //                Toast.makeText(mContext, mContext.getResources().getString(R.string.unbet), Toast.LENGTH_SHORT).show();
                 goDetial(_data.getId());
@@ -311,13 +317,18 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
             gameresult.setText(team0.getScore().getTotal() + " - " + team1.getScore().getTotal());
 
-            Odds odd0 = getOddData(odds, "final", team0.getTeam_id());
-            Odds odd1 = getOddData(odds, "final", team1.getTeam_id());
+            Odds odd0 = getOddData(odds, team0.getTeam_id());
+            Odds odd1 = getOddData(odds, team1.getTeam_id());
 
             if(odd0!=null){
                 int _status = odd0.getStatus();
                 int _id = odd0.getId();
+                String _stage = odd0.getMatch_stage();
                 String _oddstring = odd0.getOdds();
+
+                groupname.setText(odd0.getGroup_name());
+                String _name = mapNames.get(_stage);
+                matchstage.setText(TextUtils.isEmpty(_name) ? _stage : _name);
 
                 updateArrow(odd0, oMap.get(_id), gamebet0, imggamearrow0);
                 oMap.put(_id, _oddstring);
@@ -471,11 +482,10 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             else imggamearrow.setAlpha(0.0f);
         }
 
-        private Odds getOddData(List<Odds> odds, String key, int team_id) {
+        private Odds getOddData(List<Odds> odds, int team_id) {
             if (odds == null) return null;
             for (int i = 0; i < odds.size(); i++) {
-                String _match_stage = odds.get(i).getMatch_stage();
-                if (_match_stage.equalsIgnoreCase(key) && team_id == odds.get(i).getTeam_id()) {
+                if (team_id == odds.get(i).getTeam_id()) {
                     return odds.get(i);
                 }
             }
