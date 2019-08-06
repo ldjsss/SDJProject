@@ -56,7 +56,6 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
     private Map<String, ObData> groups;
     private int total = 0;
 
-    private Map<Integer,ResultsModel > _gamelist;
     private Map<Integer, String> oMap = new HashMap<>();
     private LayoutInflater inflater;
     private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
@@ -67,7 +66,6 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
         statusText = new String[]{"", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.matchCurrentTitle), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
         winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
         inflater = LayoutInflater.from(mContext);
-        _gamelist = SharePreUtils.getInstance().getGamelist();
         groups = Fragment_Main.selectGroups;
     }
 
@@ -246,17 +244,14 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             gameplaycount.setText(String.format("+%s", _data.getPlay_count()));
             gametime.setText(AppUtils.getFormatTime5(_data.getStart_time_ms()));
 
-            if(_gamelist != null) {
-                ResultsModel gameinfo = _gamelist.get(_data.getGame_id());
-                if(gameinfo != null) {
-                    HttpTool.getBitmapUrl(gameinfo.getLogo(), new HttpTool.bmpListener() {
-                        @Override
-                        public void onFinish(Bitmap bitmap) {
-                            if (bitmap != null) gameicon.setImageBitmap(bitmap);
-                        }
-                    });
+
+            HttpTool.getBitmapUrl(_data.getGame_logo(), new HttpTool.bmpListener() {
+                @Override
+                public void onFinish(Bitmap bitmap) {
+                    if (bitmap != null) gameicon.setImageBitmap(bitmap);
                 }
-            }
+            });
+
 
             if(_data.getTeam() == null || _data.getTeam().size() < 2) {
                 Toast.makeText(mContext, "--------service Team data error ", Toast.LENGTH_SHORT).show();

@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.CountBean;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.MatchBean;
 import com.lldj.tc.sharepre.SharePreUtils;
@@ -96,37 +97,12 @@ public class Fragment_ViewPager extends BaseFragment {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 if (data.getKey().equalsIgnoreCase(EventType.MATCHCOUNT)) {
-                    int _viewType = Integer.parseInt(data.getTag());
-                    String _matchNum = _viewType == 3 ? "" : data.getValue() + "";
-                    updateTitle(_viewType, _matchNum);
-                }
-            }
-        });
-
-        HttpMsg.getInstance().sendGetGameList(MatchBean.class, new HttpMsg.Listener() {
-            @Override
-            public void onFinish(Object _res) {
-                MatchBean res = (MatchBean) _res;
-                if (res.getCode() == GlobalVariable.succ) {
-                    List<ResultsModel> list = res.getResult();
-                    if(list == null || list.size() <= 0) return;
-                    int today = 0, cur = 0, front = 0;
-                    for (int i = 0; i < list.size(); i++) {
-                        ResultsModel _model = list.get(i);
-                        today += _model.getToday();
-                        cur += _model.getLive();
-                        front += _model.getEarly();
-                    }
-
-                    updateTitle(0, today+"");
-                    updateTitle(1, cur+"");
-                    updateTitle(2, front+"");
-
-                    Map<Integer,ResultsModel > _map = new HashMap<>();
-                    for (int i = 0; i < list.size(); i++) {
-                        _map.put(list.get(i).getId(), list.get(i));
-                    }
-                    SharePreUtils.getInstance().setGamelist(_map);
+                    CountBean _value = (CountBean)data.getValue();
+                    if(_value == null) return;
+                    CountBean.CountMode _data = (CountBean.CountMode) _value.getResult();
+                    updateTitle(0, String.valueOf(_data.getEarly()));
+                    updateTitle(1, String.valueOf(_data.getLive()));
+                    updateTitle(2, String.valueOf(_data.getToday()));
                 }
             }
         });
@@ -169,7 +145,7 @@ public class Fragment_ViewPager extends BaseFragment {
     public void updateTitle(int index, String title) {
         TabLayout.Tab tab = tabLayout.getTabAt(index);
         if (tab == null) return;
-        TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tab_no_reading_count_tv);
+        TextView textView = tab.getCustomView().findViewById(R.id.tab_no_reading_count_tv);
         if (textView == null) return;
         textView.setText(title);
     }

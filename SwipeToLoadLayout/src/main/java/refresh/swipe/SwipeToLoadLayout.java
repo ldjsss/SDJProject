@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Scroller;
 
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import sun.bo.lin.refresh.R;
 
 

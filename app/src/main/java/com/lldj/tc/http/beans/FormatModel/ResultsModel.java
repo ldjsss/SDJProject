@@ -35,6 +35,7 @@ public class ResultsModel{
     private String logo;
     private String name;
     private String short_name;
+    private String game_logo;
 
     /////////////
 
@@ -71,6 +72,14 @@ public class ResultsModel{
 
     public void setPage_num(int page_num) {
         this.page_num = page_num;
+    }
+
+    public String getGame_logo() {
+        return game_logo;
+    }
+
+    public void setGame_logo(String game_logo) {
+        this.game_logo = game_logo;
     }
 
     private String round;

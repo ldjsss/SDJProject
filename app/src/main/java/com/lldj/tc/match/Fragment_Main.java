@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.CountBean;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.PageMatchBean;
 import com.lldj.tc.sharepre.SharePreUtils;
@@ -250,11 +251,11 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, page_size, LoadingFooter.State.Normal, null);
                 }
 
-                AppUtils.dispatchEvent(new ObData(EventType.MATCHCOUNT, total, String.valueOf(ViewType)));
-
                 subjectLrecycleview.refreshComplete();
             }
         });
+
+        HttpMsg.getInstance().sendGetGamesCount(CountBean.class, null);
     }
 
     private void startUpdate() {

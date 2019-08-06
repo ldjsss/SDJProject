@@ -139,7 +139,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private Disposable disposable;
     private String gaming = "";
     private boolean select = false;
-    private Map<Integer, ResultsModel> _gamelist;
     private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
 
     @Override
@@ -159,7 +158,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         }
 
         gaming = getResources().getString(R.string.gameing);
-        _gamelist = SharePreUtils.getInstance().getGamelist();
     }
 
     @Override
@@ -252,17 +250,13 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     gamestatus.setVisibility(status == 2 ? View.GONE : View.VISIBLE);
                     looklayout.setVisibility(status == 2 ? View.VISIBLE : View.GONE);
 
-                    if (_gamelist != null) {
-                        ResultsModel gameinfo = _gamelist.get(_data.getGame_id());
-                        if (gameinfo != null) {
-                            HttpTool.getBitmapUrl(gameinfo.getLogo(), new HttpTool.bmpListener() {
-                                @Override
-                                public void onFinish(Bitmap bitmap) {
-                                    if (bitmap != null) gameicon.setImageBitmap(bitmap);
-                                }
-                            });
+
+                    HttpTool.getBitmapUrl(_data.getGame_logo(), new HttpTool.bmpListener() {
+                        @Override
+                        public void onFinish(Bitmap bitmap) {
+                            if (bitmap != null) gameicon.setImageBitmap(bitmap);
                         }
-                    }
+                    });
 
 
                     HttpTool.getBitmapUrl(team0.getTeam_logo(), new HttpTool.bmpListener() {
@@ -359,7 +353,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     int tabPosition = tab.getPosition();
-                    if(DEBUG)Log.e("onTabSelected", String.valueOf(tabPosition));
+                    if (DEBUG) Log.e("onTabSelected", String.valueOf(tabPosition));
                     select = true;
                     if (tabPosition == 0) layoutManager.scrollToPosition(0);
                     else layoutManager.scrollToPosition(tabPosition * 2 + 1);
@@ -378,12 +372,12 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
     @Override
     public void onScrollUp() {
-        if(DEBUG)Log.e("onScrollUp", "onScrollUp");
+        if (DEBUG) Log.e("onScrollUp", "onScrollUp");
     }
 
     @Override
     public void onScrollDown() {
-        if(DEBUG) Log.e("onScrollDown", "onScrollDown");
+        if (DEBUG) Log.e("onScrollDown", "onScrollDown");
     }
 
     @Override
@@ -395,7 +389,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     @Override
     public void onScrolled(int distanceX, int distanceY) {
         int pos = layoutManager.findFirstVisibleItemPosition();
-        if(DEBUG)Log.e("pos" + pos, "distanceY = " + distanceY);
+        if (DEBUG) Log.e("pos" + pos, "distanceY = " + distanceY);
         if (distanceY <= 0) pos = 0;
         else if (tabLayout != null && select == false)
             tabLayout.setScrollPosition((pos) / 2, 0, false);

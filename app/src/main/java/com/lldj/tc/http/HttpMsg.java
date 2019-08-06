@@ -13,7 +13,9 @@ import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.http.beans.MapBean;
 import com.lldj.tc.match.Activity_MainUI;
 import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
+import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
@@ -237,6 +239,16 @@ public class HttpMsg<T>{
 
     public void sendGetOdds(String game_ids, Class<T>service, Listener callbackListener) {
         HttpTool.sendGet((new StringBuffer(baseUrl).append("match/oddssimple?").append(game_ids)).toString(), new HttpMsg().getListener(service, callbackListener), null);
+    }
+
+    public void sendGetGamesCount(Class<T>service, Listener callbackListener) {
+        HttpTool.sendGet((new StringBuffer(baseUrl).append("game/count")).toString(), new HttpMsg().getListener(service, new HttpMsg.Listener(){
+            @Override
+            public void onFinish(Object msg) {
+                AppUtils.dispatchEvent(new ObData(EventType.MATCHCOUNT, msg));
+                if(callbackListener != null) callbackListener.onFinish(msg);
+            }
+        }), null);
     }
 
     public interface Listener<T> {
