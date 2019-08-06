@@ -155,5 +155,10 @@
     <string name="changePhone">修改手机号</string>
     <string name="lookmatch">观看直播</string>
     <string name="messtitle">消息</string>
+    <string name="unfinished">未完成</string>
+    <string name="finished">已完成</string>
+    <string name="preferential">优惠</string>
+    <string name="task">任务</string>
+    <string name="get">未领取</string>
 </resources>
 

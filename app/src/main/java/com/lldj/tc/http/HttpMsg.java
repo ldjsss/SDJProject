@@ -251,6 +251,11 @@ public class HttpMsg<T>{
         }), null);
     }
 
+    public void sendActivity(final String access_token, Class<T>service, Listener callbackListener) {
+
+        HttpTool.httpPost((new StringBuffer(baseUrl).append("user/tasks")).toString(), null, new HttpMsg().getListener(service, callbackListener), access_token);
+    }
+
     public interface Listener<T> {
         void onFinish(T msg);
     }

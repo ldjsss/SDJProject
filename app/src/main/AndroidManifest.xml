@@ -106,6 +106,7 @@
         <activity android:name=".info.Activity_tradings" />
         <activity android:name=".info.Activity_Info" />
         <activity android:name=".info.Activity_Mess" />
+        <activity android:name=".info.Activity_Activitys" />
 
         <activity android:name="com.wintone.smartvision_bankCard.ScanCamera">
             <intent-filter>

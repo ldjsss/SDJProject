@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/rec_stroke_round4_969696"
+    android:layout_marginTop="@dimen/dimen_5">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="3.5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:id="@+id/messtitle"
+            android:text="xxx"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:gravity="left"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dimen_20"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:id="@+id/complete"
+            android:text="xxx"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:gravity="left"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dimen_20"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"></View>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:id="@+id/des"
+            android:text="xxx"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:gravity="left"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dimen_20"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"></View>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="10dp"
+        android:layout_height="match_parent"></View>
+
+    <RelativeLayout
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.3">
+
+        <TextView
+            android:id="@+id/tbcomplete"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:text="@string/unfinished"
+            android:textSize="14sp"
+            android:textColor="#4B79BA"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"
+            android:background="@drawable/rec_gameselect"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_20"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

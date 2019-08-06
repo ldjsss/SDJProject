@@ -141,7 +141,7 @@ public class Dialog_Set extends BaseDialog {
                 getContext().startActivity(new Intent(getContext(), Activity_Mess.class));
                 break;
             case R.id.activitylayout:
-                Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+                getContext().startActivity(new Intent(getContext(), Activity_Activitys.class));
                 break;
             case R.id.rulelayout:
                 Intent intent = new Intent(getContext(), Activity_Webview.class);
