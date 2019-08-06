@@ -280,7 +280,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
             Object _tag = imgplayicon0.getTag();
             final String _logo = team0.getTeam_logo();
-            if(_tag == null || (_tag != null && !_logo.equalsIgnoreCase((String)_tag)))
+            if(_tag == null || (_tag != null && !_logo.equalsIgnoreCase(String.valueOf(_tag))))
             {
                 HttpTool.getBitmapUrl(_logo, new bmpListener() {
                     @Override
@@ -295,7 +295,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
             _tag = imgplayicon1.getTag();
             final String _logo1 = team1.getTeam_logo();
-            if(_tag == null || (_tag != null && !_logo1.equalsIgnoreCase((String)_tag)))
+            if(_tag == null || (_tag != null && !_logo1.equalsIgnoreCase(String.valueOf(_tag))))
             {
                 HttpTool.getBitmapUrl(_logo1, new bmpListener() {
                     @Override

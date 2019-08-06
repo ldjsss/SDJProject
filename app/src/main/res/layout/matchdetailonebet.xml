@@ -7,12 +7,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/dimen_10">
 
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="@color/color_bg"/>
+            android:background="@color/color_cdc3b3"/>
 
         <TextView
             android:id="@+id/matchplayname"

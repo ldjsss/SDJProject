@@ -425,7 +425,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         if(DEBUG)System.out.println("url:" + _matchData.getLive_url());
 //        String s3 = "http://v.yongjiujiexi.com/20180304/B0cYHQvY/index.m3u8";
 //        videoplayer.setUp(s3, JZVideoPlayerStandard.NORMAL_ORIENTATION, _matchData.getTournament_name() + "/" + _matchData.getMatch_short_name());
-        videoplayer.setUp(_matchData.getLive_url(), JZVideoPlayerStandard.NORMAL_ORIENTATION, _matchData.getTournament_name() + "/" + _matchData.getMatch_short_name());
+        videoplayer.setUp(_matchData.getLive_url(), JZVideoPlayerStandard.NORMAL_ORIENTATION, String.format("%s/%s", _matchData.getTournament_name(), _matchData.getMatch_short_name()));
 //        videoplayer.fullscreenButton.setVisibility(View.GONE);
         videoplayer.progressBar.setVisibility(View.GONE);
         videoplayer.currentTimeTextView.setVisibility(View.GONE);
