@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/color_bg"
+    android:layout_margin="@dimen/dimen_5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/main_notification"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dimen_5"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20sp"
+                android:id="@+id/messtitle"
+                android:text="xxx"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:gravity="left"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dimen_5"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"></View>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/messcontent"
+        android:text="xxx"
+        android:textSize="12sp"
+        android:textColor="@color/color_cdc3b3"
+        android:layout_marginStart="28dp"
+        android:gravity="left"
+        android:layout_marginBottom="@dimen/dimen_5"/>
+
+</LinearLayout>

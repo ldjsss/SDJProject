@@ -8,6 +8,8 @@ import com.lldj.tc.toolslibrary.view.BaseDialog;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.lldj.tc.BuildConfig.DEBUG;
+
 public class DialogManager {
     private List<BaseDialog> dialogList = new LinkedList<BaseDialog>();
     private static DialogManager instance;
@@ -24,17 +26,19 @@ public class DialogManager {
     public BaseDialog show(BaseDialog dialog) {
         if(dialog == null) return null;
 
-        String _tag = dialog.getClass().getSimpleName();
-        BaseDialog _have = getDialog(_tag);
+        String tag = dialog.getClass().getSimpleName();
+        BaseDialog _have = getDialog(tag);
         if(_have == null){
-            Log.e("error","DialogManager tag is repeat, tag = " + _tag);
             dialogList.add(dialog);
         }
         else{
-            if(_have.isShow) return dialog;
+            if(_have.isShow) {
+                if(DEBUG) Log.e("error", String.format("DialogManager tag is repeat, tag = %s", tag));
+                return dialog;
+            }
         }
 
-        dialog.setTag(_tag);
+        dialog.setTag(tag);
         dialog.show();
 
         return dialog;
@@ -45,8 +49,13 @@ public class DialogManager {
 
         BaseDialog _have = getDialog(tag);
         if(_have == null){
-            Log.e("error","DialogManager tag is repeat, tag = " + tag);
             dialogList.add(dialog);
+        }
+        else{
+            if(_have.isShow) {
+                if(DEBUG) Log.e("error", String.format("DialogManager tag is repeat, tag = %s", tag));
+                return dialog;
+            }
         }
 
         dialog.setTag(tag);

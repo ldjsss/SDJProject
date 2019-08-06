@@ -84,11 +84,9 @@
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".info.Activity_Records"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
+
+        <activity android:name=".info.Activity_Records" />
+
         <activity
             android:name=".info.Activity_Webview"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
@@ -107,6 +105,8 @@
         <activity android:name=".info.Activity_AddCard" />
         <activity android:name=".info.Activity_tradings" />
         <activity android:name=".info.Activity_Info" />
+        <activity android:name=".info.Activity_Mess" />
+
         <activity android:name="com.wintone.smartvision_bankCard.ScanCamera">
             <intent-filter>
                 <action android:name="wintone.bankCard.scan_camera" />

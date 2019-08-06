@@ -44,8 +44,6 @@ public class Activity_Records extends BaseActivity {
     @BindView(R.id.recordpager)
     ViewPager recordpager;
 
-    private int height;
-
     private Adapter_RecordPager mPagerAdapter;
 
 

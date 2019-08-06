@@ -179,7 +179,7 @@ public class SharePreUtils {
         getInstance().userId = openid;
         setToken(context, token);
 
-        System.out.println("--------token:" + token);
+//        System.out.println("--------token:" + token);
 
     }
 
@@ -195,6 +195,6 @@ public class SharePreUtils {
         getInstance().birthday = ret.getBirthday();
         getInstance().recharge_url = ret.getRecharge_url();
 
-        if(TextUtils.isEmpty(getInstance().birthday)) getInstance().birthday = Calendar.getInstance().getTimeInMillis() + "";
+        if(TextUtils.isEmpty(getInstance().birthday)) getInstance().birthday = String.valueOf(Calendar.getInstance().getTimeInMillis());
     }
 }

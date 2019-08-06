@@ -65,16 +65,17 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
 
         mHandler.setHandleMsgListener(this);
 
-        String path = "android.resource://" + mContext.getPackageName() + "/" + R.raw.main_movie;
+        String path = String.format("android.resource://%s/%s", mContext.getPackageName(), R.raw.main_movie);
 
         videoView.setVideoURI(Uri.parse(path));
-        videoView.start();
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                videoView.start();
+                mp.start();
+                mp.setLooping(true);
             }
         });
+        videoView.start();
 
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -147,7 +148,7 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
     }
 
     private void saveLoginData(JsonBean res) {
-        ResultsModel ret = (ResultsModel)res.getResult();
+        ResultsModel ret = res.getResult();
         SharePreUtils.getInstance().setLoginInfo(mContext, ret.getAccess_token(), ret.getExpires_in(), ret.getOpenid());
         Toast.makeText(mContext, mContext.getResources().getString(R.string.loginsucc), Toast.LENGTH_SHORT).show();
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.GOTOMAIN);

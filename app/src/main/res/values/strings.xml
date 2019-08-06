@@ -61,8 +61,8 @@
     <string name="haveselect">已选</string>
     <string name="clickedlook">投注单</string>
     <string name="betlistlook">查看</string>
-    <string name="betminnum">最低押注</string>
-    <string name="betmaxnum">最高押注</string>
+    <string name="betminnum">%s最低押注%d</string>
+    <string name="betmaxnum">%s最高押注%d</string>
     <string name="betchangewarm">您所选投注项的盘口、或有效性已经产生变化</string>
     <string name="acceptStr">接收赔率变化</string>
     <string name="onebet">单注</string>
@@ -154,5 +154,6 @@
     <string name="only">您还可以免费使用</string>
     <string name="changePhone">修改手机号</string>
     <string name="lookmatch">观看直播</string>
+    <string name="messtitle">消息</string>
 </resources>
 

@@ -137,7 +137,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private String[] statusText;
     private int disTime = 4000;
     private Disposable disposable;
-    private Observer<ObData> observer;
     private String gaming = "";
     private boolean select = false;
     private Map<Integer, ResultsModel> _gamelist;
@@ -177,7 +176,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
         mContext.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
 
-        observer = new Observer<ObData>() {
+        registEvent(new Observer<ObData>() {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 if (data.getKey().equalsIgnoreCase(EventType.SELECTGROUPS)) {
@@ -186,8 +185,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     }
                 }
             }
-        };
-        AppUtils.registEvent(observer);
+        });
 
         matchtime.setText("");
         gamestatus1.setText("");
@@ -361,7 +359,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     int tabPosition = tab.getPosition();
-                    if(DEBUG)Log.e("onTabSelected", tabPosition + "");
+                    if(DEBUG)Log.e("onTabSelected", String.valueOf(tabPosition));
                     select = true;
                     if (tabPosition == 0) layoutManager.scrollToPosition(0);
                     else layoutManager.scrollToPosition(tabPosition * 2 + 1);
@@ -397,7 +395,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     @Override
     public void onScrolled(int distanceX, int distanceY) {
         int pos = layoutManager.findFirstVisibleItemPosition();
-        if(DEBUG)Log.e("pos", pos + "  distanceY = " + distanceY);
+        if(DEBUG)Log.e("pos" + pos, "distanceY = " + distanceY);
         if (distanceY <= 0) pos = 0;
         else if (tabLayout != null && select == false)
             tabLayout.setScrollPosition((pos) / 2, 0, false);
@@ -478,8 +476,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
     private void close() {
         stopUpdate();
-        AppUtils.unregisterEvent(observer);
-        observer = null;
         videoplayer.releaseAllVideos();
         tvlayout.setVisibility(View.GONE);
     }
