@@ -34,16 +34,13 @@ public class ActivityBean {
 
     public static class ActivityMode{
         private int id;
-        private int status;
+        private String activity_name;
+        private String activity_desc;
+        private String activity_begin_time;
+        private String activity_end_time;
         private String created_time;
-        private String task_begin_time;
-        private String task_desc;
-        private String task_end_time;
-        private String task_name;
-        private String task_reward_money;
-        private String task_set_num;
-        private int task_type;
-        private String user_set_num;
+        private String activity_jump;
+        private String activity_img;
 
         public int getId() {
             return id;
@@ -53,12 +50,36 @@ public class ActivityBean {
             this.id = id;
         }
 
-        public int getStatus() {
-            return status;
+        public String getActivity_name() {
+            return activity_name;
         }
 
-        public void setStatus(int status) {
-            this.status = status;
+        public void setActivity_name(String activity_name) {
+            this.activity_name = activity_name;
+        }
+
+        public String getActivity_desc() {
+            return activity_desc;
+        }
+
+        public void setActivity_desc(String activity_desc) {
+            this.activity_desc = activity_desc;
+        }
+
+        public String getActivity_begin_time() {
+            return activity_begin_time;
+        }
+
+        public void setActivity_begin_time(String activity_begin_time) {
+            this.activity_begin_time = activity_begin_time;
+        }
+
+        public String getActivity_end_time() {
+            return activity_end_time;
+        }
+
+        public void setActivity_end_time(String activity_end_time) {
+            this.activity_end_time = activity_end_time;
         }
 
         public String getCreated_time() {
@@ -69,68 +90,20 @@ public class ActivityBean {
             this.created_time = created_time;
         }
 
-        public String getTask_begin_time() {
-            return task_begin_time;
+        public String getActivity_jump() {
+            return activity_jump;
         }
 
-        public void setTask_begin_time(String task_begin_time) {
-            this.task_begin_time = task_begin_time;
+        public void setActivity_jump(String activity_jump) {
+            this.activity_jump = activity_jump;
         }
 
-        public String getTask_desc() {
-            return task_desc;
+        public String getActivity_img() {
+            return activity_img;
         }
 
-        public void setTask_desc(String task_desc) {
-            this.task_desc = task_desc;
-        }
-
-        public String getTask_end_time() {
-            return task_end_time;
-        }
-
-        public void setTask_end_time(String task_end_time) {
-            this.task_end_time = task_end_time;
-        }
-
-        public String getTask_name() {
-            return task_name;
-        }
-
-        public void setTask_name(String task_name) {
-            this.task_name = task_name;
-        }
-
-        public String getTask_reward_money() {
-            return task_reward_money;
-        }
-
-        public void setTask_reward_money(String task_reward_money) {
-            this.task_reward_money = task_reward_money;
-        }
-
-        public String getTask_set_num() {
-            return task_set_num;
-        }
-
-        public void setTask_set_num(String task_set_num) {
-            this.task_set_num = task_set_num;
-        }
-
-        public int getTask_type() {
-            return task_type;
-        }
-
-        public void setTask_type(int task_type) {
-            this.task_type = task_type;
-        }
-
-        public String getUser_set_num() {
-            return user_set_num;
-        }
-
-        public void setUser_set_num(String user_set_num) {
-            this.user_set_num = user_set_num;
+        public void setActivity_img(String activity_img) {
+            this.activity_img = activity_img;
         }
     }
 }

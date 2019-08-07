@@ -251,9 +251,18 @@ public class HttpMsg<T>{
         }), null);
     }
 
-    public void sendActivity(final String access_token, Class<T>service, Listener callbackListener) {
-
+    public void sendTastList(final String access_token, Class<T>service, Listener callbackListener) {
         HttpTool.httpPost((new StringBuffer(baseUrl).append("user/tasks")).toString(), null, new HttpMsg().getListener(service, callbackListener), access_token);
+    }
+
+    public void sendGetTask(final String task_id, final String access_token, Class<T>service, Listener callbackListener) {
+        Map<String,String> URLParams = new HashMap();
+        URLParams.put("task_id", task_id);
+        HttpTool.httpPost((new StringBuffer(baseUrl).append("user/taskreward")).toString(), URLParams, new HttpMsg().getListener(service, callbackListener), access_token);
+    }
+
+    public void sendGetActivity(final String access_token, Class<T>service, Listener callbackListener) {
+        HttpTool.httpPost((new StringBuffer(baseUrl).append("user/activitys")).toString(), null, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
     public interface Listener<T> {

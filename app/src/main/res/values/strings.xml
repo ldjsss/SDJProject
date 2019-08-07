@@ -160,5 +160,6 @@
     <string name="preferential">优惠</string>
     <string name="task">任务</string>
     <string name="get">未领取</string>
+    <string name="gettasksucc">领取成功</string>
 </resources>
 

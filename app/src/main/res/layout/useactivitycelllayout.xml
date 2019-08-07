@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:background="@drawable/rec_stroke_round4_969696"
+    android:layout_marginStart="@dimen/dimen_5"
+    android:layout_marginEnd="@dimen/dimen_5"
+    android:layout_marginTop="@dimen/dimen_5">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/game_arena"
+        android:id="@+id/activityimg"
+        android:layout_gravity="center_vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:id="@+id/activitytitle"
+            android:text="xxx"
+            android:textSize="16sp"
+            android:textColor="#4B79BA"
+            android:gravity="left"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dimen_20"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:id="@+id/activitydes"
+            android:text="xxx"
+            android:textSize="16sp"
+            android:textColor="#4B79BA"
+            android:gravity="left"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dimen_20"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"></View>
+    </LinearLayout>
+
+</RelativeLayout>
