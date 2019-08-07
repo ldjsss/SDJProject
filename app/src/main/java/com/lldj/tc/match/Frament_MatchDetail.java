@@ -36,6 +36,7 @@ import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
 import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.util.ImageLoader;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
@@ -56,6 +57,7 @@ import cn.jzvd.JZVideoPlayerStandard;
 import io.reactivex.disposables.Disposable;
 
 import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
+import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
 public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.LScrollListener {
     @BindView(R.id.toolbar_back_iv)
@@ -140,6 +142,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private String gaming = "";
     private boolean select = false;
     private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
+    private ImageLoader imageLoader = new ImageLoader(bActivity, R.mipmap.game_arena, R.mipmap.game_arena);
 
     @Override
     public int getContentView() {
@@ -250,34 +253,13 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     gamestatus.setVisibility(status == 2 ? View.GONE : View.VISIBLE);
                     looklayout.setVisibility(status == 2 ? View.VISIBLE : View.GONE);
 
+                    imageLoader.getAndSetImage(_data.getGame_logo(), gameicon);
 
-                    HttpTool.getBitmapUrl(_data.getGame_logo(), new HttpTool.bmpListener() {
-                        @Override
-                        public void onFinish(Bitmap bitmap) {
-                            if (bitmap != null) gameicon.setImageBitmap(bitmap);
-                        }
-                    });
+                    imageLoader.getAndSetImage(team0.getTeam_logo(), imgplayicon0);
+                    imageLoader.getAndSetImage(team0.getTeam_logo(), imgvidoicon1);
 
-
-                    HttpTool.getBitmapUrl(team0.getTeam_logo(), new HttpTool.bmpListener() {
-                        @Override
-                        public void onFinish(Bitmap bitmap) {
-                            if (bitmap != null) {
-                                imgplayicon0.setImageBitmap(bitmap);
-                                imgvidoicon1.setImageBitmap(bitmap);
-                            }
-                        }
-                    });
-
-                    HttpTool.getBitmapUrl(team1.getTeam_logo(), new HttpTool.bmpListener() {
-                        @Override
-                        public void onFinish(Bitmap bitmap) {
-                            if (bitmap != null) {
-                                imgplayicon1.setImageBitmap(bitmap);
-                                imgvidoicon2.setImageBitmap(bitmap);
-                            }
-                        }
-                    });
+                    imageLoader.getAndSetImage(team1.getTeam_logo(), imgplayicon1);
+                    imageLoader.getAndSetImage(team1.getTeam_logo(), imgvidoicon2);
 
 //                    Log.w("-----detail data = ", _data.toString());
 

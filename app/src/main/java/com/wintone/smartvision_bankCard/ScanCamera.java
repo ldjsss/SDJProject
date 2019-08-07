@@ -38,7 +38,6 @@ import android.widget.Toast;
 
 import com.lldj.tc.R;
 import com.lldj.tc.info.Activity_AddCard;
-import com.wintone.ShowResult;
 import com.wintone.bankcard.BankCardAPI;
 import com.wintone.view.ViewfinderView;
 

@@ -18,6 +18,7 @@ import com.lldj.tc.http.beans.BaseBean;
 import com.lldj.tc.http.beans.TaskBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.http.HttpTool;
+import com.lldj.tc.toolslibrary.util.ImageLoader;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.GlobalVariable;
 
@@ -27,6 +28,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
+
 
 public class Adapter_ActivityCell extends RecyclerView.Adapter {
 
@@ -35,6 +38,7 @@ public class Adapter_ActivityCell extends RecyclerView.Adapter {
     private List<TaskBean.TaskMode> messList = new ArrayList<>();
     private List<ActivityBean.ActivityMode> _List = new ArrayList<>();
     private int ViewType = 0;
+    private ImageLoader imageLoader = new ImageLoader(bActivity, R.mipmap.game_arena, R.mipmap.game_arena);
 
 
     public Adapter_ActivityCell(Context mContext, int _ViewType) {
@@ -92,12 +96,7 @@ public class Adapter_ActivityCell extends RecyclerView.Adapter {
                 ((TextView)itemView.findViewById(R.id.activitytitle)).setText(_data.getActivity_name());
                 ((TextView)itemView.findViewById(R.id.activitydes)).setText(_data.getActivity_desc());
                 ImageView gameicon = itemView.findViewById(R.id.activityimg);
-                HttpTool.getBitmapUrl(_data.getActivity_img(), new HttpTool.bmpListener() {
-                    @Override
-                    public void onFinish(Bitmap bitmap) {
-                        if (bitmap != null) gameicon.setImageBitmap(bitmap);
-                    }
-                });
+                imageLoader.getAndSetImage(_data.getActivity_img(), gameicon);
             }
             else {
                 TaskBean.TaskMode _data = messList.get(pos);

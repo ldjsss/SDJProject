@@ -21,6 +21,7 @@ import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.util.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
     public List<Integer> selects = new ArrayList();
 
     private ResultsModel firstData;
+    private ImageLoader imageLoader = new ImageLoader(bActivity, R.mipmap.game_arena, R.mipmap.game_arena);
 
     public Adapter_GameSelect(Context context, List<ResultsModel>_datas){
         this.context = context;
@@ -128,12 +130,7 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
                         if (_id == 0) {
                             img.setImageResource(R.mipmap.game_arena);
                         } else {
-                            HttpTool.getBitmapUrl(_data.getLogo(), new HttpTool.bmpListener() {
-                                @Override
-                                public void onFinish(Bitmap bitmap) {
-                                    if (bitmap != null) img.setImageBitmap(bitmap);
-                                }
-                            });
+                            imageLoader.getAndSetImage(_data.getLogo(), img);
                         }
 
                         ((TextView) view.findViewById(R.id.gamename)).setText(_data.getName());

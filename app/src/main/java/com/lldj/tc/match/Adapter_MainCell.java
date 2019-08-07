@@ -22,6 +22,7 @@ import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Team;
 import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.toolslibrary.util.ImageLoader;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
@@ -59,6 +60,8 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
     private Map<Integer, String> oMap = new HashMap<>();
     private LayoutInflater inflater;
     private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
+    private ImageLoader imageLoader = new ImageLoader(bActivity, R.mipmap.game_arena, R.mipmap.game_arena);
+
 
     public Adapter_MainCell(Context mContext, int _viewType) {
         this.mContext = mContext;
@@ -244,14 +247,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             gameplaycount.setText(String.format("+%s", _data.getPlay_count()));
             gametime.setText(AppUtils.getFormatTime5(_data.getStart_time_ms()));
 
-
-            HttpTool.getBitmapUrl(_data.getGame_logo(), new HttpTool.bmpListener() {
-                @Override
-                public void onFinish(Bitmap bitmap) {
-                    if (bitmap != null) gameicon.setImageBitmap(bitmap);
-                }
-            });
-
+            imageLoader.getAndSetImage(_data.getGame_logo(), gameicon);
 
             if(_data.getTeam() == null || _data.getTeam().size() < 2) {
                 Toast.makeText(mContext, "--------service Team data error ", Toast.LENGTH_SHORT).show();
@@ -278,36 +274,8 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             gameresult.setVisibility((matchStatus == 2 || matchStatus == 3) ? View.VISIBLE : View.GONE);
             gametime.setVisibility((matchStatus == 2 || matchStatus == 3) ? View.GONE : View.VISIBLE);
 
-            Object _tag = imgplayicon0.getTag();
-            final String _logo = team0.getTeam_logo();
-            if(_tag == null || (_tag != null && !_logo.equalsIgnoreCase(String.valueOf(_tag))))
-            {
-                HttpTool.getBitmapUrl(_logo, new bmpListener() {
-                    @Override
-                    public void onFinish(Bitmap bitmap) {
-                        if (bitmap != null) {
-                            imgplayicon0.setImageBitmap(bitmap);
-                            imgplayicon0.setTag(_logo);
-                        }
-                    }
-                });
-            }
-
-            _tag = imgplayicon1.getTag();
-            final String _logo1 = team1.getTeam_logo();
-            if(_tag == null || (_tag != null && !_logo1.equalsIgnoreCase(String.valueOf(_tag))))
-            {
-                HttpTool.getBitmapUrl(_logo1, new bmpListener() {
-                    @Override
-                    public void onFinish(Bitmap bitmap) {
-                        if (bitmap != null) {
-                            imgplayicon1.setImageBitmap(bitmap);
-                            imgplayicon1.setTag(_logo1);
-                        }
-                    }
-                });
-            }
-
+            imageLoader.getAndSetImage(team0.getTeam_logo(), imgplayicon0);
+            imageLoader.getAndSetImage(team1.getTeam_logo(), imgplayicon1);
             gameresult.setText(String.format("%s - %s", team0.getScore().getTotal(), team1.getScore().getTotal()));
 
             Odds odd0 = getOddData(odds, team0.getTeam_id());

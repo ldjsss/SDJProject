@@ -50,4 +50,5 @@ public class Utils {
         }
         return ((ViewCompat.MEASURED_STATE_MASK | (r << 16)) | (g << 8)) | b;
     }
+
 }

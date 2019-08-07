@@ -41,8 +41,8 @@ import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
 public class HttpTool {
     private static int timeout = 8000;
     private static SSLContext ctx                   = null;
-    private static HostnameVerifier verifier        = null;
-    private static SSLSocketFactory socketFactory   = null;
+    public static HostnameVerifier verifier        = null;
+    public static SSLSocketFactory socketFactory   = null;
 
 
     public static void sendGet(final String url, final msgListener listener, final String token) {

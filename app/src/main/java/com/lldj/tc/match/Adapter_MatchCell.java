@@ -21,6 +21,7 @@ import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.util.ImageLoader;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.utils.Utils;

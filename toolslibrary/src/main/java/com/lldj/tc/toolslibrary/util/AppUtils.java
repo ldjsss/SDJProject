@@ -15,31 +15,25 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.provider.Settings;
-import androidx.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+
 import com.google.android.material.tabs.TabLayout;
-import com.lldj.tc.toolslibrary.R;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
-import com.lldj.tc.toolslibrary.view.Titanic;
-import com.lldj.tc.toolslibrary.view.TitanicTextView;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -65,14 +59,13 @@ import java.util.regex.Pattern;
 import static android.content.Context.TELEPHONY_SERVICE;
 
 public class AppUtils {
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
     private static final AppUtils ourInstance = new AppUtils();
 
     public static AppUtils getInstance() {
         return ourInstance;
     }
     private static Dialog loading = null;
-    private static Titanic titanic = null;
 
     private  static ArrayList<Observer<ObData>> eventList = new ArrayList<>();
     private  static Observable<ObData> observable;

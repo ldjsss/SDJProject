@@ -19,10 +19,13 @@ import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.util.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
 public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResultCell.MyViewHolder> {
     private Context context;
@@ -30,6 +33,7 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
     private List<BetMatchBean.betResult> datas2 = new ArrayList<>();
     private boolean result = false;
     Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
+    private ImageLoader imageLoader = new ImageLoader(bActivity, R.mipmap.game_arena, R.mipmap.game_arena);
 
     public Adapter_BetResultCell(Context context, List<BetModel> datas){
         this.context = context;
@@ -96,13 +100,8 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
         }
 
         if(record == null) return;
-        HttpTool.getBitmapUrl(record.getGame_logo(), new HttpTool.bmpListener() {
-            @Override
-            public void onFinish(Bitmap bitmap) {
-                if (bitmap != null) holder.tv_logoicon.setImageBitmap(bitmap);
-            }
-        });
 
+        imageLoader.getAndSetImage(record.getGame_logo(), holder.tv_logoicon);
     }
 
     @Override

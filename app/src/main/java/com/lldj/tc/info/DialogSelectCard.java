@@ -24,6 +24,7 @@ import com.lldj.tc.http.beans.BankBean;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.util.ImageLoader;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
 import com.lldj.tc.utils.EventType;
 
@@ -44,6 +45,7 @@ public class DialogSelectCard extends BaseDialog {
     @BindView(R.id.addparlayout)
     RelativeLayout addparlayout;
     private List<BankBean.BankModel> _list = new ArrayList();
+    private ImageLoader imageLoader = new ImageLoader(bActivity, R.mipmap.game_arena, R.mipmap.game_arena);
 
     public DialogSelectCard(@NonNull Context context, @StyleRes int themeResId, List<BankBean.BankModel> _list, boolean add) {
         super(context, themeResId);
@@ -86,12 +88,7 @@ public class DialogSelectCard extends BaseDialog {
                 }
             });
 
-            HttpTool.getBitmapUrl(bank.getLogo(), new HttpTool.bmpListener() {
-                @Override
-                public void onFinish(Bitmap bitmap) {
-                    if (bitmap != null) ((ImageView)addView.findViewById(R.id.bankicon)).setImageBitmap(bitmap);
-                }
-            });
+            imageLoader.getAndSetImage(bank.getLogo(), (ImageView)addView.findViewById(R.id.bankicon));
         }
 
         if(!add) return;
