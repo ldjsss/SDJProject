@@ -107,10 +107,10 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.forget_psw_tv:
-                new Dialog_Forget(this, R.style.DialogTheme).show();
+                new Dialog_Forget(Activity_Login.this, R.style.DialogTheme).show();
                 break;
             case R.id.register_tv:
-                new Dialog_Register(this, R.style.DialogTheme).show();
+                new Dialog_Register(Activity_Login.this, R.style.DialogTheme).show();
                 break;
             case R.id.login_tv:
                 if (!checkAll()) return;
@@ -134,7 +134,7 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
     }
 
     private void tokenLogin() {
-        String token = SharePreUtils.getToken(mContext);
+        String token = SharePreUtils.getToken(Activity_Login.this);
         if(TextUtils.isEmpty(token)) return;
         HttpMsg.getInstance().sendTokenLogin(token, JsonBean.class, new HttpMsg.Listener() {
             @Override
@@ -149,8 +149,8 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
 
     private void saveLoginData(JsonBean res) {
         ResultsModel ret = res.getResult();
-        SharePreUtils.getInstance().setLoginInfo(mContext, ret.getAccess_token(), ret.getExpires_in(), ret.getOpenid());
-        Toast.makeText(mContext, mContext.getResources().getString(R.string.loginsucc), Toast.LENGTH_SHORT).show();
+        SharePreUtils.getInstance().setLoginInfo(Activity_Login.this, ret.getAccess_token(), ret.getExpires_in(), ret.getOpenid());
+        Toast.makeText(Activity_Login.this, mContext.getResources().getString(R.string.loginsucc), Toast.LENGTH_SHORT).show();
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.GOTOMAIN);
 
     }
@@ -160,19 +160,19 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
         password = pswEt.getText().toString().trim();
 
         if (TextUtils.isEmpty(userCount) || userCount.length() < 6 || userCount.length() > 16) {
-            ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, mContext.getResources().getString(R.string.errorRemind), ToastUtils.LENGTH_SHORT);
+            ToastUtils.show_middle_pic(Activity_Login.this, R.mipmap.cancle_icon, mContext.getResources().getString(R.string.errorRemind), ToastUtils.LENGTH_SHORT);
             return false;
         }
         if (TextUtils.isEmpty(password) || password.length() < 6 || password.length() > 16) {
-            ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, mContext.getResources().getString(R.string.errorRemind1), ToastUtils.LENGTH_SHORT);
+            ToastUtils.show_middle_pic(Activity_Login.this, R.mipmap.cancle_icon, mContext.getResources().getString(R.string.errorRemind1), ToastUtils.LENGTH_SHORT);
             return false;
         }
         return true;
     }
 
     private void fillCount() {
-        telNumEt.setText(SharePreUtils.getInstance().getUserName(mContext));
-        pswEt.setText(SharePreUtils.getInstance().getPassword(mContext));
+        telNumEt.setText(SharePreUtils.getInstance().getUserName(Activity_Login.this));
+        pswEt.setText(SharePreUtils.getInstance().getPassword(Activity_Login.this));
     }
 
     private void pswStatus(EditText pPswEt, ImageView pPswStatusIv) {
@@ -196,27 +196,27 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
                 fillCount();
             case HandlerType.GOTOMAIN:
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                HttpMsg.getInstance().sendGetUserInfo(mContext, SharePreUtils.getInstance().getToken(mContext), JsonBean.class, new HttpMsg.Listener() {
+                HttpMsg.getInstance().sendGetUserInfo(mContext, SharePreUtils.getInstance().getToken(Activity_Login.this), JsonBean.class, new HttpMsg.Listener() {
                     @Override
                     public void onFinish(Object _res) {
                         JsonBean res = (JsonBean) _res;
                         if (res.getCode() == GlobalVariable.succ) {
-                            startActivity(new Intent(mContext, Activity_MainUI.class));
+                            startActivity(new Intent(Activity_Login.this, Activity_MainUI.class));
                             finish();
                         }
                     }
                 });
                 break;
             case HandlerType.JUSTLOOK:
-                startActivity(new Intent(this, Activity_MainUI.class));
+                startActivity(new Intent(Activity_Login.this, Activity_MainUI.class));
                 finish();
                 break;
             case HandlerType.SHOWTOAST:
-                ToastUtils.show_middle_pic(this, R.mipmap.cancle_icon, msg.getData().getString("msg"), ToastUtils.LENGTH_SHORT);
+                ToastUtils.show_middle_pic(Activity_Login.this, R.mipmap.cancle_icon, msg.getData().getString("msg"), ToastUtils.LENGTH_SHORT);
                 break;
             case HandlerType.LOADING:
                 if(!isFinishing()){
-                    AppUtils.showLoading(this);
+                    AppUtils.showLoading(Activity_Login.this);
                 }
                 break;
         }

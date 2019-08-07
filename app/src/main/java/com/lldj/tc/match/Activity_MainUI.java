@@ -106,7 +106,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                     }
 
                     if(dialogBet == null) {
-                        dialogBet = new DialogBet(mContext, R.style.DialogTheme);
+                        dialogBet = new DialogBet(Activity_MainUI.this, R.style.DialogTheme);
                     }
                     DialogManager.getInstance().show(dialogBet);
                     dialogBet.betListAdd(data);
@@ -131,23 +131,23 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                     guestWarm();
                     return;
                 }
-                DialogManager.getInstance().show(new Dialog_Set(this, R.style.DialogTheme));
+                DialogManager.getInstance().show(new Dialog_Set(Activity_MainUI.this, R.style.DialogTheme));
                 break;
             case HandlerType.LEFTBACK:
                 break;
             case HandlerType.SHOWTOAST:
-                ToastUtils.show_middle_pic(this, R.mipmap.cancle_icon, msg.getData().getString("msg"), ToastUtils.LENGTH_SHORT);
+                ToastUtils.show_middle_pic(Activity_MainUI.this, R.mipmap.cancle_icon, msg.getData().getString("msg"), ToastUtils.LENGTH_SHORT);
                 break;
             case HandlerType.LOADING:
 //                AppUtils.showLoading(bActivity);
                 break;
             case HandlerType.GAMESELECT:
-                DialogManager.getInstance().show(new DialogGameSelect(mContext, R.style.DialogTheme));
+                DialogManager.getInstance().show(new DialogGameSelect(Activity_MainUI.this, R.style.DialogTheme));
                 break;
             case HandlerType.LEAVEGAME:
-                SharePreUtils.setToken(this, "");
+                SharePreUtils.setToken(Activity_MainUI.this, "");
                 SharePreUtils.getInstance().setUserId("");
-                startActivity(new Intent(mContext, Activity_Login.class));
+                startActivity(new Intent(Activity_MainUI.this, Activity_Login.class));
                 finish();
                 break;
         }
@@ -162,7 +162,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
 
     private void guestWarm() {
 
-        CustomDialog customDialog = new CustomDialog(this, R.style.MyDialogStyle);
+        CustomDialog customDialog = new CustomDialog(Activity_MainUI.this, R.style.MyDialogStyle);
         customDialog.setTitle(getResourcesString(R.string.app_name));
         customDialog.setMessage(getResourcesString(R.string.cannotbet));
         customDialog.setCancel(getResourcesString(R.string.btncancle), new CustomDialog.IOnCancelListener() {
