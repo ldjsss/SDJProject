@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.lldj.tc.R;
+import com.lldj.tc.jsInterface.DecoObject;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
@@ -36,9 +37,10 @@ public class Activity_Webview extends BaseActivity {
     @BindView(R.id.toolbar_root_layout)
     RelativeLayout toolbarRootLayout;
     @BindView(R.id.rulewebview)
-    WebView rulewebview;
+    WebView webview;
 
     private String url = "";
+    private String title = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,33 +55,38 @@ public class Activity_Webview extends BaseActivity {
 
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
-//        Log.e("", "onCreate: -----------OneActivity:"+ url );
+        title = intent.getStringExtra("title");
 
         ImmersionBar.with(this).titleBar(toolbarRootLayout).init();
-        toolbarTitleTv.setText(getResources().getString(R.string.rules));
+        toolbarTitleTv.setText(title);
 
         if(AppUtils.isEmptyString(url)) return;
 
-        rulewebview.setBackgroundColor(getResources().getColor(R.color.color_bg));
-        rulewebview.loadDataWithBaseURL(null, "加载中。。", "text/html", "utf-8",null);
-        rulewebview.setVisibility(View.VISIBLE);
-        rulewebview.loadUrl(url);
-        WebSettings settings = rulewebview.getSettings();
+        webview.setBackgroundColor(getResources().getColor(R.color.color_bg));
+        webview.loadDataWithBaseURL(null, "加载中。。", "text/html", "utf-8",null);
+        webview.setVisibility(View.VISIBLE);
+        webview.loadUrl(url);
+        WebSettings settings = webview.getSettings();
         settings.setDefaultTextEncodingName("utf-8") ;
         settings.setJavaScriptEnabled(true);
-        rulewebview.setWebViewClient(new WebViewClient() {
+        webview.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
         });
 
-        rulewebview.setWebViewClient(new WebViewClient() {
+        webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                 handler.proceed();
             }
         });
+
+        WebSettings webSettings = webview.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        webview.addJavascriptInterface(new DecoObject(this),"decoObject");
 
     }
 

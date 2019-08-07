@@ -146,18 +146,26 @@ public class Dialog_Set extends BaseDialog {
             case R.id.rulelayout:
                 Intent intent = new Intent(getContext(), Activity_Webview.class);
                 intent.putExtra("url", "http://192.168.1.53:8080/rule.html");
+                intent.putExtra("title", getContext().getResources().getString(R.string.rules));
                 getContext().startActivity(intent);
                 break;
             case R.id.aboutlayout:
                 Intent intent1 = new Intent(getContext(), Activity_Webview.class);
                 intent1.putExtra("url", "http://192.168.1.53:8080/about.html");
+                intent1.putExtra("title", getContext().getResources().getString(R.string.about));
                 getContext().startActivity(intent1);
                 break;
             case R.id.agency:
-                Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(getContext(), Activity_Webview.class);
+                intent2.putExtra("url", "http://192.168.1.53:8080/agent_qrcode.html");
+                intent2.putExtra("title", getContext().getResources().getString(R.string.agency));
+                getContext().startActivity(intent2);
                 break;
             case R.id.share:
-                Toast.makeText(getContext(), "---------------Not yet implemented ", Toast.LENGTH_SHORT).show();
+                Intent intent3 = new Intent(getContext(), Activity_Webview.class);
+                intent3.putExtra("url", "http://192.168.1.53:8080/agent_qrcode.html");
+                intent3.putExtra("title", getContext().getResources().getString(R.string.share));
+                getContext().startActivity(intent3);
                 break;
         }
     }
