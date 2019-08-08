@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
 
@@ -132,6 +133,16 @@ public class Activity_Mess extends BaseActivity implements LRecyclerView.LScroll
 
     @Override
     public void onScrolled(int distanceX, int distanceY) {
+    }
+
+    @OnClick(R.id.toolbar_back_iv)
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_back_iv:
+                finish();
+                overridePendingTransition(0,R.anim.out_to_right);
+                break;
+        }
     }
 
 }

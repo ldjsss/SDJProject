@@ -21,7 +21,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="#232323"
+                android:background="#1e1e1e"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="-1dp"/>
 
@@ -37,7 +37,7 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="20dp"
-                        android:background="#232323"
+                        android:background="#1e1e1e"
                         android:layout_alignParentEnd="true"/>
                 </RelativeLayout>
                 <RelativeLayout
@@ -48,7 +48,7 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="20dp"
-                        android:background="#232323"
+                        android:background="#1e1e1e"
                         android:layout_alignParentEnd="true"/>
                 </RelativeLayout>
                 <RelativeLayout
@@ -59,7 +59,7 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="20dp"
-                        android:background="#232323"
+                        android:background="#1e1e1e"
                         android:layout_alignParentEnd="true"/>
                 </RelativeLayout>
                 <RelativeLayout

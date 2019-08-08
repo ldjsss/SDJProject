@@ -1,5 +1,6 @@
 package com.lldj.tc.match;
 
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,6 +52,9 @@ public class Fragment_ViewPager extends BaseFragment {
     @BindView(R.id.firstpage_viewpager)
     ViewPager firstpageViewpager;
     private Adapter_MainPager mPagerAdapter;
+
+    int colorSelect = Color.parseColor("#f0e6d8");
+    int colorUnSelect = Color.parseColor("#6c6b63");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,28 +122,32 @@ public class Fragment_ViewPager extends BaseFragment {
             tab.setCustomView(R.layout.tab_item);
             View cusView = tab.getCustomView();
 //            AppUtils.screenAdapterLoadView((ViewGroup)cusView);
-            if (i == 0) {
-                cusView.findViewById(R.id.tab_text).setSelected(true);
-            }
-            TextView textView = (TextView) cusView.findViewById(R.id.tab_text);
+            setTextSelect(tab, i == 0);
+            TextView textView = cusView.findViewById(R.id.tab_text);
             textView.setText(mPagerAdapter.getPageTitle(i));
 
         }
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                tab.getCustomView().findViewById(R.id.tab_text).setSelected(true);
+                setTextSelect(tab, true);
                 firstpageViewpager.setCurrentItem(tab.getPosition(), true);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                tab.getCustomView().findViewById(R.id.tab_text).setSelected(false);
+                setTextSelect(tab, false);
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
+    }
+
+    private void setTextSelect(TabLayout.Tab tab, boolean select){
+        View view = tab.getCustomView();
+        ((TextView)view.findViewById(R.id.tab_text)).setTextColor(select ? colorSelect : colorUnSelect);
+        ((TextView)view.findViewById(R.id.tab_no_reading_count_tv)).setTextColor(select ? colorSelect : colorUnSelect);
     }
 
     public void updateTitle(int index, String title) {
