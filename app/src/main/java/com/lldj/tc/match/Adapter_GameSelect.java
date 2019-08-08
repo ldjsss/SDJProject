@@ -128,7 +128,7 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
                     if ((_tag == null || (int) view.getTag() != _id) && _data != null) {
                         ImageView img = view.findViewById(R.id.imggameicon);
                         if (_id == 0) {
-                            img.setImageResource(R.mipmap.game_arena);
+                            img.setImageResource(R.mipmap.yxsx_qb);
                         } else {
                             imageLoader.getAndSetImage(_data.getLogo(), img);
                         }
@@ -182,9 +182,9 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
 
         private void setViewColor(View v, boolean select){
             if(select)
-                v.findViewById(R.id.selectline).setBackgroundColor(Color.parseColor("#85E1E2"));
+                v.findViewById(R.id.selectline).setBackgroundColor(Color.parseColor("#baa936"));
             else
-                v.findViewById(R.id.selectline).setBackgroundColor(Color.parseColor("#383b4a"));
+                v.findViewById(R.id.selectline).setBackgroundColor(Color.parseColor("#1f1f1f"));
         }
     }
 }

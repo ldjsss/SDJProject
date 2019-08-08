@@ -1,61 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="120dp"
-    android:layout_height="120dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="20sp"
-        android:textColor="#D0D7F0"
-        android:gravity="center"
-        android:background="@drawable/gameiconbg" />
+    android:layout_height="120dp"
+    android:background="@drawable/gameiconbg"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_weight="1"/>
+        android:layout_centerInParent="true"
+        android:id="@+id/logocenter">
+
         <ImageView
             android:id="@+id/imggameicon"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@mipmap/game_arena"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_weight="1"/>
+            android:src="@mipmap/game_arena" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/gamename"
             android:text="FIFA"
             android:textSize="14sp"
-            android:textColor="#D0D7F0"
-            android:layout_weight="1"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_weight="1"/>
-            <View
-                android:layout_width="50dp"
-                android:layout_height="2dp"
-                android:layout_marginBottom="@dimen/dp_15"
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/selectline"
-                android:background="#383b4a"/>
-        </LinearLayout>
+            android:textColor="#6e6d65"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
+
+    <View
+        android:layout_width="50dp"
+        android:layout_height="2dp"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/selectline"
+        android:background="#383b4a"
+        android:layout_below="@+id/logocenter"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10"/>
 
 </RelativeLayout>
