@@ -21,9 +21,9 @@
 
             <ImageView
                 android:id="@+id/gameicon"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:paddingStart="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="@dimen/dp_10"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/game_arena" />
 
@@ -53,16 +53,16 @@
 
             <TextView
                 android:layout_width="40dp"
-                android:layout_height="25dp"
+                android:layout_height="23dp"
                 android:id="@+id/gameplaycount"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:text="+3"
                 android:textSize="12sp"
-                android:textColor="@color/color_cdc3b3"
+                android:textColor="#b49f5e"
                 android:gravity="center"
-                android:background="@drawable/rec_stroke_round4_969696" />
+                android:background="@drawable/rec_stroke_round4_b49f5e" />
 
         </RelativeLayout>
 
@@ -70,7 +70,7 @@
             android:id="@+id/img_layout"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:gravity="center_vertical">
@@ -101,11 +101,12 @@
                 android:id="@+id/imglayout0">
                 <ImageView
                     android:id="@+id/imgplayicon0"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
-                    android:src="@mipmap/game_arena"/>
+                    android:src="@mipmap/game_arena"
+                    android:layout_centerVertical="true"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -115,11 +116,12 @@
                 android:layout_alignParentEnd="true">
                 <ImageView
                     android:id="@+id/imgplayicon1"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
-                    android:src="@mipmap/game_arena"/>
+                    android:src="@mipmap/game_arena"
+                    android:layout_centerVertical="true"/>
 
             </RelativeLayout>
         </RelativeLayout>

@@ -73,7 +73,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     @BindView(R.id.gamenamecount)
     TextView gamenamecount;
     @BindView(R.id.gamestatus)
-    TextView gamestatus;
+    LinearLayout gamestatus;
     @BindView(R.id.matchwin0)
     TextView matchwin0;
     @BindView(R.id.matchwin1)
@@ -139,7 +139,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private String[] statusText;
     private int disTime = 4000;
     private Disposable disposable;
-    private String gaming = "";
     private boolean select = false;
     private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
     private ImageLoader imageLoader = new ImageLoader(bActivity, R.mipmap.game_arena, R.mipmap.game_arena);
@@ -160,7 +159,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
 
-        gaming = getResources().getString(R.string.gameing);
     }
 
     @Override
@@ -189,7 +187,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         });
 
         matchtime.setText("");
-        gamestatus1.setText("");
         gamestatus.setVisibility(View.GONE);
         looklayout.setVisibility(View.GONE);
         matchwin0.setVisibility(View.GONE);
@@ -233,11 +230,11 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     playnamecommon1.setText(team1.getTeam_short_name());
                     playvidoname0.setText(team0.getTeam_short_name());
                     playvidoname2.setText(team1.getTeam_short_name());
-                    matchtime.setText(status == 2 ? gaming : AppUtils.getFormatTime2(_data.getStart_time_ms()));
-                    if (status <= 2) startUpdate();
+                    matchtime.setText(String.format("%s %s", AppUtils.getFormatTime2(_data.getStart_time_ms()), AppUtils.getWhatDay(_data.getStart_time_ms())));
+                    if (status == 2) startUpdate();
                     else stopUpdate();
 
-                    gamestatus1.setText((status == 2 || status == 3) ? "" : AppUtils.getFormatTime4(_data.getStart_time_ms()));
+                    gamestatus1.setText((status > 1 && status <= 4) ? statusText[status] : AppUtils.getFormatTime4(_data.getStart_time_ms()));
 
                     String oneWin = String.valueOf(team0.getScore().getTotal());
                     String twoWin = String.valueOf(team1.getScore().getTotal());
@@ -246,11 +243,11 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     vidowin0.setText(oneWin);
                     vidowin1.setText(twoWin);
 
+                    matchtime.setVisibility((status == 2 || status == 3) ? View.GONE : View.VISIBLE);
                     matchwin0.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
                     matchwin1.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
 
-                    gamestatus.setText(statusText[status]);
-                    gamestatus.setVisibility(status == 2 ? View.GONE : View.VISIBLE);
+                    gamestatus.setVisibility((status == 2 || status == 3) ? View.GONE : View.VISIBLE);
                     looklayout.setVisibility(status == 2 ? View.VISIBLE : View.GONE);
 
                     imageLoader.getAndSetImage(_data.getGame_logo(), gameicon);

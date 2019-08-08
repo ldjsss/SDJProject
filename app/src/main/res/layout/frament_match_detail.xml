@@ -58,16 +58,16 @@
 
             <TextView
                 android:layout_width="40dp"
-                android:layout_height="25dp"
+                android:layout_height="23dp"
                 android:id="@+id/gameplaycount"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:text="+3"
                 android:textSize="12sp"
-                android:textColor="@color/color_cdc3b3"
+                android:textColor="#b49f5e"
                 android:gravity="center"
-                android:background="@drawable/rec_stroke_round4_969696" />
+                android:background="@drawable/rec_stroke_round4_b49f5e" />
 
         </RelativeLayout>
 
@@ -187,23 +187,37 @@
                     android:layout_marginTop="28dp"
                     android:textColor="@color/white" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="25dp">
+                    android:id="@+id/gamestatus">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/cpsy_gp3"
+                        android:id="@+id/gamestatusicon"
+                        android:layout_centerHorizontal="true"
+                        android:tint="#955d5c"
+                        android:layout_gravity="center_horizontal"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/gamestatus"
-                        android:singleLine="true"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
+                        android:textColor="#955d5c"
                         android:text="@string/matchStatusFront"
+                        android:layout_below="@+id/gamestatusicon"
                         android:layout_centerHorizontal="true"
-                        android:textColor="@color/color_8e6c37" />
-                </RelativeLayout>
+                        android:layout_gravity="center_horizontal"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="80dp"

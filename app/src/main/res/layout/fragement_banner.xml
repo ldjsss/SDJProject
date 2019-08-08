@@ -11,5 +11,5 @@
         app:setDirection="bottom_to_top"
         app:setGravity="center"
         android:background="@drawable/mainprimay_round100"
-        app:setTextColor="@color/color_8e6c37"/>
+        app:setTextColor="#bfaf79"/>
 </LinearLayout>

@@ -51,6 +51,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -664,12 +665,85 @@ public class AppUtils {
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
             d = sf.parse(timers);// 日期转换为时间戳
         } catch (ParseException e) {
-// TODO Auto-generated catch block
+        // TODO Auto-generated catch block
             e.printStackTrace();
         }
         timeStemp = d.getTime();
         return timeStemp;
     }
+
+    /**
+     * 将时间戳转换成当天零点的时间戳
+     *
+     * @param milliseconds
+     * @return
+     */
+    public static Calendar zeroFromHour(long milliseconds) {
+        Calendar calendar = Calendar.getInstance(); // 获得一个日历
+
+        calendar.setTimeInMillis(completMilliseconds(milliseconds));
+        zeroFromHour(calendar);
+        return calendar;
+    }
+    /**
+     * 将时，分，秒，以及毫秒值设置为0
+     *
+     * @param calendar
+     */
+    public static void zeroFromHour(Calendar calendar) {
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+    }
+    /**
+     * 由于服务器返回的是10位，手机端使用需要补全3位
+     *
+     * @param milliseconds
+     * @return
+     */
+    public static long completMilliseconds(long milliseconds) {
+        String milStr = Long.toString(milliseconds);
+        if (milStr.length() == 10) {
+            milliseconds = milliseconds * 1000;
+        }
+        return milliseconds;
+    }
+
+
+    /**
+     * 最终调用方法
+     * @param timeStamp
+     * @return
+     */
+
+    public static String getWhatDay (long timeStamp) {
+        Calendar cal = zeroFromHour(timeStamp);
+        String whatDay="";
+        if(cal.get(Calendar.DAY_OF_WEEK)==Calendar.SATURDAY){
+            whatDay="星期六";
+        }
+        if(cal.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY){
+            whatDay="星期日";
+        }
+        if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY){
+            whatDay = "星期一";
+        }
+        if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY){
+            whatDay = "星期二";
+        }
+        if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY){
+            whatDay = "星期三";
+        }
+        if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY){
+            whatDay = "星期四";
+        }
+        if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY){
+            whatDay = "星期五";
+        }
+        return whatDay;
+    }
+
 
 
     /*

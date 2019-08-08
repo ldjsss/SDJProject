@@ -12,7 +12,7 @@
         android:textColor="@color/color_cdc3b3"
         android:singleLine="true"
         android:ellipsize="marquee"
-        android:textSize="15sp"
+        android:textSize="16sp"
         android:text="demo"/>
 
     <TextView

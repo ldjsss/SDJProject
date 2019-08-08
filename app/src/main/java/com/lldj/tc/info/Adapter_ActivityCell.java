@@ -15,6 +15,7 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.ActivityBean;
 import com.lldj.tc.http.beans.BaseBean;
+import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.http.beans.TaskBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.http.HttpTool;
@@ -126,6 +127,8 @@ public class Adapter_ActivityCell extends RecyclerView.Adapter {
                                         _data.setStatus(2);
                                         ToastUtils.show_middle_pic(mContext, R.mipmap.cancle_icon, mContext.getString(R.string.gettasksucc), ToastUtils.LENGTH_SHORT);
                                         notifyDataSetChanged();
+
+                                        HttpMsg.getInstance().sendGetUserInfo(mContext, SharePreUtils.getInstance().getToken(mContext), JsonBean.class, null);
                                     }
                                 }
                             });

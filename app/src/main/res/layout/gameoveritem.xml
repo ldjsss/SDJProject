@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="35dp"
+    android:layout_height="40dp"
     android:orientation="horizontal"
     android:id="@+id/bottomoverlayout">
 
@@ -27,7 +27,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/playvictoryicon0"
             android:src="@mipmap/main_victory"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_10"/>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="@dimen/dimen_20"
@@ -54,7 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="-10dp"
             android:id="@+id/playvictoryicon1"
-            android:src="@mipmap/main_failure" />
+            android:src="@mipmap/main_failure"
+            android:layout_marginStart="@dimen/dp_10"/>
     </RelativeLayout>
 
 </LinearLayout>
