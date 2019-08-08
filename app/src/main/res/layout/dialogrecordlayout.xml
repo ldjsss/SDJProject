@@ -8,28 +8,34 @@
 
     <include layout="@layout/toolbar_back_layout"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/rec_stroke_round4_969696"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/recordtablayout"
             style="@style/FirstpageFragment_TabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabPaddingTop="2dp"
-            app:tabPaddingBottom="2dp"
+            android:layout_height="40dp"
             app:tabBackground="@color/transparent"
-            app:tabIndicatorFullWidth="false"
-            android:background="#252A3B"/>
-    </RelativeLayout>
+            app:tabIndicatorFullWidth="false" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/recordpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_10"
-        android:overScrollMode="never"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/recordpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:overScrollMode="never"/>
+    </LinearLayout>
 
 </LinearLayout>

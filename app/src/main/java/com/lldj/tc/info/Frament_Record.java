@@ -1,8 +1,10 @@
 package com.lldj.tc.info;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,20 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.RecordModel;
-import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.FormatModel.matchModel.BetModel;
 import com.lldj.tc.http.beans.RecordBean;
 import com.lldj.tc.match.Adapter_BetResultCell;
 import com.lldj.tc.sharepre.SharePreUtils;
-import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
-import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
-import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
 
@@ -40,6 +38,8 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
     LRecyclerView subjectLrecycleview;
     @BindView(R.id.layout_board)
     FrameLayout layoutBoard;
+    @BindView(R.id.sublayout)
+    LinearLayout sublayout;
 
     private Adapter_BetResultCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
@@ -77,6 +77,7 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
 
         }
 
+        sublayout.setBackgroundColor(getResources().getColor(R.color.transparent));
         layoutBoard.setVisibility(View.GONE);
     }
 
@@ -140,21 +141,20 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
                 if (res.getCode() == GlobalVariable.succ) {
 
                     RecordModel _ret = res.getResult();
-                    List<BetModel> _list =  _ret.getRecords();
+                    List<BetModel> _list = _ret.getRecords();
                     pageSize = _ret.getPage_size();
                     curPage = _ret.getPage_num();
                     totalPage = _ret.getPages();
 
-                    if(curPage <= 1) {
+                    if (curPage <= 1) {
                         alist.clear();
-                    }
-                    else{
+                    } else {
                         for (int i = alist.size() - 1; i > 0; i--) {
                             if (alist.get(i).getPage_num() == curPage) alist.remove(i);
                         }
                     }
 
-                    if(_list != null){
+                    if (_list != null) {
                         for (int i = 0; i < _list.size(); i++) {
                             _list.get(i).setPage_num(curPage);
                             alist.add(_list.get(i));
@@ -162,7 +162,7 @@ public class Frament_Record extends BaseFragment implements LRecyclerView.LScrol
                     }
 
                     Collections.sort(alist, (o1, o2) -> {
-                        return (int)(o1.getBet_created_time() - o2.getBet_created_time());
+                        return (int) (o1.getBet_created_time() - o2.getBet_created_time());
                     });
 
                     mAdapter.changeData(alist);

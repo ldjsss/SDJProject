@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginTop="@dimen/dimen_5">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp" />
+    android:layout_height="wrap_content"
+   android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:background="@drawable/rec_stroke_round4_969696">
+        android:padding="10dp"
+        android:background="@drawable/rec_stroke_round4_121212">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,8 +17,8 @@
 
             <ImageView
                 android:id="@+id/tv_logoicon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@mipmap/game_arena"
                 android:layout_centerVertical="true" />
             <TextView
@@ -34,8 +28,8 @@
                 android:layout_toRightOf="@+id/tv_logoicon"
                 android:text="Chinese soccer"
                 android:layout_centerVertical="true"
-                android:textSize="20sp"
-                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textColor="#ded1c2"
                 android:layout_marginStart="@dimen/dimen_5"/>
 
             <TextView
@@ -46,7 +40,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:textSize="16sp"
-                android:textColor="#8993B4" />
+                android:textColor="#998750" />
 
             <TextView
                 android:id="@+id/tv_matchtround"
@@ -56,8 +50,8 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/tv_matchtstatus"
                 android:textSize="16sp"
-                android:textColor="#8993B4"
-                android:layout_marginEnd="@dimen/dp_10"/>
+                android:textColor="#ded1c2"
+                android:layout_marginEnd="@dimen/dp_5"/>
 
         </RelativeLayout>
 
@@ -84,8 +78,8 @@
                     android:layout_height="wrap_content"
                     android:text="Chinese soccer-vs-Chinese soccer"
                     android:layout_centerVertical="true"
-                    android:textSize="16sp"
-                    android:textColor="#545D71" />
+                    android:textSize="14sp"
+                    android:textColor="#ded1c2" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
@@ -95,8 +89,8 @@
                     android:layout_height="wrap_content"
                     android:text="start: 2019/06/25 15:44:00"
                     android:layout_centerVertical="true"
-                    android:textSize="16sp"
-                    android:textColor="#545D71" />
+                    android:textSize="14sp"
+                    android:textColor="#5a5952" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
@@ -106,8 +100,8 @@
                     android:layout_height="wrap_content"
                     android:text="bets: 2.7"
                     android:layout_centerVertical="true"
-                    android:textSize="16sp"
-                    android:textColor="#545D71" />
+                    android:textSize="14sp"
+                    android:textColor="#5a5952" />
             </LinearLayout>
 
             <ImageView
@@ -150,8 +144,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/onebet"
                     android:layout_centerVertical="true"
-                    android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textSize="14sp"
+                    android:textColor="#ded1c2" />
 
                 <TextView
                     android:id="@+id/tv_betsureing"
@@ -160,8 +154,8 @@
                     android:text="@string/betsureing"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:textSize="16sp"
-                    android:textColor="#74ACC3" />
+                    android:textSize="14sp"
+                    android:textColor="#5a5952" />
 
                 <TextView
                     android:id="@+id/tv_havepay"
@@ -171,7 +165,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:textSize="16sp"
-                    android:textColor="#74ACC3"
+                    android:textColor="#5a5952"
                     android:background="@drawable/rec_nulltext"/>
             </RelativeLayout>
 
@@ -187,8 +181,8 @@
                     android:text="@string/betmoney"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
-                    android:textSize="16sp"
-                    android:textColor="#BDC5DE" />
+                    android:textSize="14sp"
+                    android:textColor="#ded1c2" />
 
                 <TextView
                     android:id="@+id/tv_betmoney"
@@ -197,9 +191,9 @@
                     android:text="0"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/tv_betmoneytitle"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:layout_marginStart="@dimen/dp_10"/>
+                    android:textSize="14sp"
+                    android:textColor="#ded1c2"
+                    android:layout_marginStart="@dimen/dp_5"/>
 
                 <TextView
                     android:id="@+id/tv_willget"
@@ -208,8 +202,8 @@
                     android:text="0"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"/>
+                    android:textSize="14sp"
+                    android:textColor="#ded1c2"/>
 
                 <TextView
                     android:id="@+id/tv_willgettitle"
@@ -218,9 +212,9 @@
                     android:text="@string/maxGetTitle"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/tv_willget"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:layout_marginEnd="@dimen/dp_10"/>
+                    android:textSize="14sp"
+                    android:textColor="#ded1c2"
+                    android:layout_marginEnd="@dimen/dp_5"/>
 
 
             </RelativeLayout>
@@ -229,6 +223,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -239,7 +234,7 @@
                 android:text="@string/betsurewarm"
                 android:layout_centerVertical="true"
                 android:textSize="14sp"
-                android:textColor="#545D71" />
+                android:textColor="#5a5952" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -251,8 +246,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/betnum"
                     android:layout_centerVertical="true"
-                    android:textSize="13sp"
-                    android:textColor="#545D71" />
+                    android:textSize="14sp"
+                    android:textColor="#5a5952" />
                 <TextView
                     android:id="@+id/tv_betnum"
                     android:layout_width="wrap_content"
@@ -260,8 +255,8 @@
                     android:text="0"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/tv_betnumtitle"
-                    android:textSize="13sp"
-                    android:textColor="#545D71"
+                    android:textSize="14sp"
+                    android:textColor="#5a5952"
                     android:layout_marginStart="@dimen/dp_5"/>
 
                 <TextView
@@ -271,15 +266,16 @@
                     android:text="2019/06/26 10:01:52"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:textSize="11sp"
-                    android:textColor="#545D71" />
+                    android:textSize="14sp"
+                    android:textColor="#5a5952" />
 
             </RelativeLayout>
         </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp" />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
 
 </LinearLayout>
