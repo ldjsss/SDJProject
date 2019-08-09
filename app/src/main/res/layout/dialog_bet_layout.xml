@@ -61,7 +61,7 @@
                 android:id="@+id/moneyhave"/>
 
             <View
-                android:layout_width="@dimen/dp_1"
+                android:layout_width="0.5dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/dp_10"
                 android:id="@+id/closeline"

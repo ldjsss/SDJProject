@@ -288,21 +288,33 @@ public class DialogBet extends BaseDialog {
             tv_groupteams.setText(_data.getMatch_name());
 
             TextView betpercent = convertView.findViewById(R.id.betpercent);
-            String _str = String.format("@%s", odd.getOdds());
-            String _ltext = betpercent.getText().toString();
-            if(!TextUtils.isEmpty(_ltext) && !betpercent.getText().equals(_str)){
-                betwarmlayout.setVisibility(View.VISIBLE);
-                AppUtils.dispatchEvent(new ObData(EventType.BTNCHANGE, null, ID, odd.getOdds()));
-                betpercent.setTextColor(Color.RED);
-                Utils.setFlickerAnimation(betpercent, 8, new Utils.Listener() {
-                    @Override
-                    public void onFinish() {
-                        betpercent.setTextColor(getContext().getResources().getColor(R.color.color_a09584));
-                        betpercent.setAlpha(1.0f);
-                    }
-                });
+            ImageView betoddslock = convertView.findViewById(R.id.betoddslock);
+            if(odd.getStatus() == 1){
+                String _str = String.format("@%s", odd.getOdds());
+                String _ltext = betpercent.getText().toString();
+                Object _tag = betpercent.getTag();
+                if(!TextUtils.isEmpty(_ltext) && !betpercent.getText().equals(_str) && _tag != null && String.valueOf(_tag).equalsIgnoreCase(String.valueOf(odd.getId()))){
+                    betwarmlayout.setVisibility(View.VISIBLE);
+                    AppUtils.dispatchEvent(new ObData(EventType.BTNCHANGE, null, ID, odd.getOdds()));
+                    betpercent.setTextColor(Color.RED);
+                    Utils.setFlickerAnimation(betpercent, 8, new Utils.Listener() {
+                        @Override
+                        public void onFinish() {
+                            betpercent.setTextColor(getContext().getResources().getColor(R.color.color_a09584));
+                            betpercent.setAlpha(1.0f);
+                        }
+                    });
+                }
+                betpercent.setText(_str);
+                betpercent.setTag(odd.getId());
+                betpercent.setVisibility(View.VISIBLE);
+                betoddslock.setVisibility(View.GONE);
             }
-            betpercent.setText(_str);
+            else{
+                betpercent.setVisibility(View.GONE);
+                betoddslock.setVisibility(View.VISIBLE);
+            }
+
 
             TextView betwildgettv = (TextView) convertView.findViewById(R.id.betwildgettv);
             betwildgettv.setText(betinfo == null ? "0" : String.format("%.2f", (betinfo.getAmount() * Float.parseFloat(odd.getOdds()))));

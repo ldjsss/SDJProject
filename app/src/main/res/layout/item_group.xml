@@ -81,6 +81,27 @@
                 android:singleLine="true"
                 android:focusable="false"
                 android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_centerVertical="true"
+                android:text=""
+                android:textColor="@color/color_a09584"
+                android:id="@+id/betpercent"
+                android:singleLine="true"
+                android:layout_toLeftOf="@+id/betinput_et"
+                android:layout_marginEnd="@dimen/dp_10"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/main_lock"
+                android:id="@+id/betoddslock"
+                android:layout_toLeftOf="@+id/betinput_et"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:visibility="gone"/>
         </RelativeLayout>
 
          <RelativeLayout
@@ -108,18 +129,6 @@
          </RelativeLayout>
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:layout_centerVertical="true"
-        android:text=""
-        android:textColor="@color/color_a09584"
-        android:id="@+id/betpercent"
-        android:layout_alignParentEnd="true"
-        android:singleLine="true"
-        android:layout_marginEnd="130dp"/>
 
 
     <View

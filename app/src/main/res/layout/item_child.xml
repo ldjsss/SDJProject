@@ -109,16 +109,25 @@
             android:layout_width="5dp"
             android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/tv_child12"
+        <RelativeLayout
             android:layout_width="15dp"
             android:layout_height="match_parent"
-            android:text="delete"
-            android:textColor="@color/color_8e6c37"
-            android:gravity="center"
-            android:background="@drawable/rec_betcountbtn"
-            android:tag="tv11"
-            android:layout_weight="1"/>
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/tv_child12"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/color_8e6c37"
+                android:gravity="center"
+                android:background="@drawable/rec_betcountbtn"
+                android:tag="tv11" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/dktz_cha2"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/dp_27" />
+        </RelativeLayout>
 
     </LinearLayout>
 

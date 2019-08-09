@@ -10,48 +10,48 @@
         android:layout_height="40dp"
         android:id="@+id/bettitlelayout"
         android:gravity="center_vertical"
-        android:background="#252A3B">
+        android:background="@drawable/rec_bettitle">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/gamebeticon"
-            android:src="@mipmap/sobot_icon_switch_robot"
+            android:src="@mipmap/xzlb_rl"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_20"/>
+            android:layout_marginStart="@dimen/dp_10"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/betresult"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/gamebeticon"
             android:layout_marginLeft="@dimen/dp_10"
             android:id="@+id/deleteall"
-            android:textColor="#74ACC3"/>
+            android:textColor="@color/color_bg"/>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/betlrecycleview"
         android:layout_width="match_parent"
-        android:layout_height="255dp"
+        android:layout_height="250dp"
         android:overScrollMode="never"
-        android:background="@color/black"/>
+        android:background="@color/color_262935"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="40dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:background="#252A3B">
+        android:background="@color/color_262935">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lookbetlist"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:id="@+id/bt_betlist"
-            android:textColor="#BDC5DE"
+            android:textColor="@color/color_cdc3b3"
             android:layout_weight="1"
             android:gravity="center"/>
 
@@ -59,9 +59,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/continuebet"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:id="@+id/bt_continue"
-            android:textColor="#74ACC3"
+            android:textColor="@color/color_cdc3b3"
             android:layout_weight="1"
             android:gravity="center"/>
     </LinearLayout>

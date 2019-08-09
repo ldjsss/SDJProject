@@ -24,7 +24,8 @@
             android:text="FIFA"
             android:textSize="14sp"
             android:textColor="#6e6d65"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_5"/>
     </LinearLayout>
 
     <View

@@ -2,10 +2,12 @@ package com.lldj.tc.match;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -86,6 +88,8 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
             holder.betvictoryicon.setVisibility(View.GONE);
             holder.tv_havepay.setVisibility(View.GONE);
             holder.tv_betsureing.setVisibility(View.VISIBLE);
+            holder.resultcelllayout.setBackgroundColor(context.getResources().getColor(R.color.transparent));
+            holder.cellendline.setVisibility(View.VISIBLE);
         }
         else if(datas.size() > 0){
             holder.tv_havepay.setVisibility(View.GONE);
@@ -126,6 +130,8 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
         private TextView tv_matchtround;
         private TextView tv_matchtstatus;
         private ImageView tv_logoicon;
+        private LinearLayout resultcelllayout;
+        private View cellendline;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -145,6 +151,8 @@ public class Adapter_BetResultCell extends RecyclerView.Adapter<Adapter_BetResul
             tv_matchtround = itemView.findViewById(R.id.tv_matchtround);
             tv_matchtstatus = itemView.findViewById(R.id.tv_matchtstatus);
             tv_logoicon = itemView.findViewById(R.id.tv_logoicon);
+            resultcelllayout = itemView.findViewById(R.id.resultcelllayout);
+            cellendline = itemView.findViewById(R.id.cellendline);
         }
     }
 }
