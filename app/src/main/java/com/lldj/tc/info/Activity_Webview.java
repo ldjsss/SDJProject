@@ -69,6 +69,7 @@ public class Activity_Webview extends BaseActivity {
         WebSettings settings = webview.getSettings();
         settings.setDefaultTextEncodingName("utf-8") ;
         settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
         webview.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);

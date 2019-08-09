@@ -84,9 +84,7 @@
             android:background="#383b4a"/>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="30dp"></View>
+
 
     <WebView
         android:layout_width="match_parent"

@@ -75,6 +75,7 @@ public class Activity_Shop extends BaseActivity {
         WebSettings settings = shopwebview.getSettings();
         settings.setDefaultTextEncodingName("utf-8");
         settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
         shopwebview.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
