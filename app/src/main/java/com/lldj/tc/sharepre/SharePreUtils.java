@@ -193,7 +193,7 @@ public class SharePreUtils {
         getInstance().userId = ret.getOpenid();
         getInstance().agent = ret.isAgent();
         getInstance().birthday = ret.getBirthday();
-        getInstance().recharge_url = "http://192.168.1.60/payhtml/pay-index?access_token=70d14eae-4709-4529-b6f2-f7e6c04e7d56";//ret.getRecharge_url();
+        getInstance().recharge_url = ret.getRecharge_url();
 
         if(TextUtils.isEmpty(getInstance().birthday)) getInstance().birthday = String.valueOf(Calendar.getInstance().getTimeInMillis());
     }

@@ -448,6 +448,7 @@ public class DialogBet extends BaseDialog {
                                 for (int k = 0; k < _data.getOdds().size(); k++) {
                                     if (_data.getOdds().get(k).getId() == result.get(i).getId()) {
                                         _data.getOdds().get(k).setOdds(result.get(i).getOdds());
+                                        _data.getOdds().get(k).setStatus(result.get(i).getStatus());
                                     }
                                 }
                             }
