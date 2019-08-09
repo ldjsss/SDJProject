@@ -2,9 +2,11 @@ package com.lldj.tc.match;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +25,6 @@ import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
-import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
@@ -56,7 +57,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 
     private Adapter_MainCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
-    private ArrayList<ResultsModel> alist= new ArrayList<>();
+    private ArrayList<ResultsModel> alist = new ArrayList<>();
     public int page_size = 10;
     public int page_num = 1;
     public int pages = 0;
@@ -85,16 +86,14 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     if (mAdapter != null) {
                         mAdapter.updateSelect((List<ObData>) data.getValue());
                     }
-                } else if ( _key.equalsIgnoreCase(EventType.DETIALHIDE)) {
+                } else if (_key.equalsIgnoreCase(EventType.DETIALHIDE)) {
                     startUpdate();
-                }
-                else if (_key.equalsIgnoreCase(EventType.SELECTGAMEID)) {
+                } else if (_key.equalsIgnoreCase(EventType.SELECTGAMEID)) {
                     alist.clear();
                     page_num = 1;
                     selects = SharePreUtils.getInstance().getSelectGame(getContext());
                     onRefresh();
-                }
-                else if (_key.equalsIgnoreCase(EventType.BETDETAILUI)) {
+                } else if (_key.equalsIgnoreCase(EventType.BETDETAILUI)) {
                     stopUpdate();
                 }
             }
@@ -103,6 +102,21 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         selects = SharePreUtils.getInstance().getSelectGame(getContext());
 
 //        Log.e(AppUtils.getScreenWidth(getContext()) + "--------", AppUtils.getScreenHeight(getContext()) + "------");
+
+
+
+        if (ViewType > 1) {
+            fragment_Calendar = new Fragment_Calendar();
+        } else {
+            fragment_Banner = new Fragment_Banner();
+            Bundle bundle = new Bundle();
+            bundle.putInt("ARG", ViewType);
+            fragment_Banner.setArguments(bundle);
+        }
+
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.add(1000 + ViewType, fragment_Calendar != null ? fragment_Calendar : fragment_Banner);
+        transaction.commit();
     }
 
     @Override
@@ -113,7 +127,6 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     @Override
     public void initView(View rootView) {
         ButterKnife.bind(this, rootView);
-
         rootView.findViewById(R.id.layout_board).setId(1000 + ViewType); //In order to solve id duplication after reuse, add deviation when adding control dynamically
 
         if (lAdapter == null) {
@@ -123,26 +136,12 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
             lAdapter = new LRecyclerViewAdapter(getActivity(), mAdapter);
             subjectLrecycleview.setAdapter(lAdapter);
             subjectLrecycleview.setLScrollListener(this);
-
-            if (ViewType > 1) {
-                fragment_Calendar = new Fragment_Calendar();
-            } else {
-                fragment_Banner = new Fragment_Banner();
-                Bundle bundle = new Bundle();
-                bundle.putInt("ARG", ViewType);
-                fragment_Banner.setArguments(bundle);
-            }
-
-            FragmentTransaction transaction = bActivity.getSupportFragmentManager().beginTransaction();  //It's a compatibility issue, avoid warnings so don't use getFragmentManager()
-            transaction.add(1000 + ViewType, fragment_Calendar != null ? fragment_Calendar : fragment_Banner);
-            transaction.commit();
         }
-
     }
 
     @Override
     public void onRefresh() {
-        if(DEBUG)Clog.e("onRefresh", String.format("onRefresh = %s", ViewType));
+        if (DEBUG) Clog.e("onRefresh", String.format("onRefresh = %s", ViewType));
         HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
         getMatchData();
 
@@ -153,15 +152,15 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
         this._visible = isVisible;
-       if(fragment_Banner != null){
-           if(isVisible )fragment_Banner.startViewAnimator();
-           else fragment_Banner.stopViewAnimator();
-       }
+        if (fragment_Banner != null) {
+            if (isVisible) fragment_Banner.startViewAnimator();
+            else fragment_Banner.stopViewAnimator();
+        }
         if (isVisible) {
-            if(DEBUG)Clog.e("onFragmentVisibleChange", String.format("isVisible = %s", ViewType));
+            if (DEBUG) Clog.e("onFragmentVisibleChange", String.format("isVisible = %s", ViewType));
             onRefresh();
         } else {
-            if(DEBUG)Clog.e("onFragmentVisibleChange", String.format("ishide = %s", ViewType));
+            if (DEBUG) Clog.e("onFragmentVisibleChange", String.format("ishide = %s", ViewType));
             stopUpdate();
         }
     }
@@ -177,8 +176,8 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     @Override
     public void onScrolled(int distanceX, int distanceY) {
         int pos = layoutManager.findFirstVisibleItemPosition();
-        page_num = (int)Math.ceil(pos/(page_size*1.0));
-        if(page_num <= 0) page_num = 1;
+        page_num = (int) Math.ceil(pos / (page_size * 1.0));
+        if (page_num <= 0) page_num = 1;
 //        Log.e("page_num", page_num + "  page_num = " + page_num) ;
 
     }
@@ -191,7 +190,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         }
         if (page_num < pages) {
             RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, page_size, LoadingFooter.State.Loading, null);
-            page_num ++;
+            page_num++;
             getMatchData();
         } else {
             RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, page_size, LoadingFooter.State.TheEnd, null);
@@ -205,29 +204,27 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                 PageMatchBean res = (PageMatchBean) _res;
                 if (res.getCode() == GlobalVariable.succ) {
                     PageMatchBean.matchModel _result = res.getResult();
-                    if(_result == null) {
+                    if (_result == null) {
                         Toast.makeText(mContext, "--------service data error ", Toast.LENGTH_SHORT).show();
                         page_size = 10;
                         pages = 0;
                         total = 0;
-                    }
-                    else {
+                    } else {
                         page_size = _result.getPage_size();
                         pages = _result.getPages();
                         total = _result.getTotal();
                     }
 
-                    if(page_num <= 1) {
+                    if (page_num <= 1) {
                         alist.clear();
-                    }
-                    else{
+                    } else {
                         for (int i = alist.size() - 1; i > 0; i--) {
 //                            Clog.e("-------i = " + i, "alist size = " + alist.size());
                             if (alist.get(i).getPage_num() == page_num) alist.remove(i);
                         }
                     }
 
-                    if(_result != null && _result.getDatas() != null){
+                    if (_result != null && _result.getDatas() != null) {
                         List<ResultsModel> _datas = _result.getDatas();
                         for (int i = 0; i < _datas.size(); i++) {
                             _datas.get(i).setPage_num(page_num);
@@ -236,16 +233,16 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                     }
 
                     Collections.sort(alist, (o1, o2) -> {
-                        return (int)(o1.getStart_time_ms() - o2.getStart_time_ms());
+                        return (int) (o1.getStart_time_ms() - o2.getStart_time_ms());
                     });
 
-                    if(page_num >= pages){ //Add blank items
+                    if (page_num >= pages) { //Add blank items
                         for (int i = 0; i < 2; i++) {
-                            alist.add(new ResultsModel( -1, "", "", page_num));
+                            alist.add(new ResultsModel(-1, "", "", page_num));
                         }
                     }
 
-                    tvNoMatch.setVisibility(alist.size()>0?View.GONE:View.VISIBLE);
+                    tvNoMatch.setVisibility(alist.size() > 0 ? View.GONE : View.VISIBLE);
 
                     mAdapter.changeData(alist, total);
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, page_size, LoadingFooter.State.Normal, null);
@@ -287,21 +284,21 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     @Override
     public void onPause() {
         super.onPause();
-        if(DEBUG)Clog.e("onPause", String.format("onPause = %s", ViewType));
+        if (DEBUG) Clog.e("onPause", String.format("onPause = %s", ViewType));
         stopUpdate();
 
-        if(fragment_Banner != null){
-          fragment_Banner.stopViewAnimator();
+        if (fragment_Banner != null) {
+            fragment_Banner.stopViewAnimator();
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(DEBUG)Clog.e("onResume", String.format("onResume = %s", ViewType));
+        if (DEBUG) Clog.e("onResume", String.format("onResume = %s", ViewType));
         startUpdate();
 
-        if(fragment_Banner != null && _visible){
+        if (fragment_Banner != null && _visible) {
             fragment_Banner.startViewAnimator();
         }
     }
