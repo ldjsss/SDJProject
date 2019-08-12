@@ -37,7 +37,7 @@
         android:hint="@string/userKeyRemind"
         android:maxLength="16"
         android:textColor="@color/color_ebe3d7"
-        android:textColorHint="@color/color_cdc3b3"
+        android:textColorHint="@color/color_544a36"
         android:textCursorDrawable="@drawable/my_cursor"
         android:singleLine="true"
         android:textSize="14sp" />

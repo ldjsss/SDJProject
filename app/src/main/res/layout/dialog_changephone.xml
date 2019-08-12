@@ -15,6 +15,8 @@
         android:layout_height="match_parent"
         android:overScrollMode="never"
         android:scrollbars="none"
+        android:background="@drawable/rec_stroke_969696"
+        android:layout_margin="@dimen/dp_10"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
@@ -30,7 +32,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="@dimen/dimen_40"
                 android:layout_marginEnd="@dimen/dimen_40"
-                android:layout_marginTop="40dp" />
+                android:layout_marginTop="10dp" />
 
             <!--获取验证码-->
             <include

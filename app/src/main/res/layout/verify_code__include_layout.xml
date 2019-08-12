@@ -35,7 +35,7 @@
             android:inputType="phone|number"
             android:maxLength="11"
             android:textColor="@color/color_ebe3d7"
-            android:textColorHint="@color/color_cdc3b3"
+            android:textColorHint="@color/color_544a36"
             android:textCursorDrawable="@drawable/my_cursor"
             android:singleLine="true"
             android:textSize="14sp"
@@ -47,7 +47,7 @@
             android:layout_height="@dimen/dp_25"
             android:layout_alignParentEnd="true"
             android:text="@string/get_verify_code"
-            android:textColor="@color/colorService"
+            android:textColor="#bfae79"
             android:layout_centerVertical="true"
             android:background="@drawable/outline_btn"
             android:textSize="12sp"/>
