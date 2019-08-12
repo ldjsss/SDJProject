@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#2A3142">
+    android:background="#383838">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#383b4a" />
+        android:background="#282828" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

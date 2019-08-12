@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/addnewcard"
             android:textSize="16sp"
-            android:layout_marginStart="@dimen/dp_60"
+            android:layout_marginStart="@dimen/dp_50"
             android:textColor="#616D88"
             android:id="@+id/addbank"
             android:gravity="center_vertical"/>

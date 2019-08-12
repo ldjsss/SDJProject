@@ -19,14 +19,15 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#383838">
+            android:background="@drawable/rec_stroke_banktitle"
+            android:id="@+id/selectlayout">
 
             <TextView
                 android:id="@+id/banktitlename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/bankcard"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:layout_marginStart="@dimen/dp_20"
                 android:textColor="@color/color_cdc3b3"
                 android:layout_centerVertical="true"/>
@@ -51,7 +52,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:id="@+id/selectlayout"
                     android:layout_marginStart="@dimen/dp_10">
                     <TextView
                         android:layout_width="match_parent"
@@ -121,7 +121,7 @@
                 android:layout_gravity="center_vertical"
                 android:inputType="number"
                 android:maxLength="20"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 

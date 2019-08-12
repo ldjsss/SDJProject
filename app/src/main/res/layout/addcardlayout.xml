@@ -10,37 +10,51 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#1C2031"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/rec_stroke_969696"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#212534">
+            android:background="@drawable/rec_stroke_banktitle">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="15dp"></View>
+            <TextView
+                android:id="@+id/banktitlename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cardman"
+                android:textSize="16sp"
+                android:layout_marginStart="@dimen/dp_20"
+                android:textColor="@color/color_cdc3b3"
+                android:layout_centerVertical="true"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="@string/cardman"
-                    android:textSize="15sp"
-                    android:layout_marginStart="@dimen/dp_20"
-                    android:textColor="@color/color_cdc3b3" />
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_toRightOf="@+id/banktitlename"
+                android:layout_marginStart="@dimen/dp_10">
+
+                <View
+                    android:id="@+id/resvierify_line1"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:background="@color/color_1a1c26" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:orientation="vertical"
-                    android:id="@+id/selectlayout">
+                    android:id="@+id/selectlayout"
+                    android:layout_toRightOf="@+id/banktitlename"
+                    android:layout_marginStart="@dimen/dp_10">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -67,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="15dp"></View>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -84,21 +98,6 @@
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/dimen_20">
 
-            <!--<EditText-->
-                <!--android:id="@+id/editaddcardnum"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="40dp"-->
-                <!--android:background="@color/transparent"-->
-                <!--android:hint="@string/addcardnum"-->
-                <!--android:textColor="@color/color_ebe3d7"-->
-                <!--android:textColorHint="#68718C"-->
-                <!--android:textCursorDrawable="@drawable/my_cursor"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_marginStart="@dimen/dp_20"-->
-                <!--android:inputType="number"-->
-                <!--android:maxLength="30"-->
-                <!--android:textSize="23sp" />-->
-
             <com.lsh.library.BankNumEditText
                 android:id="@+id/bankCardNum"
                 android:layout_width="match_parent"
@@ -110,12 +109,12 @@
                 android:layout_marginStart="@dimen/dp_20"
                 android:textCursorDrawable="@drawable/my_cursor"
                 android:singleLine="true"
-                android:textSize="23sp"
+                android:textSize="18sp"
                 android:inputType="number" />
 
             <ImageView
-                android:layout_width="33dp"
-                android:layout_height="33dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@mipmap/user_camera"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
@@ -172,8 +171,8 @@
                 android:layout_marginStart="31dp"/>
 
             <ImageView
-                android:layout_width="33dp"
-                android:layout_height="33dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@mipmap/main_next"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
@@ -194,7 +193,7 @@
             android:text="@string/btnsure"
             android:textColor="@color/color_cdc3b3"
             android:gravity="center"
-            android:background="@drawable/rec_nulltext"
+            android:background="@drawable/rec_00be0a_round100"
             android:layout_gravity="center_horizontal"
             android:textSize="18sp"
             android:id="@+id/addsure"

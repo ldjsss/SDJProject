@@ -134,21 +134,6 @@ public class Activity_AddCard extends BaseActivity{
             }
         });
 
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_29), R.mipmap.user_bank_29));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_30), R.mipmap.user_bank_30));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_31), R.mipmap.user_bank_31));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_32), R.mipmap.user_bank_32));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_33), R.mipmap.user_bank_33));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_34), R.mipmap.user_bank_34));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_35), R.mipmap.user_bank_35));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_36), R.mipmap.user_bank_36));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_37), R.mipmap.user_bank_37));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_38), R.mipmap.user_bank_38));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_39), R.mipmap.user_bank_39));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_40), R.mipmap.user_bank_40));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_41), R.mipmap.user_bank_41));
-//        _list.add(new BankBean.BankModel(getResourcesString(R.string.user_bank_42), R.mipmap.user_bank_42));
-
         HttpMsg.getInstance().sendSuportBankList(SharePreUtils.getToken(this), BankBean.class, new HttpMsg.Listener() {
             @Override
             public void onFinish(Object _res) {
@@ -162,6 +147,8 @@ public class Activity_AddCard extends BaseActivity{
                 }
             }
         });
+
+        AppUtils.setEditTextHintSize(findViewById(R.id.bankCardNum), getResourcesString(R.string.getmoneywarm), 14);
 
     }
 
