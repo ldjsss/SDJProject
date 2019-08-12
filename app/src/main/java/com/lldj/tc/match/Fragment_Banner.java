@@ -55,11 +55,11 @@ public class Fragment_Banner extends BaseFragment {
 
     private void initData() {
         msgList = new ArrayList<>();
-        msgList.add("欢迎各位来到闪电竞！");
-        msgList.add("Welcome to the lightning race！");
-        msgList.add("大家好，我是闪电竟，欢迎大家的到来！");
-        msgList.add("Hello, everyone, I am lightning unexpectedly！");
-        msgList.add("闪电竞！闪电竞！闪电竞！闪电竞！闪电竞！");
+        msgList.add("欢迎各位来到星云电竞！");
+        msgList.add("Welcome to the NEBULA！");
+        msgList.add("大家好，我是星云电竞，欢迎大家的到来！");
+        msgList.add("Hello, everyone, I am NEBULA！");
+        msgList.add("星云电竞！星云电竞！星云电竞！星云电竞！星云电竞！");
         /**
          * 设置数据，方式一
          */
