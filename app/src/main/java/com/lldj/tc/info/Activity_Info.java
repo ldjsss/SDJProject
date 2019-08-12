@@ -18,8 +18,10 @@ import com.lldj.tc.http.beans.BaseBean;
 import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
+import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
+import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
 
@@ -41,6 +43,11 @@ public class Activity_Info extends BaseActivity {
     @BindView(R.id.phonelayout)
     RelativeLayout phonelayout;
 
+    @BindView(R.id.toolbar_root_layout)
+    RelativeLayout toolbarRootLayout;
+    @BindView(R.id.toolbar_title_tv)
+    StrokeTextView toolbarTitleTv;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +65,16 @@ public class Activity_Info extends BaseActivity {
         tvname.setText(SharePreUtils.getName(this));
         tvphone.setText(SharePreUtils.getPhone(this));
 
+        ImmersionBar.with(bActivity).titleBar(toolbarRootLayout).init();
+        toolbarTitleTv.setText(bActivity.getResources().getString(R.string.setTitle));
+
         if(AppUtils.isNumer(SharePreUtils.getInstance().getBirthday()))tvbrithday.setText(AppUtils.getFormatTime2(Long.parseLong(SharePreUtils.getInstance().getBirthday())));
     }
 
-    @OnClick({R.id.back_main_iv, R.id.brithlayout, R.id.phonelayout, R.id.keylayout, R.id.exitlayout})
+    @OnClick({R.id.toolbar_back_iv, R.id.brithlayout, R.id.phonelayout, R.id.keylayout, R.id.exitlayout})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.back_main_iv:
+            case R.id.toolbar_back_iv:
                 finish();
                 overridePendingTransition(0, R.anim.out_to_right);
                 break;

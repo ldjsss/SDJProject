@@ -44,18 +44,10 @@ public class Dialog_Set extends BaseDialog {
     TextView tvname;
     @BindView(R.id.hellow)
     TextView hellow;
-    @BindView(R.id.toolbar_back_iv)
-    ImageView toolbarBackIv;
-    @BindView(R.id.imservice)
-    ImageView imservice;
     @BindView(R.id.toolbar_root_layout)
     RelativeLayout toolbarRootLayout;
     @BindView(R.id.toolbar_title_tv)
     StrokeTextView toolbarTitleTv;
-    @BindView(R.id.tvservices)
-    TextView tvservices;
-    @BindView(R.id.connectservice)
-    RelativeLayout connectservice;
 
     public Dialog_Set(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
@@ -120,13 +112,14 @@ public class Dialog_Set extends BaseDialog {
     }
 
     @OnClick({R.id.packed_iv, R.id.packlayout, R.id.recordlayout, R.id.setiv, R.id.toolbar_back_iv,
-            R.id.messlayout, R.id.activitylayout, R.id.rulelayout, R.id.aboutlayout, R.id.agency, R.id.share})
+            R.id.messlayout, R.id.activitylayout, R.id.rulelayout, R.id.aboutlayout, R.id.agency, R.id.share, R.id.settv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back_iv:
                 dismiss();
                 break;
             case R.id.setiv:
+            case R.id.settv:
                 getContext().startActivity(new Intent(getContext(), Activity_Info.class));
                 break;
             case R.id.packlayout:

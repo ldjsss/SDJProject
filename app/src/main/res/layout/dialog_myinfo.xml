@@ -6,37 +6,7 @@
     android:orientation="vertical"
     android:background="@color/color_bg">
 
-    <RelativeLayout
-        android:id="@+id/top_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_50"
-        android:layout_weight="1"
-        android:layout_marginTop="@dimen/dp_10">
-        <ImageView
-            android:id="@+id/back_main_iv"
-            android:layout_width="@dimen/toolbar_height"
-            android:layout_height="@dimen/toolbar_height"
-            android:padding="@dimen/dp_10"
-            android:src="@mipmap/main_back"
-            android:layout_centerVertical="true"/>
-        <com.lldj.tc.toolslibrary.view.StrokeTextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/setTitle"
-            android:textSize="20sp"
-            app:outerColor="#000000"
-            app:innnerColor="#ffffff"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:ellipsize="end"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="#1B1E2A"/>
-
-    </RelativeLayout>
+    <include layout="@layout/toolbar_back_layout"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -44,7 +14,8 @@
         android:overScrollMode="never"
         android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_below="@id/top_layout"
+        android:background="@drawable/rec_stroke_969696"
+        android:layout_margin="@dimen/dp_10"
         android:layout_weight="100">
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,8 +24,11 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_60"
-                android:background="@drawable/rec_stroke_969696"
+                android:layout_height="45dp"
+                android:background="@drawable/rec_setceil_round"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
                 android:id="@+id/namelayout">
 
                 <TextView
@@ -63,8 +37,8 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/color_cdc3b3"
                     android:text="@string/realname"
-                    android:textSize="18sp"
-                    android:layout_marginStart="@dimen/dp_20"/>
+                    android:textSize="14sp"
+                    android:layout_marginStart="@dimen/dp_10"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -72,9 +46,9 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/color_cdc3b3"
                     android:text="xxx"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="60dp"
+                    android:layout_marginEnd="40dp"
                     android:id="@+id/tvname"/>
 
                 <View
@@ -86,8 +60,11 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_60"
-                android:background="@drawable/rec_stroke_969696"
+                android:layout_height="45dp"
+                android:background="@drawable/rec_setceil_round"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
                 android:id="@+id/brithlayout">
 
                 <TextView
@@ -96,15 +73,15 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/color_cdc3b3"
                     android:text="@string/birth"
-                    android:textSize="18sp"
-                    android:layout_marginStart="@dimen/dp_20"/>
+                    android:textSize="14sp"
+                    android:layout_marginStart="@dimen/dp_10"/>
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@mipmap/main_next"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_marginEnd="@dimen/dimen_10"
                     android:id="@+id/arrowb"/>
 
                 <TextView
@@ -114,7 +91,7 @@
                     android:padding="@dimen/dp_10"
                     android:textColor="@color/color_cdc3b3"
                     android:text="2000-02-22"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:layout_toLeftOf="@+id/arrowb"
                     android:id="@+id/tvbrithday"/>
 
@@ -127,8 +104,11 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_60"
-                android:background="@drawable/rec_stroke_969696"
+                android:layout_height="45dp"
+                android:background="@drawable/rec_setceil_round"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
                 android:id="@+id/phonelayout">
 
                 <TextView
@@ -137,15 +117,15 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/color_cdc3b3"
                     android:text="@string/changeph"
-                    android:textSize="18sp"
-                    android:layout_marginStart="@dimen/dp_20"/>
+                    android:textSize="14sp"
+                    android:layout_marginStart="@dimen/dp_10"/>
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@mipmap/main_next"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_marginEnd="@dimen/dimen_10"
                     android:id="@+id/arrowbsss"/>
 
                 <TextView
@@ -155,7 +135,7 @@
                     android:padding="@dimen/dp_10"
                     android:textColor="@color/color_cdc3b3"
                     android:text="18888888888"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:layout_toLeftOf="@+id/arrowbsss"
                     android:id="@+id/tvphone"/>
 
@@ -168,8 +148,11 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_60"
-                android:background="@drawable/rec_stroke_969696"
+                android:layout_height="45dp"
+                android:background="@drawable/rec_setceil_round"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
                 android:id="@+id/keylayout">
 
                 <TextView
@@ -178,15 +161,15 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/color_cdc3b3"
                     android:text="@string/changekey"
-                    android:textSize="18sp"
-                    android:layout_marginStart="@dimen/dp_20"/>
+                    android:textSize="14sp"
+                    android:layout_marginStart="@dimen/dp_10"/>
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@mipmap/main_next"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/dimen_20" />
+                    android:layout_marginEnd="@dimen/dimen_10" />
 
                 <View
                     android:layout_width="match_parent"
@@ -197,9 +180,11 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_60"
+                android:layout_height="45dp"
                 android:layout_marginTop="@dimen/dp_60"
-                android:background="@drawable/rec_stroke_969696"
+                android:background="@drawable/rec_setceil_round"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dp_10"
                 android:id="@+id/exitlayout">
                 <TextView
                     android:layout_width="wrap_content"
@@ -207,8 +192,8 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/color_cdc3b3"
                     android:text="@string/exit"
-                    android:textSize="18sp"
-                    android:layout_marginStart="@dimen/dp_20"/>
+                    android:textSize="14sp"
+                    android:layout_marginStart="@dimen/dp_10"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
