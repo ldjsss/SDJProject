@@ -121,7 +121,8 @@
     <string name="bankwarm">10分钟内到账</string>
     <string name="moneytitle">金额</string>
     <string name="getmoneywarm">提款金额最低100元</string>
-    <string name="moneypoket">钱包余额 ￥ %s,</string>
+    <string name="moneypokettitle">钱包余额</string>
+    <string name="moneypoket">￥ %s</string>
     <string name="allget">全部提现</string>
     <string name="btnsure">确定</string>
     <string name="btncancle">取消</string>

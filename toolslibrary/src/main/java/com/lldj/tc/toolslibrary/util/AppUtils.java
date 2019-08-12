@@ -17,7 +17,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.SpannedString;
 import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -25,6 +29,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -868,6 +873,18 @@ public class AppUtils {
             return false;
         }
         return true;
+    }
+
+    /**
+     * ========================================================
+     *         设置EditText的hint字体的大小
+     * ========================================================
+     */
+    public static void  setEditTextHintSize(EditText editText, String hintText, int size){
+        SpannableString ss = new SpannableString(hintText);//定义hint的值
+        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(size,true);//设置字体大小 true表示单位是sp
+        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        editText.setHint(new SpannedString(ss));
     }
 
 }

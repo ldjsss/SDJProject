@@ -28,7 +28,7 @@
             android:src="@mipmap/icon_gameselect"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/toolbar_left_menu_iv"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginLeft="13dp"/>
 
         <ImageView
             android:id="@+id/toolbar_title_tv"

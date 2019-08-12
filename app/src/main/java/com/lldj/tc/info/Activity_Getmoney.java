@@ -3,7 +3,6 @@ package com.lldj.tc.info;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -17,13 +16,12 @@ import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.BankBean;
 import com.lldj.tc.http.beans.BaseBean;
 import com.lldj.tc.http.beans.JsonBean;
-import com.lldj.tc.match.DialogBet;
-import com.lldj.tc.match.Frament_MatchDetail;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
@@ -32,7 +30,6 @@ import com.lldj.tc.utils.GlobalVariable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -125,6 +122,8 @@ public class Activity_Getmoney extends BaseActivity {
                 }
             }
         });
+
+        AppUtils.setEditTextHintSize(editmoney, getResourcesString(R.string.getmoneywarm), 14);
 
     }
 
