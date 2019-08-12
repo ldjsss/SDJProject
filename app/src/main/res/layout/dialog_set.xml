@@ -151,7 +151,7 @@
                         android:layout_marginStart="@dimen/dp_10"
                         android:text="¥0"
                         android:textSize="14sp"
-                        android:textColor="#86E5D8"
+                        android:textColor="@color/color_cdc3b3"
                         android:id="@+id/moneycur"/>
 
                 </LinearLayout>

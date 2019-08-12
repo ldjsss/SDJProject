@@ -85,12 +85,7 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".info.Activity_Records" />
-
-        <activity
-            android:name=".info.Activity_Webview"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
+        <activity android:name=".info.Activity_Webview" />
         <activity
             android:name=".info.Activity_Shop"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
