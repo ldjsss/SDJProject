@@ -3,6 +3,7 @@ package com.lldj.tc.info;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,8 @@ public class Frament_Activity extends BaseFragment implements LRecyclerView.LScr
     LRecyclerView subjectLrecycleview;
     @BindView(R.id.layout_board)
     FrameLayout layoutBoard;
+    @BindView(R.id.sublayout)
+    LinearLayout sublayout;
 
     private Adapter_ActivityCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
@@ -63,6 +66,7 @@ public class Frament_Activity extends BaseFragment implements LRecyclerView.LScr
             subjectLrecycleview.setLScrollListener(this);
         }
 
+        sublayout.setBackgroundColor(getResources().getColor(R.color.transparent));
         layoutBoard.setVisibility(View.GONE);
     }
 
