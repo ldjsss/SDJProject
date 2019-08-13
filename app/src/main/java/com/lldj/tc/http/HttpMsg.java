@@ -34,8 +34,10 @@ public class HttpMsg<T>{
         return ourInstance;
     }
 
-    public static String baseUrl = "http://192.168.1.118/";
-//    public static String baseUrl = "http://server.yjwl.ltd/";
+//    public static String baseUrl = "http://192.168.1.118/";
+    public static String baseUrl = "http://server.yjwl.ltd/";
+
+//    public static String baseUrl = "http://123.56.4.224/";
 
     private static void toastMess(String msg){
         if(msg == null) msg = "";

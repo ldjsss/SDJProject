@@ -65,6 +65,8 @@ public class HttpTool {
                     if(token != null)con.setRequestProperty("Authorization", token);
 
                     con.setRequestMethod("GET");
+                    con.setUseCaches(false);
+                    con.setRequestProperty("connection", "close");
                     con.setConnectTimeout(timeout);
                     con.setReadTimeout(timeout);
 
@@ -197,8 +199,9 @@ public class HttpTool {
                     httpURLConnection.setDoInput(true);//设置是否从httpURLConnection读入，默认是false
                     httpURLConnection.setUseCaches(false);//POST请求不能用缓存，设置为false
                     httpURLConnection.setRequestProperty("Content-Type","application/json;charset=UTF-8"); //设置请求属性
-                    httpURLConnection.setRequestProperty("connection", "keep-alive");
+//                    httpURLConnection.setRequestProperty("connection", "keep-alive");
                     httpURLConnection.setRequestProperty("Authorization", token);
+                    httpURLConnection.setRequestProperty("connection", "close");
                     httpURLConnection.setRequestMethod("POST");
                     DataOutputStream os = new DataOutputStream( httpURLConnection.getOutputStream());
                     String content = String.valueOf(params);
@@ -284,14 +287,16 @@ public class HttpTool {
 
                     con.setRequestMethod("POST");
                     con.setDoOutput(true);
-                    con.setDoInput(true);
                     con.setUseCaches(false);
                     // cookie也可以在这里设置
                     // con.setRequestProperty("Set-Cookie", "");
 
                     con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                    con.setRequestProperty("connection", "keep-alive");
+//                    con.setRequestProperty("connection", "keep-alive");
+                    con.setRequestProperty("connection", "close");
                     con.setRequestProperty("Authorization", token);
+                    con.setConnectTimeout(timeout);
+                    con.setReadTimeout(timeout);
                     OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), "UTF-8");
                     osw.write(sb.toString());
                     osw.flush();
@@ -352,6 +357,7 @@ public class HttpTool {
                     con.setRequestMethod("GET");
                     con.setConnectTimeout(timeout);
                     con.setReadTimeout(timeout);
+                    con.setRequestProperty("connection", "close");
                     con.connect();
                     InputStream is = con.getInputStream();
                     final Bitmap bitmap = BitmapFactory.decodeStream(is);

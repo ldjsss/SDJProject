@@ -1,10 +1,8 @@
 package com.lldj.tc.login;
 
-import android.Manifest;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
@@ -17,12 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.lldj.tc.http.beans.MapBean;
-import com.lldj.tc.match.Activity_MainUI;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.JsonBean;
+import com.lldj.tc.match.Activity_MainUI;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.util.AppUtils;
@@ -30,13 +27,6 @@ import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
-import com.wintone.smartvision_bankCard.ScanCamera;
-import com.mylhyl.acp.Acp;
-import com.mylhyl.acp.AcpListener;
-import com.mylhyl.acp.AcpOptions;
-
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,8 +61,10 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                mp.start();
-                mp.setLooping(true);
+                if(!mp.isLooping()) {
+                    mp.setLooping(true);
+                    mp.start();
+                }
             }
         });
         videoView.start();
@@ -88,7 +80,6 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
         tokenLogin();
 
         HttpMsg.getInstance().sendGetName();
-
     }
 
     @Override
@@ -101,6 +92,12 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
     protected void onResume() {
         super.onResume();
         if(videoView != null) videoView.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        videoView.pause();
     }
 
     @OnClick({R.id.forget_psw_tv, R.id.login_tv, R.id.register_tv, R.id.just_look_tv, R.id.psw_show_or_hid_iv})
@@ -221,5 +218,4 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
                 break;
         }
     }
-
 }

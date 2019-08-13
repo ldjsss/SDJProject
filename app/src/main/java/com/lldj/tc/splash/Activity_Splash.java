@@ -29,7 +29,7 @@ public class Activity_Splash extends Activity {
             public void doNext(long number) {
                 RxTimerUtil.cancel();
 //                if (Build.VERSION.SDK_INT >= 23) {
-//                    Acp.getInstance(Activity_Splash.this).request(new AcpOptions.Builder().setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).build(), new AcpListener() {
+//                    Acp.getInstance(Activity_Splash.this).request(new AcpOptions.Builder().setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.INTERNET).build(), new AcpListener() {
 //                        @Override
 //                        public void onGranted() {
 //                            goGame();
