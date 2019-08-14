@@ -9,7 +9,8 @@
     </base-config>
     <!--自己服务器，使用https，将所有域名添加到此-->
     <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="true">server.yjwl.ltd</domain>
+        <domain includeSubdomains="true">http://server.yjwl.ltd</domain>
+        <domain includeSubdomains="true">http://hapi.snfangya.com</domain>
         <!--<trust-anchors>-->
         <!--<certificates src="@raw/my_proxy_ssl_proxying_certificate" />-->
         <!--</trust-anchors>-->
