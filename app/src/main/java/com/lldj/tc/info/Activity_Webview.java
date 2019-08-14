@@ -73,6 +73,8 @@ public class Activity_Webview extends BaseActivity {
 
         if(AppUtils.isEmptyString(_url)) return;
 
+        AppUtils.showLoading(this);
+
         webview.setBackgroundColor(getResources().getColor(R.color.color_bg));
         webview.loadDataWithBaseURL(null, "加载中。。", "text/html", "utf-8",null);
         webview.setVisibility(View.VISIBLE);
@@ -83,7 +85,7 @@ public class Activity_Webview extends BaseActivity {
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-        settings.setBlockNetworkImage(false);
+        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
 
         //设置自适应屏幕，两者合用
         settings.setUseWideViewPort(true); //将图片调整到适合webview的大小
@@ -95,6 +97,10 @@ public class Activity_Webview extends BaseActivity {
         settings.setLoadsImagesAutomatically(true); //支持自动加载图片
         settings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+        }
+
         try {
             if (Build.VERSION.SDK_INT >= 16) {
                 Class<?> clazz = webview.getSettings().getClass();
@@ -104,22 +110,9 @@ public class Activity_Webview extends BaseActivity {
                     method.invoke(webview.getSettings(), true);//修改设置
                 }
             }
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        webview.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                handler.proceed();
-            }
-        });
 
         webview.setWebViewClient(new WebViewClient() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -140,6 +133,18 @@ public class Activity_Webview extends BaseActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                Log.d( "--------","start load url = "+ url);
+                view.getSettings().setBlockNetworkImage(true);
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                // super.onReceivedSslError(view, handler, error);
+                //super句话一定要删除，或者注释掉，否则又走handler.cancel()默认的不支持https的了。
+                handler.proceed();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    webview.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+                }
             }
         });
 
@@ -148,6 +153,8 @@ public class Activity_Webview extends BaseActivity {
             public void onProgressChanged(WebView view, int newProgress) {
                 // TODO Auto-generated method stub
                 if (newProgress == 100) {
+                    AppUtils.hideLoading();
+                    view.getSettings().setBlockNetworkImage(false);
                      Log.d("------","加载完成");
 
                 } else {
@@ -187,6 +194,12 @@ public class Activity_Webview extends BaseActivity {
     protected void onStop() {
         super.onStop();
         webview.getSettings().setJavaScriptEnabled(false);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        webview.onPause();
     }
 
     @Override
