@@ -139,9 +139,9 @@ public class Activity_tradings extends BaseActivity implements LRecyclerView.LSc
     @OnClick(R.id.toolbar_back_iv)
     public void onClick() {
 
-        Intent _intent = new Intent(this, Activity_Shop.class);
-        _intent.putExtra("Anim_fade", R.style.Anim_left);
-        startActivity(_intent);
+//        Intent _intent = new Intent(this, Activity_Shop.class);
+//        _intent.putExtra("Anim_fade", R.style.Anim_left);
+//        startActivity(_intent);
         finish();
         overridePendingTransition(0, R.anim.out_to_right);
     }

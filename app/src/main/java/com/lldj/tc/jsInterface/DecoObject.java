@@ -7,6 +7,8 @@ import android.os.Build;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
+import com.lldj.tc.info.Activity_Getmoney;
+import com.lldj.tc.info.Activity_tradings;
 import com.lldj.tc.toolslibrary.util.DonwloadSaveImg;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
@@ -44,5 +46,16 @@ public class DecoObject {
     private void doNext(String url){
 //        Toast.makeText(c, "-------android----savePic  = " + url, Toast.LENGTH_SHORT).show();
         DonwloadSaveImg.donwloadImg(c, url);
+    }
+
+
+    @JavascriptInterface
+    public void tradeHistoryLog(){
+        c.startActivity(new Intent(c, Activity_tradings.class));
+    }
+
+    @JavascriptInterface
+    public void withdrawMoney(){
+        c.startActivity(new Intent(c, Activity_Getmoney.class));
     }
 }

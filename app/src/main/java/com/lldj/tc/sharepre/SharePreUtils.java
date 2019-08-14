@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
+import com.lldj.tc.http.beans.UrlBean;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -16,7 +17,11 @@ public class SharePreUtils {
 
     private boolean agent;
     private String birthday;
+    private String about_url;
+    private String agent_url;
+    private String qrcode_url;
     private String recharge_url;
+    private String rule_url;
     private String userId;
     private Map<String, String> mapNames = new HashMap<>();
 
@@ -158,6 +163,42 @@ public class SharePreUtils {
         this.recharge_url = recharge_url;
     }
 
+    public static void setInstance(SharePreUtils instance) {
+        SharePreUtils.instance = instance;
+    }
+
+    public String getAbout_url() {
+        return about_url;
+    }
+
+    public void setAbout_url(String about_url) {
+        this.about_url = about_url;
+    }
+
+    public String getAgent_url() {
+        return agent_url;
+    }
+
+    public void setAgent_url(String agent_url) {
+        this.agent_url = agent_url;
+    }
+
+    public String getQrcode_url() {
+        return qrcode_url;
+    }
+
+    public void setQrcode_url(String qrcode_url) {
+        this.qrcode_url = qrcode_url;
+    }
+
+    public String getRule_url() {
+        return rule_url;
+    }
+
+    public void setRule_url(String rule_url) {
+        this.rule_url = rule_url;
+    }
+
     public Map<Integer,ResultsModel > getGamelist() {
         return Gamelist;
     }
@@ -193,8 +234,16 @@ public class SharePreUtils {
         getInstance().userId = ret.getOpenid();
         getInstance().agent = ret.isAgent();
         getInstance().birthday = ret.getBirthday();
-        getInstance().recharge_url = ret.getRecharge_url();
 
         if(TextUtils.isEmpty(getInstance().birthday)) getInstance().birthday = String.valueOf(Calendar.getInstance().getTimeInMillis());
+    }
+
+    public static void setUrlInfo(UrlBean.urlModel ret) {
+        getInstance().about_url    = ret.getAbout_url();
+        getInstance().agent_url    = ret.getAgent_url();
+        getInstance().qrcode_url   = ret.getQrcode_url();
+        getInstance().rule_url     = ret.getRule_url();
+        getInstance().recharge_url = ret.getRecharge_url();
+
     }
 }

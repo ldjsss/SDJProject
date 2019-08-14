@@ -146,11 +146,11 @@ public class Activity_Getmoney extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back_iv:
-                Intent _intent = new Intent(this, Activity_Shop.class);
-                _intent.putExtra("Anim_fade", R.style.Anim_left);
-                startActivity(_intent);
+//                Intent _intent = new Intent(this, Activity_Shop.class);
+//                _intent.putExtra("Anim_fade", R.style.Anim_left);
+//                startActivity(_intent);
                 finish();
-                overridePendingTransition(0, R.anim.out_to_right);
+//                overridePendingTransition(0, R.anim.out_to_right);
                 break;
             case R.id.selectlayout:
                 DialogManager.getInstance().show(new DialogSelectCard(mContext, R.style.DialogTheme, _list, true));

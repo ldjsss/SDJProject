@@ -3,7 +3,6 @@ package com.lldj.tc.toolslibrary.view;
 import android.annotation.TargetApi;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,7 +12,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.lldj.tc.toolslibrary.BuildConfig;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;

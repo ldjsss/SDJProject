@@ -18,6 +18,7 @@ import androidx.annotation.StyleRes;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.JsonBean;
+import com.lldj.tc.http.beans.UrlBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
@@ -84,6 +85,8 @@ public class Dialog_Set extends BaseDialog {
                 }
             }
         });
+
+        HttpMsg.getInstance().sendGetUrl(SharePreUtils.getInstance().getToken(context), UrlBean.class, null);
     }
 
     private String getGreetings() {
@@ -123,9 +126,13 @@ public class Dialog_Set extends BaseDialog {
                 getContext().startActivity(new Intent(getContext(), Activity_Info.class));
                 break;
             case R.id.packlayout:
-                Intent _intent = new Intent(getContext(), Activity_Shop.class);
-                _intent.putExtra("Anim_fade", R.style.Anim_fade);
-                getContext().startActivity(_intent);
+//                Intent _intent = new Intent(getContext(), Activity_Shop.class);
+//                _intent.putExtra("Anim_fade", R.style.Anim_fade);
+//                getContext().startActivity(_intent);
+                Intent intent0 = new Intent(getContext(), Activity_Webview.class);
+                intent0.putExtra("url", SharePreUtils.getInstance().getRecharge_url());
+                intent0.putExtra("title", getContext().getResources().getString(R.string.wallet));
+                getContext().startActivity(intent0);
                 break;
             case R.id.recordlayout:
                 getContext().startActivity(new Intent(getContext(), Activity_Records.class));
@@ -138,25 +145,25 @@ public class Dialog_Set extends BaseDialog {
                 break;
             case R.id.rulelayout:
                 Intent intent = new Intent(getContext(), Activity_Webview.class);
-                intent.putExtra("url", "http://192.168.1.53:8080/rule.html");
+                intent.putExtra("url", SharePreUtils.getInstance().getRule_url());
                 intent.putExtra("title", getContext().getResources().getString(R.string.rules));
                 getContext().startActivity(intent);
                 break;
             case R.id.aboutlayout:
                 Intent intent1 = new Intent(getContext(), Activity_Webview.class);
-                intent1.putExtra("url", "http://192.168.1.53:8080/about.html");
+                intent1.putExtra("url", SharePreUtils.getInstance().getAbout_url());
                 intent1.putExtra("title", getContext().getResources().getString(R.string.about));
                 getContext().startActivity(intent1);
                 break;
             case R.id.agency:
                 Intent intent2 = new Intent(getContext(), Activity_Webview.class);
-                intent2.putExtra("url", "http://192.168.1.53:8080/agent_qrcode.html");
+                intent2.putExtra("url", SharePreUtils.getInstance().getAgent_url());
                 intent2.putExtra("title", getContext().getResources().getString(R.string.agency));
                 getContext().startActivity(intent2);
                 break;
             case R.id.share:
                 Intent intent3 = new Intent(getContext(), Activity_Webview.class);
-                intent3.putExtra("url", "http://192.168.1.53:8080/agent_qrcode.html");
+                intent3.putExtra("url", SharePreUtils.getInstance().getQrcode_url());
                 intent3.putExtra("title", getContext().getResources().getString(R.string.share));
                 getContext().startActivity(intent3);
                 break;

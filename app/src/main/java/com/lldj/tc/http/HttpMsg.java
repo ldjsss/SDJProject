@@ -11,6 +11,7 @@ import com.lldj.tc.http.beans.BaseBean;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.http.beans.MapBean;
+import com.lldj.tc.http.beans.UrlBean;
 import com.lldj.tc.match.Activity_MainUI;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
@@ -34,8 +35,8 @@ public class HttpMsg<T>{
         return ourInstance;
     }
 
-//    public static String baseUrl = "http://192.168.1.118/";
-    public static String baseUrl = "http://server.yjwl.ltd/";
+    public static String baseUrl = "http://192.168.1.118/";
+//    public static String baseUrl = "http://server.yjwl.ltd/";
 
 //    public static String baseUrl = "http://123.56.4.224/";
 
@@ -265,6 +266,18 @@ public class HttpMsg<T>{
 
     public void sendGetActivity(final String access_token, Class<T>service, Listener callbackListener) {
         HttpTool.httpPost((new StringBuffer(baseUrl).append("user/activitys")).toString(), null, new HttpMsg().getListener(service, callbackListener), access_token);
+    }
+
+    public void sendGetUrl(final String access_token, Class<T>service, Listener callbackListener) {
+        HttpTool.httpPost((new StringBuffer(baseUrl).append("user/urls")).toString(), null, new HttpMsg().getListener(service, new HttpMsg.Listener(){
+            @Override
+            public void onFinish(Object msg) {
+                UrlBean res = (UrlBean) msg;
+                if(res.getCode() == GlobalVariable.succ){
+                    SharePreUtils.getInstance().setUrlInfo(res.getResult());
+                }
+            }
+        }), access_token);
     }
 
     public interface Listener<T> {
