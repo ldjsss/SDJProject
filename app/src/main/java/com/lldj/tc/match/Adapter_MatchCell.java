@@ -150,7 +150,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                         View view = inflater.inflate(R.layout.matchdetailonebet, null);
                         view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                         addlayout.addView(view);
-                        ((TextView)view.findViewById(R.id.matchplayname)).setText(_key);
+                        ((TextView)view.findViewById(R.id.matchplayname)).setText(String.format("| %s", _key));
                         _lastKey = _key;
                     }
 

@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center"
-    android:id="@+id/dtitlelayout">
+    android:id="@+id/dtitlelayout"
+    android:paddingTop="@dimen/dp_10">
     <View
         android:layout_width="110dp"
         android:layout_height="1dp"

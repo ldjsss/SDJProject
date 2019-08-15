@@ -248,7 +248,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="220dp"
             android:id="@+id/tvlayout"
             android:orientation="vertical"
             android:layout_marginStart="@dimen/dp_10"
@@ -258,7 +258,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="210dp">
+                android:layout_height="180dp">
                 <include layout="@layout/mediolayout"
                     android:id="@+id/vidiolayout" />
             </LinearLayout>
@@ -356,11 +356,12 @@
             android:id="@+id/tab_layout"
             style="@style/DetailFragment_TabLayout"
             android:layout_width="match_parent"
+            android:layout_height="35dp"
             app:tabPaddingStart="1dp"
             app:tabPaddingEnd="1dp"
-            android:layout_height="wrap_content"
             app:tabBackground="@color/transparent"
             app:tabIndicatorFullWidth="false"/>
+
         <com.lldj.tc.toolslibrary.recycleview.LRecyclerView
             android:id="@+id/jingcairecycleview"
             android:layout_width="match_parent"
