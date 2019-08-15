@@ -12,6 +12,7 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
+import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -94,7 +95,6 @@ public class Activity_Webview extends BaseActivity {
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
         settings.setAllowFileAccess(true); //设置可以访问文件
         settings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
-        settings.setLoadsImagesAutomatically(true); //支持自动加载图片
         settings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -117,12 +117,14 @@ public class Activity_Webview extends BaseActivity {
         webview.setWebViewClient(new WebViewClient() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                view.loadUrl(request.getUrl().toString());
-                return true;
+//                view.loadUrl(request.getUrl().toString());
+//                return true;
+                return false;
             }
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                webview.setLayerType(View.LAYER_TYPE_HARDWARE,null);
                 Log.d( "--------","url = "+ url);
                 for (int i = 0; i < loadHistoryUrls.size(); i++) {
                     if(loadHistoryUrls.get(i).equalsIgnoreCase(url)) return;
@@ -146,6 +148,17 @@ public class Activity_Webview extends BaseActivity {
                     webview.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
                 }
             }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                //6.0以下执行
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    return;
+                }
+                view.loadUrl("about:blank");// 避免出现默认的错误界面
+//                view.loadUrl(mErrorUrl);// 加载自定义错误页面
+            }
         });
 
         webview.setWebChromeClient(new WebChromeClient() {
@@ -160,6 +173,28 @@ public class Activity_Webview extends BaseActivity {
                 } else {
                     Log.d("------","加载中..." + newProgress);
                 }
+            }
+
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                // android 6.0 以下通过title获取判断
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                    if (title.contains("404") || title.contains("500") || title.contains("Error") || title.contains("找不到网页") || title.contains("网页无法打开")) {
+                        view.loadUrl("about:blank");// 避免出现默认的错误界面
+//                        view.loadUrl(mErrorUrl);// 加载自定义错误页面
+                    }
+                }
+            }
+
+            @Override
+            public void onExceededDatabaseQuota(String url, String databaseIdentifier,
+                                                long quota, long estimatedDatabaseSize, long totalQuota,
+                                                WebStorage.QuotaUpdater quotaUpdater) {
+                // This default implementation passes the current quota back to WebCore.
+                // WebCore will interpret this that new quota was declined.
+//                quotaUpdater.updateQuota(quota);
+                quotaUpdater.updateQuota(estimatedDatabaseSize * 2);
             }
          });
 
@@ -199,7 +234,8 @@ public class Activity_Webview extends BaseActivity {
     @Override
     public void onPause() {
         super.onPause();
-        webview.onPause();
+//        webview.onPause();
+        webview.loadUrl("about:blank");
     }
 
     @Override

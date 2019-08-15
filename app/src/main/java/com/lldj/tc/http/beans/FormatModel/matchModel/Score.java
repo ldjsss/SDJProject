@@ -1,7 +1,7 @@
 package com.lldj.tc.http.beans.FormatModel.matchModel;
 
 public class Score {
-    private int total;
+    private int total = 0;
     private int r1;
     private int r2;
     private int r3;

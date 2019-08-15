@@ -102,11 +102,11 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/gamecountheng"
                     android:singleLine="true"
-                    android:textSize="38sp"
-                    android:text="-"
+                    android:textSize="22sp"
+                    android:text="0-0"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="21dp"
-                    android:textColor="@color/color_cdc3b3" />
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -175,30 +175,6 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/matchwin0"
-                    android:singleLine="true"
-                    android:textSize="30sp"
-                    android:text="0"
-                    android:layout_toRightOf="@id/imglayout0"
-                    android:layout_marginLeft="-17dp"
-                    android:layout_marginTop="28dp"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/matchwin1"
-                    android:singleLine="true"
-                    android:textSize="30sp"
-                    android:text="0"
-                    android:layout_toLeftOf="@id/imglayout1"
-                    android:layout_marginRight="-17dp"
-                    android:layout_marginTop="28dp"
-                    android:textColor="@color/white" />
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -224,7 +200,8 @@
                         android:text="@string/matchStatusFront"
                         android:layout_below="@+id/gamestatusicon"
                         android:layout_centerHorizontal="true"
-                        android:layout_gravity="center_horizontal"/>
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/bottomstatus"/>
 
                     <View
                         android:layout_width="match_parent"

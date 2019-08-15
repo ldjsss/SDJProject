@@ -74,10 +74,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     TextView gamenamecount;
     @BindView(R.id.gamestatus)
     LinearLayout gamestatus;
-    @BindView(R.id.matchwin0)
-    TextView matchwin0;
-    @BindView(R.id.matchwin1)
-    TextView matchwin1;
     @BindView(R.id.matchtime)
     TextView matchtime;
     @BindView(R.id.imgplayicon0)
@@ -128,6 +124,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     TextView playvidoname2;
     @BindView(R.id.gamecountheng)
     TextView gamecountheng;
+    @BindView(R.id.bottomstatus)
+    TextView bottomstatus;
 
     private ResultsModel _matchData;
     private int ViewType;
@@ -190,8 +188,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         matchtime.setText("");
         gamestatus.setVisibility(View.GONE);
         looklayout.setVisibility(View.GONE);
-        matchwin0.setVisibility(View.GONE);
-        matchwin1.setVisibility(View.GONE);
         gamecountheng.setVisibility(View.GONE);
         gamestatus1.setVisibility(View.GONE);
 
@@ -233,24 +229,22 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     playnamecommon1.setText(team1.getTeam_short_name());
                     playvidoname0.setText(team0.getTeam_short_name());
                     playvidoname2.setText(team1.getTeam_short_name());
-                    matchtime.setText((status > 1 && status <= 4) ? statusText[status] : String.format("%s %s", AppUtils.getFormatTime2(_data.getStart_time_ms()), AppUtils.getWhatDay(_data.getStart_time_ms())));
+                    bottomstatus.setText(statusText[status]);
+                    matchtime.setText((status == 2) ? statusText[status] : String.format("%s %s", AppUtils.getFormatTime2(_data.getStart_time_ms()), AppUtils.getWhatDay(_data.getStart_time_ms())));
                     if (status == 2) startUpdate();
                     else stopUpdate();
 
                     gamestatus1.setText(AppUtils.getFormatTime4(_data.getStart_time_ms()));
 
-                    String oneWin = String.valueOf(team0.getScore().getTotal());
-                    String twoWin = String.valueOf(team1.getScore().getTotal());
-                    matchwin0.setText(oneWin);
-                    matchwin1.setText(twoWin);
-                    vidowin0.setText(oneWin);
-                    vidowin1.setText(twoWin);
+                    int oneWin = team0.getScore() == null ? 0 : team0.getScore().getTotal();
+                    int twoWin = team1.getScore() == null ? 0 : team1.getScore().getTotal();
+                    gamecountheng.setText(String.format("%s - %s", oneWin, twoWin));
+                    vidowin0.setText(String.valueOf(oneWin));
+                    vidowin1.setText(String.valueOf(twoWin));
 
                     gamestatus1.setVisibility((status == 2 || status == 3) ? View.GONE : View.VISIBLE);
-                    matchwin0.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
-                    matchwin1.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
 
-                    gamestatus.setVisibility((status == 2 || status == 3) ? View.GONE : View.VISIBLE);
+                    gamestatus.setVisibility((status == 2) ? View.GONE : View.VISIBLE);
                     gamecountheng.setVisibility((status == 2 || status == 3) ? View.VISIBLE : View.GONE);
                     looklayout.setVisibility(status == 2 ? View.VISIBLE : View.GONE);
 
