@@ -137,6 +137,8 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                 break;
             case HandlerType.SHOWTOAST:
                 ToastUtils.show_middle_pic(Activity_MainUI.this, R.mipmap.cancle_icon, msg.getData().getString("msg"), ToastUtils.LENGTH_SHORT);
+                int _code = msg.getData().getInt("code", 0);
+                if(_code == 401) goBackToLogin();
                 break;
             case HandlerType.LOADING:
 //                AppUtils.showLoading(bActivity);
@@ -145,12 +147,16 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                 DialogManager.getInstance().show(new DialogGameSelect(Activity_MainUI.this, R.style.DialogTheme));
                 break;
             case HandlerType.LEAVEGAME:
-                SharePreUtils.setToken(Activity_MainUI.this, "");
-                SharePreUtils.getInstance().setUserId("");
-                startActivity(new Intent(Activity_MainUI.this, Activity_Login.class));
-                finish();
+                goBackToLogin();
                 break;
         }
+    }
+
+    private void goBackToLogin(){
+        SharePreUtils.setToken(Activity_MainUI.this, "");
+        SharePreUtils.getInstance().setUserId("");
+        startActivity(new Intent(Activity_MainUI.this, Activity_Login.class));
+        finish();
     }
 
     @Override

@@ -40,11 +40,12 @@ public class HttpMsg<T>{
 
 //    public static String baseUrl = "http://123.56.4.224/";
 
-    private static void toastMess(String msg){
+    private static void toastMess(String msg, int code){
         if(msg == null) msg = "";
         Message message=new Message();
         Bundle bundle=new Bundle();
         bundle.putString("msg", msg);
+        bundle.putInt("code", code);
         message.setData(bundle);
         message.what=HandlerType.SHOWTOAST;
         HandlerInter.getInstance().sendMessage(message);
@@ -63,10 +64,10 @@ public class HttpMsg<T>{
                     int _code = _data.getCode();
                     String _msg  = _data.getMessage();
 
-                    if(_code != GlobalVariable.succ){ toastMess("ERROR CODE " + _code + _msg); }
+                    if(_code != GlobalVariable.succ){ toastMess("ERROR CODE " + _code + _msg, _code); }
 
                 }else{
-                    toastMess("NET ERROR CODE" + code + msg);
+                    toastMess("NET ERROR CODE" + code + msg, code);
                 }
                 AppUtils.getInstance().hideLoading();
             }

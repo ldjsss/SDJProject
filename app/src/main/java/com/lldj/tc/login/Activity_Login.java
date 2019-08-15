@@ -210,6 +210,11 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
                 break;
             case HandlerType.SHOWTOAST:
                 ToastUtils.show_middle_pic(Activity_Login.this, R.mipmap.cancle_icon, msg.getData().getString("msg"), ToastUtils.LENGTH_SHORT);
+                int _code = msg.getData().getInt("code", 0);
+                if(_code == 401) {
+                    SharePreUtils.setToken(Activity_Login.this, "");
+                    SharePreUtils.getInstance().setUserId("");
+                }
                 break;
             case HandlerType.LOADING:
                 if(!isFinishing()){
