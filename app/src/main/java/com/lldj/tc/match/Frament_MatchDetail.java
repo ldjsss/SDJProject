@@ -38,6 +38,7 @@ import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.ImageLoader;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
+import com.lldj.tc.toolslibrary.util.StringUtil;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
@@ -217,9 +218,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     }
 
                     List<Team> teams = _data.getTeam();
-                    Collections.sort(teams, (o1, o2) -> {
-                        return (int)(o1.getPos() - o2.getPos());
-                    });
+                    Collections.sort(teams, (o1, o2) -> { return (int)(o1.getPos() - o2.getPos()); });
 
                     Team team0 = teams.get(0);
                     Team team1 = teams.get(1);
@@ -227,7 +226,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     int status = _data.getStatus();
 
                     gamename.setText(_data.getTournament_name());
-                    gamenamecount.setText(String.format("/ %s", _data.getRound()));
+                    gamenamecount.setText(String.format("/ %s", StringUtil.convertUp(_data.getRound())));
                     gameplaycount.setText(String.format("+%s", _data.getPlay_count()));
                     playnamecommon0.setText(team0.getTeam_short_name());
                     playnamecommon1.setText(team1.getTeam_short_name());
@@ -235,8 +234,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     playvidoname2.setText(team1.getTeam_short_name());
                     bottomstatus.setText(statusText[status]);
                     matchtime.setText((status == 2) ? statusText[status] : String.format("%s %s", AppUtils.getFormatTime2(_data.getStart_time_ms()), AppUtils.getWhatDay(_data.getStart_time_ms())));
-                    if (status == 2) startUpdate();
-                    else stopUpdate();
+                    if (status == 2) startUpdate();else stopUpdate();
 
                     gamestatus1.setText(AppUtils.getFormatTime4(_data.getStart_time_ms()));
 

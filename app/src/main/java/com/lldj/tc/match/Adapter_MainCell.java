@@ -23,6 +23,7 @@ import com.lldj.tc.http.beans.FormatModel.matchModel.Odds;
 import com.lldj.tc.http.beans.FormatModel.matchModel.Team;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.util.ImageLoader;
+import com.lldj.tc.toolslibrary.util.StringUtil;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
@@ -183,11 +184,10 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
 
         public viewHolder(View itemView) {
             super(itemView);
-//            AppUtils.screenAdapterLoadView((ViewGroup)itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick({R.id.playname0, R.id.gamebg, R.id.playname1, R.id.playcelllayout0, R.id.playcelllayout1})
+        @OnClick({R.id.playname0, R.id.gamebg, R.id.playname1})
         public void onViewClicked(View view) {
             if(getAdapterPosition() - 1 < 0) return;
             ResultsModel _data = mlist.get(getAdapterPosition() - 1);
@@ -205,13 +205,6 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
                     if(_tag1 == null) return;
                     betAdd(_data, (int)_tag1);
                     break;
-                case R.id.playcelllayout0:
-                    Toast.makeText(mContext, "ffffff", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.playcelllayout1:
-                    Toast.makeText(mContext, "jjjjjjjj", Toast.LENGTH_SHORT).show();
-                    break;
-
             }
         }
 
@@ -244,7 +237,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             gamebg.setAlpha(1.0f);
 
             gamename.setText(_data.getTournament_name());
-            gamenamecount.setText(String.format("/ %s", _data.getRound()));
+            gamenamecount.setText(String.format("/ %s", StringUtil.convertUp(_data.getRound())));
             gameplaycount.setText(String.format("+%s", _data.getPlay_count()));
             gametime.setText(AppUtils.getFormatTime5(_data.getStart_time_ms()));
 
@@ -256,9 +249,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
             }
 
             List<Team> teams = _data.getTeam();
-            Collections.sort(teams, (o1, o2) -> {
-                return (int)(o1.getPos() - o2.getPos());
-            });
+            Collections.sort(teams, (o1, o2) -> { return (int)(o1.getPos() - o2.getPos()); });
 
             Team team0 = teams.get(0);
             Team team1 = teams.get(1);
