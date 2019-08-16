@@ -45,6 +45,7 @@ import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -217,8 +218,13 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                         return;
                     }
 
-                    Team team0 = _data.getTeam() != null ? _data.getTeam().get(0) : null;
-                    Team team1 = _data.getTeam() != null ? _data.getTeam().get(1) : null;
+                    List<Team> teams = _data.getTeam();
+                    Collections.sort(teams, (o1, o2) -> {
+                        return (int)(o1.getPos() - o2.getPos());
+                    });
+
+                    Team team0 = teams.get(0);
+                    Team team1 = teams.get(1);
                     List<Odds> odds = _data.getOdds() != null ? _data.getOdds() : null;
                     int status = _data.getStatus();
 
