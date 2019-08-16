@@ -1,4 +1,18 @@
 apply plugin: 'com.android.application'
+apply plugin: 'channel'
+
+buildscript {
+    repositories {
+        maven {
+            url "file:///Users/litao/localMaven"
+        }
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.leon.channel:plugin:2.0.3'
+    }
+}
 
 android {
     compileSdkVersion 28
@@ -21,6 +35,18 @@ android {
             storePassword "123456"
             keyPassword "123456"
             keyAlias "sdj"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+
+        debug {
+            File strFile = new File("../JKS/sdj.jks")
+            storeFile file(strFile)
+            storePassword "123456"
+            keyPassword "123456"
+            keyAlias "sdj"
+            v1SigningEnabled true
+            v2SigningEnabled true
         }
     }
 
@@ -31,16 +57,26 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true   //是否代码混淆
+            minifyEnabled true
             multiDexEnabled true //防止方法数量超过65536导致错误
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
 
     aaptOptions {
         cruncherEnabled = false
         useNewCruncher = false
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     compileOptions {
@@ -54,20 +90,6 @@ android {
         main {
             jniLibs.srcDirs = ['libs']
         }
-    }
-
-    buildscript {
-        repositories {
-            mavenCentral()
-        }
-
-        dependencies {
-            classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-        }
-    }
-
-    repositories {
-        mavenCentral()
     }
 
 }
@@ -106,6 +128,12 @@ dependencies {
     implementation 'com.lsh.bankcardnum:banknumformatlibrary:1.0.2'
 
     implementation 'com.contrarywind:Android-PickerView:3.2.6'
+
+
+    //api：同老版本compile作用一样，即本module将会向外暴露其依赖的module变化，即若'helper'库发生了改变，那么本module以及所有依赖于本module的module都要重新编译
+    api 'com.leon.channel:helper:2.0.3'
+    //implementation：本module不会向外暴露其依赖的module变化，即若'junit'库发生改变，只会重编译本module，不会重编依赖于本module的外部module，即不会向外传播
+    testImplementation 'junit:junit:4.12'
 
 }
 

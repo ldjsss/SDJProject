@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.leon.channel.helper.ChannelReaderUtil;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
@@ -80,6 +81,9 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
         tokenLogin();
 
         HttpMsg.getInstance().sendGetName();
+
+        String channel = ChannelReaderUtil.getChannel(getApplicationContext());
+        ToastUtils.show_middle_pic(Activity_Login.this, R.mipmap.cancle_icon, "channel = " + channel, ToastUtils.LENGTH_LONG);
     }
 
     @Override
