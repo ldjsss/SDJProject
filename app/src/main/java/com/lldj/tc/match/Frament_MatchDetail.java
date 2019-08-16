@@ -61,8 +61,6 @@ import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
 import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
 public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.LScrollListener {
-    @BindView(R.id.toolbar_back_iv)
-    ImageView toolbarBackIv;
     @BindView(R.id.toolbar_title_tv)
     StrokeTextView toolbarTitleTv;
     @BindView(R.id.toolbar_root_layout)
@@ -149,18 +147,18 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         return R.layout.frament_match_detail;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AppUtils.fullScreenImmersive(mContext.getWindow().getDecorView());
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        } else {
-            mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
-
-    }
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        AppUtils.fullScreenImmersive(mContext.getWindow().getDecorView());
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+//            mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        } else {
+//            mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//        }
+//
+//    }
 
     @Override
     public void initView(View view) {
