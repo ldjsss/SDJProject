@@ -1,9 +1,13 @@
 package com.lldj.tc.utils;
 
+import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
+
+import com.lldj.tc.toolslibrary.util.AppUtils;
 
 public class Utils {
 
@@ -27,6 +31,19 @@ public class Utils {
 
         view.setAnimation(animation);
 
+    }
+
+    public static String getDevices(Activity activity){
+        StringBuffer sbf = new StringBuffer();
+        sbf.append(AppUtils.getDeviceName());
+        sbf.append("/");
+        sbf.append(AppUtils.getSystemVersion());
+        sbf.append("/");
+        sbf.append(AppUtils.getVersionName(activity));
+        sbf.append("/");
+        sbf.append(AppUtils.getResolution(activity));
+
+        return sbf.toString();
     }
 
 

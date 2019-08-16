@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 
+import com.leon.channel.helper.ChannelReaderUtil;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.JsonBean;
@@ -30,11 +31,14 @@ import com.lldj.tc.toolslibrary.view.BaseDialog;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
+import com.lldj.tc.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
+
+import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
 public class Dialog_Register extends BaseDialog {
     @BindView(R.id.toolbar_back_iv)
@@ -157,13 +161,16 @@ public class Dialog_Register extends BaseDialog {
                 break;
             case R.id.register_tv:
                 if (!checkAll()) return;
+                String package_info = ChannelReaderUtil.getChannel(bActivity.getApplicationContext());
+                String devices = Utils.getDevices(bActivity);
+//                ToastUtils.show_middle_pic(Activity_Login.this, R.mipmap.cancle_icon, "channel = " + channel, ToastUtils.LENGTH_LONG);
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
-                HttpMsg.getInstance().sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(getContext()), "", JsonBean.class, new HttpMsg.Listener(){
+                HttpMsg.getInstance().sendRegister(userCount, password, userName, phoneNum, phoneCode, AppUtils.getChannel(getContext()), devices, package_info, JsonBean.class, new HttpMsg.Listener(){
                     @Override
                     public void onFinish(Object _res) {
                         JsonBean res = (JsonBean) _res;
                         if(res.getCode() == GlobalVariable.succ){
-                            SharePreUtils.getInstance().setRegistInfo(getContext(), userCount, password, userName, phoneNum, AppUtils.getChannel(getContext()), "");
+                            SharePreUtils.getInstance().setRegistInfo(getContext(), userCount, password, userName, phoneNum, AppUtils.getChannel(getContext()), devices);
                             Toast.makeText(getContext(), getContext().getResources().getString(R.string.registSucc),Toast.LENGTH_SHORT).show();
                             HandlerInter.getInstance().sendEmptyMessage(HandlerType.REGISTSUCC);
                             dismiss();

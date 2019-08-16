@@ -96,7 +96,7 @@ public class HttpMsg<T>{
         HttpTool.httpPost((new StringBuffer(baseUrl).append("oauth2")).toString(), URLParams, new HttpMsg().getListener(service, callbackListener), "");
     }
 
-    public void sendRegister(final String username, final String password, String name, String mobile, String sms, String channel, String devices, Class<T>service, Listener callbackListener) {
+    public void sendRegister(final String username, final String password, String name, String mobile, String sms, String channel, String devices, String package_info, Class<T>service, Listener callbackListener) {
         Map<String,String> URLParams = new HashMap();
         URLParams.put("username", username);
         URLParams.put("password", password);
@@ -105,6 +105,7 @@ public class HttpMsg<T>{
         URLParams.put("sms", sms);
         URLParams.put("channel", channel);
         URLParams.put("devices", devices);
+        URLParams.put("package_info", package_info);
 
         HttpTool.httpPost((new StringBuffer(baseUrl).append("register/submit")).toString(), URLParams, new HttpMsg().getListener(service, callbackListener), "");
     }
