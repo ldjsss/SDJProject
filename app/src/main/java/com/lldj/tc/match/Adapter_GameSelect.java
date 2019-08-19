@@ -181,10 +181,15 @@ public class Adapter_GameSelect extends RecyclerView.Adapter<Adapter_GameSelect.
         }
 
         private void setViewColor(View v, boolean select){
-            if(select)
+            if(select) {
                 v.findViewById(R.id.selectline).setBackgroundColor(Color.parseColor("#baa936"));
-            else
+                v.setBackground(bActivity.getResources().getDrawable(R.drawable.gameiconbgselect));
+
+            }
+            else {
                 v.findViewById(R.id.selectline).setBackgroundColor(Color.parseColor("#1f1f1f"));
+                v.setBackground(bActivity.getResources().getDrawable(R.drawable.gameiconbg));
+            }
         }
     }
 }
