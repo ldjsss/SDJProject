@@ -84,7 +84,7 @@ public class HttpMsg<T>{
         HttpTool.httpPost(sgetCodeURL, sParams, new HttpMsg().getListener(service, callbackListener), "");
     }
 
-    private static final String loginURL = new StringBuilder(baseUrl).append("register/login").toString();
+    private static final String loginURL = new StringBuilder(baseUrl).append("login").toString();
     public void sendLogin(final String username, final String password, Class<T>service, Listener callbackListener) {
         sParams.clear();
         sParams.put("username", username);
@@ -93,7 +93,7 @@ public class HttpMsg<T>{
         HttpTool.httpPost(loginURL, sParams, new HttpMsg().getListener(service, callbackListener), "");
     }
 
-    private static final String tokenURL = new StringBuilder(baseUrl).append("register/oauth2").toString();
+    private static final String tokenURL = new StringBuilder(baseUrl).append("oauth2").toString();
     public void sendTokenLogin(final String token, Class<T>service, Listener callbackListener) {
         sParams.clear();
         sParams.put("access_token", token);
@@ -155,7 +155,7 @@ public class HttpMsg<T>{
         HttpTool.sendGet(String.format(matchListURL, type, page_num, game_ids), new HttpMsg().getListener(service, callbackListener), null);
     }
 
-    private static final StringBuilder matchDetailURL = new StringBuilder(baseUrl).append("atch/detail/");
+    private static final StringBuilder matchDetailURL = new StringBuilder(baseUrl).append("match/detail/");
     public void sendGetMatchDetial(int matchID, Class<T>service, Listener callbackListener) {
         HttpTool.sendGet(matchDetailURL.append(matchID).toString(), new HttpMsg().getListener(service, callbackListener), null);
     }

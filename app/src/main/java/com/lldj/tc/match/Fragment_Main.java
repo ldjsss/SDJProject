@@ -2,11 +2,9 @@ package com.lldj.tc.match;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,8 +23,8 @@ import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
+import com.lldj.tc.toolslibrary.time.BasicTimer;
 import com.lldj.tc.toolslibrary.util.Clog;
-import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
@@ -40,10 +38,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.disposables.Disposable;
 
 import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
-import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
 /**
  * main ui
@@ -65,8 +61,8 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     private int ViewType;
     private Fragment_Banner fragment_Banner;
     private Fragment_Calendar fragment_Calendar;
-    private Disposable disposable;
-    private int disTime = 10000;
+    private BasicTimer disposable;
+    private int disTime = 8000;
     private String selects = "";
     private boolean _visible = false;
     private LinearLayoutManager layoutManager;
@@ -198,7 +194,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     }
 
     private void getMatchData() {//"&game_ids=" + selectID
-        HttpMsg.getInstance().sendGetMatchList(ViewType + 1, page_num, selects, PageMatchBean.class, new HttpMsg.Listener() {
+        final HttpMsg.Listener cal = new HttpMsg.Listener() {
             @Override
             public void onFinish(Object _res) {
                 PageMatchBean res = (PageMatchBean) _res;
@@ -250,7 +246,9 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 
                 subjectLrecycleview.refreshComplete();
             }
-        });
+        };
+
+        HttpMsg.getInstance().sendGetMatchList(ViewType + 1, page_num, selects, PageMatchBean.class, cal);
 
         HttpMsg.getInstance().sendGetGamesCount(CountBean.class, null);
     }
@@ -258,21 +256,20 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     private void startUpdate() {
         if (disposable != null || ViewType > 1 || !_visible) return;
 
-        disposable = RxTimerUtilPro.interval(disTime, new RxTimerUtilPro.IRxNext() {
+        disposable = new BasicTimer(new BasicTimer.BasicTimerCallback() {
             @Override
-            public void doNext(long number) {
+            public void onTimer() {
                 getMatchData();
             }
-
-            @Override
-            public void onComplete() {
-            }
         });
+        disposable.start(disTime);
     }
 
     private void stopUpdate() {
-        RxTimerUtilPro.cancel(disposable);
-        disposable = null;
+        if(disposable != null){
+            disposable.cancel();
+            disposable = null;
+        }
     }
 
     @Override

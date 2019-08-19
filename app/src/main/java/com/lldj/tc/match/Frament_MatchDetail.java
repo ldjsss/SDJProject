@@ -35,6 +35,7 @@ import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
+import com.lldj.tc.toolslibrary.time.BasicTimer;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.ImageLoader;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
@@ -138,7 +139,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
     private String[] statusText;
     private int disTime = 4000;
-    private Disposable disposable;
+    private BasicTimer disposable;
     private boolean select = false;
     private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
     private ImageLoader imageLoader = new ImageLoader(bActivity, R.mipmap.game_arena, R.mipmap.game_arena);
@@ -204,7 +205,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
     @Override
     public void onRefresh() {
-        HttpMsg.getInstance().sendGetMatchDetial(matchId, JsonBean.class, new HttpMsg.Listener() {
+
+        final HttpMsg.Listener cal = new HttpMsg.Listener() {
             @Override
             public void onFinish(Object _res) {
                 JsonBean res = (JsonBean) _res;
@@ -314,7 +316,9 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                 RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
                 jingcairecycleview.refreshComplete();
             }
-        });
+        };
+
+        HttpMsg.getInstance().sendGetMatchDetial(matchId, JsonBean.class, cal);
     }
 
     private void initRecycleview() {
@@ -378,21 +382,20 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private void startUpdate() {
         if (disposable != null) return;
 
-        disposable = RxTimerUtilPro.interval(disTime, new RxTimerUtilPro.IRxNext() {
+        disposable = new BasicTimer(new BasicTimer.BasicTimerCallback() {
             @Override
-            public void doNext(long number) {
+            public void onTimer() {
                 onRefresh();
             }
-
-            @Override
-            public void onComplete() {
-            }
         });
+        disposable.start(disTime);
     }
 
     private void stopUpdate() {
-        RxTimerUtilPro.cancel(disposable);
-        disposable = null;
+        if(disposable != null){
+            disposable.cancel();
+            disposable = null;
+        }
     }
 
     private void playMatch() {
