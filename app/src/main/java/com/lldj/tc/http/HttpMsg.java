@@ -155,9 +155,9 @@ public class HttpMsg<T>{
         HttpTool.sendGet(String.format(matchListURL, type, page_num, game_ids), new HttpMsg().getListener(service, callbackListener), null);
     }
 
-    private static final StringBuilder matchDetailURL = new StringBuilder(baseUrl).append("match/detail/");
+    private static final String matchDetailURL = new StringBuilder(baseUrl).append("match/detail/%s").toString();
     public void sendGetMatchDetial(int matchID, Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(matchDetailURL.append(matchID).toString(), new HttpMsg().getListener(service, callbackListener), null);
+        HttpTool.sendGet(String.format(matchDetailURL, matchID), new HttpMsg().getListener(service, callbackListener), null);
     }
 
     private static final String betListURL = new StringBuilder(baseUrl).append("bet/submit").toString();
@@ -224,9 +224,9 @@ public class HttpMsg<T>{
         }), null);
     }
 
-    private static final StringBuilder changeBirURL = new StringBuilder(baseUrl).append("user/modifybirthday?birthday=");
+    private static final String changeBirURL = new StringBuilder(baseUrl).append("user/modifybirthday?birthday=%s").toString();
     public void sendChangeBir(final String access_token, final String birthday, Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet((changeBirURL.append(birthday)).toString(), new HttpMsg().getListener(service, callbackListener), access_token);
+        HttpTool.sendGet(String.format(changeBirURL, birthday), new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
     private static final String changeKeyURL = new StringBuilder(baseUrl).append("user/modifypassword").toString();
@@ -256,9 +256,9 @@ public class HttpMsg<T>{
         HttpTool.httpPost(getUserCodeURL, sParams, new HttpMsg().getListener(service, callbackListener), access_token);
     }
 
-    private static final StringBuilder getOddsURL = new StringBuilder(baseUrl).append("match/oddssimple?");
+    private static final String getOddsURL = new StringBuilder(baseUrl).append("match/oddssimple?%s").toString();
     public void sendGetOdds(String game_ids, Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet((getOddsURL.append(game_ids)).toString(), new HttpMsg().getListener(service, callbackListener), null);
+        HttpTool.sendGet(String.format(getOddsURL, game_ids), new HttpMsg().getListener(service, callbackListener), null);
     }
 
     private static final String getGameCountURL = new StringBuilder(baseUrl).append("game/count").toString();
