@@ -104,9 +104,9 @@ public class Fragment_ViewPager extends BaseFragment {
                     CountBean _value = (CountBean)data.getValue();
                     if(_value == null) return;
                     CountBean.CountMode _data = (CountBean.CountMode) _value.getResult();
-                    updateTitle(0, String.valueOf(_data.getEarly()));
+                    updateTitle(0, String.valueOf(_data.getToday()));
                     updateTitle(1, String.valueOf(_data.getLive()));
-                    updateTitle(2, String.valueOf(_data.getToday()));
+                    updateTitle(2, String.valueOf(_data.getEarly()));
                 }
             }
         });

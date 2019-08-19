@@ -71,7 +71,7 @@ public class HttpTool {
                     con.setReadTimeout(timeout);
 
                     final int code = con.getResponseCode();
-                    StringBuffer buffer = new StringBuffer();
+                    StringBuilder buffer = new StringBuilder();
                     if(code == HttpURLConnection.HTTP_OK)
                     {
                         InputStreamReader in = new InputStreamReader(con.getInputStream());
@@ -88,20 +88,24 @@ public class HttpTool {
                     }
 
                     final String ret = buffer.toString();
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onFinish(code, ret);
-                        }
-                    });
+                    if(listener != null) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onFinish(code, ret);
+                            }
+                        });
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onFinish(-1000, "failed to connect to");
-                        }
-                    });
+                    if(listener != null) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onFinish(-1000, "failed to connect to");
+                            }
+                        });
+                    }
                 } finally {
                     if (con != null) {
                         con.disconnect();
@@ -160,20 +164,24 @@ public class HttpTool {
                     }
 
                     final String ret = result;
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onFinish(code, ret);
-                        }
-                    });
+                    if(listener != null) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onFinish(code, ret);
+                            }
+                        });
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onFinish(-1000, "failed to connect to");
-                        }
-                    });
+                    if(listener != null) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onFinish(-1000, "failed to connect to");
+                            }
+                        });
+                    }
                 }finally {
                     if (httpURLConnection != null) { httpURLConnection.disconnect(); }
                 }
@@ -210,7 +218,7 @@ public class HttpTool {
                     os.close();  //关闭流对象
 
                     final int code = httpURLConnection.getResponseCode();
-                    StringBuffer result = new StringBuffer();
+                    StringBuilder result = new StringBuilder();
                     if (code == HttpURLConnection.HTTP_OK) {
                         InputStreamReader in = new InputStreamReader(httpURLConnection.getInputStream());
                         BufferedReader bf = new BufferedReader(in);
@@ -228,21 +236,24 @@ public class HttpTool {
                     }
 
                     final String ret = result.toString();
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onFinish(code, ret);
-                        }
-                    });
-
+                    if(listener != null) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onFinish(code, ret);
+                            }
+                        });
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onFinish(-1000, "failed to connect to");
-                        }
-                    });
+                    if(listener != null) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onFinish(-1000, "failed to connect to");
+                            }
+                        });
+                    }
                 } finally {
                     if (httpURLConnection != null) {
                         httpURLConnection.disconnect();
@@ -257,7 +268,7 @@ public class HttpTool {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                StringBuffer sb = new StringBuffer();
+                StringBuilder sb = new StringBuilder();
                 if (params != null) {
                     for (Map.Entry<String, String> e : params.entrySet()) {
                         sb.append(e.getKey());
@@ -303,7 +314,7 @@ public class HttpTool {
                     osw.close();
 
                     final int code = con.getResponseCode();
-                    StringBuffer buffer = new StringBuffer();
+                    StringBuilder buffer = new StringBuilder();
                     if(code == HttpURLConnection.HTTP_OK)
                     {
                         InputStreamReader in = new InputStreamReader(con.getInputStream());
@@ -319,20 +330,24 @@ public class HttpTool {
                     }
                     con.disconnect();
                     final String ret = buffer.toString();
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onFinish(code, ret);
-                        }
-                    });
+                    if(listener != null) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onFinish(code, ret);
+                            }
+                        });
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onFinish(-1000, "failed to connect to");
-                        }
-                    });
+                    if(listener != null) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onFinish(-1000, "failed to connect to");
+                            }
+                        });
+                    }
                 }finally { if (con != null) { con.disconnect(); } }
             }
         }).start();
@@ -363,20 +378,24 @@ public class HttpTool {
                     final Bitmap bitmap = BitmapFactory.decodeStream(is);
                     is.close();
 
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onFinish(bitmap);
-                        }
-                    });
+                    if(listener != null) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onFinish(bitmap);
+                            }
+                        });
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onFinish(null);
-                        }
-                    });
+                    if(listener != null) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onFinish(null);
+                            }
+                        });
+                    }
                 }finally {
                     if (con != null) {
                         con.disconnect();
