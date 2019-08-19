@@ -25,8 +25,8 @@ import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
+import com.lldj.tc.toolslibrary.time.BasicTimer;
 import com.lldj.tc.toolslibrary.util.AppUtils;
-import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseDialog;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.GlobalVariable;
@@ -36,7 +36,6 @@ import com.lldj.tc.utils.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.disposables.Disposable;
 
 import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
@@ -67,7 +66,7 @@ public class Dialog_Register extends BaseDialog {
     View resviewLine33;
     @BindView(R.id.resname_et)
     EditText resnameEt;
-    private Disposable getCodeDisposable;
+    private BasicTimer getCodeDisposable;
 
     private String phoneNum = "";
     private String userCount = "";
@@ -105,7 +104,7 @@ public class Dialog_Register extends BaseDialog {
     @Override
     public void dismiss() {
         super.dismiss();
-        if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
+        if (getCodeDisposable != null) getCodeDisposable.cancel();
     }
 
 
@@ -126,27 +125,7 @@ public class Dialog_Register extends BaseDialog {
                     showToast(R.string.errorRemind5);
                     return;
                 }
-                codeTime = 120;
-                resgetVerifyCodebtn.setEnabled(false);
 
-                if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
-                getCodeDisposable = RxTimerUtilPro.interval(1000, new RxTimerUtilPro.IRxNext() {
-                    @Override
-                    public void doNext(long number) {
-                        codeTime--;
-                        if (codeTime <=0 ){
-                            if (getCodeDisposable != null) RxTimerUtilPro.cancel(getCodeDisposable);
-                            getCodeDisposable = null;
-                            resgetVerifyCodebtn.setEnabled(true);
-                            resgetVerifyCodebtn.setText(getContext().getText(R.string.get_verify_code));
-                            return;
-                        }
-                        resgetVerifyCodebtn.setText(codeTime + "s");
-                    }
-
-                    @Override
-                    public void onComplete() {}
-                });
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LOADING);
                 HttpMsg.getInstance().sendGetCode(phoneNum, JsonBean.class, new HttpMsg.Listener(){
                     @Override
@@ -154,6 +133,25 @@ public class Dialog_Register extends BaseDialog {
                         JsonBean res = (JsonBean)_res;
                         if(res.getCode() == GlobalVariable.succ) {
                             Toast.makeText(getContext(), getContext().getResources().getString(R.string.codeHaveSend), Toast.LENGTH_SHORT).show();
+                            codeTime = 120;
+                            resgetVerifyCodebtn.setEnabled(false);
+
+                            if (getCodeDisposable != null) getCodeDisposable.cancel();
+                            getCodeDisposable = new BasicTimer(new BasicTimer.BasicTimerCallback() {
+                                @Override
+                                public void onTimer() {
+                                    codeTime--;
+                                    if (codeTime <= 0) {
+                                        if (getCodeDisposable != null) getCodeDisposable.cancel();
+                                        getCodeDisposable = null;
+                                        resgetVerifyCodebtn.setEnabled(true);
+                                        resgetVerifyCodebtn.setText(getContext().getText(R.string.get_verify_code));
+                                        return;
+                                    }
+                                    resgetVerifyCodebtn.setText(codeTime + "s");
+                                }
+                            });
+                            getCodeDisposable.start(1000);
                         }
                     }
                 });
