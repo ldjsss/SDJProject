@@ -168,7 +168,7 @@ public class Fragment_ViewPager extends BaseFragment {
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.GAMESELECT);
                 break;
             case R.id.connectservice:
-                Toast.makeText(mContext,"---------------test2",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,"This functionality is not yet implemented!",Toast.LENGTH_SHORT).show();
                 break;
         }
     }

@@ -66,7 +66,8 @@ public class HttpMsg<T>{
                     int _code = _data.getCode();
                     String _msg  = _data.getMessage();
 
-                    if(_code != GlobalVariable.succ){ toastMess("ERROR CODE " + _code + _msg, _code); }
+//                    if(_code != GlobalVariable.succ){ toastMess("ERROR CODE " + _code + _msg, _code); }
+                    if(_code != GlobalVariable.succ){ toastMess(_msg, _code); }
 
                 }else{
                     toastMess("NET ERROR CODE" + code + msg, code);
