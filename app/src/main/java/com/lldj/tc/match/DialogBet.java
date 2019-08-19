@@ -30,6 +30,7 @@ import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
+import com.lldj.tc.toolslibrary.time.BasicTimer;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
@@ -47,7 +48,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.disposables.Disposable;
 
 import static android.view.ViewGroup.FOCUS_BEFORE_DESCENDANTS;
 
@@ -61,7 +61,7 @@ public class DialogBet extends BaseDialog {
     RelativeLayout betwarmlayout;
     private ExpandableListView expandableListView;
     private Map<String, BetModel> betList = new HashMap();
-    private Disposable disposable;
+    private BasicTimer disposable;
     private int disTime = 5000;
 
     //Note that the character array is not written that {{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
@@ -470,22 +470,22 @@ public class DialogBet extends BaseDialog {
 
     private void startUpdate() {
         if (disposable == null) {
-            disposable = RxTimerUtilPro.interval(disTime, new RxTimerUtilPro.IRxNext() {
+
+            disposable = new BasicTimer(new BasicTimer.BasicTimerCallback() {
                 @Override
-                public void doNext(long number) {
+                public void onTimer() {
                     getOdds();
                 }
-
-                @Override
-                public void onComplete() {
-                }
             });
+            disposable.start(disTime);
         }
     }
 
     private void stopUpdate() {
-        RxTimerUtilPro.cancel(disposable);
-        disposable = null;
+        if(disposable != null){
+            disposable.cancel();
+            disposable = null;
+        }
     }
 
     @Override

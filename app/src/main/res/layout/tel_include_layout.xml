@@ -37,6 +37,7 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/view_line"
         android:background="@color/transparent"
+        android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:hint="@string/userCountRemind"
         android:maxLength="16"
         android:textColor="@color/color_ebe3d7"

@@ -33,6 +33,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/resview_line11"
+        android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:background="@color/transparent"
         android:hint="@string/userKeyRemind"
         android:maxLength="16"
