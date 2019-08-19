@@ -159,11 +159,11 @@ public class DialogBetBottom extends BaseDialog {
             BetModel value = entry.getValue();
             if (value != null) {
                 if(value.getAmount() < value.getBet_min()) {
-                    ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, String.format(getContext().getResources().getString(R.string.betminnum), value.getName(), value.getBet_min()), ToastUtils.LENGTH_SHORT);
+                    ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, String.format(getContext().getResources().getString(R.string.betminnum), value.getBet_min()), ToastUtils.LENGTH_SHORT);
                     return;
                 }
                 else if(value.getAmount() > value.getBet_max()){
-                    ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, String.format(getContext().getResources().getString(R.string.betmaxnum), value.getName(), value.getBet_max()), ToastUtils.LENGTH_SHORT);
+                    ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, String.format(getContext().getResources().getString(R.string.betmaxnum), value.getBet_max()), ToastUtils.LENGTH_SHORT);
                     return;
                 }
 
