@@ -77,7 +77,7 @@ public class DialogBetBottom extends BaseDialog {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         WindowManager.LayoutParams layoutParams = window.getAttributes();
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE; //核心代码是这个属性。
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         window.setAttributes(layoutParams);
 
         this.setCanceledOnTouchOutside(false);
@@ -153,22 +153,29 @@ public class DialogBetBottom extends BaseDialog {
 
         JSONArray arrayList=new JSONArray();
         Iterator<Map.Entry<String, BetModel>> entries = _betList.entrySet().iterator();
+        int totalbet = 0;
         while (entries.hasNext()) {
             Map.Entry<String, BetModel> entry = entries.next();
-
             BetModel value = entry.getValue();
             if (value != null) {
-                if(value.getAmount() < value.getBet_min()) {
+                int amount = value.getAmount();
+                if(amount < value.getBet_min()) {
                     ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, String.format(getContext().getResources().getString(R.string.betminnum), value.getBet_min()), ToastUtils.LENGTH_SHORT);
                     return;
                 }
-                else if(value.getAmount() > value.getBet_max()){
+                else if(amount > value.getBet_max()){
                     ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, String.format(getContext().getResources().getString(R.string.betmaxnum), value.getBet_max()), ToastUtils.LENGTH_SHORT);
                     return;
                 }
 
+                totalbet += amount;
                 arrayList.put(value.getJSONObject());
             }
+        }
+
+        if(totalbet > Float.parseFloat(SharePreUtils.getMoney(getContext()))) {
+            ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getContext().getResources().getString(R.string.shortmoney), ToastUtils.LENGTH_SHORT);
+            return;
         }
         JSONObject jsonObj = new JSONObject();
         try {

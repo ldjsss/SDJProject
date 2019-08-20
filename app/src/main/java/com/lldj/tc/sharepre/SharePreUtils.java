@@ -80,7 +80,7 @@ public class SharePreUtils {
     }
 
     public static String getMoney(Context context) {
-        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.MONEY, "");
+        return SharedPreferencesUtil.getSharedPreferences(context).getString(SharedKeys.MONEY, "0");
     }
 
     public static void setPhone(Context context, String phone) {
