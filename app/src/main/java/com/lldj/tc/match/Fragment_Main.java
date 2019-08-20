@@ -198,7 +198,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
             @Override
             public void onFinish(Object _res) {
                 PageMatchBean res = (PageMatchBean) _res;
-                if (res.getCode() == GlobalVariable.succ) {
+                if (res != null && res.getCode() == GlobalVariable.succ) {
                     PageMatchBean.matchModel _result = res.getResult();
                     if (_result == null) {
                         Toast.makeText(mContext, "--------service data error ", Toast.LENGTH_SHORT).show();
