@@ -163,5 +163,7 @@
     <string name="task">任务</string>
     <string name="get">未领取</string>
     <string name="gettasksucc">领取成功</string>
+    <string name="definal">| 全场</string>
+    <string name="dewinner">获胜者</string>
 </resources>
 
