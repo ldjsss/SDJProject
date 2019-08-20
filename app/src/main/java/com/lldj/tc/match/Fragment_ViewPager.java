@@ -1,39 +1,28 @@
 package com.lldj.tc.match;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
-import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.CountBean;
-import com.lldj.tc.http.beans.FormatModel.ResultsModel;
-import com.lldj.tc.http.beans.MatchBean;
-import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
-import com.lldj.tc.toolslibrary.util.AppUtils;
+import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.utils.EventType;
-import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +40,8 @@ public class Fragment_ViewPager extends BaseFragment {
     TabLayout tabLayout;
     @BindView(R.id.firstpage_viewpager)
     ViewPager firstpageViewpager;
+    @BindView(R.id.maintoptitlelayout)
+    LinearLayout maintoptitlelayout;
     private Adapter_MainPager mPagerAdapter;
 
     int colorSelect = Color.parseColor("#f0e6d8");
@@ -62,7 +53,9 @@ public class Fragment_ViewPager extends BaseFragment {
     }
 
     @Override
-    public int getContentView() { return R.layout.activity_main_include_layout; }
+    public int getContentView() {
+        return R.layout.activity_main_include_layout;
+    }
 
 
     @Override
@@ -75,6 +68,8 @@ public class Fragment_ViewPager extends BaseFragment {
     //初始化viewpager
     private void initViewPager() {
 
+        ImmersionBar.with((Activity) mContext).titleBar(maintoptitlelayout).init();
+
         mPagerAdapter = new Adapter_MainPager(mContext, mContext.getSupportFragmentManager());
         firstpageViewpager.setAdapter(mPagerAdapter);
         tabLayout.setupWithViewPager(firstpageViewpager);
@@ -86,7 +81,8 @@ public class Fragment_ViewPager extends BaseFragment {
         definedTablayout();
         firstpageViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
             public void onPageSelected(int position) {
@@ -94,15 +90,16 @@ public class Fragment_ViewPager extends BaseFragment {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) { }
+            public void onPageScrollStateChanged(int state) {
+            }
         });
 
         this.registEvent(new Observer<ObData>() {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 if (data.getKey().equalsIgnoreCase(EventType.MATCHCOUNT)) {
-                    CountBean _value = (CountBean)data.getValue();
-                    if(_value == null) return;
+                    CountBean _value = (CountBean) data.getValue();
+                    if (_value == null) return;
                     CountBean.CountMode _data = (CountBean.CountMode) _value.getResult();
                     updateTitle(0, String.valueOf(_data.getToday()));
                     updateTitle(1, String.valueOf(_data.getLive()));
@@ -140,14 +137,15 @@ public class Fragment_ViewPager extends BaseFragment {
             }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
         });
     }
 
-    private void setTextSelect(TabLayout.Tab tab, boolean select){
+    private void setTextSelect(TabLayout.Tab tab, boolean select) {
         View view = tab.getCustomView();
-        ((TextView)view.findViewById(R.id.tab_text)).setTextColor(select ? colorSelect : colorUnSelect);
-        ((TextView)view.findViewById(R.id.tab_no_reading_count_tv)).setTextColor(select ? colorSelect : colorUnSelect);
+        ((TextView) view.findViewById(R.id.tab_text)).setTextColor(select ? colorSelect : colorUnSelect);
+        ((TextView) view.findViewById(R.id.tab_no_reading_count_tv)).setTextColor(select ? colorSelect : colorUnSelect);
     }
 
     public void updateTitle(int index, String title) {
@@ -168,7 +166,7 @@ public class Fragment_ViewPager extends BaseFragment {
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.GAMESELECT);
                 break;
             case R.id.connectservice:
-                Toast.makeText(mContext,"This functionality is not yet implemented!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "This functionality is not yet implemented!", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

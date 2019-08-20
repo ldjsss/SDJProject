@@ -1,11 +1,13 @@
 package com.lldj.tc.match;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -17,6 +19,7 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.MatchBean;
+import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
@@ -39,6 +42,8 @@ public class DialogGameSelect extends BaseDialog {
     private Adapter_GameSelect adapter;
     @BindView(R.id.gamerecycleview)
     RecyclerView gamerecycleview;
+    @BindView(R.id.maintoptitlelayout)
+    LinearLayout maintoptitlelayout;
 
     public DialogGameSelect(@NonNull Context context, int themeResId) {
         super(context, themeResId);
@@ -57,6 +62,9 @@ public class DialogGameSelect extends BaseDialog {
         window.setAttributes(layoutParams);
 
         this.setCanceledOnTouchOutside(false);
+
+        ImmersionBar.with((Activity) context).titleBar(maintoptitlelayout).init();
+
     }
 
     @Override
