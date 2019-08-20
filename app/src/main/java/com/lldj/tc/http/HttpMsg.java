@@ -35,9 +35,9 @@ public class HttpMsg<T>{
     public static HttpMsg getInstance() { return ourInstance; }
     private static Map<String,String> sParams = new HashMap();
 
-    public static final String baseUrl = "http://192.168.1.118/";
+//    public static final String baseUrl = "http://192.168.1.118/";
 
-//      private static final String baseUrl = "http://server.yjwl.ltd/";
+      private static final String baseUrl = "http://server.yjwl.ltd/";
 
 //    public static final StringBuilder baseUrl = new StringBuilder("http://123.56.4.224/");
 

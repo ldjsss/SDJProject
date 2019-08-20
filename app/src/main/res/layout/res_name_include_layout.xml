@@ -6,47 +6,47 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="32dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:text="@string/name"
-        android:textColor="@color/color_ebe3d7"
-        android:textSize="16sp" />
-
-    <View
-        android:id="@+id/resview_line55"
-        android:layout_width="0.5dp"
-        android:layout_height="18dp"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="70dp"
-        android:background="@color/color_1a1c26" />
-
-    <EditText
-        android:id="@+id/resname_et"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/resview_line55"
-        android:background="@color/transparent"
-        android:hint="@string/nameRemaind"
-        android:maxLength="11"
-        android:textColor="@color/color_ebe3d7"
-        android:textColorHint="@color/color_544a36"
-        android:textCursorDrawable="@drawable/my_cursor"
-        android:singleLine="true"
-        android:textSize="14sp" />
+        android:layout_height="32dp">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="5dp"
-        android:background="@color/color_1a1c26" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/name"
+            android:textColor="@color/color_ebe3d7"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/resview_line55"
+            android:layout_width="0.5dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="70dp"
+            android:background="@color/color_1a1c26" />
+
+        <EditText
+            android:id="@+id/resname_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/resview_line55"
+            android:background="@color/transparent"
+            android:hint="@string/nameRemaind"
+            android:maxLength="11"
+            android:textColor="@color/color_ebe3d7"
+            android:textColorHint="@color/color_544a36"
+            android:textCursorDrawable="@drawable/my_cursor"
+            android:singleLine="true"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="5dp"
+            android:background="@color/color_1a1c26" />
     </RelativeLayout>
 
 </RelativeLayout>

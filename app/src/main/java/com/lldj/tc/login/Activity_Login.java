@@ -1,7 +1,5 @@
 package com.lldj.tc.login;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -21,19 +19,14 @@ import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.JsonBean;
-import com.lldj.tc.http.beans.PageMatchBean;
 import com.lldj.tc.match.Activity_MainUI;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
-import com.lldj.tc.toolslibrary.time.BasicTimer;
 import com.lldj.tc.toolslibrary.util.AppUtils;
-import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
 import com.lldj.tc.utils.GlobalVariable;
 import com.lldj.tc.utils.HandlerType;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -112,10 +105,10 @@ public class Activity_Login extends BaseActivity implements HandlerInter.HandleM
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.forget_psw_tv:
-                new Dialog_Forget(Activity_Login.this, R.style.DialogTheme).show();
+                startActivity(new Intent(this, Activity_Forget.class));
                 break;
             case R.id.register_tv:
-                new Dialog_Register(Activity_Login.this, R.style.DialogTheme).show();
+                startActivity(new Intent(this, Activity_Register.class));
                 break;
             case R.id.login_tv:
                 if (!checkAll()) return;
