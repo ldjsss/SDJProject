@@ -124,6 +124,7 @@ public class Activity_Center extends BaseActivity {
         switch (view.getId()) {
             case R.id.toolbar_back_iv:
                 finish();
+                overridePendingTransition(0, R.anim.out_to_left);
                 break;
             case R.id.setiv:
             case R.id.settv:

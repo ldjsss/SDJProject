@@ -15,6 +15,7 @@ import com.lldj.tc.R;
 import com.lldj.tc.info.Activity_Center;
 import com.lldj.tc.login.Activity_Login;
 import com.lldj.tc.sharepre.SharePreUtils;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.CustomDialog;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
@@ -120,7 +121,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                 if(_code == 401) goBackToLogin();
                 break;
             case HandlerType.LOADING:
-//                AppUtils.showLoading(bActivity);
+                AppUtils.showLoading(bActivity);
                 break;
             case HandlerType.GAMESELECT:
                 startActivity(new Intent(mContext, ActivityGameSelect.class));

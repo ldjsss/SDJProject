@@ -53,7 +53,6 @@ public class ActivityGameSelect extends BaseActivity {
         Window window = this.getWindow();
         window.setGravity(Gravity.TOP);
         window.setWindowAnimations(R.style.animStyleTop);
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
     }
 
@@ -95,6 +94,7 @@ public class ActivityGameSelect extends BaseActivity {
                 break;
             case R.id.toolbar_gameselect:
                 finish();
+                overridePendingTransition(0, R.anim.out_to_top);
                 break;
             case R.id.connectservice:
                 Toast.makeText(mContext,"---------------test2",Toast.LENGTH_SHORT).show();
@@ -104,6 +104,7 @@ public class ActivityGameSelect extends BaseActivity {
                 SharePreUtils.getInstance().setSelectGame(mContext, selects);
                 if(adapter != null) AppUtils.dispatchEvent(new ObData(EventType.SELECTGAMEID, selects));
                 finish();
+                overridePendingTransition(0, R.anim.out_to_top);
                 break;
         }
     }
