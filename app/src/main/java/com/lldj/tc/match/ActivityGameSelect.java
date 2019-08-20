@@ -1,7 +1,6 @@
 package com.lldj.tc.match;
 
-import android.app.Activity;
-import android.content.Context;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,25 +8,24 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
+
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
 import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.MatchBean;
-import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
-import com.lldj.tc.utils.EventType;
-import com.lldj.tc.utils.GlobalVariable;
-import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
+import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.util.AppUtils;
-import com.lldj.tc.toolslibrary.view.BaseDialog;
+import com.lldj.tc.toolslibrary.view.BaseActivity;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.GlobalVariable;
+import com.lldj.tc.utils.HandlerType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DialogGameSelect extends BaseDialog {
+public class ActivityGameSelect extends BaseActivity {
     private List<ResultsModel> list;
     private Adapter_GameSelect adapter;
     @BindView(R.id.gamerecycleview)
@@ -45,31 +43,26 @@ public class DialogGameSelect extends BaseDialog {
     @BindView(R.id.maintoptitlelayout)
     LinearLayout maintoptitlelayout;
 
-    public DialogGameSelect(@NonNull Context context, int themeResId) {
-        super(context, themeResId);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        View view = View.inflate(context, R.layout.gameselect, null);
-        setContentView(view);
-        ButterKnife.bind(this, view);
+        setContentView(R.layout.gameselect);
+        ButterKnife.bind(this);
 
         Window window = this.getWindow();
         window.setGravity(Gravity.TOP);
         window.setWindowAnimations(R.style.animStyleTop);
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-        WindowManager.LayoutParams layoutParams = window.getAttributes();
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        window.setAttributes(layoutParams);
-
-        this.setCanceledOnTouchOutside(false);
-
-        ImmersionBar.with((Activity) context).titleBar(maintoptitlelayout).init();
-
     }
 
+
     @Override
-    public void show() {
-        super.show();
+    protected void initData() {
+        ButterKnife.bind(this);
+
+        ImmersionBar.with(this).titleBar(maintoptitlelayout).init();
 
         HttpMsg.getInstance().sendGetGameList(MatchBean.class, new HttpMsg.Listener() {
             @Override
@@ -78,8 +71,8 @@ public class DialogGameSelect extends BaseDialog {
                 if (res.getCode() == GlobalVariable.succ) {
                     list = res.getResult();
 
-                    if(adapter == null) adapter = new Adapter_GameSelect(getContext(), list);
-                    gamerecycleview.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+                    if(adapter == null) adapter = new Adapter_GameSelect(mContext, list);
+                    gamerecycleview.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
                     gamerecycleview.setAdapter(adapter);
                     gamerecycleview.setItemAnimator(new DefaultItemAnimator());
 
@@ -91,6 +84,7 @@ public class DialogGameSelect extends BaseDialog {
                 }
             }
         });
+
     }
 
     @OnClick({R.id.toolbar_left_menu_iv, R.id.toolbar_gameselect, R.id.connectservice, R.id.tv_selectgame})
@@ -100,16 +94,16 @@ public class DialogGameSelect extends BaseDialog {
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.LEFTMENU);
                 break;
             case R.id.toolbar_gameselect:
-                DialogManager.getInstance().removeDialog(this);
+                finish();
                 break;
             case R.id.connectservice:
-                Toast.makeText(getContext(),"---------------test2",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,"---------------test2",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_selectgame:
                 String selects = adapter.getSelect();
-                SharePreUtils.getInstance().setSelectGame(getContext(), selects);
+                SharePreUtils.getInstance().setSelectGame(mContext, selects);
                 if(adapter != null) AppUtils.dispatchEvent(new ObData(EventType.SELECTGAMEID, selects));
-                DialogManager.getInstance().removeDialog(this);
+                finish();
                 break;
         }
     }

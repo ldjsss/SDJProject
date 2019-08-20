@@ -123,7 +123,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
 //                AppUtils.showLoading(bActivity);
                 break;
             case HandlerType.GAMESELECT:
-                DialogManager.getInstance().show(new DialogGameSelect(Activity_MainUI.this, R.style.DialogTheme));
+                startActivity(new Intent(mContext, ActivityGameSelect.class));
                 break;
             case HandlerType.LEAVEGAME:
                 goBackToLogin();

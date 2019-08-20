@@ -108,6 +108,7 @@
         <activity android:name=".login.Activity_Register" />
         <activity android:name=".login.Activity_Forget" />
         <activity android:name=".info.Activity_Center" />
+        <activity android:name=".match.ActivityGameSelect" />
 
         <activity android:name="com.wintone.smartvision_bankCard.ScanCamera">
             <intent-filter>
