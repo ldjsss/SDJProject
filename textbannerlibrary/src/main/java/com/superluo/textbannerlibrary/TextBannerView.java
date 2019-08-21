@@ -277,7 +277,7 @@ public class TextBannerView extends RelativeLayout {
             linearLayout.setGravity(mGravity);//子view显示位置跟随TextView
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.
                     LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-            linearLayout.addView(textView,param);
+            linearLayout.addView(textView, param);
 
             mViewFlipper.addView(linearLayout,i);//添加子view,并标识子view位置
         }

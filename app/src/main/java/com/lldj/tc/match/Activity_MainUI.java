@@ -5,27 +5,38 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
+import com.lldj.tc.http.HttpMsg;
+import com.lldj.tc.http.beans.BordBean;
+import com.lldj.tc.http.beans.FormatModel.ResultsModel;
+import com.lldj.tc.http.beans.PageMatchBean;
 import com.lldj.tc.info.Activity_Center;
 import com.lldj.tc.login.Activity_Login;
 import com.lldj.tc.sharepre.SharePreUtils;
-import com.lldj.tc.toolslibrary.util.AppUtils;
-import com.lldj.tc.toolslibrary.view.CustomDialog;
-import com.lldj.tc.utils.EventType;
-import com.lldj.tc.utils.HandlerType;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
+import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
+import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
+import com.lldj.tc.toolslibrary.time.BasicTimer;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
+import com.lldj.tc.toolslibrary.view.CustomDialog;
 import com.lldj.tc.toolslibrary.view.ToastUtils;
+import com.lldj.tc.utils.EventType;
+import com.lldj.tc.utils.GlobalVariable;
+import com.lldj.tc.utils.HandlerType;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +55,8 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
 
     private DialogBet dialogBet;
     private Frament_MatchDetail detailDialog;
+
+    private BasicTimer disposable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,6 +114,29 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                 }
             }
         });
+
+        getBord();
+        disposable = new BasicTimer(new BasicTimer.BasicTimerCallback() {
+            @Override
+            public void onTimer() {
+                getBord();
+            }
+        });
+        disposable.start(10000);
+    }
+
+    private void getBord(){
+        final HttpMsg.Listener cal = new HttpMsg.Listener() {
+            @Override
+            public void onFinish(Object _res) {
+                BordBean res = (BordBean) _res;
+                if (res != null && res.getCode() == GlobalVariable.succ) {
+                    AppUtils.dispatchEvent(new ObData(EventType.BORDLIST, res.getResult()));
+                }
+            }
+        };
+
+        HttpMsg.getInstance().sendGetBords(BordBean.class, cal);
     }
 
     @Override
@@ -144,6 +180,10 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
         super.onDestroy();
         mHandler.removeCallbacks(null);
         DialogManager.getInstance().removeAll();
+        if(disposable != null){
+            disposable.cancel();
+            disposable = null;
+        }
     }
 
     private void guestWarm() {

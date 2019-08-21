@@ -325,6 +325,13 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
                         }
 
+                        if(alist.size() > 3 ){
+                            for (int i = 0; i < 3; i++) {
+                                item = new ArrayList<>();
+                                item.add(new Odds(-3, ""));
+                                alist.add(item);
+                            }
+                        }
 //                        Log.d("-----alist data = ", alist.toString());
 
                         if (mAdapter != null) {
@@ -375,12 +382,10 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                 }
 
                 @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
-                }
+                public void onTabUnselected(TabLayout.Tab tab) {}
 
                 @Override
-                public void onTabReselected(TabLayout.Tab tab) {
-                }
+                public void onTabReselected(TabLayout.Tab tab) {}
             });
         }
     }

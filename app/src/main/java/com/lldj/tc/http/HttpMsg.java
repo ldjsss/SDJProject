@@ -35,9 +35,9 @@ public class HttpMsg<T>{
     public static HttpMsg getInstance() { return ourInstance; }
     private static Map<String,String> sParams = new HashMap();
 
-//    public static final String baseUrl = "http://192.168.1.118/";
+    public static final String baseUrl = "http://192.168.1.118/";
 
-      private static final String baseUrl = "http://server.yjwl.ltd/";
+//      private static final String baseUrl = "http://server.yjwl.ltd/";
 
 //    public static final StringBuilder baseUrl = new StringBuilder("http://123.56.4.224/");
 
@@ -60,7 +60,7 @@ public class HttpMsg<T>{
                 if(DEBUG)System.out.println("ret:" + code + " msg:" + msg);
                 if(code == HttpURLConnection.HTTP_OK) {
                     Object data = new Gson().fromJson(msg, service);
-                    listener.onFinish(data);
+                    if(listener != null)listener.onFinish(data);
 
                     BaseBean _data = new Gson().fromJson(msg, BaseBean.class);
                     int _code = _data.getCode();
@@ -301,6 +301,11 @@ public class HttpMsg<T>{
                 }
             }
         }), access_token);
+    }
+
+    private static final String bordURL = new StringBuilder(baseUrl).append("notice").toString();
+    public void sendGetBords(Class<T>service, Listener callbackListener) {
+        HttpTool.sendGet(bordURL, new HttpMsg().getListener(service, callbackListener), null);
     }
 
     public interface Listener<T> {

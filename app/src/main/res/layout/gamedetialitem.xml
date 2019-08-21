@@ -14,74 +14,80 @@
         android:layout_height="@dimen/dp_40"
         android:layout_weight = "1">
 
-        <TextView
-            android:id="@+id/playcellselect0"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="12sp"
-            android:textColor="@color/color_cdc3b3"
-            android:gravity="center"
-            android:background="@drawable/mathbetbg" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/playvictoryicon0"
-            android:src="@mipmap/main_victory"
-            android:layout_marginEnd="5dp"
-            android:layout_alignParentEnd="true"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/playlockicon0"
-            android:src="@mipmap/main_lock"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/dimen_20"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:id="@+id/betvisible0">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/playovername0"
-                android:text="ABCD"
-                android:textSize="12sp"
-                android:textColor="@color/color_cdc3b3"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_weight="1"/>
-
-            <RelativeLayout
+                android:id="@+id/playcellselect0"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.92">
+                android:textSize="12sp"
+                android:textColor="@color/color_cdc3b3"
+                android:gravity="center"
+                android:background="@drawable/mathbetbg" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/playvictoryicon0"
+                android:src="@mipmap/main_victory"
+                android:layout_marginEnd="5dp"
+                android:layout_alignParentEnd="true"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/playdetailarrowicon0"
-                    android:src="@mipmap/main_courage"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/dimen_10"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/playlockicon0"
+                android:src="@mipmap/main_lock"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dimen_20"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/playbetnum0"
-                    android:text="0.00"
-                    android:singleLine="true"
+                    android:id="@+id/playovername0"
+                    android:text="ABCD"
                     android:textSize="12sp"
                     android:textColor="@color/color_cdc3b3"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/playdetailarrowicon0" />
-            </RelativeLayout>
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_weight="1"/>
 
-        </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.92">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/playdetailarrowicon0"
+                        android:src="@mipmap/main_courage"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/dimen_10"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/playbetnum0"
+                        android:text="0.00"
+                        android:singleLine="true"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_cdc3b3"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/playdetailarrowicon0" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
     <View
         android:layout_width="@dimen/dimen_30"

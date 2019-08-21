@@ -104,7 +104,6 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
         public viewHolder(View itemView) {
             super(itemView);
-//            AppUtils.screenAdapterLoadView((ViewGroup)itemView);
             ButterKnife.bind(this, itemView);
             inflater = LayoutInflater.from(mContext);
         }
@@ -118,9 +117,9 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
             View view2 = addlayout.findViewById(R.id.detaionebetbg);
             View view3 = addlayout.findViewById(R.id.bottomoverlayout);
 
-            if(view1 != null) view1.setVisibility(View.GONE);
-            if(view2 != null) view2.setVisibility(View.GONE);
-            if(view3 != null) view3.setVisibility(View.GONE);
+//            if(view1 != null) view1.setVisibility(View.GONE);
+//            if(view2 != null) view2.setVisibility(View.GONE);
+//            if(view3 != null) view3.setVisibility(View.GONE);
 
             int _size = oddList.size();
             if(_size <= 0) return;
@@ -140,6 +139,8 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                     String _name = mapNames.get(mStage1);
                     ((TextView)view1.findViewById(R.id.myposition)).setText(TextUtils.isEmpty(_name) ? mStage1 : _name);
                     view1.setVisibility(View.VISIBLE);
+                    if(view2 != null) view2.setVisibility(View.GONE);
+                    if(view3 != null) view3.setVisibility(View.GONE);
                 }
                 else if(id1 == -2){
                     if(view2 == null) {
@@ -150,6 +151,24 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
                     ((TextView)view2.findViewById(R.id.matchplayname)).setText(String.format("| %s", mStage1));
                     view2.setVisibility(View.VISIBLE);
+
+                    if(view1 != null) view1.setVisibility(View.GONE);
+                    if(view3 != null) view3.setVisibility(View.GONE);
+                }
+
+                else if(id1 == -3){
+                    if(view3 == null) {
+                        view3 = inflater.inflate(R.layout.gamedetialitem, null);
+                        view3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        addlayout.addView(view3);
+                    }
+
+                    view3.findViewById(R.id.betvisible1).setVisibility(View.GONE);
+                    view3.findViewById(R.id.betvisible0).setVisibility(View.GONE);
+                    view3.setVisibility(View.VISIBLE);
+
+                    if(view1 != null) view1.setVisibility(View.GONE);
+                    if(view2 != null) view2.setVisibility(View.GONE);
                 }
             }
             else{
@@ -158,6 +177,9 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                     view3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     addlayout.addView(view3);
                 }
+
+                if(view1 != null) view1.setVisibility(View.GONE);
+                if(view2 != null) view2.setVisibility(View.GONE);
 
                 ((TextView) view3.findViewById(R.id.playovername0)).setText(TextUtils.isEmpty(odd1.getName()) ? "unknown" : odd1.getName());
                 String _oddstring = odd1.getOdds();

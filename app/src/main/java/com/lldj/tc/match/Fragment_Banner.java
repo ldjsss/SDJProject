@@ -1,12 +1,17 @@
 package com.lldj.tc.match;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.lldj.tc.DialogManager;
 import com.lldj.tc.R;
+import com.lldj.tc.http.beans.BordBean;
 import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
@@ -18,6 +23,7 @@ import com.superluo.textbannerlibrary.TextBannerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,12 +35,12 @@ public class Fragment_Banner extends BaseFragment {
     @BindView(R.id.tv_banner2)
     TextBannerView tvBanner2;
     private List<String> msgList;
-    private int ViewType = 0;
+//    private int ViewType = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ViewType = getArguments().getInt( "ARG");
+//        ViewType = getArguments().getInt( "ARG");
     }
 
     @Override
@@ -50,27 +56,41 @@ public class Fragment_Banner extends BaseFragment {
 
         setListener();
 
-        if(ViewType <= 0) tvBanner2.startViewAnimator();
+        tvBanner2.startViewAnimator();
+//        if(ViewType <= 0) tvBanner2.startViewAnimator();
+
+        registEvent(new Observer<ObData>() {
+            @Override
+            public void onUpdate(Observable<ObData> observable, ObData data) {
+                if (data.getKey().equalsIgnoreCase(EventType.BORDLIST)) {
+                    List<BordBean.BordMode> _list = (List<BordBean.BordMode>) data.getValue();
+//                    msgList.clear();
+//                    for (int i = 0; i < _list.size(); i++) {
+//                        msgList.add(_list.get(i).getBody());
+//                    }
+//                    if(_list.size() <= 1)msgList.add("欢迎各位来到星云电竞！");
+//                    tvBanner2.setDatas(msgList);
+                }
+
+            }
+        });
     }
 
     private void initData() {
         msgList = new ArrayList<>();
         msgList.add("欢迎各位来到星云电竞！");
-        msgList.add("Welcome to the NEBULA！");
-        msgList.add("大家好，我是星云电竞，欢迎大家的到来！");
-        msgList.add("Hello, everyone, I am NEBULA！");
-        msgList.add("星云电竞！星云电竞！星云电竞！星云电竞！星云电竞！");
+
         /**
          * 设置数据，方式一
          */
         tvBanner2.setDatas(msgList);
 
-//        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
+        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
         /**
          * 设置数据（带图标的数据），方式二
          */
         //第一个参数：数据 。第二参数：drawable.  第三参数drawable尺寸。第四参数图标位置
-//        mTvBanner2.setDatasWithDrawableIcon(msgList,drawable,18, Gravity.LEFT);
+        tvBanner2.setDatasWithDrawableIcon(msgList,drawable,18, Gravity.LEFT);
     }
 
     private void setListener() {
