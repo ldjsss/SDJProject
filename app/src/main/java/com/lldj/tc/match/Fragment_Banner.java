@@ -64,12 +64,12 @@ public class Fragment_Banner extends BaseFragment {
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 if (data.getKey().equalsIgnoreCase(EventType.BORDLIST)) {
                     List<BordBean.BordMode> _list = (List<BordBean.BordMode>) data.getValue();
-//                    msgList.clear();
-//                    for (int i = 0; i < _list.size(); i++) {
-//                        msgList.add(_list.get(i).getBody());
-//                    }
-//                    if(_list.size() <= 1)msgList.add("欢迎各位来到星云电竞！");
-//                    tvBanner2.setDatas(msgList);
+                    msgList.clear();
+                    for (int i = 0; i < _list.size(); i++) {
+                        msgList.add(_list.get(i).getBody());
+                    }
+                    if(_list.size() <= 1)msgList.add("欢迎各位来到星云电竞！");
+                    tvBanner2.setDatas(msgList);
                 }
 
             }
@@ -85,7 +85,7 @@ public class Fragment_Banner extends BaseFragment {
          */
         tvBanner2.setDatas(msgList);
 
-        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
+        Drawable drawable = getResources().getDrawable(R.mipmap.dljm_ss);
         /**
          * 设置数据（带图标的数据），方式二
          */
