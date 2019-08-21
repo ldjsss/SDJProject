@@ -93,14 +93,14 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 
 
 
-        if (ViewType > 1) {
-            fragment_Calendar = new Fragment_Calendar();
-        } else {
+//        if (ViewType > 1) {
+//            fragment_Calendar = new Fragment_Calendar();
+//        } else {
             fragment_Banner = new Fragment_Banner();
             Bundle bundle = new Bundle();
             bundle.putInt("ARG", ViewType);
             fragment_Banner.setArguments(bundle);
-        }
+//        }
 
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.add(1000 + ViewType, fragment_Calendar != null ? fragment_Calendar : fragment_Banner);
@@ -118,10 +118,10 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         rootView.findViewById(R.id.layout_board).setId(1000 + ViewType); //In order to solve id duplication after reuse, add deviation when adding control dynamically
 
         if (lAdapter == null) {
-            layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+            layoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
             subjectLrecycleview.setLayoutManager(layoutManager);
             mAdapter = new Adapter_MainCell(mContext, ViewType);
-            lAdapter = new LRecyclerViewAdapter(getActivity(), mAdapter);
+            lAdapter = new LRecyclerViewAdapter(mContext, mAdapter);
             subjectLrecycleview.setAdapter(lAdapter);
             subjectLrecycleview.setLScrollListener(this);
         }

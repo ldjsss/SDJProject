@@ -357,10 +357,10 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private void initRecycleview() {
 
         if (layoutManager == null) {
-            layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+            layoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
             jingcairecycleview.setLayoutManager(layoutManager);
-            mAdapter = new Adapter_MatchCell(getContext());
-            lAdapter = new LRecyclerViewAdapter(getContext(), mAdapter);
+            mAdapter = new Adapter_MatchCell(mContext);
+            lAdapter = new LRecyclerViewAdapter(mContext, mAdapter);
             jingcairecycleview.setAdapter(lAdapter);
             jingcairecycleview.setLScrollListener(this);
             jingcairecycleview.setNoMore(true);
@@ -370,6 +370,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                 public void onTabSelected(TabLayout.Tab tab) {
                     int tabPosition = tab.getPosition();
                     if (DEBUG)Log.e("onTabSelected", String.valueOf(tabPosition));
+                    isUp = 0;
                     layoutManager.scrollToPosition(keys.get(tabPosition).getIndex() + 1);
                 }
 
