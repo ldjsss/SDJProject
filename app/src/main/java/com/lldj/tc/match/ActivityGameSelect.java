@@ -50,9 +50,7 @@ public class ActivityGameSelect extends BaseActivity {
         setContentView(R.layout.gameselect);
         ButterKnife.bind(this);
 
-        Window window = this.getWindow();
-        window.setGravity(Gravity.TOP);
-        window.setWindowAnimations(R.style.animStyleTop);
+        overridePendingTransition(R.anim.in_from_top,0);
 
     }
 

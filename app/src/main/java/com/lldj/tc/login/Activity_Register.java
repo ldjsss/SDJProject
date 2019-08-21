@@ -74,9 +74,7 @@ public class Activity_Register extends BaseActivity {
 
         setContentView(R.layout.activity_register);
 
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.windowAnimations = R.style.Anim_fade;
-        getWindow().setAttributes(params);
+        overridePendingTransition(R.anim.in_from_right,0);
 
         ButterKnife.bind(this);
     }
@@ -96,6 +94,7 @@ public class Activity_Register extends BaseActivity {
         if (getCodeDisposable != null) getCodeDisposable.cancel();
         KeyboardUtil.showOrHide(mContext, this);
         finish();
+        overridePendingTransition(0,R.anim.out_to_right);
     }
 
 

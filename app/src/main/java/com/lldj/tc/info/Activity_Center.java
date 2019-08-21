@@ -58,11 +58,9 @@ public class Activity_Center extends BaseActivity {
 
         setContentView(R.layout.dialog_set);
 
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.windowAnimations = R.style.Anim_left;
-        getWindow().setAttributes(params);
-
         ButterKnife.bind(this);
+
+        overridePendingTransition(R.anim.in_from_left,0);
     }
 
 

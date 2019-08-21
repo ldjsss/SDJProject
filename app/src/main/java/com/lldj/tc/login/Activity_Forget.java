@@ -59,11 +59,9 @@ public class Activity_Forget extends BaseActivity {
 
         setContentView(R.layout.activity_forgetpw);
 
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.windowAnimations = R.style.Anim_fade;
-        getWindow().setAttributes(params);
-
         ButterKnife.bind(this);
+
+        overridePendingTransition(R.anim.in_from_right,0);
     }
 
 
@@ -80,6 +78,7 @@ public class Activity_Forget extends BaseActivity {
         if (getCodeDisposable != null) getCodeDisposable.cancel();
         KeyboardUtil.showOrHide(mContext, this);
         finish();
+        overridePendingTransition(0,R.anim.out_to_right);
     }
 
     @OnClick({R.id.toolbar_back_iv, R.id.toolbar_title_tv, R.id.connectservice, R.id.resget_verify_codebtn, R.id.register_tv})
