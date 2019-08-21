@@ -68,7 +68,7 @@ public class Activity_Info extends BaseActivity {
         ImmersionBar.with(bActivity).titleBar(toolbarRootLayout).init();
         toolbarTitleTv.setText(bActivity.getResources().getString(R.string.setTitle));
 
-        if(AppUtils.isNumer(SharePreUtils.getInstance().getBirthday()))tvbrithday.setText(AppUtils.getFormatTime2(Long.parseLong(SharePreUtils.getInstance().getBirthday())));
+        if(AppUtils.isNumer(SharePreUtils.getInstance().getBirthday()))tvbrithday.setText(AppUtils.getFormatTime2(1000*Long.parseLong(SharePreUtils.getInstance().getBirthday())));
     }
 
     @OnClick({R.id.toolbar_back_iv, R.id.brithlayout, R.id.phonelayout, R.id.keylayout, R.id.exitlayout})
@@ -84,15 +84,15 @@ public class Activity_Info extends BaseActivity {
                 TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {
-                        long bir =  date.getTime();
+                        long bir =  date.getTime()/1000;
                         HttpMsg.getInstance().sendChangeBir(SharePreUtils.getInstance().getToken(mContext), bir + "", BaseBean.class, new HttpMsg.Listener() {
                             @Override
                             public void onFinish(Object _res) {
                                 BaseBean res = (BaseBean) _res;
                                 if (res.getCode() == GlobalVariable.succ) {
-                                    Toast.makeText(Activity_Info.this, "--------------succ ", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Activity_Info.this, "--------------succ ", Toast.LENGTH_SHORT).show();
                                     SharePreUtils.getInstance().setBirthday(bir + "");
-                                    tvbrithday.setText(AppUtils.getFormatTime2(bir));
+                                    tvbrithday.setText(AppUtils.getFormatTime2(bir*1000));
                                 }
                             }
                         });

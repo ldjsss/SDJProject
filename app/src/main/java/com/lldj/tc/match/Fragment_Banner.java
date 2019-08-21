@@ -68,7 +68,6 @@ public class Fragment_Banner extends BaseFragment {
                     for (int i = 0; i < _list.size(); i++) {
                         msgList.add(_list.get(i).getBody());
                     }
-                    if(_list.size() <= 1)msgList.add("欢迎各位来到星云电竞！");
                     tvBanner2.setDatas(msgList);
                 }
 

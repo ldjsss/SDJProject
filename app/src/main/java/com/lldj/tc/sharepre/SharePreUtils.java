@@ -235,7 +235,7 @@ public class SharePreUtils {
         getInstance().agent = ret.isAgent();
         getInstance().birthday = ret.getBirthday();
 
-        if(TextUtils.isEmpty(getInstance().birthday)) getInstance().birthday = String.valueOf(Calendar.getInstance().getTimeInMillis());
+        if(TextUtils.isEmpty(getInstance().birthday)) getInstance().birthday = String.valueOf(Calendar.getInstance().getTimeInMillis()/1000);
     }
 
     public static void setUrlInfo(UrlBean.urlModel ret) {
