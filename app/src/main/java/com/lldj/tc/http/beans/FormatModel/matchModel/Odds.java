@@ -11,7 +11,6 @@ public class Odds{
     private long last_update;
     private int match_id;
     private int sort_index;
-
     private String value;
     private String win;
     private String name;
@@ -19,7 +18,12 @@ public class Odds{
     private String group_short_name;
     private String odds;
     private String tag;
-    private String match_stage;
+    private String match_stage = "";
+
+    public Odds(int id, String match_stage) {
+        this.id = id;
+        this.match_stage = match_stage;
+    }
 
     public int getGroup_id() {
         return group_id;

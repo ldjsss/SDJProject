@@ -62,6 +62,32 @@ import io.reactivex.disposables.Disposable;
 import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
 import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
+class keyModel{
+    private int index;
+    private String value;
+
+    public keyModel(int index, String value) {
+        this.index = index;
+        this.value = value;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+}
+
 public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.LScrollListener {
     @BindView(R.id.toolbar_title_tv)
     StrokeTextView toolbarTitleTv;
@@ -133,14 +159,14 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private int matchId;
     private Adapter_MatchCell mAdapter = null;
     private LRecyclerViewAdapter lAdapter = null;
-    private int mTotal = 0;
+    private int isUp = 0;
     private LinearLayoutManager layoutManager;
     private DrawerLayout drawerLayout;
+    private List<keyModel> keys = new ArrayList<>();
 
     private String[] statusText;
     private int disTime = 4000;
     private BasicTimer disposable;
-    private boolean select = false;
     private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
     private ImageLoader imageLoader = new ImageLoader(bActivity, R.mipmap.game_arena, R.mipmap.game_arena);
 
@@ -148,19 +174,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     public int getContentView() {
         return R.layout.frament_match_detail;
     }
-
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        AppUtils.fullScreenImmersive(mContext.getWindow().getDecorView());
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-//            mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        } else {
-//            mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            mContext.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//        }
-//
-//    }
 
     @Override
     public void initView(View view) {
@@ -260,60 +273,80 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     imageLoader.getAndSetImage(team1.getTeam_logo(), imgplayicon1);
                     imageLoader.getAndSetImage(team1.getTeam_logo(), imgvidoicon2);
 
-//                    Log.w("-----detail data = ", _data.toString());
+//                    Log.d("-----detail data = ", _data.toString());
 
-                    Map<String, Map<String, List<Odds>>> oddMap = new HashMap<>();
-                    List<String> keys = new ArrayList<>();
-                    if (odds != null) {
-//                        Collections.sort(odds, (o1, o2) -> {
-//                            return (int)(o2.getSort_index() - o1.getSort_index());
-//                        });
-                        mTotal = 0;
+                    if(odds != null){
+
+                        Collections.sort(odds, (o1, o2) -> {
+                            return (int)(o2.getSort_index() - o1.getSort_index());
+                        });
+
+                        ArrayList<List<Odds>> alist = new ArrayList<>();
+                        keys.clear();
+                        List<Odds> item = new ArrayList<>();
                         String _match_stage = "";
+                        int _group_id= -1;
                         for (int i = 0; i < odds.size(); i++) {
                             Odds _odd = odds.get(i);
                             String _key = _odd.getMatch_stage();
+                            int _gid = _odd.getGroup_id();
                             if (!_key.equalsIgnoreCase(_match_stage)) {
-                                keys.add("-1");
+                                keys.add(new keyModel(alist.size(), _key));
+                                if(item.size() > 0) {
+                                    alist.add(item);
+                                    item = new ArrayList<>();
+                                }
+
+                                item.add(new Odds(-1, _key));
                                 _match_stage = _key;
+
+                                alist.add(item);
+                                item = new ArrayList<>();
+                            }
+                            if (_gid != _group_id) {
+                                if(item.size() > 0) {
+                                    alist.add(item);
+                                    item = new ArrayList<>();
+                                }
+
+                                item.add(new Odds(-2, _odd.getGroup_name()));
+                                _group_id = _gid;
+
+                                alist.add(item);
+                                item = new ArrayList<>();
                             }
 
-                            Map<String, List<Odds>> itemList = oddMap.get(_key);
-                            if (itemList == null) {
-                                itemList = new HashMap<>();
-                                oddMap.put(_key, itemList);
-                                keys.add(_key);
+                            item.add(_odd);
+
+                            if(i >= odds.size() - 1 || item.size() >= 2){
+                                alist.add(item);
+                                item = new ArrayList<>();
                             }
-                            String _nextKey = _odd.getGroup_name();
-                            List<Odds> ceilList = itemList.get(_nextKey);
-                            if (ceilList == null) {
-                                ceilList = new ArrayList<>();
-                                itemList.put(_nextKey, ceilList);
-                            }
-                            ceilList.add(_odd);
+
                         }
 
-                        mTotal = keys.size();
-                        if (tabLayout != null && tabLayout.getTabCount() != keys.size() / 2) {
+//                        Log.d("-----alist data = ", alist.toString());
+
+                        if (mAdapter != null) {
+                            mAdapter.changeData(alist, _data);
+                        }
+
+                        if (tabLayout != null && tabLayout.getTabCount() != keys.size()) {
                             tabLayout.removeAllTabs();
 
-                            String str, _title;
+                            keyModel model;
                             for (int i = 0; i < keys.size(); i++) {
-                                str = keys.get(i);
-                                if (!str.equalsIgnoreCase("-1")) {
-                                    _title = mapNames.get(str);
-                                    tabLayout.addTab(tabLayout.newTab().setText(TextUtils.isEmpty(_title) ? str : _title));
-                                }
+                                model = keys.get(i);
+                                String _title = mapNames.get(model.getValue());
+                                tabLayout.addTab(tabLayout.newTab().setText(TextUtils.isEmpty(_title) ? model.getValue() : _title));
                             }
                             AppUtils.reduceMarginsInTabs(tabLayout, 10);
                         }
+
                     }
 
-                    if (mAdapter != null) {
-                        mAdapter.changeData(oddMap, _data, keys);
-                    }
                 }
-                RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, mTotal, LoadingFooter.State.Normal, null);
+                RecyclerViewStateUtils.setFooterViewState(mContext, jingcairecycleview, 10, LoadingFooter.State.Normal, null);
                 jingcairecycleview.refreshComplete();
             }
         };
@@ -336,10 +369,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     int tabPosition = tab.getPosition();
-                    if (DEBUG) Log.e("onTabSelected", String.valueOf(tabPosition));
-                    select = true;
-                    if (tabPosition == 0) layoutManager.scrollToPosition(0);
-                    else layoutManager.scrollToPosition(tabPosition * 2 + 1);
+                    if (DEBUG)Log.e("onTabSelected", String.valueOf(tabPosition));
+                    layoutManager.scrollToPosition(keys.get(tabPosition).getIndex() + 1);
                 }
 
                 @Override
@@ -355,28 +386,41 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
     @Override
     public void onScrollUp() {
-        if (DEBUG) Log.e("onScrollUp", "onScrollUp");
+        Log.e("onScrollUp", "onScrollUp");
+        isUp = 1;
     }
 
     @Override
     public void onScrollDown() {
-        if (DEBUG) Log.e("onScrollDown", "onScrollDown");
+        Log.e("onScrollDown", "onScrollDown");
+        isUp = 2;
     }
 
     @Override
     public void onBottom() {
 //        Log.e("打印", "滚动到底部");
-        if (tabLayout != null && select == false) tabLayout.setScrollPosition(mTotal - 1, 0, false);
     }
 
     @Override
     public void onScrolled(int distanceX, int distanceY) {
-        int pos = layoutManager.findFirstVisibleItemPosition();
-        if (DEBUG) Log.e("pos" + pos, "distanceY = " + distanceY);
-        if (distanceY <= 0) pos = 0;
-        else if (tabLayout != null && select == false)
-            tabLayout.setScrollPosition((pos) / 2, 0, false);
-        select = false;
+        if(isUp == 2) {
+            int pos = layoutManager.findFirstCompletelyVisibleItemPosition();
+            for (int i = 0; i < keys.size(); i++) {
+                if (pos <= keys.get(i).getIndex()) {
+                    tabLayout.setScrollPosition(i, 0, false);
+                    break;
+                }
+            }
+        }
+        else if(isUp == 1){
+            int pos = layoutManager.findLastCompletelyVisibleItemPosition();
+            for (int i = keys.size() - 1; i > 0; i--) {
+                if (pos >= keys.get(i).getIndex()) {
+                    tabLayout.setScrollPosition(i, 0, false);
+                    break;
+                }
+            }
+        }
     }
 
     private void startUpdate() {

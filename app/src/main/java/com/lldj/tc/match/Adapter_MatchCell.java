@@ -43,9 +43,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
     private viewHolder mHolder = null;
     private int[] winBmp;
     private ResultsModel tData;
-    private List<String> keys = new ArrayList<>();
-
-    private Map<String, Map<String, List<Odds>>>  mlist = new HashMap<>();
+    private ArrayList<List<Odds>> mlist = new ArrayList<>();
     private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
     private Map<Integer, String> oMap = new HashMap<>();
     private Map<String, ObData> groups;
@@ -54,10 +52,9 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
         this.mContext = mContext;
     }
 
-    public void changeData(Map<String, Map<String, List<Odds>>>  plist, ResultsModel _data, List<String> keys) {
+    public void changeData(ArrayList<List<Odds>>  plist, ResultsModel _data) {
         this.mlist = plist;
         this.tData = _data;
-        this.keys = keys;
         if (winBmp == null) winBmp = new int[]{R.mipmap.main_failure, R.mipmap.main_victory};
         groups = Fragment_Main.selectGroups;
 
@@ -93,7 +90,7 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return keys.size();
+        return mlist.size();
     }
 
 
@@ -102,8 +99,6 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
         LinearLayout detailitembg;
         @BindView(R.id.addlayout)
         LinearLayout addlayout;
-        @BindView(R.id.addonelayout)
-        LinearLayout addonelayout;
 
         private LayoutInflater inflater;
 
@@ -117,161 +112,153 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
         public void bottomCommon() {
 
             int pos = getAdapterPosition() - 1;
-            String key = keys.get(pos);
-            addlayout.removeAllViews();
+            List<Odds> oddList = mlist.get(pos);
 
-            String _keyStr = keys.get(pos);
-            if(_keyStr.equalsIgnoreCase("-1")){
-                View view = addonelayout.findViewById(R.id.dtitlelayout);
-                if(view == null) {
-                    view = inflater.inflate(R.layout.matchdetialonetitle, null);
-                    view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    addonelayout.addView(view);
+            View view1 = addlayout.findViewById(R.id.dtitlelayout);
+            View view2 = addlayout.findViewById(R.id.detaionebetbg);
+            View view3 = addlayout.findViewById(R.id.bottomoverlayout);
+
+            if(view1 != null) view1.setVisibility(View.GONE);
+            if(view2 != null) view2.setVisibility(View.GONE);
+            if(view3 != null) view3.setVisibility(View.GONE);
+
+            int _size = oddList.size();
+            if(_size <= 0) return;
+
+            Odds odd1 = oddList.get(0);
+            int  id1  = odd1.getId();
+            int _status = odd1.getStatus();
+            String mStage1 = odd1.getMatch_stage();
+
+            if(id1 <= 0){
+                if(id1 == -1){
+                    if(view1 == null) {
+                        view1 = inflater.inflate(R.layout.matchdetialonetitle, null);
+                        view1.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        addlayout.addView(view1);
+                    }
+                    String _name = mapNames.get(mStage1);
+                    ((TextView)view1.findViewById(R.id.myposition)).setText(TextUtils.isEmpty(_name) ? mStage1 : _name);
+                    view1.setVisibility(View.VISIBLE);
                 }
+                else if(id1 == -2){
+                    if(view2 == null) {
+                        view2 = inflater.inflate(R.layout.matchdetailonebet, null);
+                        view2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        addlayout.addView(view2);
+                    }
 
-                if(keys.size() > pos + 1)key = keys.get(pos + 1);
-                String _name = mapNames.get(key);
-                ((TextView)view.findViewById(R.id.myposition)).setText(TextUtils.isEmpty(_name) ? key : _name);
-                addonelayout.setVisibility(View.VISIBLE);
-                return;
+                    ((TextView)view2.findViewById(R.id.matchplayname)).setText(String.format("| %s", mStage1));
+                    view2.setVisibility(View.VISIBLE);
+                }
             }
-
-            addonelayout.setVisibility(View.GONE);
-            Map<String, List<Odds>> newOdds = mlist.get(key);
-            if (newOdds != null && newOdds.size() > 0) {
-                String _lastKey = "";
-                Iterator<Map.Entry<String, List<Odds>>> entries = newOdds.entrySet().iterator();
-                while (entries.hasNext()) {
-                    Map.Entry<String, List<Odds>> _nentry = entries.next();
-                    String _key = _nentry.getKey();
-                    List<Odds> _odds = _nentry.getValue();
-
-                    if(_lastKey != _key){
-                        View view = inflater.inflate(R.layout.matchdetailonebet, null);
-                        view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        addlayout.addView(view);
-                        ((TextView)view.findViewById(R.id.matchplayname)).setText(String.format("| %s", _key));
-                        _lastKey = _key;
-                    }
-
-                    View view;
-                    int len = (int) Math.ceil(_odds.size() / 2.0);
-                    for (int i = 0; i < len; i++) {
-                        view = inflater.inflate(R.layout.gamedetialitem, null);
-                        view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//                        AppUtils.screenAdapterLoadView((ViewGroup)view);
-                        addlayout.addView(view);
-
-                        Odds odd1 = _odds.get(i * 2);
-                        int _statue = odd1.getStatus();
-                        int _id = odd1.getId();
-
-                        ((TextView) view.findViewById(R.id.playovername0)).setText(TextUtils.isEmpty(odd1.getName()) ? "unknown" : odd1.getName());
-                        String _oddstring = odd1.getOdds();
-
-                        TextView tv_odds = view.findViewById(R.id.playbetnum0);
-                        ImageView im_lock = view.findViewById(R.id.playlockicon0);
-                        TextView playcellselect0 = view.findViewById(R.id.playcellselect0);
-                        updateArrow(odd1, oMap.get(_id), tv_odds, view.findViewById(R.id.playdetailarrowicon0));
-                        oMap.put(_id, _oddstring);
-                        setSelect(playcellselect0, String.valueOf(_id));
-                        if (_statue == 1) { //normal
-                            im_lock.setVisibility(View.GONE);
-                            if (_oddstring.equals("")) {
-                                tv_odds.setVisibility(View.GONE);
-                            } else {
-                                tv_odds.setText(_oddstring);
-                                tv_odds.setVisibility(View.VISIBLE);
-                            }
-
-                            view.findViewById(R.id.playcelllayout0).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
-                                    betClick(tData, String.valueOf(odd1.getId()));
-                                }
-                            });
-                        } else if (_statue == 2) { //lock
-                            tv_odds.setVisibility(View.GONE);
-                            im_lock.setVisibility(View.VISIBLE);
-                            playcellselect0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
-                        } else {
-                            tv_odds.setVisibility(View.GONE);
-                            im_lock.setVisibility(View.GONE);
-                            playcellselect0.setBackground(mContext.getResources().getDrawable(R.drawable.mathtitle_bg));
-                        }
-
-                        //set player 1 win icon
-                        String _win = odd1.getWin();
-                        ImageView iv_win = view.findViewById(R.id.playvictoryicon0);
-                        if (_win == null || _win.equals("") || Integer.parseInt(_win) < 0) {
-                            iv_win.setVisibility(View.GONE);
-                        } else {
-                            iv_win.setImageResource(winBmp[Integer.parseInt(_win)]);
-                            iv_win.setVisibility(View.VISIBLE);
-                        }
-
-                        if (_odds.size() >= (i + 1) * 2) {
-                            Odds odd2 = _odds.get(i * 2 + 1);
-                            _oddstring = odd2.getOdds();
-                            _statue = odd2.getStatus();
-                            int _id2 = odd2.getId();
-
-                            ((TextView) view.findViewById(R.id.playovername1)).setText(TextUtils.isEmpty(odd2.getName()) ? "unknown" : odd2.getName());
-
-                            tv_odds = view.findViewById(R.id.playbetnum1);
-                            im_lock = view.findViewById(R.id.playlockicon1);
-                            TextView playcellselect1 = view.findViewById(R.id.playcellselect1);
-                            updateArrow(odd2, oMap.get(_id2), tv_odds, view.findViewById(R.id.playdetailarrowicon1));
-                            oMap.put(_id2, _oddstring);
-                            setSelect(playcellselect1, String.valueOf(_id2));
-                            if (_statue == 1) { //normal
-                                im_lock.setVisibility(View.GONE);
-                                if (_oddstring.equals("")) {
-                                    tv_odds.setVisibility(View.GONE);
-                                } else {
-                                    tv_odds.setText(_oddstring);
-                                    tv_odds.setVisibility(View.VISIBLE);
-                                }
-
-                                view.findViewById(R.id.playcelllayout1).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
-                                        betClick(tData, String.valueOf(odd2.getId()));
-                                    }
-                                });
-                            } else if (_statue == 2) { //lock
-                                tv_odds.setVisibility(View.GONE);
-                                im_lock.setVisibility(View.VISIBLE);
-                                playcellselect1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
-                            } else {
-                                im_lock.setVisibility(View.GONE);
-                                tv_odds.setVisibility(View.GONE);
-                                playcellselect1.setBackground(mContext.getResources().getDrawable(R.drawable.mathtitle_bg));
-                            }
-
-                            //set player 2 win icon
-                            _win = odd2.getWin();
-                            iv_win = (ImageView) view.findViewById(R.id.playvictoryicon1);
-                            if (_win == null || _win.equals("") || Integer.parseInt(_win) < 0) {
-                                iv_win.setVisibility(View.GONE);
-                            } else {
-                                iv_win.setImageResource(winBmp[Integer.parseInt(_win)]);
-                                iv_win.setVisibility(View.VISIBLE);
-                            }
-                        } else {
-                            view.findViewById(R.id.betvisible1).setVisibility(View.GONE);
-                        }
-
-                    }
-                }
-                if(pos + 1 >= keys.size()){
-                    View _view = inflater.inflate(R.layout.nulllayout, null);
-                    _view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    addlayout.addView(_view);
+            else{
+                if(view3 == null) {
+                    view3 = inflater.inflate(R.layout.gamedetialitem, null);
+                    view3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    addlayout.addView(view3);
                 }
 
+                ((TextView) view3.findViewById(R.id.playovername0)).setText(TextUtils.isEmpty(odd1.getName()) ? "unknown" : odd1.getName());
+                String _oddstring = odd1.getOdds();
+
+                TextView tv_odds = view3.findViewById(R.id.playbetnum0);
+                ImageView im_lock = view3.findViewById(R.id.playlockicon0);
+                TextView playcellselect0 = view3.findViewById(R.id.playcellselect0);
+                updateArrow(odd1, oMap.get(id1), tv_odds, view3.findViewById(R.id.playdetailarrowicon0));
+                oMap.put(id1, _oddstring);
+                setSelect(playcellselect0, String.valueOf(id1));
+                if (_status == 1) { //normal
+                    im_lock.setVisibility(View.GONE);
+                    if (_oddstring.equals("")) {
+                        tv_odds.setVisibility(View.GONE);
+                    } else {
+                        tv_odds.setText(_oddstring);
+                        tv_odds.setVisibility(View.VISIBLE);
+                    }
+
+                    view3.findViewById(R.id.playcelllayout0).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
+                            betClick(tData, String.valueOf(odd1.getId()));
+                        }
+                    });
+                } else if (_status == 2) { //lock
+                    tv_odds.setVisibility(View.GONE);
+                    im_lock.setVisibility(View.VISIBLE);
+                    playcellselect0.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
+                } else {
+                    tv_odds.setVisibility(View.GONE);
+                    im_lock.setVisibility(View.GONE);
+                    playcellselect0.setBackground(mContext.getResources().getDrawable(R.drawable.mathtitle_bg));
+                }
+
+                //set player 1 win icon
+                String _win = odd1.getWin();
+                ImageView iv_win = view3.findViewById(R.id.playvictoryicon0);
+                if (_win == null || _win.equals("") || Integer.parseInt(_win) < 0) {
+                    iv_win.setVisibility(View.GONE);
+                } else {
+                    iv_win.setImageResource(winBmp[Integer.parseInt(_win)]);
+                    iv_win.setVisibility(View.VISIBLE);
+                }
+
+                if(_size >= 2) {
+                    Odds odd2 = oddList.get(1);
+                    _oddstring = odd2.getOdds();
+                    _status = odd2.getStatus();
+                    int _id2 = odd2.getId();
+
+                    ((TextView) view3.findViewById(R.id.playovername1)).setText(TextUtils.isEmpty(odd2.getName()) ? "unknown" : odd2.getName());
+
+                    tv_odds = view3.findViewById(R.id.playbetnum1);
+                    im_lock = view3.findViewById(R.id.playlockicon1);
+                    TextView playcellselect1 = view3.findViewById(R.id.playcellselect1);
+                    updateArrow(odd2, oMap.get(_id2), tv_odds, view3.findViewById(R.id.playdetailarrowicon1));
+                    oMap.put(_id2, _oddstring);
+                    setSelect(playcellselect1, String.valueOf(_id2));
+                    if (_status == 1) { //normal
+                        im_lock.setVisibility(View.GONE);
+                        if (_oddstring.equals("")) {
+                            tv_odds.setVisibility(View.GONE);
+                        } else {
+                            tv_odds.setText(_oddstring);
+                            tv_odds.setVisibility(View.VISIBLE);
+                        }
+
+                        view3.findViewById(R.id.playcelllayout1).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                HandlerInter.getInstance().sendEmptyMessage(HandlerType.SHOWBETDIA);
+                                betClick(tData, String.valueOf(odd2.getId()));
+                            }
+                        });
+                    } else if (_status == 2) { //lock
+                        tv_odds.setVisibility(View.GONE);
+                        im_lock.setVisibility(View.VISIBLE);
+                        playcellselect1.setBackground(mContext.getResources().getDrawable(R.drawable.mathbetbg));
+                    } else {
+                        im_lock.setVisibility(View.GONE);
+                        tv_odds.setVisibility(View.GONE);
+                        playcellselect1.setBackground(mContext.getResources().getDrawable(R.drawable.mathtitle_bg));
+                    }
+
+                    //set player 2 win icon
+                    _win = odd2.getWin();
+                    iv_win = (ImageView) view3.findViewById(R.id.playvictoryicon1);
+                    if (_win == null || _win.equals("") || Integer.parseInt(_win) < 0) {
+                        iv_win.setVisibility(View.GONE);
+                    } else {
+                        iv_win.setImageResource(winBmp[Integer.parseInt(_win)]);
+                        iv_win.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    view3.findViewById(R.id.betvisible1).setVisibility(View.GONE);
+                }
+
+
+                view3.setVisibility(View.VISIBLE);
             }
 
         }
