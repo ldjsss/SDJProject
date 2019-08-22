@@ -22,6 +22,7 @@ import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
 import com.lldj.tc.toolslibrary.recycleview.LoadingFooter;
 import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
 import com.lldj.tc.toolslibrary.time.BasicTimer;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.Clog;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.utils.EventType;
@@ -105,6 +106,8 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.add(1000 + ViewType, fragment_Calendar != null ? fragment_Calendar : fragment_Banner);
         transaction.commit();
+
+        AppUtils.dispatchEvent(new ObData(EventType.STORTBOARD));
 
     }
 

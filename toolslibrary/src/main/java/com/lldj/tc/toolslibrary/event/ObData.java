@@ -5,6 +5,9 @@ public class ObData implements Cloneable {
     private Object value;
     private String tag;
     private String tag1;
+    public ObData(String key){
+        this.key = key;
+    }
 
     public ObData(String key, Object value){
         this.key = key;

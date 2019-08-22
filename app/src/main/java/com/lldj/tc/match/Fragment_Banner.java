@@ -63,10 +63,13 @@ public class Fragment_Banner extends BaseFragment {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
                 if (data.getKey().equalsIgnoreCase(EventType.BORDLIST)) {
-                    List<BordBean.BordMode> _list = (List<BordBean.BordMode>) data.getValue();
+                    List<BordBean.BordMode> _list = SharePreUtils.getInstance().getBordlist();
+                    if(_list == null) return;
                     msgList.clear();
+                    String str = "";
                     for (int i = 0; i < _list.size(); i++) {
-                        msgList.add(_list.get(i).getBody());
+                        str = _list.get(i).getBody();
+                        if(!TextUtils.isEmpty(str)) msgList.add(new StringBuilder(" ").append(str).toString());
                     }
                     tvBanner2.setDatas(msgList);
                 }
@@ -77,19 +80,19 @@ public class Fragment_Banner extends BaseFragment {
 
     private void initData() {
         msgList = new ArrayList<>();
-        msgList.add("欢迎各位来到星云电竞！");
+//        msgList.add(" 欢迎各位来到星云电竞");
 
         /**
          * 设置数据，方式一
          */
         tvBanner2.setDatas(msgList);
 
-        Drawable drawable = getResources().getDrawable(R.mipmap.dljm_ss);
+//        Drawable drawable = getResources().getDrawable(R.mipmap.dljm_ss);
         /**
          * 设置数据（带图标的数据），方式二
          */
         //第一个参数：数据 。第二参数：drawable.  第三参数drawable尺寸。第四参数图标位置
-        tvBanner2.setDatasWithDrawableIcon(msgList,drawable,18, Gravity.LEFT);
+//        tvBanner2.setDatasWithDrawableIcon(msgList,drawable,18, Gravity.LEFT);
     }
 
     private void setListener() {

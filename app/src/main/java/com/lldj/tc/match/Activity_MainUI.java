@@ -112,17 +112,12 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                         dialogBet = null;
                     }
                 }
+                else if (data.getKey().equalsIgnoreCase(EventType.STORTBOARD)) {
+                    startBord();
+                }
             }
         });
 
-        getBord();
-        disposable = new BasicTimer(new BasicTimer.BasicTimerCallback() {
-            @Override
-            public void onTimer() {
-                getBord();
-            }
-        });
-        disposable.start(10000);
     }
 
     private void getBord(){
@@ -137,6 +132,18 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
         };
 
         HttpMsg.getInstance().sendGetBords(BordBean.class, cal);
+    }
+
+    private void startBord(){
+        if(disposable != null) return;
+        getBord();
+        disposable = new BasicTimer(new BasicTimer.BasicTimerCallback() {
+            @Override
+            public void onTimer() {
+                getBord();
+            }
+        });
+        disposable.start(10000);
     }
 
     @Override

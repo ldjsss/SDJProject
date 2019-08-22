@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.lldj.tc.R;
 import com.lldj.tc.http.beans.BaseBean;
+import com.lldj.tc.http.beans.BordBean;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.JsonBean;
 import com.lldj.tc.http.beans.MapBean;
@@ -305,7 +306,16 @@ public class HttpMsg<T>{
 
     private static final String bordURL = new StringBuilder(baseUrl).append("notice").toString();
     public void sendGetBords(Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(bordURL, new HttpMsg().getListener(service, callbackListener), null);
+        HttpTool.sendGet(bordURL, new HttpMsg().getListener(service, new HttpMsg.Listener(){
+            @Override
+            public void onFinish(Object msg) {
+                BordBean res = (BordBean) msg;
+                if(res.getCode() == GlobalVariable.succ){
+                    SharePreUtils.getInstance().setBordlist(res.getResult());
+                    if(callbackListener!=null) callbackListener.onFinish(msg);
+                }
+            }
+        }), null);
     }
 
     public interface Listener<T> {

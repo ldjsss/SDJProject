@@ -6,7 +6,9 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +33,7 @@ import java.util.List;
 public class TextBannerView extends RelativeLayout {
     private ViewFlipper mViewFlipper;
     private int mInterval = 3000;/**文字切换时间间隔,默认3s*/
-    private boolean isSingleLine = false;/**文字是否为单行,默认false*/
+    private boolean isSingleLine = true;/**文字是否为单行,默认false*/
     private int mTextColor = 0xff000000;/**设置文字颜色,默认黑色*/
     private int mTextSize = 14; /**设置文字尺寸,默认16px*/
     private int mGravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;/**文字显示位置,默认左边居中*/
@@ -65,6 +67,8 @@ public class TextBannerView extends RelativeLayout {
     private boolean isStarted;
     private boolean isDetachedFromWindow;
 
+    private Drawable _drawable;
+    private int index = 0;
 
     public TextBannerView(Context context) {
         this(context,null);
@@ -79,7 +83,7 @@ public class TextBannerView extends RelativeLayout {
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextBannerViewStyle, defStyleAttr, 0);
         mInterval = typedArray.getInteger(R.styleable.TextBannerViewStyle_setInterval, mInterval);//文字切换时间间隔
-        isSingleLine = typedArray.getBoolean(R.styleable.TextBannerViewStyle_setSingleLine, false);//文字是否为单行
+        isSingleLine = typedArray.getBoolean(R.styleable.TextBannerViewStyle_setSingleLine, true);//文字是否为单行
         mTextColor = typedArray.getColor(R.styleable.TextBannerViewStyle_setTextColor, mTextColor);//设置文字颜色
         if (typedArray.hasValue(R.styleable.TextBannerViewStyle_setTextSize)) {//设置文字尺寸
             mTextSize = (int) typedArray.getDimension(R.styleable.TextBannerViewStyle_setTextSize, mTextSize);
@@ -155,14 +159,14 @@ public class TextBannerView extends RelativeLayout {
         mViewFlipper = new ViewFlipper(getContext());//new 一个ViewAnimator
         mViewFlipper.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         addView(mViewFlipper);
-//        startViewAnimator();
         //设置点击事件
         mViewFlipper.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = mViewFlipper.getDisplayedChild();//当前显示的子视图的索引位置
+//                int position = mViewFlipper.getDisplayedChild();//当前显示的子视图的索引位置
                 if (mListener!=null){
-                    mListener.onItemClick(mDatas.get(position),position);
+                    String curText = mDatas.get(index%mDatas.size());
+                    mListener.onItemClick(curText,index);
                 }
             }
         });
@@ -192,17 +196,27 @@ public class TextBannerView extends RelativeLayout {
      */
     private AnimRunnable mRunnable = new AnimRunnable();
     private class AnimRunnable implements Runnable{
-
         @Override
         public void run() {
             if (isStarted){
                 setInAndOutAnimation(inAnimResId, outAnimResId);
                 mViewFlipper.showNext();//手动显示下一个子view。
+                index++;
+                TextView tv = (TextView)mViewFlipper.getCurrentView();
+                if(tv != null) {
+                    if (!DisplayUtils.notEmpty(mDatas)) {
+                        tv.setText("");
+                    } else {
+                        if (_drawable != null)
+                            tv.setCompoundDrawables(_drawable, null, null, null);//左边
+                        String curText = mDatas.get(index % mDatas.size());
+                        tv.setText(curText);
+                    }
+                }
                 postDelayed(this,mInterval + animDuration);
             }else {
                 stopViewAnimator();
             }
-
         }
     }
 
@@ -223,21 +237,16 @@ public class TextBannerView extends RelativeLayout {
         mViewFlipper.setOutAnimation(outAnim);
     }
 
-
-
     /**设置数据集合*/
     public void setDatas(List<String> datas){
         this.mDatas = datas;
-        if (DisplayUtils.notEmpty(mDatas)){
-            mViewFlipper.removeAllViews();
-            for (int i = 0; i < mDatas.size(); i++) {
+        if (DisplayUtils.notEmpty(mDatas) && mViewFlipper.getChildCount() <= 0){
+            for (int i = 0; i < 2; i++) {
                 TextView textView = new TextView(getContext());
                 setTextView(textView,i);
-
                 mViewFlipper.addView(textView,i);//添加子view,并标识子view位置
             }
         }
-
     }
 
     /**
@@ -249,18 +258,16 @@ public class TextBannerView extends RelativeLayout {
      */
     public void setDatasWithDrawableIcon(List<String> datas, Drawable drawable,int size, int direction){
         this.mDatas = datas;
-        if (DisplayUtils.isEmpty(mDatas)){
-            return;
-        }
-        mViewFlipper.removeAllViews();
-        for (int i = 0; i < mDatas.size(); i++) {
+        if (DisplayUtils.isEmpty(mDatas) || mViewFlipper.getChildCount() > 0){ return; }
+        for (int i = 0; i < 2; i++) {
             TextView textView = new TextView(getContext());
             setTextView(textView,i);
-
+            textView.setId(1 + i);
             textView.setCompoundDrawablePadding(8);
             float scale = getResources().getDisplayMetrics().density;// 屏幕密度 ;
             int muchDp = (int) (size * scale + 0.5f);
             drawable.setBounds(0, 0, muchDp, muchDp);
+            _drawable = drawable;
             if (direction==Gravity.LEFT){
                 textView.setCompoundDrawables(drawable,null,null , null);//左边
             }else if (direction==Gravity.TOP){
@@ -271,28 +278,21 @@ public class TextBannerView extends RelativeLayout {
                 textView.setCompoundDrawables(null,null, null, drawable);//底部
             }
 
-
-            LinearLayout linearLayout = new LinearLayout(getContext());
-            linearLayout.setOrientation(LinearLayout.HORIZONTAL);//水平方向
-            linearLayout.setGravity(mGravity);//子view显示位置跟随TextView
-            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.
-                    LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-            linearLayout.addView(textView, param);
-
-            mViewFlipper.addView(linearLayout,i);//添加子view,并标识子view位置
+            mViewFlipper.addView(textView,i);//添加子view,并标识子view位置
         }
     }
     /**设置TextView*/
     private void setTextView(TextView textView,int position){
-        textView.setText(mDatas.get(position));
-        //任意设置你的文字样式，在这里
         textView.setSingleLine(isSingleLine);
         textView.setEllipsize(TextUtils.TruncateAt.END);
+        textView.setMarqueeRepeatLimit(-1);
         textView.setTextColor(mTextColor);
         textView.setTextSize(mTextSize);
         textView.setGravity(mGravity);
         textView.getPaint().setFlags(mFlags);//字体划线
         textView.setTypeface(null, mTypeface);//字体样式
+        textView.setHorizontallyScrolling(true);
+        textView.setPadding(40, 0, 10, 0);
     }
 
 

@@ -3,6 +3,7 @@ package com.lldj.tc.sharepre;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.lldj.tc.http.beans.BordBean;
 import com.lldj.tc.http.beans.FormatModel.ResultsModel;
 import com.lldj.tc.http.beans.UrlBean;
 
@@ -23,6 +24,7 @@ public class SharePreUtils {
     private String recharge_url;
     private String rule_url;
     private String userId;
+    private List<BordBean.BordMode> bordlist;
     private Map<String, String> mapNames = new HashMap<>();
 
     private Map<Integer,ResultsModel > Gamelist;
@@ -205,6 +207,14 @@ public class SharePreUtils {
 
     public void setGamelist(Map<Integer,ResultsModel > gamelist) {
         Gamelist = gamelist;
+    }
+
+    public List<BordBean.BordMode> getBordlist() {
+        return bordlist;
+    }
+
+    public void setBordlist(List<BordBean.BordMode> bordlist) {
+        this.bordlist = bordlist;
     }
 
     public static void setRegistInfo(Context context, final String username, final String password, String name, String mobile, String channel, String devices) {

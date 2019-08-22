@@ -14,4 +14,5 @@ public class EventType {
     public static final String SELECTBANK = "SELECTBANK";
     public static final String BTNCHANGE = "BTNCHANGE";
     public static final String BORDLIST = "BORDLIST";
+    public static final String STORTBOARD = "STORTBOARD";
 }

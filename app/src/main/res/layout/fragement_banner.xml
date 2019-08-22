@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <com.superluo.textbannerlibrary.TextBannerView
         android:id="@+id/tv_banner2"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         app:setDirection="bottom_to_top"
-        app:setGravity="center"
+        android:gravity="left|center_vertical"
         android:background="@drawable/mainprimay_round100"
         app:setTextColor="#bfaf79"/>
-</LinearLayout>
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@mipmap/dljm_ss"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dp_10"/>
+</RelativeLayout>
