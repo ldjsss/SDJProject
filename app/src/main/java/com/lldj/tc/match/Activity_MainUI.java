@@ -157,7 +157,7 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                 if(_code == 401) goBackToLogin();
                 break;
             case HandlerType.LOADING:
-                AppUtils.showLoading(bActivity);
+                AppUtils.showLoading(this);
                 break;
             case HandlerType.GAMESELECT:
                 startActivity(new Intent(mContext, ActivityGameSelect.class));

@@ -1,5 +1,6 @@
 package com.lldj.tc.toolslibrary.retrofit.progress;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,11 +16,11 @@ public class ProgressDialogHandler extends Handler {
     public static final int DISMISS_PROGRESS_DIALOG = 2;
 
     private Dialog mProgressDialog;
-    private Context mContext;
+    private Activity mContext;
     private boolean mIsCancleable;
     private ProgressCancelListener mProgressCancelListener;
 
-    public ProgressDialogHandler(Context context, ProgressCancelListener mProgressCancelListener, boolean cancelable) {
+    public ProgressDialogHandler(Activity context, ProgressCancelListener mProgressCancelListener, boolean cancelable) {
         super();
         this.mContext = context;
         this.mProgressCancelListener = mProgressCancelListener;

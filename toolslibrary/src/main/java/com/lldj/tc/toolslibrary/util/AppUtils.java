@@ -839,10 +839,17 @@ public class AppUtils {
     /**
      * 弹出loading动画
      */
-    public static void showLoading(Context context) {
+    public static void showLoading(Activity activity) {
         if(AppUtils.loading != null) return;
-        AppUtils.loading = DialogUtils.createLoadingDialog(context, "loading", false);
-        AppUtils.loading.show();
+        if (!activity.isFinishing())//xActivity即为本界面的Activity
+        {
+            return;
+        }
+
+        Dialog _dia = DialogUtils.createLoadingDialog(activity, "loading", false);
+        if(_dia == null) return;
+        _dia.show();;
+        AppUtils.loading = _dia;
     }
     public static void hideLoading() {
         if(AppUtils.loading == null) return;

@@ -105,6 +105,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.add(1000 + ViewType, fragment_Calendar != null ? fragment_Calendar : fragment_Banner);
         transaction.commit();
+
     }
 
     @Override
@@ -115,6 +116,7 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
     @Override
     public void initView(View rootView) {
         ButterKnife.bind(this, rootView);
+
         rootView.findViewById(R.id.layout_board).setId(1000 + ViewType); //In order to solve id duplication after reuse, add deviation when adding control dynamically
 
         if (lAdapter == null) {

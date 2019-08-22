@@ -220,6 +220,7 @@ public class Adapter_MainCell extends RecyclerView.Adapter {
         }
 
         private void goDetial(int id){
+            if(id <= 0) return;
             Map<String, Integer> _map = new HashMap();
             _map.put("ViewType", ViewType);
             _map.put("id", id);

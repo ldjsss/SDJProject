@@ -1,6 +1,7 @@
 package com.lldj.tc.toolslibrary.util;
 
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -22,7 +23,11 @@ public final class DialogUtils {
      * @param msg
      * @return
      */
-    public static Dialog createLoadingDialog(Context context, String msg, boolean isCancle) {
+    public static Dialog createLoadingDialog(Activity context, String msg, boolean isCancle) {
+        if (!context.isFinishing())//xActivity即为本界面的Activity
+        {
+            return null;
+        }
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.dialog_loading, null);
         TextView title = (TextView) view.findViewById(R.id.id_dialog_loading_msg);
