@@ -184,7 +184,7 @@ public class DialogBetBottom extends BaseDialog {
             e.printStackTrace();
         }
         //"{\"datas\": [{\"amount\": 0,\"oddsid\": 85759}]}"
-        AppUtils.showLoading(bActivity);
+//        AppUtils.showLoading(bActivity);
         HttpMsg.getInstance().sendBetList(SharePreUtils.getToken(getContext()), jsonObj.toString(), BetMatchBean.class, new HttpMsg.Listener(){
             @Override
             public void onFinish(Object _res) {

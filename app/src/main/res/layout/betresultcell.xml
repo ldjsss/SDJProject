@@ -248,7 +248,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/betnum"
                     android:layout_centerVertical="true"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:textColor="#5a5952" />
                 <TextView
                     android:id="@+id/tv_betnum"
@@ -257,7 +257,7 @@
                     android:text="0"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/tv_betnumtitle"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:textColor="#5a5952"
                     android:layout_marginStart="@dimen/dp_5"/>
 
@@ -268,7 +268,7 @@
                     android:text="2019/06/26 10:01:52"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:textColor="#5a5952" />
 
             </RelativeLayout>

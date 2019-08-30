@@ -1,6 +1,7 @@
 package com.lldj.tc.match;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
 import com.lldj.tc.http.beans.CountBean;
+import com.lldj.tc.info.Activity_Webview;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
@@ -166,7 +168,12 @@ public class Fragment_ViewPager extends BaseFragment {
                 HandlerInter.getInstance().sendEmptyMessage(HandlerType.GAMESELECT);
                 break;
             case R.id.connectservice:
-                Toast.makeText(mContext, "This functionality is not yet implemented!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "This functionality is not yet implemented!", Toast.LENGTH_SHORT).show();
+                String url = "http://chat.yjwl.ltd:7070/index/index/mobile?id=14&name=%E4%BC%9A%E5%91%9814&group=1&avatar=http%3A%2F%2Fwx2.sinaimg.cn%2Fmw690%2F5db11ff4gy1flxmew7edlj203d03wt8n.jpg";
+                Intent intent2 = new Intent(mContext, Activity_Webview.class);
+                intent2.putExtra("url", url);
+                intent2.putExtra("title", getResources().getString(R.string.connectservice));
+                startActivity(intent2);
                 break;
         }
     }
