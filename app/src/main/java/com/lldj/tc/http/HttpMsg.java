@@ -265,13 +265,7 @@ public class HttpMsg<T>{
 
     private static final String getGameCountURL = new StringBuilder(baseUrl).append("game/count").toString();
     public void sendGetGamesCount(Class<T>service, Listener callbackListener) {
-        HttpTool.sendGet(getGameCountURL, new HttpMsg().getListener(service, new HttpMsg.Listener(){
-            @Override
-            public void onFinish(Object msg) {
-                AppUtils.dispatchEvent(new ObData(EventType.MATCHCOUNT, msg));
-                if(callbackListener != null) callbackListener.onFinish(msg);
-            }
-        }),null);
+        HttpTool.sendGet(getGameCountURL, new HttpMsg().getListener(service, callbackListener),null);
     }
 
     private static final String taskListURL = new StringBuilder(baseUrl).append("user/tasks").toString();

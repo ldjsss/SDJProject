@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.lldj.tc.R;
+import com.lldj.tc.http.HttpMsg;
 import com.lldj.tc.http.beans.CountBean;
 import com.lldj.tc.info.Activity_Webview;
 import com.lldj.tc.toolslibrary.event.ObData;
@@ -22,6 +24,7 @@ import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
 import com.lldj.tc.toolslibrary.handler.HandlerInter;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.utils.EventType;
 import com.lldj.tc.utils.HandlerType;
@@ -65,6 +68,8 @@ public class Fragment_ViewPager extends BaseFragment {
         ButterKnife.bind(this, rootView);
 
         initViewPager();
+
+        getAllGameCount();
     }
 
     //初始化viewpager
@@ -99,19 +104,42 @@ public class Fragment_ViewPager extends BaseFragment {
         this.registEvent(new Observer<ObData>() {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
-                if (data.getKey().equalsIgnoreCase(EventType.MATCHCOUNT)) {
-                    CountBean _value = (CountBean) data.getValue();
-                    if (_value == null) return;
-                    CountBean.CountMode _data = (CountBean.CountMode) _value.getResult();
-                    updateTitle(0, String.valueOf(_data.getToday()));
-                    updateTitle(1, String.valueOf(_data.getLive()));
-                    updateTitle(2, String.valueOf(_data.getEarly()));
+                String str = data.getTag();
+                if(TextUtils.isEmpty(str)) return;
+                int _select = Integer.parseInt(str);
+//                if (data.getKey().equalsIgnoreCase(EventType.MATCHCOUNT)) {
+//                    CountBean _value = (CountBean) data.getValue();
+//                    if (_value == null) return;
+//                    CountBean.CountMode _data = (CountBean.CountMode) _value.getResult();
+//                    updateTitle(0, String.valueOf(_data.getToday()));
+//                    updateTitle(1, String.valueOf(_data.getLive()));
+//                    updateTitle(2, String.valueOf(_data.getEarly()));
+//                }
+//                else
+                if(data.getKey().equalsIgnoreCase(EventType.MATCHCOUNTONE)){
+                    int _value = (int) data.getValue();
+                    if(_select < 0 || _select >= 3) return;
+                    updateTitle(_select, String.valueOf(_value));
                 }
             }
         });
 
 //        AppUtils.reduceMarginsInTabs(tabLayout, 30);
 //        AppUtils.setIndicator(getContext(), tabLayout,20, 20);
+    }
+
+    private void getAllGameCount(){
+        final HttpMsg.Listener cal1 = new HttpMsg.Listener() {
+            @Override
+            public void onFinish(Object _res) {
+                CountBean _value = (CountBean) _res;
+                CountBean.CountMode _data = (CountBean.CountMode) _value.getResult();
+                updateTitle(0, String.valueOf(_data.getToday()));
+                updateTitle(1, String.valueOf(_data.getLive()));
+                updateTitle(2, String.valueOf(_data.getEarly()));
+            }
+        };
+        HttpMsg.getInstance().sendGetGamesCount(CountBean.class, cal1);
     }
 
     //自定义tab布局

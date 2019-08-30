@@ -177,6 +177,10 @@ public class Adapter_MatchCell extends RecyclerView.Adapter {
                     view3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     addlayout.addView(view3);
                 }
+                else{
+                    view3.findViewById(R.id.betvisible0).setVisibility(View.VISIBLE);
+                    view3.findViewById(R.id.betvisible1).setVisibility(View.VISIBLE);
+                }
 
                 if(view1 != null) view1.setVisibility(View.GONE);
                 if(view2 != null) view2.setVisibility(View.GONE);

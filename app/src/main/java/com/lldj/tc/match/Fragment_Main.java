@@ -229,16 +229,20 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
                         return (int) (o1.getStart_time_ms() - o2.getStart_time_ms());
                     });
 
-                    if (page_num >= pages) { //Add blank items
+                    tvNoMatch.setVisibility(alist.size() > 0 ? View.GONE : View.VISIBLE);
+
+                    if (page_num >= pages && alist.size() > 0) { //Add blank items
                         for (int i = 0; i < 2; i++) {
                             alist.add(new ResultsModel(-1, "", "", page_num));
                         }
                     }
 
-                    tvNoMatch.setVisibility(alist.size() > 0 ? View.GONE : View.VISIBLE);
-
                     mAdapter.changeData(alist, total);
                     RecyclerViewStateUtils.setFooterViewState(mContext, subjectLrecycleview, page_size, LoadingFooter.State.Normal, null);
+
+                    ObData ob = new ObData(EventType.MATCHCOUNTONE, total);
+                    ob.setTag(String.valueOf(ViewType));
+                    AppUtils.dispatchEvent(ob);
                 }
 
                 subjectLrecycleview.refreshComplete();
@@ -247,7 +251,6 @@ public class Fragment_Main extends BaseFragment implements LRecyclerView.LScroll
 
         HttpMsg.getInstance().sendGetMatchList(ViewType + 1, page_num, selects, PageMatchBean.class, cal);
 
-        HttpMsg.getInstance().sendGetGamesCount(CountBean.class, null);
     }
 
     private void startUpdate() {
