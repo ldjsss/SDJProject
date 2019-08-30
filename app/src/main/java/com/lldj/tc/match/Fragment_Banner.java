@@ -69,7 +69,7 @@ public class Fragment_Banner extends BaseFragment {
                     String str = "";
                     for (int i = 0; i < _list.size(); i++) {
                         str = _list.get(i).getBody();
-                        if(!TextUtils.isEmpty(str)) msgList.add(new StringBuilder(" ").append(str).toString());
+                        if(!TextUtils.isEmpty(str)) msgList.add(str);
                     }
                     tvBanner2.setDatas(msgList);
                 }

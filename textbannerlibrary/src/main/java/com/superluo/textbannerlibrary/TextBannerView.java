@@ -292,7 +292,7 @@ public class TextBannerView extends RelativeLayout {
         textView.getPaint().setFlags(mFlags);//字体划线
         textView.setTypeface(null, mTypeface);//字体样式
         textView.setHorizontallyScrolling(true);
-        textView.setPadding(40, 0, 10, 0);
+        textView.setPadding(10, 0, 10, 0);
     }
 
 
