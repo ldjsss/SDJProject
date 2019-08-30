@@ -165,8 +165,8 @@ public class TextBannerView extends RelativeLayout {
             public void onClick(View v) {
 //                int position = mViewFlipper.getDisplayedChild();//当前显示的子视图的索引位置
                 if (mListener!=null){
-                    String curText = mDatas.get(index%mDatas.size());
-                    mListener.onItemClick(curText,index);
+//                    String curText = mDatas.get(index%mDatas.size());
+//                    mListener.onItemClick(curText,index);
                 }
             }
         });
