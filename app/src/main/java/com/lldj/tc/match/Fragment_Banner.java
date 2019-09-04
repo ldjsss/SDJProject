@@ -16,6 +16,7 @@ import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
+import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.utils.EventType;
 import com.superluo.textbannerlibrary.ITextBannerItemClickListener;
@@ -99,7 +100,8 @@ public class Fragment_Banner extends BaseFragment {
         tvBanner2.setItemOnClickListener(new ITextBannerItemClickListener() {
             @Override
             public void onItemClick(String data, int position) {
-                Toast.makeText(mContext, String.valueOf(position)+">>"+data, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, String.valueOf(position)+">>"+data, Toast.LENGTH_SHORT).show();
+                AppUtils.dispatchEvent(new ObData(EventType.NOTICES, position));
             }
         });
     }

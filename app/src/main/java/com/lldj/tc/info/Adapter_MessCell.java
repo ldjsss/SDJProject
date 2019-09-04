@@ -4,14 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.http.beans.MessBean;
+import com.lldj.tc.http.beans.BordBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +23,14 @@ public class Adapter_MessCell extends RecyclerView.Adapter {
 
     private Context mContext;
     private viewHolder mHolder = null;
-    private List<MessBean.MessMode> messList = new ArrayList<>();
+    private List<BordBean.BordMode> messList = new ArrayList<>();
 
 
     public Adapter_MessCell(Context mContext) {
         this.mContext = mContext;
     }
 
-    public void changeData(List<MessBean.MessMode> _messList) {
+    public void changeData(List<BordBean.BordMode> _messList) {
         this.messList = _messList;
 
         notifyDataSetChanged();
@@ -75,10 +74,10 @@ public class Adapter_MessCell extends RecyclerView.Adapter {
 
             int pos = getAdapterPosition() - 1;
 
-            MessBean.MessMode _data = messList.get(pos);
+            BordBean.BordMode _data = messList.get(pos);
 
             messtitle.setText(_data.getTitle());
-            messcontent.setText(_data.getContent());
+            messcontent.setText(_data.getBody());
 
         }
 

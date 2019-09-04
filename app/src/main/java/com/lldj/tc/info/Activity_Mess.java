@@ -1,6 +1,5 @@
 package com.lldj.tc.info;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,13 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lldj.tc.R;
-import com.lldj.tc.http.beans.MessBean;
+import com.lldj.tc.http.beans.BordBean;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
-import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.view.BaseActivity;
-import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
 
 import java.util.ArrayList;
@@ -46,7 +43,7 @@ public class Activity_Mess extends BaseActivity implements LRecyclerView.LScroll
     private int mTotal = 0;
     private LinearLayoutManager layoutManager;
 
-    private List<MessBean.MessMode> messList = new ArrayList<>();
+    private List<BordBean.BordMode> messList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +72,7 @@ public class Activity_Mess extends BaseActivity implements LRecyclerView.LScroll
 
         mTotal = 3;
         for (int i = 0; i < mTotal; i++) {
-            messList.add(new MessBean.MessMode("test" + i, "dfsfsfsdfdsfsdfsdfsfsdf", 1213213123));
+            messList.add(new BordBean.BordMode("test" + i, "dfsfsfsdfdsfsdfsdfsfsdf", "121212"));
         }
 
         initRecycleview();

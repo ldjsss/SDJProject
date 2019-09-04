@@ -39,6 +39,13 @@ public class BordBean {
         private String created_time;
         private String body;
 
+
+        public BordMode(String title, String body, String created_time) {
+            this.title = title;
+            this.body = body;
+            this.created_time = created_time;
+        }
+
         public int getId() {
             return id;
         }

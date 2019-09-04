@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_262935">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:id="@+id/bettitlelayout"
+        android:background="@drawable/rec_bettitle">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/noticesTitle"
+                android:textSize="14sp"
+                android:layout_gravity="center_vertical"
+                android:layout_toRightOf="@id/gamebettotalcount"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:id="@+id/deleteall"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_1a1c26"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/closelayout">
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_10"
+                android:id="@+id/closeline"
+                android:background="@color/color_1a1c26"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="×"
+                android:textSize="25sp"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:id="@+id/close"
+                android:textColor="@color/color_1a1c26"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <com.lldj.tc.toolslibrary.recycleview.LRecyclerView
+        android:id="@+id/jingcairecycleview"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/rec_stroke_969696"/>
+
+</LinearLayout>

@@ -78,7 +78,8 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
         registEvent(new Observer<ObData>() {
             @Override
             public void onUpdate(Observable<ObData> observable, ObData data) {
-                if (data.getKey().equalsIgnoreCase(EventType.BETDETAILUI)) {
+                String _okey = data.getKey();
+                if (_okey.equalsIgnoreCase(EventType.BETDETAILUI)) {
                     Map<String, Integer> _map = (Map) data.getValue();
 
                     detailDialog = new Frament_MatchDetail();
@@ -86,13 +87,13 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                     detailDialog.showView(_map.get("ViewType"), _map.get("id"));
                     drawerLayout.openDrawer(Gravity.RIGHT);
                 }
-                else if (data.getKey().equalsIgnoreCase(EventType.DETIALHIDE)) {
+                else if (_okey.equalsIgnoreCase(EventType.DETIALHIDE)) {
                     if(detailDialog == null) return;
                     drawerLayout.closeDrawer(Gravity.RIGHT);
                     getSupportFragmentManager().beginTransaction().remove(detailDialog).commit();
                     detailDialog = null;
                 }
-                else if (data.getKey().equalsIgnoreCase(EventType.BETLISTADD)) {
+                else if (_okey.equalsIgnoreCase(EventType.BETLISTADD)) {
                     if(TextUtils.isEmpty(SharePreUtils.getInstance().getUserId())){
                         guestWarm();
                         return;
@@ -103,8 +104,9 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                     }
                     DialogManager.getInstance().show(dialogBet);
                     dialogBet.betListAdd(data);
+
                 }
-                else if (data.getKey().equalsIgnoreCase(EventType.SELECTGROUPS)) {
+                else if (_okey.equalsIgnoreCase(EventType.SELECTGROUPS)) {
                     List<ObData> groups = (List<ObData>)data.getValue();
                     if(groups == null || groups.size() <=0 ) {
                         DialogManager.getInstance().removeDialog("dialogBet");
@@ -112,8 +114,12 @@ public class Activity_MainUI extends BaseActivity implements HandlerInter.Handle
                         dialogBet = null;
                     }
                 }
-                else if (data.getKey().equalsIgnoreCase(EventType.STORTBOARD)) {
+                else if (_okey.equalsIgnoreCase(EventType.STORTBOARD)) {
                     startBord();
+                }
+                else if (_okey.equalsIgnoreCase(EventType.NOTICES)) {
+                    final DialogNotice dialogNotice = new DialogNotice(Activity_MainUI.this, R.style.DialogTheme);
+                    DialogManager.getInstance().show(dialogNotice);
                 }
             }
         });
