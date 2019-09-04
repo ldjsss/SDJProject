@@ -1,18 +1,22 @@
 package com.lldj.tc.match;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.os.Build;
-import android.os.Bundle;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,7 +33,6 @@ import com.lldj.tc.sharepre.SharePreUtils;
 import com.lldj.tc.toolslibrary.event.ObData;
 import com.lldj.tc.toolslibrary.event.Observable;
 import com.lldj.tc.toolslibrary.event.Observer;
-import com.lldj.tc.toolslibrary.http.HttpTool;
 import com.lldj.tc.toolslibrary.immersionbar.ImmersionBar;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerView;
 import com.lldj.tc.toolslibrary.recycleview.LRecyclerViewAdapter;
@@ -38,7 +41,6 @@ import com.lldj.tc.toolslibrary.recycleview.RecyclerViewStateUtils;
 import com.lldj.tc.toolslibrary.time.BasicTimer;
 import com.lldj.tc.toolslibrary.util.AppUtils;
 import com.lldj.tc.toolslibrary.util.ImageLoader;
-import com.lldj.tc.toolslibrary.util.RxTimerUtilPro;
 import com.lldj.tc.toolslibrary.util.StringUtil;
 import com.lldj.tc.toolslibrary.view.BaseFragment;
 import com.lldj.tc.toolslibrary.view.StrokeTextView;
@@ -48,21 +50,18 @@ import com.lldj.tc.utils.GlobalVariable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Handler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerStandard;
-import io.reactivex.disposables.Disposable;
 
 import static com.lldj.tc.toolslibrary.util.AppUtils.DEBUG;
 import static com.lldj.tc.toolslibrary.view.BaseActivity.bActivity;
 
-class keyModel{
+class keyModel {
     private int index;
     private String value;
 
@@ -133,8 +132,6 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     TextView lookmatch;
     @BindView(R.id.arrowplay)
     ImageView arrowplay;
-    @BindView(R.id.videoplayer)
-    JZVideoPlayerStandard videoplayer;
     @BindView(R.id.tvlayout)
     LinearLayout tvlayout;
     @BindView(R.id.imgvidoicon1)
@@ -153,6 +150,10 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     TextView gamecountheng;
     @BindView(R.id.bottomstatus)
     TextView bottomstatus;
+    @BindView(R.id.videoplayer)
+    VideoView videoplayer;
+    @BindView(R.id.showloading)
+    ImageView showloading;
 
     private ResultsModel _matchData;
     private int ViewType;
@@ -169,6 +170,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     private BasicTimer disposable;
     private Map<String, String> mapNames = SharePreUtils.getInstance().getMapNames();
     private ImageLoader imageLoader = new ImageLoader(bActivity, R.mipmap.game_arena, R.mipmap.game_arena);
+    private MediaController mControl;
 
     @Override
     public int getContentView() {
@@ -179,7 +181,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     public void initView(View view) {
         ButterKnife.bind(this, view);
 
-        if (statusText == null) statusText = new String[]{"unknown", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.gameing), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
+        if (statusText == null)
+            statusText = new String[]{"unknown", mContext.getString(R.string.matchStatusFront), mContext.getString(R.string.gameing), mContext.getString(R.string.matchStatusOver), mContext.getString(R.string.matchStatusError)};
 
         ImmersionBar.with((Activity) mContext).titleBar(toolbarRootLayout).init();
 
@@ -206,6 +209,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
         gamestatus1.setVisibility(View.GONE);
 
         initRecycleview();
+
     }
 
     public void showView(int ViewType, int matchId) {
@@ -233,7 +237,9 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     }
 
                     List<Team> teams = _data.getTeam();
-                    Collections.sort(teams, (o1, o2) -> { return (int)(o1.getPos() - o2.getPos()); });
+                    Collections.sort(teams, (o1, o2) -> {
+                        return (int) (o1.getPos() - o2.getPos());
+                    });
 
                     Team team0 = teams.get(0);
                     Team team1 = teams.get(1);
@@ -249,7 +255,8 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     playvidoname2.setText(team1.getTeam_short_name());
                     bottomstatus.setText(statusText[status]);
                     matchtime.setText((status == 2) ? statusText[status] : String.format("%s %s", AppUtils.getFormatTime2(_data.getStart_time_ms()), AppUtils.getWhatDay(_data.getStart_time_ms())));
-                    if (status == 2) startUpdate();else stopUpdate();
+                    if (status == 2) startUpdate();
+                    else stopUpdate();
 
                     gamestatus1.setText(AppUtils.getFormatTime4(_data.getStart_time_ms()));
 
@@ -275,24 +282,24 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
 //                    Log.d("-----detail data = ", _data.toString());
 
-                    if(odds != null){
+                    if (odds != null) {
 
                         Collections.sort(odds, (o1, o2) -> {
-                            return (int)(o2.getSort_index() - o1.getSort_index());
+                            return (int) (o2.getSort_index() - o1.getSort_index());
                         });
 
                         ArrayList<List<Odds>> alist = new ArrayList<>();
                         keys.clear();
                         List<Odds> item = new ArrayList<>();
                         String _match_stage = "";
-                        int _group_id= -1;
+                        int _group_id = -1;
                         for (int i = 0; i < odds.size(); i++) {
                             Odds _odd = odds.get(i);
                             String _key = _odd.getMatch_stage();
                             int _gid = _odd.getGroup_id();
                             if (!_key.equalsIgnoreCase(_match_stage)) {
                                 keys.add(new keyModel(alist.size(), _key));
-                                if(item.size() > 0) {
+                                if (item.size() > 0) {
                                     alist.add(item);
                                     item = new ArrayList<>();
                                 }
@@ -304,7 +311,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                                 item = new ArrayList<>();
                             }
                             if (_gid != _group_id) {
-                                if(item.size() > 0) {
+                                if (item.size() > 0) {
                                     alist.add(item);
                                     item = new ArrayList<>();
                                 }
@@ -318,14 +325,14 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
                             item.add(_odd);
 
-                            if(i >= odds.size() - 1 || item.size() >= 2){
+                            if (i >= odds.size() - 1 || item.size() >= 2) {
                                 alist.add(item);
                                 item = new ArrayList<>();
                             }
 
                         }
 
-                        if(alist.size() > 3 ){
+                        if (alist.size() > 3) {
                             for (int i = 0; i < 3; i++) {
                                 item = new ArrayList<>();
                                 item.add(new Odds(-3, ""));
@@ -376,16 +383,18 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     int tabPosition = tab.getPosition();
-                    if (DEBUG)Log.e("onTabSelected", String.valueOf(tabPosition));
+                    if (DEBUG) Log.e("onTabSelected", String.valueOf(tabPosition));
                     isUp = 0;
                     layoutManager.scrollToPosition(keys.get(tabPosition).getIndex() + 1);
                 }
 
                 @Override
-                public void onTabUnselected(TabLayout.Tab tab) {}
+                public void onTabUnselected(TabLayout.Tab tab) {
+                }
 
                 @Override
-                public void onTabReselected(TabLayout.Tab tab) {}
+                public void onTabReselected(TabLayout.Tab tab) {
+                }
             });
         }
     }
@@ -409,7 +418,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
     @Override
     public void onScrolled(int distanceX, int distanceY) {
-        if(isUp == 2) {
+        if (isUp == 2) {
             int pos = layoutManager.findFirstCompletelyVisibleItemPosition();
             for (int i = 0; i < keys.size(); i++) {
                 if (pos <= keys.get(i).getIndex()) {
@@ -417,8 +426,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
                     break;
                 }
             }
-        }
-        else if(isUp == 1){
+        } else if (isUp == 1) {
             int pos = layoutManager.findLastCompletelyVisibleItemPosition();
             for (int i = keys.size() - 1; i > 0; i--) {
                 if (pos >= keys.get(i).getIndex()) {
@@ -436,13 +444,19 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             @Override
             public void onTimer() {
                 onRefresh();
+
+                if(!videoplayer.isPlaying()){
+                    showloading.setVisibility(View.VISIBLE);
+                } else{
+                    showloading.setVisibility(View.GONE);
+                }
             }
         });
         disposable.start(disTime);
     }
 
     private void stopUpdate() {
-        if(disposable != null){
+        if (disposable != null) {
             disposable.cancel();
             disposable = null;
         }
@@ -454,23 +468,40 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
             ToastUtils.show_middle_pic(getContext(), R.mipmap.cancle_icon, getResources().getString(R.string.nogamelooking), ToastUtils.LENGTH_SHORT);
             return;
         }
-        if(DEBUG)System.out.println("url:" + _matchData.getLive_url());
-        String s3 = "http://v.yongjiujiexi.com/20180304/B0cYHQvY/index.m3u8";
-        videoplayer.setUp(s3, JZVideoPlayerStandard.NORMAL_ORIENTATION, _matchData.getTournament_name() + "/" + _matchData.getMatch_short_name());
-//        videoplayer.setUp(_matchData.getLive_url(), JZVideoPlayerStandard.NORMAL_ORIENTATION, String.format("%s/%s", _matchData.getTournament_name(), _matchData.getMatch_short_name()));
-//        videoplayer.fullscreenButton.setVisibility(View.GONE);
-        videoplayer.progressBar.setVisibility(View.GONE);
-        videoplayer.currentTimeTextView.setVisibility(View.GONE);
-        videoplayer.totalTimeTextView.setVisibility(View.GONE);
-        videoplayer.tinyBackImageView.setVisibility(View.GONE);
-        videoplayer.batteryLevel.setVisibility(View.GONE);
-        videoplayer.startButton.setVisibility(View.GONE);
-        videoplayer.setVideoImageDisplayType(JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
-        videoplayer.TOOL_BAR_EXIST = false;
-        videoplayer.ACTION_BAR_EXIST = false;
-        videoplayer.startVideo();
+        System.out.println("url:" + _matchData.getLive_url());
 
-        //        videocontroller1.ivThumb.setThumbInCustomProject("视频/MP3缩略图地址");
+        if (mControl == null) mControl = new MediaController(mContext);
+        videoplayer.setMediaController(mControl);
+        mControl.setVisibility(View.INVISIBLE);
+        videoplayer.setVideoURI(Uri.parse(_matchData.getLive_url()));
+        videoplayer.requestFocus();
+        videoplayer.start();
+
+        videoplayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Toast.makeText(mContext, "播放完成了", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        videoplayer.setOnInfoListener(new MediaPlayer.OnInfoListener() {
+            public boolean onInfo(MediaPlayer mp, int what, int extra) {
+                if(what == MediaPlayer.MEDIA_INFO_BUFFERING_START){
+                    showloading.setVisibility(View.VISIBLE);
+                }else if(what == MediaPlayer.MEDIA_INFO_BUFFERING_END){
+                    //此接口每次回调完START就回调END,若不加上判断就会出现缓冲图标一闪一闪的卡顿现象
+                    if(mp.isPlaying()){
+                        showloading.setVisibility(View.GONE);
+                    }
+                }
+                return true;
+            }
+        });
+        videoplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            public void onPrepared(MediaPlayer mp) {
+                showloading.setVisibility(View.GONE);//缓冲完成就隐藏
+            }
+        });
 
 
         tvlayout.setVisibility(View.VISIBLE);
@@ -480,14 +511,14 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
     @Override
     public void onPause() {
         super.onPause();
-        videoplayer.releaseAllVideos();
+        videoplayer.pause();
     }
 
     @OnClick({R.id.medioclose, R.id.lookmatch, R.id.toolbar_back_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.medioclose:
-                videoplayer.releaseAllVideos();
+                videoplayer.pause();
                 tvlayout.setVisibility(View.GONE);
                 break;
             case R.id.lookmatch:
@@ -502,7 +533,7 @@ public class Frament_MatchDetail extends BaseFragment implements LRecyclerView.L
 
     private void close() {
         stopUpdate();
-        videoplayer.releaseAllVideos();
+        videoplayer.stopPlayback();
         tvlayout.setVisibility(View.GONE);
     }
 
